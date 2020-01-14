@@ -3,19 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.Api", "BlazUICommunity.Api\BlazUICommunity.Api.csproj", "{0A07D0EF-948B-4C0E-B123-8A202E5F6676}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.Api", "BlazUICommunity.Api\BlazUICommunity.Api.csproj", "{0A07D0EF-948B-4C0E-B123-8A202E5F6676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.App", "BlazUICommunity.App\BlazUICommunity.App.csproj", "{7ED5522D-6335-4934-B910-08CF4DFA4731}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.App", "BlazUICommunity.App\BlazUICommunity.App.csproj", "{7ED5522D-6335-4934-B910-08CF4DFA4731}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.Model", "BlazUICommunity.Model\BlazUICommunity.Model.csproj", "{A3F88305-6BC0-4FE5-A7E3-F6A611E6A3F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.Model", "BlazUICommunity.Model\BlazUICommunity.Model.csproj", "{A3F88305-6BC0-4FE5-A7E3-F6A611E6A3F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.Repository", "BlazUICommunity.Repository\BlazUICommunity.Repository.csproj", "{50AE8F18-079E-463E-86A5-CA66797D4764}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.Utility", "BlazUICommunity.Utility\BlazUICommunity.Utility.csproj", "{0F08BA12-E388-4FCF-AB90-7E4E7CB2ADA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.IRepository", "BlazUICommunity.IRepository\BlazUICommunity.IRepository.csproj", "{7F577B4C-A8B0-4259-A345-8C1096E65B40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.IdentityServer4", "BlazUICommunity.IdentityServer4\BlazUICommunity.IdentityServer4.csproj", "{5481E37B-6307-4DF9-89C1-06D91CDD3D33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.Utility", "BlazUICommunity.Utility\BlazUICommunity.Utility.csproj", "{0F08BA12-E388-4FCF-AB90-7E4E7CB2ADA4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.Interface", "BlazUICommunity.Interface\BlazUICommunity.Interface.csproj", "{7136A676-5792-4EF1-9393-BAAB2D22A743}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.IdentityServer4", "BlazUICommunity.IdentityServer4\BlazUICommunity.IdentityServer4.csproj", "{5481E37B-6307-4DF9-89C1-06D91CDD3D33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.Service", "BlazUICommunity.Service\BlazUICommunity.Service.csproj", "{F407D6CA-DA74-453F-B51F-6EAF934C8C32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestBZCommunity", "UnitTestBZCommunity\UnitTestBZCommunity.csproj", "{C622138C-465A-4FA8-9086-61C1508FB391}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.Test", "BlazUICommunity.Test\BlazUICommunity.Test.csproj", "{29877874-1FB2-455F-A970-3959E711E527}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.UnitOfWork", "BlazUICommunity.UnitOfWork\BlazUICommunity.UnitOfWork.csproj", "{4E0B8EC1-710D-4AFE-9FE6-89B7F0E3FB26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,14 +41,6 @@ Global
 		{A3F88305-6BC0-4FE5-A7E3-F6A611E6A3F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3F88305-6BC0-4FE5-A7E3-F6A611E6A3F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3F88305-6BC0-4FE5-A7E3-F6A611E6A3F1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{50AE8F18-079E-463E-86A5-CA66797D4764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{50AE8F18-079E-463E-86A5-CA66797D4764}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{50AE8F18-079E-463E-86A5-CA66797D4764}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{50AE8F18-079E-463E-86A5-CA66797D4764}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F577B4C-A8B0-4259-A345-8C1096E65B40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F577B4C-A8B0-4259-A345-8C1096E65B40}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F577B4C-A8B0-4259-A345-8C1096E65B40}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F577B4C-A8B0-4259-A345-8C1096E65B40}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0F08BA12-E388-4FCF-AB90-7E4E7CB2ADA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0F08BA12-E388-4FCF-AB90-7E4E7CB2ADA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F08BA12-E388-4FCF-AB90-7E4E7CB2ADA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,6 +49,26 @@ Global
 		{5481E37B-6307-4DF9-89C1-06D91CDD3D33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5481E37B-6307-4DF9-89C1-06D91CDD3D33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5481E37B-6307-4DF9-89C1-06D91CDD3D33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7136A676-5792-4EF1-9393-BAAB2D22A743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7136A676-5792-4EF1-9393-BAAB2D22A743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7136A676-5792-4EF1-9393-BAAB2D22A743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7136A676-5792-4EF1-9393-BAAB2D22A743}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F407D6CA-DA74-453F-B51F-6EAF934C8C32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F407D6CA-DA74-453F-B51F-6EAF934C8C32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F407D6CA-DA74-453F-B51F-6EAF934C8C32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F407D6CA-DA74-453F-B51F-6EAF934C8C32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C622138C-465A-4FA8-9086-61C1508FB391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C622138C-465A-4FA8-9086-61C1508FB391}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C622138C-465A-4FA8-9086-61C1508FB391}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C622138C-465A-4FA8-9086-61C1508FB391}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29877874-1FB2-455F-A970-3959E711E527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29877874-1FB2-455F-A970-3959E711E527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29877874-1FB2-455F-A970-3959E711E527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29877874-1FB2-455F-A970-3959E711E527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E0B8EC1-710D-4AFE-9FE6-89B7F0E3FB26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E0B8EC1-710D-4AFE-9FE6-89B7F0E3FB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E0B8EC1-710D-4AFE-9FE6-89B7F0E3FB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E0B8EC1-710D-4AFE-9FE6-89B7F0E3FB26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

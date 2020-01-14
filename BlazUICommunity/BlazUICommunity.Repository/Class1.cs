@@ -1,8 +1,14 @@
-﻿using System;
+﻿using Arch.EntityFrameworkCore.UnitOfWork;
+using BlazUICommunity.Model.Models;
+using System;
 
 namespace BlazUICommunity.Repository
 {
-    public class Class1
+    public class UserRepository : Repository<BZUserModel>, IRepository<BZUserModel>
     {
+        public UserRepository(BlazUICommunityContext dbContext) : base(dbContext)
+        {
+
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlazUICommunity.Model
+namespace BlazUICommunity.Service
 {
     public class Class1
     {
