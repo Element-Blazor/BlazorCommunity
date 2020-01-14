@@ -10,9 +10,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http.Features;
-using System.IO.Compression;
-using BlazUICommunity.Utility;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlazUICommunity.Utility.MiddleWare
@@ -23,10 +20,7 @@ namespace BlazUICommunity.Utility.MiddleWare
     public class LoggerMiddleware
     {
         private static   ILogger<LoggerMiddleware> _logger;
-        public LoggerMiddleware(ILogger<LoggerMiddleware> logger)
-        {
-            _logger = logger;
-        }
+   
         private readonly RequestDelegate _next;
         /// <summary>
         /// 计时器
@@ -36,8 +30,9 @@ namespace BlazUICommunity.Utility.MiddleWare
         /// 
         /// </summary>
         /// <param name="next"></param>
-        public LoggerMiddleware(RequestDelegate next)
+        public LoggerMiddleware(RequestDelegate next, ILogger<LoggerMiddleware> logger)
         {
+            _logger = logger;
             _next = next;
             _stopwatch = new Stopwatch();
         }
@@ -98,20 +93,37 @@ namespace BlazUICommunity.Utility.MiddleWare
             }
             // 响应完成记录时间和存入日志
             context.Response.OnCompleted(() =>
-                    {
-                        _stopwatch.Stop();
-                        model.ElapsedTime = $"{_stopwatch.ElapsedMilliseconds }ms";
-                        if (!model.Request.Url.ToLower().Contains("swagger") || model.Request.Url.ToLower().Contains("html"))
-                            _logger.LogDebug($"request->response：\r\n{JsonConvert.SerializeObject(model)}");
-                        return Task.CompletedTask;
-                    });
+            {
+                _stopwatch.Stop();
+                model.ElapsedTime = $"{_stopwatch.ElapsedMilliseconds }ms";
+                WriteLog(model);
+                return Task.CompletedTask;
+            });
         }
+
+        private static void WriteLog(HttpMiddlewareModel model)
+        {
+            if ( !model.Request.Url.ToLower().Contains("swagger") &&! model.Request.Url.ToLower().Contains("html") )
+            {
+                _logger.LogDebug("============================================================================");
+                _logger.LogDebug($"开始：【{model.ExecuteStart}】");
+                _logger.LogDebug($"Url：【{model.Request.Url}】");
+                _logger.LogDebug($"Header：\r\n                      {string.Join("\r\n                       " , model.Request.Header.ToArray())}");
+                _logger.LogDebug($"Param：{model.Request.Param}");
+                _logger.LogDebug($"Response：");
+                _logger.LogDebug($"      {JsonConvert.SerializeObject(model.Response)}");
+                _logger.LogDebug($"结束：【{model.ExecuteEnd}】");
+                _logger.LogDebug($"耗时：【{model.ElapsedTime}】");
+                _logger.LogDebug("============================================================================");
+            }
+        }
+
         /// <summary>
         /// 获取响应内容
         /// </summary>
         /// <param name="response"></param>
         /// <returns></returns>
-        public async Task<string> GetResponse(HttpResponse response)
+        private async Task<string> GetResponse(HttpResponse response)
         {
             response.Body.Seek(0, SeekOrigin.Begin);
             var text = await new StreamReader(response.Body).ReadToEndAsync();
