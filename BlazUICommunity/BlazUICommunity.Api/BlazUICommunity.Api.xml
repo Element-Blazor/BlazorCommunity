@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BlazUICommunity.Api</name>
+    </assembly>
+    <members>
+        <member name="M:BlazUICommunity.Api.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:BlazUICommunity.Api.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="F:BlazUICommunity.Api.Startup.AutofacContainer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:BlazUICommunity.Api.Startup.ConfigureContainer(Autofac.ContainerBuilder)">
+            <summary>
+            系统调用
+            </summary>
+            <param name="builder"></param>
+        </member>
+    </members>
+</doc>

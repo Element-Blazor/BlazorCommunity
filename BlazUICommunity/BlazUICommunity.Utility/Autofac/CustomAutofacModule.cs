@@ -7,6 +7,7 @@ namespace BlazUICommunity.Utility
 {
     public class CustomAutofacModule : Autofac.Module
     {
+    
         protected override void Load(ContainerBuilder containerBuilder)
         {
 

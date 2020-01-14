@@ -34,7 +34,7 @@ namespace BlazUICommunity.Model.Models
             if (!optionsBuilder.IsConfigured)
             {
                 //throw new ArgumentException("dbconnection string is not Configured");
-                optionsBuilder.UseMySql("server=192.168.205.92;database=BlazUICommunity;port=3306;uid=root;password=P@ssw0rd;character set=utf8mb4;");
+                optionsBuilder.UseMySql("server=localhost;database=BlazUICommunity;port=3306;uid=root;password=P@ssw0rd123;character set=utf8mb4;");
             }
         }
 

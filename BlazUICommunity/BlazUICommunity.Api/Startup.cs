@@ -7,6 +7,9 @@ using Autofac;
 using BlazUICommunity.Model.Models;
 using BlazUICommunity.Repository;
 using BlazUICommunity.Utility;
+using BlazUICommunity.Utility.Configure;
+using BlazUICommunity.Utility.Extensions;
+using BlazUICommunity.Utility.MiddleWare;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,6 +19,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
+using NLog.Web;
 
 namespace BlazUICommunity.Api
 {
@@ -31,13 +36,12 @@ namespace BlazUICommunity.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddDbContext<BlazUICommunityContext>(opt => opt.UseMySql("server=192.168.205.92;database=BlazUICommunity;port=3306;uid=root;password=P@ssw0rd;character set=utf8mb4;"))
-                //.AddDbContext<BloggingContext>(opt => opt.UseInMemoryDatabase("UnitOfWork"))
+            services.AddSingleton<LoggerMiddleware>();
+            services.AddCustomAddControllers();
+            services.AddCustomSwagger();
+            services.AddDbContext<BlazUICommunityContext>(opt => opt.UseMySql(Configuration.GetConnectionString("DbConnectionString")))
                 .AddUnitOfWork<BlazUICommunityContext>();
-            //.AddCustomRepository<BZUserModel , BZUserRepository>()
-            //.AddCustomRepository<SysLog , SysLogRepository>();
-            //services.AddScoped(typeof(IRepository<>) , typeof(Repository<>));
+     
         }
         /// <summary>
         /// 
@@ -52,16 +56,21 @@ namespace BlazUICommunity.Api
             builder.RegisterModule<CustomAutofacModule>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime appLitetime)
+        public void Configure(IApplicationBuilder app , IWebHostEnvironment env , IHostApplicationLifetime appLitetime)
         {
-            if (env.IsDevelopment())
+            if ( env.IsDevelopment() )
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
+            #region Swagger
+            app.UseCustomSwaggerUI(p => p.Title = "Blazui ÉçÇø WebApi Docs");
+            #endregion
             app.UseRouting();
+            //hostBuilder.UseNLog();
+            app.UseLogMiddleware();
 
             app.UseAuthorization();
 

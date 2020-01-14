@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 
 namespace BlazUICommunity.Api
 {
@@ -40,7 +41,7 @@ namespace BlazUICommunity.Api
                 loggingBuilder.AddFilter("Microsoft" , LogLevel.Warning);//过滤掉系统默认的一些日志
                 //loggingBuilder.AddLog4Net();// log4 加载配置文件
                 //loggingBuilder.AddConfiguration()
-                //loggingBuilder.AddNLog();
+                loggingBuilder.AddNLog();
             })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
