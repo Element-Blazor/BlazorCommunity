@@ -3,7 +3,7 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlazUICommunity.UnitOfWork
+namespace Arch.EntityFrameworkCore.UnitOfWork
 {
     /// <summary>
     /// Defines the interface(s) for generic unit of work.

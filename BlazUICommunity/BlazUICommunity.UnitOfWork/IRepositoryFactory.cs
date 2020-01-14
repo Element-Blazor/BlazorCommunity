@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace BlazUICommunity.UnitOfWork
+namespace Arch.EntityFrameworkCore.UnitOfWork
 {
     /// <summary>
     /// Defines the interfaces for <see cref="IRepository{TEntity}"/> interfaces.

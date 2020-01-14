@@ -5,7 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazUICommunity.Model\BlazUICommunity.Model.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.Repository\BlazUICommunity.Repository.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.Utility\BlazUICommunity.Utility.csproj" />
   </ItemGroup>
 
 

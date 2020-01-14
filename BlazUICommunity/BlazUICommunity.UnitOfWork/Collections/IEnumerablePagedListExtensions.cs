@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BlazUICommunity.UnitOfWork.Collections
+namespace Arch.EntityFrameworkCore.UnitOfWork.Collections
 {
     /// <summary>
     /// Provides some extension methods for <see cref="IEnumerable{T}"/> to provide paging capability.

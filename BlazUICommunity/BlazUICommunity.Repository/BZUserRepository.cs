@@ -4,9 +4,9 @@ using System;
 
 namespace BlazUICommunity.Repository
 {
-    public class UserRepository : Repository<BZUserModel>, IRepository<BZUserModel>
+    public class BZUserRepository : Repository<BZUserModel>, IRepository<BZUserModel>
     {
-        public UserRepository(BlazUICommunityContext dbContext) : base(dbContext)
+        public BZUserRepository(BlazUICommunityContext dbContext) : base(dbContext)
         {
 
         }

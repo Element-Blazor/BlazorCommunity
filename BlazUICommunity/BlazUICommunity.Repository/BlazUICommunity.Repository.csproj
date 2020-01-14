@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlazUICommunity.Model\BlazUICommunity.Model.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.UnitOfWork\BlazUICommunity.UnitOfWork.csproj" />
+  </ItemGroup>
+
 </Project>

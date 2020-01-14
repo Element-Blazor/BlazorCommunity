@@ -13,15 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.Utility", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.IdentityServer4", "BlazUICommunity.IdentityServer4\BlazUICommunity.IdentityServer4.csproj", "{5481E37B-6307-4DF9-89C1-06D91CDD3D33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.Interface", "BlazUICommunity.Interface\BlazUICommunity.Interface.csproj", "{7136A676-5792-4EF1-9393-BAAB2D22A743}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.Service", "BlazUICommunity.Service\BlazUICommunity.Service.csproj", "{F407D6CA-DA74-453F-B51F-6EAF934C8C32}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestBZCommunity", "UnitTestBZCommunity\UnitTestBZCommunity.csproj", "{C622138C-465A-4FA8-9086-61C1508FB391}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.Test", "BlazUICommunity.Test\BlazUICommunity.Test.csproj", "{29877874-1FB2-455F-A970-3959E711E527}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.UnitOfWork", "BlazUICommunity.UnitOfWork\BlazUICommunity.UnitOfWork.csproj", "{4E0B8EC1-710D-4AFE-9FE6-89B7F0E3FB26}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.Repository", "BlazUICommunity.Repository\BlazUICommunity.Repository.csproj", "{BDEFA4C3-A69F-47BC-88CD-27B32D02456F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,14 +47,6 @@ Global
 		{5481E37B-6307-4DF9-89C1-06D91CDD3D33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5481E37B-6307-4DF9-89C1-06D91CDD3D33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5481E37B-6307-4DF9-89C1-06D91CDD3D33}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7136A676-5792-4EF1-9393-BAAB2D22A743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7136A676-5792-4EF1-9393-BAAB2D22A743}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7136A676-5792-4EF1-9393-BAAB2D22A743}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7136A676-5792-4EF1-9393-BAAB2D22A743}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F407D6CA-DA74-453F-B51F-6EAF934C8C32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F407D6CA-DA74-453F-B51F-6EAF934C8C32}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F407D6CA-DA74-453F-B51F-6EAF934C8C32}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F407D6CA-DA74-453F-B51F-6EAF934C8C32}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C622138C-465A-4FA8-9086-61C1508FB391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C622138C-465A-4FA8-9086-61C1508FB391}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C622138C-465A-4FA8-9086-61C1508FB391}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,6 +59,10 @@ Global
 		{4E0B8EC1-710D-4AFE-9FE6-89B7F0E3FB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E0B8EC1-710D-4AFE-9FE6-89B7F0E3FB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E0B8EC1-710D-4AFE-9FE6-89B7F0E3FB26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDEFA4C3-A69F-47BC-88CD-27B32D02456F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDEFA4C3-A69F-47BC-88CD-27B32D02456F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDEFA4C3-A69F-47BC-88CD-27B32D02456F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDEFA4C3-A69F-47BC-88CD-27B32D02456F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace BlazUICommunity.UnitOfWork
+namespace Arch.EntityFrameworkCore.UnitOfWork
 {
     using System;
     using System.Linq;
@@ -16,6 +16,7 @@ namespace BlazUICommunity.UnitOfWork
     /// </summary>
     public interface IUnitOfWork : IDisposable
     {
+        bool CommitWithTransaction(Action action);
         /// <summary>
         /// Changes the database name. This require the databases in the same machine. NOTE: This only work for MySQL right now.
         /// </summary>

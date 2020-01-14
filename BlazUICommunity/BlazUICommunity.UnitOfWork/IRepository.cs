@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace BlazUICommunity.UnitOfWork
+namespace Arch.EntityFrameworkCore.UnitOfWork
 {
     using System;
     using System.Collections.Generic;
@@ -22,6 +22,13 @@ namespace BlazUICommunity.UnitOfWork
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
     public interface IRepository<TEntity> where TEntity : class
     {
+
+        /// <summary>
+        /// 立即保存全部修改
+        /// 把增/删的savechange给放到这里，是为了保证事务的
+        /// </summary>
+        void Commit();
+
         /// <summary>
         /// Changes the table name. This require the tables in the same database.
         /// </summary>
@@ -150,7 +157,7 @@ namespace BlazUICommunity.UnitOfWork
         /// <param name="ignoreQueryFilters">Ignore query filters</param>
         /// <returns>An <see cref="IPagedList{TEntity}"/> that contains elements that satisfy the condition specified by <paramref name="predicate"/>.</returns>
         /// <remarks>This method defaults to a read-only, no-tracking query.</remarks>
-        TResult GetFirstOrDefault<TResult>(Expression<Func<TEntity, TResult>> selector,
+        TResult GetFirstOrDefaultEx<TResult>(Expression<Func<TEntity, TResult>> selector,
                                            Expression<Func<TEntity, bool>> predicate = null,
                                            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                                            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
@@ -168,7 +175,7 @@ namespace BlazUICommunity.UnitOfWork
         /// <param name="ignoreQueryFilters">Ignore query filters</param>
         /// <returns>An <see cref="IPagedList{TEntity}"/> that contains elements that satisfy the condition specified by <paramref name="predicate"/>.</returns>
         /// <remarks>Ex: This method defaults to a read-only, no-tracking query.</remarks>
-        Task<TResult> GetFirstOrDefaultAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
+        Task<TResult> GetFirstOrDefaultExAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
             Expression<Func<TEntity, bool>> predicate = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,

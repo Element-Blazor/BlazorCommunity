@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BlazUICommunity.UnitOfWork
+namespace Arch.EntityFrameworkCore.UnitOfWork
 {
     /// <summary>
     /// Extension methods for setting up unit of work related services in an <see cref="IServiceCollection"/>.

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace BlazUICommunity.UnitOfWork
+namespace Arch.EntityFrameworkCore.UnitOfWork
 {
     /// <summary>
     /// Represents the default implementation of the <see cref="IUnitOfWork"/> and <see cref="IUnitOfWork{TContext}"/> interface.
@@ -210,6 +210,22 @@ namespace BlazUICommunity.UnitOfWork
         public void TrackGraph(object rootEntity, Action<EntityEntryGraphNode> callback)
         {
             _context.ChangeTracker.TrackGraph(rootEntity, callback);
+        }
+
+        public bool CommitWithTransaction(Action action)
+        {
+            try
+            {
+                using var transaction = _context.Database.BeginTransaction();
+                action?.Invoke();
+                transaction.Commit();
+            }
+            catch ( Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            return true;
         }
     }
 }

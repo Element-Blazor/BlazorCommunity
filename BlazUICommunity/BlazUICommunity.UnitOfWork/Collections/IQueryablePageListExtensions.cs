@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlazUICommunity.UnitOfWork.Collections
+namespace Arch.EntityFrameworkCore.UnitOfWork.Collections
 {
     public static class IQueryablePageListExtensions
     {

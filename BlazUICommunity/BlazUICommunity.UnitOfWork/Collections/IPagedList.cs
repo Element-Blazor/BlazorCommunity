@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace BlazUICommunity.UnitOfWork.Collections
+namespace Arch.EntityFrameworkCore.UnitOfWork.Collections
 {
     /// <summary>
     /// Provides the interface(s) for paged list of any type.

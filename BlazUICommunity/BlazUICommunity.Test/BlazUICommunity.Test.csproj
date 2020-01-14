@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BlazUICommunity.Model\BlazUICommunity.Model.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.Repository\BlazUICommunity.Repository.csproj" />
   </ItemGroup>
 
 </Project>
