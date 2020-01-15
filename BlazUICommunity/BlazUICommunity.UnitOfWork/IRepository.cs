@@ -81,6 +81,13 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
                                                     bool disableTracking = true,
                                                     CancellationToken cancellationToken = default(CancellationToken),
                                                     bool ignoreQueryFilters = false);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        Task<IPagedList<TEntity>> GetPagedListAsync(   int pageIndex = 0 , int pageSize = 20 , bool disableTracking = true , CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the <see cref="IPagedList{TResult}"/> based on a predicate, orderby delegate and page information. This method default no-tracking query.

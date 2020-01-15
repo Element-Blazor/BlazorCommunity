@@ -156,7 +156,15 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
                 return query.ToPagedList(pageIndex , pageSize);
             }
         }
-
+        public virtual Task<IPagedList<TEntity>> GetPagedListAsync(int pageIndex = 0 , int pageSize = 20 , bool disableTracking = true , CancellationToken cancellationToken = default(CancellationToken))
+        {
+            IQueryable<TEntity> query = _dbSet;
+            if ( disableTracking )
+            {
+                query = query.AsNoTracking();
+            }
+            return query.ToPagedListAsync(pageIndex , pageSize , 0 , cancellationToken);
+        }
         /// <summary>
         /// Gets the <see cref="IPagedList{TEntity}"/> based on a predicate, orderby delegate and page information. This method default no-tracking query.
         /// </summary>
@@ -799,5 +807,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         {
             this._dbContext.SaveChanges();
         }
+
+   
     }
 }

@@ -4,6 +4,42 @@
         <name>BlazUICommunity.Api</name>
     </assembly>
     <members>
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.GetUsers(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.GetUser(System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.DeleteUser(System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.PatchUser(System.Int32,BlazUICommunity.Model.Models.BZUserModel)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.UpdateUser(System.Int32,BlazUICommunity.Model.Models.BZUserModel)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.AddUser(BlazUICommunity.Model.Models.BZUserModel)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:BlazUICommunity.Api.Program.Main(System.String[])">
             <summary>
             

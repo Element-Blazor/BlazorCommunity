@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Arch.EntityFrameworkCore.UnitOfWork;
 using BlazUICommunity.Model.Models;
+using BlazUICommunity.Utility.Filter;
 using log4net.Repository.Hierarchy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BlazUICommunity.Api.Controllers
 {
+    [HiddenApi]
     [Route("[controller]")]
     [ApiController]
     public class FirstController : ControllerBase

@@ -37,8 +37,11 @@ namespace BlazUICommunity.Api
             Host.CreateDefaultBuilder(args)
             .ConfigureLogging((context , loggingBuilder) =>
             {
-                loggingBuilder.AddFilter("System" , LogLevel.Warning);
-                loggingBuilder.AddFilter("Microsoft" , LogLevel.Warning);//过滤掉系统默认的一些日志
+                //loggingBuilder.AddFilter("System" , LogLevel.Warning);
+                //loggingBuilder.AddFilter("Microsoft" , LogLevel.Warning);
+                //loggingBuilder.AddConsole();
+                //loggingBuilder.AddDebug();
+                //loggingBuilder.AddEventLog();
                 //loggingBuilder.AddLog4Net();// log4 加载配置文件
                 //loggingBuilder.AddConfiguration()
                 loggingBuilder.AddNLog();

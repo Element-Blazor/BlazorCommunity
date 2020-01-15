@@ -62,14 +62,14 @@ namespace BlazUICommunity.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            #region Swagger
+
             app.UseCustomSwaggerUI(p => p.Title = "Blazui ÉçÇø WebApi Docs");
-            #endregion
+
             app.UseRouting();
-            //hostBuilder.UseNLog();
+
             app.UseLogMiddleware();
 
             app.UseAuthorization();

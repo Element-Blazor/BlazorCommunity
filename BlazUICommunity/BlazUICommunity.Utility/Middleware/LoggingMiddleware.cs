@@ -106,14 +106,15 @@ namespace BlazUICommunity.Utility.MiddleWare
             if ( !model.Request.Url.ToLower().Contains("swagger") &&! model.Request.Url.ToLower().Contains("html") )
             {
                 _logger.LogDebug("============================================================================");
-                _logger.LogDebug($"开始：【{model.ExecuteStart}】");
-                _logger.LogDebug($"Url：【{model.Request.Url}】");
-                _logger.LogDebug($"Header：\r\n                      {string.Join("\r\n                       " , model.Request.Header.ToArray())}");
-                _logger.LogDebug($"Param：{model.Request.Param}");
+                _logger.LogDebug($"Start：{model.ExecuteStart}");
+                _logger.LogDebug($"Url：{model.Request.Url}");
+                _logger.LogDebug($"Header：");
+                _logger.LogDebug($"{string.Join("\r\n                          " , model.Request.Header.ToArray())}");
+                _logger.LogDebug($"Request：{model.Request.Param}");
                 _logger.LogDebug($"Response：");
-                _logger.LogDebug($"      {JsonConvert.SerializeObject(model.Response)}");
-                _logger.LogDebug($"结束：【{model.ExecuteEnd}】");
-                _logger.LogDebug($"耗时：【{model.ElapsedTime}】");
+                _logger.LogDebug($"{JsonConvert.SerializeObject(model.Response)}");
+                _logger.LogDebug($"End：{model.ExecuteEnd}");
+                _logger.LogDebug($"ElapsedTime：{model.ElapsedTime}");
                 _logger.LogDebug("============================================================================");
             }
         }
