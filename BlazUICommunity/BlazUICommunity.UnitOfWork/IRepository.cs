@@ -340,7 +340,11 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// </summary>
         /// <param name="entity">The entity.</param>
         void Update(TEntity entity);
-
+        /// <summary>
+        /// Updates the specified entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        void Update(TEntity entity , params Expression<Func<TEntity , object>>[] updatedProperties);
         /// <summary>
         /// Updates the specified entities.
         /// </summary>

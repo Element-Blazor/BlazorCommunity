@@ -13,13 +13,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.Utility", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.IdentityServer4", "BlazUICommunity.IdentityServer4\BlazUICommunity.IdentityServer4.csproj", "{5481E37B-6307-4DF9-89C1-06D91CDD3D33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestBZCommunity", "UnitTestBZCommunity\UnitTestBZCommunity.csproj", "{C622138C-465A-4FA8-9086-61C1508FB391}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestBZCommunity", "UnitTestBZCommunity\UnitTestBZCommunity.csproj", "{C622138C-465A-4FA8-9086-61C1508FB391}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.Test", "BlazUICommunity.Test\BlazUICommunity.Test.csproj", "{29877874-1FB2-455F-A970-3959E711E527}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.Test", "BlazUICommunity.Test\BlazUICommunity.Test.csproj", "{29877874-1FB2-455F-A970-3959E711E527}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.UnitOfWork", "BlazUICommunity.UnitOfWork\BlazUICommunity.UnitOfWork.csproj", "{4E0B8EC1-710D-4AFE-9FE6-89B7F0E3FB26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.UnitOfWork", "BlazUICommunity.UnitOfWork\BlazUICommunity.UnitOfWork.csproj", "{4E0B8EC1-710D-4AFE-9FE6-89B7F0E3FB26}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.Repository", "BlazUICommunity.Repository\BlazUICommunity.Repository.csproj", "{BDEFA4C3-A69F-47BC-88CD-27B32D02456F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.DTO", "BlazUICommunity.DTO\BlazUICommunity.DTO.csproj", "{EE2464C8-5E94-4C23-9DB8-92726F78A6B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazUICommunity.Request", "BlazUICommunity.Request\BlazUICommunity.Request.csproj", "{ED9778D8-1BB2-4158-8E67-0F689D02200C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +67,14 @@ Global
 		{BDEFA4C3-A69F-47BC-88CD-27B32D02456F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDEFA4C3-A69F-47BC-88CD-27B32D02456F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDEFA4C3-A69F-47BC-88CD-27B32D02456F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE2464C8-5E94-4C23-9DB8-92726F78A6B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE2464C8-5E94-4C23-9DB8-92726F78A6B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE2464C8-5E94-4C23-9DB8-92726F78A6B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE2464C8-5E94-4C23-9DB8-92726F78A6B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED9778D8-1BB2-4158-8E67-0F689D02200C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED9778D8-1BB2-4158-8E67-0F689D02200C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED9778D8-1BB2-4158-8E67-0F689D02200C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED9778D8-1BB2-4158-8E67-0F689D02200C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

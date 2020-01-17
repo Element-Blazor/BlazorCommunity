@@ -37,8 +37,8 @@ namespace BlazUICommunity.Api
             Host.CreateDefaultBuilder(args)
             .ConfigureLogging((context , loggingBuilder) =>
             {
-                //loggingBuilder.AddFilter("System" , LogLevel.Warning);
-                //loggingBuilder.AddFilter("Microsoft" , LogLevel.Warning);
+                loggingBuilder.AddFilter("System" , LogLevel.Warning);
+                loggingBuilder.AddFilter("Microsoft" , LogLevel.Warning);
                 //loggingBuilder.AddConsole();
                 //loggingBuilder.AddDebug();
                 //loggingBuilder.AddEventLog();

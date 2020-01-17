@@ -21,6 +21,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using NLog.Web;
+using AutoMapper;
 
 namespace BlazUICommunity.Api
 {
@@ -41,7 +42,7 @@ namespace BlazUICommunity.Api
             services.AddCustomSwagger();
             services.AddDbContext<BlazUICommunityContext>(opt => opt.UseMySql(Configuration.GetConnectionString("DbConnectionString")))
                 .AddUnitOfWork<BlazUICommunityContext>();
-     
+            services.AddAutoMapper(typeof(AutoMapConfiguration));
         }
         /// <summary>
         /// 
@@ -56,12 +57,13 @@ namespace BlazUICommunity.Api
             builder.RegisterModule<CustomAutofacModule>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app , IWebHostEnvironment env , IHostApplicationLifetime appLitetime)
+        public void Configure(IApplicationBuilder app , IWebHostEnvironment env , IHostApplicationLifetime appLitetime,ILoggerFactory factory)
         {
             if ( env.IsDevelopment() )
             {
                 app.UseDeveloperExceptionPage();
             }
+
             Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
             app.UseHttpsRedirection();
             app.UseStaticFiles();

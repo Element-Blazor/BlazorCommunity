@@ -657,10 +657,54 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="entity">The entity.</param>
         public virtual void Update(TEntity entity)
         {
-            _dbSet.Update(entity);
+            UpdateIfChanged(entity);
             Commit();
         }
 
+         void UpdateIfChanged(TEntity entity)
+        {
+            var dbEntityEntry = _dbContext.Entry(entity);
+
+            foreach ( var property in dbEntityEntry.OriginalValues.Properties)
+            {
+                var original = property.PropertyInfo.GetValue(dbEntityEntry.OriginalValues.ToObject());
+                var current = dbEntityEntry.CurrentValues.Properties.FirstOrDefault(p => p.Name == property.Name)?.PropertyInfo.GetValue(dbEntityEntry.CurrentValues.ToObject());
+                if ( original != null && !original.Equals(current))
+                {
+                    dbEntityEntry.Property(property.Name).IsModified = true;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Updates the specified entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        public virtual void Update(TEntity entity, params Expression<Func<TEntity , object>>[] updatedProperties)
+        {
+            var dbEntityEntry = _dbContext.Entry(entity);
+            if ( updatedProperties.Any() )
+            {
+                foreach ( var property in updatedProperties )
+                {
+                    dbEntityEntry.Property(property).IsModified = true;
+                }
+            }
+            else
+            {
+                foreach ( var property in dbEntityEntry.OriginalValues.Properties )
+                {
+                    var original = property.PropertyInfo.GetValue(dbEntityEntry.OriginalValues.ToObject());
+                    var current = dbEntityEntry.CurrentValues.Properties.FirstOrDefault(p => p.Name == property.Name)?.PropertyInfo.GetValue(dbEntityEntry.CurrentValues.ToObject());
+                    if ( original != null && !original.Equals(current) )
+                    {
+                        dbEntityEntry.Property(property.Name).IsModified = true;
+                    }
+                }
+            }
+            Commit();
+        }
         /// <summary>
         /// Updates the specified entity.
         /// </summary>

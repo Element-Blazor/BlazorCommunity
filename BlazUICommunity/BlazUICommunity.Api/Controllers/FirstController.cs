@@ -32,32 +32,36 @@ namespace BlazUICommunity.Api.Controllers
         {
             logger.LogDebug("测试日志");
             //communityContext.Database.EnsureCreated();
-            //BZUserModel bZUserModel = new BZUserModel()
-            //{
-            //    Account = "abcdefg123" ,
-            //    Avatar = "http://www.baidu.com/image/ssa" ,
-            //    Cypher = "31312321",
-            //    Email = "212718@qq.com" ,
-            //    LastLoginAddr = "2131" ,
-            //    LastLoginDate = DateTime.Now ,
-            //    LastLoginType = 0 ,
-            //    Level = 1 ,
-            //    Mobile = "12131321321312" ,
-            //    NickName = "vicky" ,
-            //    Points = 100 ,
-            //    RegisterDate = DateTime.Now ,
-            //    Sex = 0 ,
-            //    Signature = " stay hangur stay foolish" ,
-            //    Status = 0
-            //};
+            BZUserModel bZUserModel = new BZUserModel()
+            {
+                Account = "abcdefg123"+new Random().Next(0 , 1000) ,
+                Avatar = "http://www.baidu.com/image/ssa" ,
+                Cypher = "31312321" ,
+                Email = "212718@qq.com" ,
+                LastLoginAddr = "2131" ,
+                LastLoginDate = DateTime.Now ,
+                LastLoginType = 0 ,
+                Level = 1 ,
+                Mobile = "12132" ,
+                NickName = "vicky" ,
+                Points = 100 ,
+                RegisterDate = DateTime.Now ,
+                Sex = 0 ,
+                Signature = " stay hangur stay foolish" ,
+                Status = 0
+            };
             var userRepository = unitOfWork.GetRepository<BZUserModel>(true);
             //var logRepository = _unitOfWork.GetRepository<SysLog>(true);
-            //_unitOfWork.CommitWithTransaction(() =>
-            //{
-            //    userRepository.Insert(bZUserModel);
-            //    logRepository.Insert(new SysLog() { CreateTime = DateTime.Now , Detail = "异常，，，，" , CreatorId = 1 , UserName = "321333333333333", Introduction="13131", LastModifierId=1, LastModifyTime=DateTime.Now, LogType=1 });
-            //});
+            _unitOfWork.CommitWithTransaction(() =>
+            {
+                //userRepository.Insert(bZUserModel);
+                //logRepository.Insert(new SysLog() { CreateTime = DateTime.Now , Detail = "异常，，，，" , CreatorId = 1 , UserName = "321333333333333" , Introduction = "13131" , LastModifierId = 1 , LastModifyTime = DateTime.Now , LogType = 1 });
+
+                userRepository.Insert(bZUserModel);
+              
+            });
             //_unitOfWork.SaveChanges();
+
             var user = userRepository.GetFirstOrDefault(p=>p.Id==1);
             //using       ( BlazUICommunityContext  content=new BlazUICommunityContext() )
             //{

@@ -1,11 +1,22 @@
 ﻿using System;
+using BlazUICommunity.Utility.Logger;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Logging;
 
 namespace BlazUICommunity.Model.Models
 {
     public partial class BlazUICommunityContext : DbContext
     {
+       // public static readonly ILoggerFactory MyLoggerFactory
+       //= LoggerFactory.Create(builder =>
+       //{
+       //    builder
+       //     .AddFilter((category , level) =>
+       //         category == DbLoggerCategory.Database.Command.Name
+       //         && level == LogLevel.Information)
+       //     .AddConsole();
+       //});
         public BlazUICommunityContext()
         {
         }
@@ -36,6 +47,7 @@ namespace BlazUICommunity.Model.Models
                 //throw new ArgumentException("dbconnection string is not Configured");
                 optionsBuilder.UseMySql("server=localhost;database=BlazUICommunity;port=3306;uid=root;password=P@ssw0rd123;character set=utf8mb4;");
             }
+            optionsBuilder.UseLoggerFactory(new CustomEFCoreLoggerFactory());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

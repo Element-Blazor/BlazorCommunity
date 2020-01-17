@@ -4,8 +4,8 @@ using System.Text;
 
 namespace BlazUICommunity.Utility.Request
 {
-   public class BaseRequest
+   public abstract class BaseRequest
     {
-
+        public PageInfo pageInfo { get; set; } = new PageInfo();
     }
 }
