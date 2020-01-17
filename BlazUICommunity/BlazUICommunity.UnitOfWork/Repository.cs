@@ -664,10 +664,10 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
          void UpdateIfChanged(TEntity entity)
         {
             var dbEntityEntry = _dbContext.Entry(entity);
-
-            foreach ( var property in dbEntityEntry.OriginalValues.Properties)
+             var OriginalValues = dbEntityEntry.GetDatabaseValues();
+            foreach ( var property in OriginalValues.Properties )
             {
-                var original = property.PropertyInfo.GetValue(dbEntityEntry.OriginalValues.ToObject());
+                var original = property.PropertyInfo.GetValue(OriginalValues.ToObject());
                 var current = dbEntityEntry.CurrentValues.Properties.FirstOrDefault(p => p.Name == property.Name)?.PropertyInfo.GetValue(dbEntityEntry.CurrentValues.ToObject());
                 if ( original != null && !original.Equals(current))
                 {
