@@ -19,9 +19,11 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace BlazUICommunity.Api.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Route("api")]
     [ApiController]
-    [SwaggerTag("创建，读取，更新和删除Products")]
     public class UserController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -31,6 +33,7 @@ namespace BlazUICommunity.Api.Controllers
         /// 
         /// </summary>
         /// <param name="unitOfWork"></param>
+        /// <param name="mapper"></param>
         public UserController(IUnitOfWork unitOfWork,
             IMapper mapper)
         {
@@ -86,7 +89,9 @@ namespace BlazUICommunity.Api.Controllers
                 return new BadRequestResponse("userid is error");
             var user = _mapper.Map<BZUserModel>(userDto);
             user.Id = userId;
-            _userRepository.Update(user);
+
+            //_userRepository.Update(user);
+            _userRepository.UpdateEntityField(user , p => p.Account);
             return Ok();
         }
 
@@ -102,6 +107,35 @@ namespace BlazUICommunity.Api.Controllers
             return Ok();
         }
 
+        //[HttpGet("TestBulk")]
+        //public async Task<IActionResult> TestBulk()
+        //{
+        //    List<BZUserModel> bZUserModels = new List<BZUserModel>();
+        //    for ( int i = 0; i < 20; i++ )
+        //    {
+        //        bZUserModels.Add(new BZUserModel() { 
+        //         Account="12312"+i,
+        //          Avatar="12312312"+i,
+        //           Cypher="321312312",
+        //            Email="eeee",
+        //             Level=1,
+        //              LastLoginAddr="1312312",
+        //               LastLoginDate=DateTime.Now,
+        //                LastLoginType=0,
+        //                 Mobile="1231231",
+        //                  NickName="321312312"+i,
+        //                 Points=1,
+        //                  RegisterDate=DateTime.Now,
+        //                   Sex=1,
+        //                    Signature="21312",
+        //                     Status=0,  
+        //        });
+        //    }
+        //    bZUserModels.Add(await _userRepository.FindAsync(1));
+        //    _userRepository.BulkInsert(bZUserModels);
+        //    //_userRepository.BulkInsert();
+        //    return Ok();
+        //}
         ///// <summary>
         ///// 
         ///// </summary>

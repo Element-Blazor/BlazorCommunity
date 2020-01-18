@@ -657,54 +657,57 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="entity">The entity.</param>
         public virtual void Update(TEntity entity)
         {
-            UpdateIfChanged(entity);
-            Commit();
-        }
-
-         void UpdateIfChanged(TEntity entity)
-        {
             var dbEntityEntry = _dbContext.Entry(entity);
-             var OriginalValues = dbEntityEntry.GetDatabaseValues();
+            var OriginalValues = dbEntityEntry.GetDatabaseValues();
             foreach ( var property in OriginalValues.Properties )
             {
                 var original = property.PropertyInfo.GetValue(OriginalValues.ToObject());
-                var current = dbEntityEntry.CurrentValues.Properties.FirstOrDefault(p => p.Name == property.Name)?.PropertyInfo.GetValue(dbEntityEntry.CurrentValues.ToObject());
-                if ( original != null && !original.Equals(current))
+                var current = property.PropertyInfo.GetValue(entity);
+                //dbEntityEntry.CurrentValues.Properties.FirstOrDefault(p => p.Name == property.Name)?.PropertyInfo.GetValue(dbEntityEntry.CurrentValues.ToObject());
+                if ( original != null && current != null && !original.Equals(current) )
                 {
                     dbEntityEntry.Property(property.Name).IsModified = true;
                 }
             }
-        }
-
-
-        /// <summary>
-        /// Updates the specified entity.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        public virtual void Update(TEntity entity, params Expression<Func<TEntity , object>>[] updatedProperties)
-        {
-            var dbEntityEntry = _dbContext.Entry(entity);
-            if ( updatedProperties.Any() )
-            {
-                foreach ( var property in updatedProperties )
-                {
-                    dbEntityEntry.Property(property).IsModified = true;
-                }
-            }
-            else
-            {
-                foreach ( var property in dbEntityEntry.OriginalValues.Properties )
-                {
-                    var original = property.PropertyInfo.GetValue(dbEntityEntry.OriginalValues.ToObject());
-                    var current = dbEntityEntry.CurrentValues.Properties.FirstOrDefault(p => p.Name == property.Name)?.PropertyInfo.GetValue(dbEntityEntry.CurrentValues.ToObject());
-                    if ( original != null && !original.Equals(current) )
-                    {
-                        dbEntityEntry.Property(property.Name).IsModified = true;
-                    }
-                }
-            }
             Commit();
         }
+
+        /// <summary>
+        /// 根据Lambda表达式更新字段
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public void UpdateEntityField(TEntity entity , params Expression<Func<TEntity , object>>[] property)
+        {
+            var dbEntityEntry = _dbContext.Entry(entity);
+            foreach ( var item in property )
+            {
+                var propName = GetFieldNameByLambda(item.Body);
+                dbEntityEntry.Property(propName).IsModified = true;
+            }
+            Commit();
+
+        }
+
+        private string GetFieldNameByLambda(Expression exprBody)
+        {
+            var property = "";
+            if ( exprBody is UnaryExpression )
+            {
+                property = ( ( MemberExpression ) ( ( UnaryExpression ) exprBody ).Operand ).Member.Name;
+            }
+            else if ( exprBody is MemberExpression )
+            {
+                property = ( ( MemberExpression ) exprBody ).Member.Name;
+            }
+            else if ( exprBody is ParameterExpression )
+            {
+                property = ( ( ParameterExpression ) exprBody ).Type.Name;
+            }
+            return property;
+        }
+
         /// <summary>
         /// Updates the specified entity.
         /// </summary>
@@ -778,7 +781,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="entities">The entities.</param>
         public virtual void Delete(params TEntity[] entities)
         {
-            _dbSet.RemoveRange(entities); 
+            _dbSet.RemoveRange(entities);
             Commit();
         }
 
@@ -786,16 +789,17 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// Deletes the specified entities.
         /// </summary>
         /// <param name="entities">The entities.</param>
-        public virtual void Delete(IEnumerable<TEntity> entities)  {
-            _dbSet.RemoveRange(entities); 
+        public virtual void Delete(IEnumerable<TEntity> entities)
+        {
+            _dbSet.RemoveRange(entities);
             Commit();
-    }
+        }
 
-    /// <summary>
-    /// Gets all entities. This method is not recommended
-    /// </summary>
-    /// <returns>The <see cref="IQueryable{TEntity}"/>.</returns>
-    public async Task<IList<TEntity>> GetAllAsync()
+        /// <summary>
+        /// Gets all entities. This method is not recommended
+        /// </summary>
+        /// <returns>The <see cref="IQueryable{TEntity}"/>.</returns>
+        public async Task<IList<TEntity>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();
         }
@@ -852,6 +856,95 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
             this._dbContext.SaveChanges();
         }
 
-   
+
+
+        #region Bulk操作
+
+        public void BulkInsert(IEnumerable<TEntity> entities)
+        {
+            _dbContext.BulkInsert(entities , options =>
+            {
+                options.InsertIfNotExists = true;
+                options.BatchSize = 100;
+                options.AutoMapOutputDirection = false;
+            });
+        }
+
+        public async Task BulkInsertAsync(IEnumerable<TEntity> entities)
+        {
+             await    _dbContext.BulkInsertAsync(entities , options =>
+            {
+                options.InsertIfNotExists = true;
+                options.BatchSize = 100;
+                options.AutoMapOutputDirection = false;
+            });
+        }
+
+
+        public void BulkDelete(IEnumerable<TEntity> entities)
+        {
+            _dbContext.BulkDelete (entities , options =>
+            {
+                options.BatchSize = 1000;
+                options.AutoMapOutputDirection = false;
+            });
+        }
+
+        public async Task BulkDeleteAsync(IEnumerable<TEntity> entities)
+        {
+            await _dbContext.BulkDeleteAsync(entities , options =>
+            {
+                options.BatchSize = 1000;
+                options.AutoMapOutputDirection = false;
+            });
+        }
+
+        public void BulkUpdate(IEnumerable<TEntity> entities)
+        {
+            _dbContext.BulkUpdate(entities , options =>
+            {
+                options.BatchSize = 100;
+                options.AutoMapOutputDirection = false;
+            });
+        }
+
+        public async Task BulkUpdateAsync(IEnumerable<TEntity> entities)
+        {
+            await _dbContext.BulkUpdateAsync(entities , options =>
+            {
+                options.BatchSize = 100;
+                options.AutoMapOutputDirection = false;
+            });
+        }
+
+        public void BulkDelete(Expression<Func<TEntity , bool>> predicate )
+        {
+            if ( predicate is null )
+            {
+                throw new ArgumentNullException($"{nameof(predicate)} is null");
+            }
+
+            var entities = GetAll(predicate);
+            _dbContext.BulkDelete(entities , options =>
+            {
+                options.BatchSize = 1000;
+                options.AutoMapOutputDirection = false;
+            });
+        }
+
+        public async Task BulkDeleteAsync(Expression<Func<TEntity , bool>> predicate)
+        {
+            if ( predicate is null )
+            {
+                throw new ArgumentNullException($"{nameof(predicate)} is null");
+            }
+            var entities = GetAll(predicate);
+            await _dbContext.BulkDeleteAsync(entities , options =>
+            {
+                options.BatchSize = 1000;
+                options.AutoMapOutputDirection = false;
+            });
+        }
+        #endregion
     }
 }

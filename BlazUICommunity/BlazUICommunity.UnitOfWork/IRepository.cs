@@ -344,7 +344,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// Updates the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        void Update(TEntity entity , params Expression<Func<TEntity , object>>[] updatedProperties);
+        void UpdateEntityField(TEntity entity , params Expression<Func<TEntity , object>>[] property);
         /// <summary>
         /// Updates the specified entities.
         /// </summary>
@@ -380,5 +380,26 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// </summary>
         /// <param name="entities">The entities.</param>
         void Delete(IEnumerable<TEntity> entities);
+
+
+
+
+        #region Bulk操作 Entity Framework Extensions
+
+        void BulkInsert(IEnumerable<TEntity> entities);
+
+        Task BulkInsertAsync(IEnumerable<TEntity> entities);
+
+        void BulkDelete(IEnumerable<TEntity> entities);
+        Task BulkDeleteAsync(IEnumerable<TEntity> entities);
+
+        void BulkDelete(Expression<Func<TEntity , bool>> predicate );
+        Task BulkDeleteAsync(Expression<Func<TEntity , bool>> predicate );
+
+
+        void BulkUpdate(IEnumerable<TEntity> entities);
+
+        Task BulkUpdateAsync(IEnumerable<TEntity> entities);
+        #endregion
     }
 }
