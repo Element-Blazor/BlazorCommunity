@@ -18,8 +18,8 @@ namespace BlazUICommunity.Utility.Filter
 
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            operation.Parameters = operation.Parameters ?? new List<OpenApiParameter>();
-            var attrs = context.ApiDescription.ActionDescriptor.AttributeRouteInfo;
+            operation.Parameters ??= new List<OpenApiParameter>();
+            _ = context.ApiDescription.ActionDescriptor.AttributeRouteInfo;
 
             //先判断是否是匿名访问,
             if (context.ApiDescription.ActionDescriptor is ControllerActionDescriptor descriptor)
@@ -41,6 +41,7 @@ namespace BlazUICommunity.Utility.Filter
 
                 }
             }
+
         }
     }
 }

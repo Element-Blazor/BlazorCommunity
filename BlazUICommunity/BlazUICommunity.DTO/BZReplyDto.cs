@@ -9,8 +9,7 @@ namespace BlazUICommunity.Model.Models
     /// <summary>
     /// 回帖
     /// </summary>
-    [Table("Reply")]
-    public partial class BZReplyModel : BaseModel
+    public partial class BZReplyDto 
     { 
         /// <summary>
         /// 内容
@@ -40,7 +39,5 @@ namespace BlazUICommunity.Model.Models
         /// 点赞数量
         /// </summary>
         public int? Favor { get; set; }
-
-        public virtual BZTopicModel Topic { get; set; }
     }
 }

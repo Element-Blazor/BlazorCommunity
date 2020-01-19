@@ -13,6 +13,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using BlazUICommunity.Utility.Formatter;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace BlazUICommunity.Utility.Configure
 {
@@ -201,8 +202,9 @@ namespace BlazUICommunity.Utility.Configure
         }
         private static Action<SwaggerGenOptions> DefaultSwaggerGenOptions()
         {
-            Action<SwaggerGenOptions> options = (o) =>
+            Action<SwaggerGenOptions> options = o=>
             {
+             
                 o.OperationFilter<SwaggerAuthorizationFilter>();
 
                 o.SwaggerDoc("v1" , new OpenApiInfo
@@ -252,6 +254,8 @@ namespace BlazUICommunity.Utility.Configure
                 o.DocumentFilter<SwaggerHiddenApiFilter>();
                 var XmlPath = $"{AppContext.BaseDirectory}{AppDomain.CurrentDomain.FriendlyName}.xml";
                 o.IncludeXmlComments(XmlPath);
+
+                o.EnableAnnotations(true);
             };
             return options;
         }

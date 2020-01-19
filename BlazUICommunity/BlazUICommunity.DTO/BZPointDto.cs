@@ -6,8 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BlazUICommunity.Model.Models
 {
 
-    [Table("point")]
-    public partial class BZPointModel : BaseModel
+    public partial class BZPointDto
     {
         /// <summary>
         /// 积分来源，1：发帖，2：回帖，3:精华帖，4：其他--规则
@@ -25,7 +24,5 @@ namespace BlazUICommunity.Model.Models
         /// 用户ID
         /// </summary>
         public int? UserId { get; set; }
-
-        public virtual BZUserModel User { get; set; }
     }
 }

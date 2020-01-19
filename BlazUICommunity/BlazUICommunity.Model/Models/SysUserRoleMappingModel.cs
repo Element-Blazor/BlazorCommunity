@@ -5,13 +5,12 @@ namespace BlazUICommunity.Model.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("SysUserMenuMapping")]
-    public partial class SysUserMenuMapping
+    [Table("SysUserRoleMapping")]
+    public partial class SysUserRoleMappingModel : BaseModel
     {
-        public int Id { get; set; }
 
         public int SysUserId { get; set; }
 
-        public int SysMenuId { get; set; }
+        public int SysRoleId { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System;
 
 namespace BlazUICommunity.Repository
 {
-    public class SysLogRepository : Repository<SysLog>, IRepository<SysLog>
+    public class SysLogRepository : Repository<SysLogModel>, IRepository<SysLogModel>
     {
         public SysLogRepository(BlazUICommunityContext dbContext) : base(dbContext)
         {

@@ -29,17 +29,17 @@ namespace BlazUICommunity.Model.Models
         public virtual DbSet<BZFollowModel> Follow { get; set; }
         public virtual DbSet<BZPointModel> Point { get; set; }
         public virtual DbSet<BZReplyModel> Reply { get; set; }
-        public virtual DbSet<BZThirdaccountModel> Thirdaccount { get; set; }
+        public virtual DbSet<BZThirdAccountModel> Thirdaccount { get; set; }
         public virtual DbSet<BZTopicModel> Topic { get; set; }
         public virtual DbSet<BZUserModel> User { get; set; }
         public virtual DbSet<BZAddressModel> Useraddress { get; set; }
-        public virtual DbSet<SysLog> SysLog { get; set; }
-        public virtual DbSet<SysUser> SysUser { get; set; }
-        public virtual DbSet<SysMenu> SysMenu { get; set; }
-        public virtual DbSet<SysRole> SysRole { get; set; }
-        public virtual DbSet<SysRoleMenuMapping> SysRoleMenuMapping { get; set; }
-        public virtual DbSet<SysUserMenuMapping> SysUserMenuMapping { get; set; }
-        public virtual DbSet<SysUserRoleMapping> SysUserRoleMapping { get; set; }
+        public virtual DbSet<SysLogModel> SysLog { get; set; }
+        public virtual DbSet<SysUserModel> SysUser { get; set; }
+        public virtual DbSet<SysMenuModel> SysMenu { get; set; }
+        public virtual DbSet<SysRoleModel> SysRole { get; set; }
+        public virtual DbSet<SysRoleMenuMappingModel> SysRoleMenuMapping { get; set; }
+        public virtual DbSet<SysUserMenuMappingModel> SysUserMenuMapping { get; set; }
+        public virtual DbSet<SysUserRoleMappingModel> SysUserRoleMapping { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -176,7 +176,7 @@ namespace BlazUICommunity.Model.Models
                     .HasConstraintName("reply_ibfk_1");
             });
 
-            modelBuilder.Entity<BZThirdaccountModel>(entity =>
+            modelBuilder.Entity<BZThirdAccountModel>(entity =>
             {
                 entity.ToTable("thirdaccount");
 
@@ -416,7 +416,7 @@ namespace BlazUICommunity.Model.Models
                     .HasConstraintName("useraddress_ibfk_1");
             });
 
-            modelBuilder.Entity<BZUserRealverification>(entity =>
+            modelBuilder.Entity<BZUserRealVerificationModel>(entity =>
             {
                 entity.ToTable("userrealverification");
 

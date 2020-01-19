@@ -6,20 +6,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BlazUICommunity.Model.Models
 {
     [Table("User")]
-    public partial class BZUserModel
+    public partial class BZUserModel : BaseModel
     {
         public BZUserModel()
         {
             Follow = new HashSet<BZFollowModel>();
             Point = new HashSet<BZPointModel>();
-            Thirdaccount = new HashSet<BZThirdaccountModel>();
+            Thirdaccount = new HashSet<BZThirdAccountModel>();
             Topic = new HashSet<BZTopicModel>();
             Useraddress = new HashSet<BZAddressModel>();
-            Userrealverification = new HashSet<BZUserRealverification>();
+            Userrealverification = new HashSet<BZUserRealVerificationModel>();
         }
 
-        [Key]
-        public int Id { get; set; }
+  
         /// <summary>
         /// 用户账号
         /// </summary>
@@ -92,9 +91,9 @@ namespace BlazUICommunity.Model.Models
         #nullable disable
         public virtual ICollection<BZFollowModel> Follow { get; set; }
         public virtual ICollection<BZPointModel> Point { get; set; }
-        public virtual ICollection<BZThirdaccountModel> Thirdaccount { get; set; }
+        public virtual ICollection<BZThirdAccountModel> Thirdaccount { get; set; }
         public virtual ICollection<BZTopicModel> Topic { get; set; }
         public virtual ICollection<BZAddressModel> Useraddress { get; set; }
-        public virtual ICollection<BZUserRealverification> Userrealverification { get; set; }
+        public virtual ICollection<BZUserRealVerificationModel> Userrealverification { get; set; }
     }
 }

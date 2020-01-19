@@ -55,7 +55,7 @@ namespace BlazUICommunity.Utility.Extensions
                 c.DefaultModelExpandDepth(3);//model展开层级
                 c.EnableFilter();//筛选--如果接口过多可以开启
                 c.DefaultModelRendering(ModelRendering.Model);//设置显示参数的实体或Example
-                c.SupportedSubmitMethods(SubmitMethod.Get , SubmitMethod.Head , SubmitMethod.Post);//
+                //c.SupportedSubmitMethods(SubmitMethod.Get , SubmitMethod.Head , SubmitMethod.Post);//
 
 
                 //c.OAuthClientId("test-id");
@@ -101,12 +101,12 @@ namespace BlazUICommunity.Utility.Extensions
                 c.EnableDeepLinking();//启用深度链接--不知道干嘛的
                 c.DisplayRequestDuration();//调试，显示接口响应时间
                 c.EnableValidator();//验证
-                c.DocExpansion(DocExpansion.List);//默认展开
+                c.DocExpansion(DocExpansion.None);//默认展开
                 c.DefaultModelsExpandDepth(-1);//隐藏model
                 c.DefaultModelExpandDepth(3);//model展开层级
                 c.EnableFilter();//筛选--如果接口过多可以开启
                 c.DefaultModelRendering(ModelRendering.Model);//设置显示参数的实体或Example
-                c.SupportedSubmitMethods(SubmitMethod.Get , SubmitMethod.Head , SubmitMethod.Post);//
+                //c.SupportedSubmitMethods(SubmitMethod.Get , SubmitMethod.Head , SubmitMethod.Post , SubmitMethod.Put , SubmitMethod.Delete);
 
 
                 //c.OAuthClientId("test-id");

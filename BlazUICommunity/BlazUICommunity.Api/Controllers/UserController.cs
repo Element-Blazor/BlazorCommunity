@@ -22,8 +22,9 @@ namespace BlazUICommunity.Api.Controllers
     /// <summary>
     /// 
     /// </summary>
-    [Route("api")]
+    [Route("api/[Controller]")]
     [ApiController]
+    [SwaggerTag(description:"用户相关")]
     public class UserController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -34,77 +35,80 @@ namespace BlazUICommunity.Api.Controllers
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="mapper"></param>
-        public UserController(IUnitOfWork unitOfWork,
+        public UserController(IUnitOfWork unitOfWork ,
             IMapper mapper)
         {
             _mapper = mapper;
-               _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
             _userRepository = unitOfWork.GetRepository<BZUserModel>(true);
+        }
+
+       
+        /// <summary>
+        /// 新增用户
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("Add")]
+        public async Task<IActionResult> Add([FromBody] BZUserDto Dto)
+        {
+            var user = _mapper.Map<BZUserModel>(Dto);
+            await _userRepository.InsertAsync(user);
+            return Ok();
+        }
+      
+
+        /// <summary>
+        /// 根据ID删除用户
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete("Delete/{Id}")]
+        public IActionResult Delete([FromRoute] int Id)
+        {
+            _userRepository.Delete(Id);
+            return Ok();
+        }
+
+        /// <summary>
+        /// 更新用户
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("Update/{Id}")]
+        public IActionResult Update([FromBody] BZUserDto Dto , [FromRoute] int Id)
+        {
+            if ( Id < 1 )
+                return new BadRequestResponse("id is error");
+            var user = _mapper.Map<BZUserModel>(Dto);
+            user.Id = Id;
+
+            //_userRepository.Update(user);
+            _userRepository.UpdateSpecifiedField(user , p => p.Account);
+            return Ok();
         }
 
         /// <summary>
         /// 根据Id查询用户
         /// </summary>
         /// <returns></returns>
-        [HttpGet("users/{userId}")]
-        public async Task<IActionResult> GetUser([FromRoute] int userId)
+        [HttpGet("Query/{Id}")]
+        public async Task<IActionResult> Query([FromRoute] int Id)
         {
-            var res = await _userRepository.FindAsync(userId);
+            var res = await _userRepository.FindAsync(Id);
+            if ( res is null )
+                return new NoContentResponse();
             return Ok(res);
         }
-
         /// <summary>
         /// 根据条件分页查询用户
         /// </summary>
         /// <returns></returns>
-        [HttpPost("users")]
-        public async Task<IActionResult> GetUsers([FromBody] UsersRequest usersRequest = null)
+        [HttpPost("Query")]
+        public async Task<IActionResult> Query([FromBody] UsersRequest Request = null)
         {
             IPagedList<BZUserModel> pagedList = null;
-            var query = usersRequest.CreateQueryExpression<BZUserModel , UsersRequest>();
-            pagedList = query == null ? await _userRepository.GetPagedListAsync(usersRequest.pageInfo.PageIndex - 1 , usersRequest.pageInfo.PageSize) :
-                       await _userRepository.GetPagedListAsync(query , o => o.OrderBy(p => p.Id) , null , usersRequest.pageInfo.PageIndex - 1 , usersRequest.pageInfo.PageSize);
+            var query = Request.CreateQueryExpression<BZUserModel , UsersRequest>();
+            pagedList = query == null ? await _userRepository.GetPagedListAsync(Request.pageInfo.PageIndex - 1 , Request.pageInfo.PageSize) :
+                       await _userRepository.GetPagedListAsync(query , o => o.OrderBy(p => p.Id) , null , Request.pageInfo.PageIndex - 1 , Request.pageInfo.PageSize);
             return Ok(pagedList);
-        }
-
-        /// <summary>
-        /// 根据ID删除用户
-        /// </summary>
-        /// <returns></returns>
-        [HttpDelete("users/{userId}")]
-        public IActionResult DeleteUser([FromRoute] int userId)
-        {
-            _userRepository.Delete(userId);
-            return Ok();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpPatch("users/{userId}")]
-        public IActionResult PatchUser([FromBody] BZUserDto userDto,[FromRoute] int userId)
-        {
-            if ( userId < 1 )
-                return new BadRequestResponse("userid is error");
-            var user = _mapper.Map<BZUserModel>(userDto);
-            user.Id = userId;
-
-            //_userRepository.Update(user);
-            _userRepository.UpdateEntityField(user , p => p.Account);
-            return Ok();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpPut("users/{userId}")]
-        public IActionResult UpdateUser([FromRoute] int userId , [FromBody] BZUserModel user)
-        {
-
-            _userRepository.Update(user);
-            return Ok();
         }
 
         //[HttpGet("TestBulk")]

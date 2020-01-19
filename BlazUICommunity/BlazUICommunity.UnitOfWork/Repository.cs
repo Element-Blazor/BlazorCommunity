@@ -678,7 +678,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="entity"></param>
         /// <param name="property"></param>
         /// <returns></returns>
-        public void UpdateEntityField(TEntity entity , params Expression<Func<TEntity , object>>[] property)
+        public void UpdateSpecifiedField(TEntity entity , params Expression<Func<TEntity , object>>[] property)
         {
             var dbEntityEntry = _dbContext.Entry(entity);
             foreach ( var item in property )

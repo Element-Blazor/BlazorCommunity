@@ -6,12 +6,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BlazUICommunity.Model.Models
 {
 
-    [Table("Thirdaccount")]
-    public partial class BZThirdAccountModel : BaseModel
+    public partial class BZThirdAccountDto 
     {
 
         /// <summary>
-        /// 登录类型：0-QQ，1：微信，2：微博，...
+        /// 登录类型：0：QQ，1：微信，2：微博，...
         /// </summary>
         public int OauthType { get; set; }
         /// <summary>
@@ -40,6 +39,5 @@ namespace BlazUICommunity.Model.Models
         /// </summary>
         public string HomePage { get; set; }
 
-        public virtual BZUserModel User { get; set; }
     }
 }

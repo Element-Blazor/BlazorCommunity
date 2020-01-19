@@ -4,39 +4,291 @@
         <name>BlazUICommunity.Api</name>
     </assembly>
     <members>
+        <member name="T:BlazUICommunity.Api.Controllers.AddressController">
+            <summary>
+            地址
+            </summary>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.AddressController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="unitOfWork"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.AddressController.Add(BlazUICommunity.DTO.BZAddressDto)">
+            <summary>
+            新增
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.AddressController.Delete(System.Int32)">
+            <summary>
+            取消
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.AddressController.Update(BlazUICommunity.DTO.BZAddressDto,System.Int32)">
+            <summary>
+            更新
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.AddressController.Query(System.Int32)">
+            <summary>
+            根据Id查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.AddressController.Query(BlazUICommunity.Request.AddressRequest)">
+            <summary>
+            根据条件分页查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazUICommunity.Api.Controllers.FollowController">
+            <summary>
+            关注
+            </summary>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.FollowController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="unitOfWork"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.FollowController.Add(BlazUICommunity.Model.Models.BZFollowDto)">
+            <summary>
+            新增关注
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.FollowController.Delete(System.Int32)">
+            <summary>
+            取消关注
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.FollowController.Update(BlazUICommunity.Model.Models.BZFollowDto,System.Int32)">
+            <summary>
+            更新关注
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.FollowController.Query(System.Int32)">
+            <summary>
+            根据Id查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.FollowController.Query(BlazUICommunity.Request.FollowRequest)">
+            <summary>
+            根据条件分页查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazUICommunity.Api.Controllers.PointController">
+            <summary>
+            积分
+            </summary>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.PointController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="unitOfWork"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.PointController.Add(BlazUICommunity.Model.Models.BZPointDto)">
+            <summary>
+            新增
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.PointController.Delete(System.Int32)">
+            <summary>
+            取消
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.PointController.Update(BlazUICommunity.Model.Models.BZPointDto,System.Int32)">
+            <summary>
+            更新
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.PointController.Query(System.Int32)">
+            <summary>
+            根据Id查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.PointController.Query(BlazUICommunity.Request.PointRequest)">
+            <summary>
+            根据条件分页查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazUICommunity.Api.Controllers.ReplyController">
+            <summary>
+            回帖相关
+            </summary>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.ReplyController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="unitOfWork"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.ReplyController.Add(BlazUICommunity.Model.Models.BZReplyDto)">
+            <summary>
+            新增回帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.ReplyController.Delete(System.Int32)">
+            <summary>
+            根据ID删除帖子
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.ReplyController.Update(BlazUICommunity.Model.Models.BZReplyDto,System.Int32)">
+            <summary>
+            更新回帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.ReplyController.Query(System.Int32)">
+            <summary>
+            根据Id查询回帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.ReplyController.Query(BlazUICommunity.Request.ReplyRequest)">
+            <summary>
+            根据条件分页查询回帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazUICommunity.Api.Controllers.ThirdAccountController">
+            <summary>
+            第三方账号
+            </summary>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.ThirdAccountController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="unitOfWork"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.ThirdAccountController.Add(BlazUICommunity.Model.Models.BZThirdAccountDto)">
+            <summary>
+            新增
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.ThirdAccountController.Delete(System.Int32)">
+            <summary>
+            取消
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.ThirdAccountController.Update(BlazUICommunity.Model.Models.BZThirdAccountDto,System.Int32)">
+            <summary>
+            更新
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.ThirdAccountController.Query(System.Int32)">
+            <summary>
+            根据Id查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazUICommunity.Api.Controllers.TopicController">
+            <summary>
+            主题帖相关
+            </summary>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.TopicController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="unitOfWork"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.TopicController.Add(BlazUICommunity.Model.Models.BZTopicDto)">
+            <summary>
+            新增主题帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.TopicController.Delete(System.Int32)">
+            <summary>
+            根据ID删除帖子
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.TopicController.Update(BlazUICommunity.Model.Models.BZTopicDto,System.Int32)">
+            <summary>
+            更新主题帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.TopicController.Query(System.Int32)">
+            <summary>
+            根据Id查询主贴
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.TopicController.Query(BlazUICommunity.Request.TopicRequest)">
+            <summary>
+            根据条件分页查询帖子
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazUICommunity.Api.Controllers.UserController">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:BlazUICommunity.Api.Controllers.UserController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
             <summary>
             
             </summary>
             <param name="unitOfWork"></param>
+            <param name="mapper"></param>
         </member>
-        <member name="M:BlazUICommunity.Api.Controllers.UserController.GetUser(System.Int32)">
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.Add(BlazUICommunity.DTO.BZUserDto)">
             <summary>
-            根据Id查询用户
+            新增用户
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BlazUICommunity.Api.Controllers.UserController.GetUsers(BlazUICommunity.Request.UsersRequest)">
-            <summary>
-            根据条件分页查询用户
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BlazUICommunity.Api.Controllers.UserController.DeleteUser(System.Int32)">
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.Delete(System.Int32)">
             <summary>
             根据ID删除用户
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BlazUICommunity.Api.Controllers.UserController.PatchUser(BlazUICommunity.DTO.BZUserDto,System.Int32)">
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.Update(BlazUICommunity.DTO.BZUserDto,System.Int32)">
             <summary>
-            
+            更新用户
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BlazUICommunity.Api.Controllers.UserController.UpdateUser(System.Int32,BlazUICommunity.Model.Models.BZUserModel)">
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.Query(System.Int32)">
             <summary>
-            
+            根据Id查询用户
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.Query(BlazUICommunity.Request.UsersRequest)">
+            <summary>
+            根据条件分页查询用户
             </summary>
             <returns></returns>
         </member>

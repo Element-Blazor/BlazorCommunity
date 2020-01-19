@@ -10,25 +10,27 @@ using log4net.Repository.Hierarchy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace BlazUICommunity.Api.Controllers
 {
     [HiddenApi]
     [Route("[controller]")]
     [ApiController]
-    public class FirstController : ControllerBase
+    //[SwaggerTag(description: "测试")]
+    public class TestController : ControllerBase
     {
-        private readonly ILogger<FirstController> _logger;
+        private readonly ILogger<TestController> _logger;
         private readonly IUnitOfWork _unitOfWork;
 
-        public FirstController(IUnitOfWork unitOfWork , ILogger<FirstController> logger)
+        public TestController(IUnitOfWork unitOfWork , ILogger<TestController> logger)
         {
             _unitOfWork = unitOfWork;
         
        }
 
         [HttpGet]
-        public IActionResult Get([FromServices] IUnitOfWork unitOfWork,[FromServices] ILogger<FirstController> logger)
+        public IActionResult Get([FromServices] IUnitOfWork unitOfWork,[FromServices] ILogger<TestController> logger)
         {
             logger.LogDebug("测试日志");
             //communityContext.Database.EnsureCreated();

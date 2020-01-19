@@ -5,14 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlazUICommunity.Model.Models
 {
-    [Table("TopicModel")]
-    public partial class BZTopicModel : BaseModel
+    public partial class BZTopicDto 
     {
-        public BZTopicModel()
-        {
-            Follow = new HashSet<BZFollowModel>();
-            Reply = new HashSet<BZReplyModel>();
-        }
+      
      
        /// <summary>
        /// 标题
@@ -59,9 +54,5 @@ namespace BlazUICommunity.Model.Models
         /// 回帖数量
         /// </summary>
         public int? ReplyCount { get; set; }
-
-        public virtual BZUserModel User { get; set; }
-        public virtual ICollection<BZFollowModel> Follow { get; set; }
-        public virtual ICollection<BZReplyModel> Reply { get; set; }
     }
 }

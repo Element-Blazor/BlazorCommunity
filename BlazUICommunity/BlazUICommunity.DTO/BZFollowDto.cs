@@ -8,8 +8,7 @@ namespace BlazUICommunity.Model.Models
     /// <summary>
     /// 我的关注 
     /// </summary>
-    [Table("Follow")]
-    public partial class BZFollowModel : BaseModel
+    public partial class BZFollowDto
     {
     
         /// <summary>
@@ -29,7 +28,5 @@ namespace BlazUICommunity.Model.Models
         /// </summary>
         public int UserId { get; set; }
 
-        public virtual BZTopicModel Topic { get; set; }
-        public virtual BZUserModel User { get; set; }
     }
 }

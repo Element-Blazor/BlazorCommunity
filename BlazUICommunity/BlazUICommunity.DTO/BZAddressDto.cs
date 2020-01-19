@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BlazUICommunity.Model.Models
+namespace BlazUICommunity.DTO
 {
-
-    [Table("Address")]
-    public partial class BZAddressModel: BaseModel
+    public class BZAddressDto
     {
-    
+
         /// <summary>
         /// 国家
         /// </summary>
@@ -34,7 +30,5 @@ namespace BlazUICommunity.Model.Models
         /// 用户ID
         /// </summary>
         public int? UserId { get; set; }
-
-        public virtual BZUserModel User { get; set; }
     }
 }

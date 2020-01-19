@@ -6,9 +6,8 @@ namespace BlazUICommunity.Model.Models
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("SysUser")]
-    public partial class SysUser
+    public partial class SysUserModel : BaseModel
     {
-        public int Id { get; set; }
 
         [Required]
         [StringLength(20)]

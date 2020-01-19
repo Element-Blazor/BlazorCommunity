@@ -6,9 +6,8 @@ namespace BlazUICommunity.Model.Models
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("SysMenu")]
-    public partial class SysMenu
+    public partial class SysMenuModel : BaseModel
     {
-        public int Id { get; set; }
 
         public int ParentId { get; set; }
 

@@ -344,7 +344,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// Updates the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        void UpdateEntityField(TEntity entity , params Expression<Func<TEntity , object>>[] property);
+        void UpdateSpecifiedField(TEntity entity , params Expression<Func<TEntity , object>>[] property);
         /// <summary>
         /// Updates the specified entities.
         /// </summary>

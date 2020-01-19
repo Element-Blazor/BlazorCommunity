@@ -5,23 +5,35 @@ namespace BlazUICommunity.Model.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("SysRole")]
-    public partial class SysRole
+    public partial class SysMenuDto 
     {
-        public int Id { get; set; }
 
-        [Required]
-        [StringLength(36)]
+        public int ParentId { get; set; }
+
+     
+
         public string Text { get; set; }
 
-        [StringLength(1000)]
+     
+        public string Url { get; set; }
+
+        public byte MenuLevel { get; set; }
+
+        public byte MenuType { get; set; }
+
+        public string MenuIcon { get; set; }
+
         public string Description { get; set; }
+
+        public string SourcePath { get; set; }
+
+        public int Sort { get; set; }
 
         public byte Status { get; set; }
 
         public DateTime CreateTime { get; set; }
 
-        public int CreateId { get; set; }
+        public int CreatorId { get; set; }
 
         public DateTime? LastModifyTime { get; set; }
 
