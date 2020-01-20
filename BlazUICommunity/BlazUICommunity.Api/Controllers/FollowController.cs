@@ -24,7 +24,7 @@ namespace BlazUICommunity.Api.Controllers
     /// </summary>
     [Route("api/[Controller]")]
     [ApiController]
-    [SwaggerTag(description: "关注相关")]
+    [SwaggerTag(description: "收藏帖子")]
     public class FollowController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

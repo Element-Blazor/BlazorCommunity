@@ -8,6 +8,7 @@ using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
 using BlazUICommunity.DTO;
 using BlazUICommunity.Model.Models;
+using BlazUICommunity.Repository;
 using BlazUICommunity.Request;
 using BlazUICommunity.Utility.Extensions;
 using BlazUICommunity.Utility.Response;
@@ -30,17 +31,20 @@ namespace BlazUICommunity.Api.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<BZUserModel> _userRepository;
         private readonly IMapper _mapper;
+        private readonly BZUserRepository _bZUserRepository;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="mapper"></param>
         public UserController(IUnitOfWork unitOfWork ,
-            IMapper mapper)
+            IMapper mapper,
+            BZUserRepository bZUserRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _userRepository = unitOfWork.GetRepository<BZUserModel>(true);
+            _bZUserRepository = bZUserRepository;
         }
 
        
@@ -109,6 +113,28 @@ namespace BlazUICommunity.Api.Controllers
             pagedList = query == null ? await _userRepository.GetPagedListAsync(Request.pageInfo.PageIndex - 1 , Request.pageInfo.PageSize) :
                        await _userRepository.GetPagedListAsync(query , o => o.OrderBy(p => p.Id) , null , Request.pageInfo.PageIndex - 1 , Request.pageInfo.PageSize);
             return Ok(pagedList);
+        }
+
+
+
+        /// <summary>
+        /// 用户活跃度
+        /// </summary>
+        /// <param name="ActiveType">1：月榜，2：周榜</param>
+        /// <returns></returns>
+        [HttpGet("Active")]
+        public async Task<IActionResult> Active(int ActiveType = 1)
+        {
+            int beforeDays = ActiveType switch
+            {
+                1 => -30,
+                2 => -7,
+                _ => -7
+            };
+            var ResultDtos = await _bZUserRepository.UserActive(DateTime.Now.AddDays(beforeDays) , DateTime.Now);
+            if ( ResultDtos is null || !ResultDtos.Any() )
+                return new NoContentResponse();
+            return Ok(ResultDtos);
         }
 
         //[HttpGet("TestBulk")]

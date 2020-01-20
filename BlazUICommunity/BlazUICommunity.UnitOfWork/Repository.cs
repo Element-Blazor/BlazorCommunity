@@ -12,6 +12,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Data.Common;
+using System.Data.SqlClient;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Arch.EntityFrameworkCore.UnitOfWork
 {
@@ -872,22 +877,22 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
 
         public async Task BulkInsertAsync(IEnumerable<TEntity> entities)
         {
-             await    _dbContext.BulkInsertAsync(entities , options =>
-            {
-                options.InsertIfNotExists = true;
-                options.BatchSize = 100;
-                options.AutoMapOutputDirection = false;
-            });
+            await _dbContext.BulkInsertAsync(entities , options =>
+        {
+            options.InsertIfNotExists = true;
+            options.BatchSize = 100;
+            options.AutoMapOutputDirection = false;
+        });
         }
 
 
         public void BulkDelete(IEnumerable<TEntity> entities)
         {
-            _dbContext.BulkDelete (entities , options =>
-            {
-                options.BatchSize = 1000;
-                options.AutoMapOutputDirection = false;
-            });
+            _dbContext.BulkDelete(entities , options =>
+           {
+               options.BatchSize = 1000;
+               options.AutoMapOutputDirection = false;
+           });
         }
 
         public async Task BulkDeleteAsync(IEnumerable<TEntity> entities)
@@ -917,7 +922,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
             });
         }
 
-        public void BulkDelete(Expression<Func<TEntity , bool>> predicate )
+        public void BulkDelete(Expression<Func<TEntity , bool>> predicate)
         {
             if ( predicate is null )
             {
@@ -944,6 +949,64 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
                 options.BatchSize = 1000;
                 options.AutoMapOutputDirection = false;
             });
+        }
+
+
+        #endregion
+
+
+        #region FromSql
+
+        private static readonly Dictionary<Type , PropertyInfo[]> TempEntityPropertiesDic = new Dictionary<Type , PropertyInfo[]>();
+        /// <summary>
+        /// Read entity list by reader
+        /// </summary>
+        /// <typeparam name="T">entity</typeparam>
+        /// <param name="reader">data reader</param>
+        /// <returns>entity</returns>
+        public async Task<IEnumerable<T>> QueryDataFromSql<T>(string sql , params DbParameter[] parameters) where T:class,new()
+        {
+            using DbConnection connection = _dbContext.Database.GetDbConnection();
+            connection.Open();
+            DbCommand cmd = connection.CreateCommand();
+            cmd.CommandText = sql;
+            if( parameters!=null&&parameters.Any())
+            cmd.Parameters.AddRange(parameters);
+            using var reader = await cmd.ExecuteReaderAsync();
+            List<T> listT = new List<T>();
+            if ( !TempEntityPropertiesDic.TryGetValue(typeof(T) , out PropertyInfo[] propertyInfos) )
+            {
+                propertyInfos = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            }
+            while ( await reader.ReadAsync() )
+            {
+                T tempEntity = Activator.CreateInstance<T>();
+                foreach ( var prop in propertyInfos )
+                {
+                    var obj = reader[prop.Name];
+                    prop.SetValue(tempEntity , obj is DBNull ? null : obj);
+                }
+                listT.Add(tempEntity);
+            }
+            return listT;
+        }
+
+
+
+        public async Task<T> ExecuteScalarAsync<T>(string sql , params DbParameter[] parameters) 
+        {
+            using DbConnection connection = _dbContext.Database.GetDbConnection();
+            connection.Open();
+            DbCommand cmd = connection.CreateCommand();
+            cmd.CommandText = sql;
+            if ( parameters != null && parameters.Any() )
+                cmd.Parameters.AddRange(parameters);
+            using var reader = await cmd.ExecuteReaderAsync();
+            if ( await reader.ReadAsync() )
+            {
+                return (T)reader[0];
+            }
+            return default;
         }
         #endregion
     }

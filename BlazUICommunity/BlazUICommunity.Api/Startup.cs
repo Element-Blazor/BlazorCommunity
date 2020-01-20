@@ -41,7 +41,8 @@ namespace BlazUICommunity.Api
             services.AddCustomAddControllers();
             services.AddCustomSwagger();
             services.AddDbContext<BlazUICommunityContext>(opt => opt.UseMySql(Configuration.GetConnectionString("DbConnectionString")))
-                .AddUnitOfWork<BlazUICommunityContext>();
+                .AddUnitOfWork<BlazUICommunityContext>();//.AddCustomRepository<BZTopicModel , BZTopicRepository>(); ;
+            //services.AddScoped(typeof(BZTopicRepository));
             services.AddAutoMapper(typeof(AutoMapConfiguration));
         }
         /// <summary>

@@ -17,7 +17,9 @@ namespace BlazUICommunity.Utility
             Assembly serviceAss = Assembly.Load("BlazUICommunity.Repository");
             Type[] sertypes = serviceAss.GetTypes().Where(p => p.Name.EndsWith("Repository")).ToArray();
             containerBuilder.RegisterTypes(sertypes).AsImplementedInterfaces().PropertiesAutowired();
+            containerBuilder.RegisterAssemblyTypes(serviceAss);
             Assembly interfaceAss = Assembly.Load("BlazUICommunity.UnitOfWork");
+            //containerBuilder.RegisterAssemblyTypes(interfaceAss);
             Type[] interfacetypes = interfaceAss.GetTypes().Where(p => p.Name.EndsWith("Repository")).ToArray();
             containerBuilder.RegisterTypes(interfacetypes).AsImplementedInterfaces().PropertiesAutowired();
 

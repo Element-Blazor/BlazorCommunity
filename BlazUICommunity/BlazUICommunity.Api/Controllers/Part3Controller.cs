@@ -20,27 +20,27 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace BlazUICommunity.Api.Controllers
 {
     /// <summary>
-    /// 地址
+    /// 第三方账号
     /// </summary>
     [Route("api/[Controller]")]
     [ApiController]
-    [SwaggerTag(description: "地址相关")]
-    public class AddressController : ControllerBase
+    [SwaggerTag(description: "第三方账号相关")]
+    public class Part3Controller : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IRepository<BZAddressModel> _addressRepository;
+        private readonly IRepository<BZThirdAccountModel> _thirdRepository;
         private readonly IMapper _mapper;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="mapper"></param>
-        public AddressController(IUnitOfWork unitOfWork ,
+        public Part3Controller(IUnitOfWork unitOfWork ,
             IMapper mapper)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _addressRepository = unitOfWork.GetRepository<BZAddressModel>(true);
+            _thirdRepository = unitOfWork.GetRepository<BZThirdAccountModel>(true);
         }
 
 
@@ -49,10 +49,10 @@ namespace BlazUICommunity.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("Add")]
-        public async Task<IActionResult> Add([FromBody] BZAddressDto dto)
+        public async Task<IActionResult> Add([FromBody] BZThirdAccountDto dto)
         {
-            var user = _mapper.Map<BZAddressModel>(dto);
-             await _addressRepository.InsertAsync(user);
+            var user = _mapper.Map<BZThirdAccountModel>(dto);
+             await _thirdRepository.InsertAsync(user);
             return Ok();
         }
 
@@ -65,7 +65,7 @@ namespace BlazUICommunity.Api.Controllers
         [HttpDelete("Delete/{Id}")]
         public IActionResult Delete([FromRoute] int Id)
         {
-            _addressRepository.Delete(Id);
+            _thirdRepository.Delete(Id);
             return Ok();
         }
 
@@ -74,14 +74,14 @@ namespace BlazUICommunity.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut("Update/{Id}")]
-        public IActionResult Update([FromBody] BZAddressDto Dto , [FromRoute] int Id)
+        public IActionResult Update([FromBody] BZThirdAccountDto Dto , [FromRoute] int Id)
         {
             if ( Id < 1 )
                 return new BadRequestResponse("id is error");
-            var user = _mapper.Map<BZAddressModel>(Dto);
+            var user = _mapper.Map<BZThirdAccountModel>(Dto);
             user.Id = Id;
 
-            _addressRepository.Update(user);
+            _thirdRepository.Update(user);
             return Ok();
         }
 
@@ -92,23 +92,11 @@ namespace BlazUICommunity.Api.Controllers
         [HttpGet("Query/{Id}")]
         public async Task<IActionResult> Query([FromRoute] int Id)
         {
-            var res = await _addressRepository.FindAsync(Id);
+            var res = await _thirdRepository.FindAsync(Id);
             if ( res is null )
                 return new NoContentResponse();
             return Ok(res);
         }
-        /// <summary>
-        /// 根据条件分页查询
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("Query")]
-        public async Task<IActionResult> Query([FromBody] AddressRequest Request = null)
-        {
-            IPagedList<BZAddressModel> pagedList = null;
-            var query = Request.CreateQueryExpression<BZAddressModel , AddressRequest>();
-            pagedList = query == null ? await _addressRepository.GetPagedListAsync(Request.pageInfo.PageIndex - 1 , Request.pageInfo.PageSize) :
-                       await _addressRepository.GetPagedListAsync(query , o => o.OrderBy(p => p.Id) , null , Request.pageInfo.PageIndex - 1 , Request.pageInfo.PageSize);
-            return Ok(pagedList);
-        }
+     
     }
 }

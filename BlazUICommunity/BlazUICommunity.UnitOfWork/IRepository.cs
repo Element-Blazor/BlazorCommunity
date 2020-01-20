@@ -15,6 +15,8 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
     using Microsoft.EntityFrameworkCore.Query;
     using Arch.EntityFrameworkCore.UnitOfWork.Collections;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
+    using System.Data.SqlClient;
+    using System.Data.Common;
 
     /// <summary>
     /// Defines the interfaces for generic repository.
@@ -400,6 +402,13 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         void BulkUpdate(IEnumerable<TEntity> entities);
 
         Task BulkUpdateAsync(IEnumerable<TEntity> entities);
+        #endregion
+
+        #region FromSql
+
+        Task<IEnumerable<T>> QueryDataFromSql<T>(string sql , params DbParameter[] parameters) where T : class, new();
+        Task<T> ExecuteScalarAsync<T>(string sql , params DbParameter[] parameters);
+
         #endregion
     }
 }
