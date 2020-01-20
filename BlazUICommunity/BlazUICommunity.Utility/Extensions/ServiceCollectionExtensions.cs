@@ -190,7 +190,7 @@ namespace BlazUICommunity.Utility.Configure
         }
         public static IServiceCollection AddCustomMemoryCache(this IServiceCollection services)
         {
-            services.AddMemoryCache();
+            services.AddMemoryCache(p=>p.ExpirationScanFrequency=TimeSpan.FromMinutes(1));
 
             return services;
         }

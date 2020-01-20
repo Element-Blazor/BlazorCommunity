@@ -1,6 +1,7 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using BlazUICommunity.DTO;
 using BlazUICommunity.Model.Models;
+using BlazUICommunity.Utility;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,18 @@ namespace BlazUICommunity.Repository
 
         }
 
-
+        public  (bool success, string message,BZUserModel user) Login(string Account , string Pwd)
+        {
+            var password = MD5Encrypt.Encrypt(Pwd);
+            var success = Exists(p => p.Account == Account && p.Cypher == password);
+            if ( success )
+            {
+                var user = GetFirstOrDefault(p => p.Account == Account && p.Cypher == password);
+                return (true, "登录成功", user);
+            }
+            else
+                return (false, "登录失败",null);
+        }
 
         /// <summary>
         /// 查询指定时间用户发表的主题帖数量

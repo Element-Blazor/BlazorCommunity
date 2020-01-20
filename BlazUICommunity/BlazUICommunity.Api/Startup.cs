@@ -22,6 +22,7 @@ using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using AutoMapper;
+using BlazUICommunity.Utility.Jwt;
 
 namespace BlazUICommunity.Api
 {
@@ -40,10 +41,12 @@ namespace BlazUICommunity.Api
             services.AddTransient<LoggerMiddleware>();
             services.AddCustomAddControllers();
             services.AddCustomSwagger();
+            services.AddCustomMemoryCache();
             services.AddDbContext<BlazUICommunityContext>(opt => opt.UseMySql(Configuration.GetConnectionString("DbConnectionString")))
                 .AddUnitOfWork<BlazUICommunityContext>();//.AddCustomRepository<BZTopicModel , BZTopicRepository>(); ;
-            //services.AddScoped(typeof(BZTopicRepository));
+            services.AddSingleton(typeof(JwtService));
             services.AddAutoMapper(typeof(AutoMapConfiguration));
+            services.AddJwtConfiguration(Configuration); 
         }
         /// <summary>
         /// 
@@ -74,7 +77,9 @@ namespace BlazUICommunity.Api
             app.UseRouting();
 
             app.UseLogMiddleware();
-
+            //ÈÏÖ¤
+            app.UseAuthentication();
+            //ÊÚÈ¨
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

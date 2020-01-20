@@ -4,6 +4,37 @@
         <name>BlazUICommunity.Api</name>
     </assembly>
     <members>
+        <member name="T:BlazUICommunity.Api.Controllers.AccessTokenController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.AccessTokenController.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Caching.Memory.IMemoryCache,Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,BlazUICommunity.Utility.Jwt.JwtService,BlazUICommunity.Repository.BZUserRepository)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+            <param name="cache"></param>
+            <param name="unitOfWork"></param>
+            <param name="jwtService"></param>
+            <param name="bZUserRepository"></param>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.AccessTokenController.Post(BlazUICommunity.DTO.LoginModel)">
+            <summary>
+            登录，获取后原来RefreshToken将失效。
+            AccessToken有效时间30分钟
+            RefreshToken有效时间60分钟
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.AccessTokenController.Refresh(System.String)">
+            <summary>
+            刷新AccessToken
+            </summary>
+            <param name="token">刷新的请求 {"token": "refresh_token"}</param>
+            <returns></returns>
+        </member>
         <member name="T:BlazUICommunity.Api.Controllers.FollowController">
             <summary>
             关注
