@@ -113,34 +113,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BlazUICommunity.Api.Controllers.PersonalController.QueryTopic(System.Int32,System.Int32,System.Int32,System.String)">
-            <summary>
-            我的主贴
-            </summary>
-            <param name="userId">用户ID</param>
-            <param name="pageIndex"></param>
-            <param name="pageSize"></param>
-            <param name="title"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BlazUICommunity.Api.Controllers.PersonalController.QueryReply(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            我的回帖
-            </summary>
-            <param name="userId">用户ID</param>
-            <param name="pageIndex"></param>
-            <param name="pageSize"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BlazUICommunity.Api.Controllers.PersonalController.QueryFollow(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            我的关注
-            </summary>
-            <param name="userId">用户ID</param>
-            <param name="pageIndex"></param>
-            <param name="pageSize"></param>
-            <returns></returns>
-        </member>
         <member name="T:BlazUICommunity.Api.Controllers.PointController">
             <summary>
             积分
@@ -400,9 +372,44 @@
         </member>
         <member name="M:BlazUICommunity.Api.Controllers.UserController.Active(System.Int32)">
             <summary>
-            用户活跃度
+            活跃度
             </summary>
             <param name="ActiveType">1：月榜，2：周榜</param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.QueryTopic(System.Int32,System.Int32,System.Int32,System.String)">
+            <summary>
+            我的主贴
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="title"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.QueryReply(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            我的回帖
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.QueryFollow(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            我的关注
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazUICommunity.Api.Controllers.UserController.ChangPasswod(BlazUICommunity.DTO.ChangePwdModel)">
+            <summary>
+            修改密码
+            </summary>
+            <param name="change"></param>
             <returns></returns>
         </member>
         <member name="T:BlazUICommunity.Api.Enum.TopicType">

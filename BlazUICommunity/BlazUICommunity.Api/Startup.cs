@@ -68,7 +68,8 @@ namespace BlazUICommunity.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            //Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

@@ -2,6 +2,8 @@
 using BlazUICommunity.DTO;
 using BlazUICommunity.Model.Models;
 using BlazUICommunity.Utility;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Caching.Memory;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -17,18 +19,85 @@ namespace BlazUICommunity.Repository
         {
 
         }
+        [Inject]
+        private IMemoryCache memoryCache { get; set; }
 
-        public  (bool success, string message,BZUserModel user) Login(string Account , string Pwd)
+        public (bool success, string message) ChangePwd(string Account , string OldPwd , string NewPwd)
         {
-            var password = MD5Encrypt.Encrypt(Pwd);
-            var success = Exists(p => p.Account == Account && p.Cypher == password);
-            if ( success )
+            if ( string.IsNullOrWhiteSpace(Account) )
             {
-                var user = GetFirstOrDefault(p => p.Account == Account && p.Cypher == password);
-                return (true, "登录成功", user);
+                throw new ArgumentException("message" , nameof(Account));
+            }
+
+            if ( string.IsNullOrWhiteSpace(OldPwd) )
+            {
+                throw new ArgumentException("message" , nameof(OldPwd));
+            }
+
+            if ( string.IsNullOrWhiteSpace(NewPwd) )
+            {
+                throw new ArgumentException("message" , nameof(NewPwd));
+            }
+
+            var checkUser = CheckAndGetUser(Account , OldPwd , out BZUserModel user);
+            if ( checkUser )
+            {
+                user.Cypher = MD5Encrypt.Encrypt(NewPwd);
+                Commit();
+                return (true, "修改成功");
             }
             else
-                return (false, "登录失败",null);
+            {
+                return (false, "用户名或旧密码错误");
+            }
+        }
+
+
+        private BZUserModel GetUserFromCache(string Account)
+        {
+            var users = memoryCache.Get<List<BZUserModel>>(nameof(BZUserModel));
+            if ( users != null )
+            {
+                return users.Single(p => p.Account == Account);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 检查用户是否存在并且返回用户
+        /// </summary>
+        /// <param name="Account"></param>
+        /// <param name="Password"></param>
+        /// <returns>BZUserModel</returns>
+        private bool CheckAndGetUser(string Account , string Password , out BZUserModel bZUser)
+        {
+            if ( string.IsNullOrWhiteSpace(Account) )
+            {
+                throw new ArgumentException("message" , nameof(Account));
+            }
+
+            if ( string.IsNullOrWhiteSpace(Password) )
+            {
+                throw new ArgumentException("message" , nameof(Password));
+            }
+
+            bZUser = GetUserFromCache(Account);
+            return bZUser == null? false:MD5Encrypt.Encrypt(Password) == bZUser.Cypher;
+         
+        }
+
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="Account"></param>
+        /// <param name="Pwd"></param>
+        /// <returns></returns>
+        public (bool success, string message, BZUserModel user) Login(string Account , string Pwd)
+        {
+            var checkUser = CheckAndGetUser(Account , Pwd , out BZUserModel user);
+
+            return checkUser ? (true, "登录成功", user) : (false, "登录失败", null);
+
         }
 
         /// <summary>
@@ -65,6 +134,12 @@ namespace BlazUICommunity.Repository
             return replyActive;
         }
 
+        /// <summary>
+        /// 统计用户活跃度
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<UserActiveDto>> UserActive(DateTime start , DateTime end)
         {
             var tops = await UserTopActives(start , end);
