@@ -11,6 +11,8 @@ namespace BlazUICommunity.Test
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+
+            Guid s1 = Guid.Parse("0edf5111-204c-404f-99fa-aeaf592884e7");
             using ( BlazUICommunityContext  communityContext=new BlazUICommunityContext() )
             {
                 communityContext.Database.EnsureCreated();

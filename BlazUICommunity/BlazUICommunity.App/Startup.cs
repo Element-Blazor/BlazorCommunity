@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blazui.Component;
 using BlazUICommunity.App.Data;
 using BlazUICommunity.App.Features.Identity;
 using Microsoft.AspNetCore.Builder;
@@ -53,6 +54,7 @@ namespace BlazUICommunity.App
             services.AddControllers();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider , RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+            services.AddBlazuiServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

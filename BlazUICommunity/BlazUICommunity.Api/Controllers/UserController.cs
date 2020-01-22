@@ -15,6 +15,7 @@ using BlazUICommunity.Utility.Extensions;
 using BlazUICommunity.Utility.Response;
 using log4net.Repository.Hierarchy;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
@@ -33,11 +34,15 @@ namespace BlazUICommunity.Api.Controllers
         private readonly IRepository<BZUserModel> _userRepository;
         private readonly IMapper _mapper;
         private readonly BZUserRepository _bZUserRepository;
+        
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="mapper"></param>
+        /// <param name="bZUserRepository"></param>
         public UserController(IUnitOfWork unitOfWork ,
             IMapper mapper,
             BZUserRepository bZUserRepository)
@@ -57,6 +62,7 @@ namespace BlazUICommunity.Api.Controllers
         public async Task<IActionResult> Add([FromBody] BZUserDto Dto)
         {
             var user = _mapper.Map<BZUserModel>(Dto);
+            //await _userManager.CreateAsync(new IdentityUser(Dto.Account) { Email = Dto.Email , EmailConfirmed = true } , "1234");
             await _userRepository.InsertAsync(user);
             return Ok();
         }

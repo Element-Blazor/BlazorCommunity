@@ -12,7 +12,7 @@ namespace BlazUICommunity.Api
     {
         public AutoMapConfiguration()
         {
-            CreateMap<BZUserModel , BZUserDto>().AfterMap((source,dest)=>dest.Cypher="*********");
+            CreateMap<BZUserModel , BZUserDto>().AfterMap((source,dest)=>dest.IdentityUser="*********");
             CreateMap<BZUserDto , BZUserModel>().ForMember(dest => dest.Id , option => option.Ignore());
 
             CreateMap<BZTopicModel , BZTopicDto>();

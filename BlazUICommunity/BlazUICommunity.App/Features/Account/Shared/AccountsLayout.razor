@@ -1,4 +1,35 @@
 ﻿@inherits LayoutComponentBase
-<section class="section">
-    @Body
-</section>
+
+    <BLayout>
+        <North>
+            <div class="el-header">
+                上边
+            </div >
+            @*<BCard Shadow="@ShadowShowType.Never" Style="">
+            <Body>
+                上边
+            </Body>
+        </BCard>*@
+        </North>
+        <Center>
+            <BCard Shadow="@ShadowShowType.Never" Style="border:none;">
+
+                <Body>
+                    @Body
+                </Body>
+            </BCard>
+
+        </Center>
+
+        <South>
+            <div  class="el-footer">
+                下边
+            </div>
+            @*<BCard Shadow="@ShadowShowType.Never">
+            <Body>
+                下边
+            </Body>
+        </BCard>*@
+        </South>
+
+    </BLayout>

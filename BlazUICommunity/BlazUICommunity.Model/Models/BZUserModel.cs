@@ -25,10 +25,10 @@ namespace BlazUICommunity.Model.Models
         [StringLength(20)]
         public string Account { get; set; }
         /// <summary>
-        ///  密码--MD5
+        ///  IdentityUserId
         /// </summary>
-        [StringLength(32)]
-        public string Cypher { get; set; }
+        [StringLength(36)]
+        public Guid IdentityUser { get; set; }
         /// <summary>
         /// 昵称
         /// </summary>

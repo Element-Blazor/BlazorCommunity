@@ -339,6 +339,7 @@
             </summary>
             <param name="unitOfWork"></param>
             <param name="mapper"></param>
+            <param name="bZUserRepository"></param>
         </member>
         <member name="M:BlazUICommunity.Api.Controllers.UserController.Add(BlazUICommunity.DTO.BZUserDto)">
             <summary>

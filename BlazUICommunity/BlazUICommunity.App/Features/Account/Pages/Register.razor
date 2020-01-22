@@ -1,7 +1,7 @@
 ﻿@page "/account/register"
 @inject UserManager<IdentityUser> userManager
 @inject NavigationManager navigationManager
-<div class="container">
+<div class="login-container">
     <h1 class="title">Register</h1>
 
     <EditForm Model="@registerAccountModel" OnValidSubmit="@RegisterUser">

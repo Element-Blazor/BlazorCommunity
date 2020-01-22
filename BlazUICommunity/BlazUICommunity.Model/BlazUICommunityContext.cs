@@ -1,12 +1,13 @@
 ﻿using System;
 using BlazUICommunity.Utility.Logger;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Logging;
 
 namespace BlazUICommunity.Model.Models
 {
-    public partial class BlazUICommunityContext : DbContext
+    public partial class BlazUICommunityContext : IdentityDbContext
     {
        // public static readonly ILoggerFactory MyLoggerFactory
        //= LoggerFactory.Create(builder =>
@@ -311,7 +312,7 @@ namespace BlazUICommunity.Model.Models
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.Cypher)
+                entity.Property(e => e.IdentityUser)
                     .IsRequired()
                     .HasColumnType("varchar(20)")
                     .HasComment("密码")

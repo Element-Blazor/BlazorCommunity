@@ -42,8 +42,8 @@ namespace BlazUICommunity.Repository
             var checkUser = CheckAndGetUser(Account , OldPwd , out BZUserModel user);
             if ( checkUser )
             {
-                user.Cypher = MD5Encrypt.Encrypt(NewPwd);
-                Commit();
+                //user.IdentityUser = MD5Encrypt.Encrypt(NewPwd);
+                //Commit();
                 return (true, "修改成功");
             }
             else
@@ -82,7 +82,8 @@ namespace BlazUICommunity.Repository
             }
 
             bZUser = GetUserFromCache(Account);
-            return bZUser == null? false:MD5Encrypt.Encrypt(Password) == bZUser.Cypher;
+            //return bZUser == null? false:MD5Encrypt.Encrypt(Password) == bZUser.IdentityUser;
+            return false;
          
         }
 
