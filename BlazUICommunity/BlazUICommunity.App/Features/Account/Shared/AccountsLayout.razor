@@ -1,35 +1,29 @@
 ﻿@inherits LayoutComponentBase
-
-    <BLayout>
-        <North>
-            <div class="el-header">
-                上边
-            </div >
-            @*<BCard Shadow="@ShadowShowType.Never" Style="">
-            <Body>
-                上边
-            </Body>
-        </BCard>*@
-        </North>
-        <Center>
-            <BCard Shadow="@ShadowShowType.Never" Style="border:none;">
-
+<BPopup></BPopup>
+<BLayout>
+    <North>
+        @*<AppHeader></AppHeader>*@
+        @*<div class="el-header">
+            上边
+        </div>*@
+        @*<BCard Shadow="@ShadowShowType.Never" Style="">
                 <Body>
-                    @Body
+                    上边
                 </Body>
-            </BCard>
+            </BCard>*@
+    </North>
+    <Center>
+        <BCard Shadow="@ShadowShowType.Never" Style="border:none;">
 
-        </Center>
-
-        <South>
-            <div  class="el-footer">
-                下边
-            </div>
-            @*<BCard Shadow="@ShadowShowType.Never">
             <Body>
-                下边
+                @Body
             </Body>
-        </BCard>*@
-        </South>
+        </BCard>
 
-    </BLayout>
+    </Center>
+
+    <South>
+     <AppFooter></AppFooter>
+    </South>
+
+</BLayout>

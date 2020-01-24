@@ -1,0 +1,35 @@
+﻿<div class="nav">
+    <div class="container">
+        <img src="img/logo.svg" width="146" height="38" />
+        <div class="fill"></div>
+        @*<div></div>*@
+    <BMenu BackgroundColor="transparent" Mode="MenuMode.Horizontal" HoverColor="#fff123" TextColor="#fff" DefaultActive="0" ActiveTextColor="#fff" >
+        <BMenuItem Icon="el-icon-chat-dot-round" Route="button">交流</BMenuItem>
+        <BMenuItem Icon="el-icon-position" Route="button">组件</BMenuItem>
+        <BMenuItem Icon="el-icon-document" Route="button">文档</BMenuItem>
+        @*<BMenuItem>
+            <BDropDown Style="display:flex;" @ref="productDropDown">
+                <Trigger>
+                    <span class="el-dropdown-link" style="vertical-align:auto;color:#fff;">
+                        @Product?.NugetPackageName  <i class="el-icon-arrow-down el-icon--right" style="color:#fff;"></i>
+                    </span>
+                </Trigger>
+                <Items>
+                    @foreach ( var product in Products )
+                    {
+                        <BDropDownItem>@product.NugetPackageName</BDropDownItem>
+                    }
+                </Items>
+            </BDropDown>
+        </BMenuItem>*@
+        <BMenuItem Icon="">
+        </BMenuItem>
+        <BMenuItem Icon="">
+        </BMenuItem>
+        <BMenuItem Icon="el-icon-user" Style="color:#fff;" Route="/account/signin">
+            登录/注册
+        </BMenuItem>
+    </BMenu>
+ 
+    </div>
+</div>

@@ -1,32 +1,24 @@
-﻿@using BlazUICommunity.App.Features.App.Components
-
+﻿
 @inherits LayoutComponentBase
 
-<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-    <div class="navbar-menu">
-        <div class="navbar-start">
-            <a href="/" class="navbar-item">
-                Home
-            </a>
-        </div>
-        <div class="navbar-end">
-            <div class="navbar-item">
-                <div class="buttons">
-                    <a href="/account/signout" class="button is-primary">
-                        Sign out
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
-<section class="section">
-    <div class="columns">
-        <div class="column is-3">
-            <Sidebar></Sidebar>
-        </div>
-        <div class="column">
-            @Body
-        </div>
-    </div>
-</section>
+<BPopup></BPopup>
+<BLayout>
+    <North>
+<AppHeader></AppHeader>
+    </North>
+    <Center>
+        <BCard Shadow="@ShadowShowType.Never" Style="border:none;">
+
+            <Body>
+                @Body
+            </Body>
+        </BCard>
+
+    </Center>
+
+    <South>
+    <AppFooter></AppFooter>
+    </South>
+
+</BLayout>
+

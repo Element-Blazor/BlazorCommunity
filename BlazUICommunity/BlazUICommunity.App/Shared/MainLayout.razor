@@ -1,3 +1,25 @@
-﻿@inherits LayoutComponentBase
-<div>123131312</div>
-@Body
+﻿@inherits MainLayoutBase
+
+<BPopup></BPopup>
+<BLayout>
+    <North>
+
+    </North>
+    <Center>
+        <BCard Shadow="@ShadowShowType.Never" Style="border:none;">
+
+            <Body>
+                @Body
+            </Body>
+        </BCard>
+
+    </Center>
+
+    <South>
+        <div class="el-footer">
+            下边
+        </div>
+    </South>
+
+</BLayout>
+
