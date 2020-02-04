@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BlazUICommunity.Utility.Request
+namespace Blazui.Community.Utility.Request
 {
    public abstract class BaseRequest
     {

@@ -214,14 +214,34 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
 
         public bool CommitWithTransaction(Action action)
         {
+            using var transaction = _context.Database.BeginTransaction();
             try
             {
-                using var transaction = _context.Database.BeginTransaction();
+          
                 action?.Invoke();
                 transaction.Commit();
             }
             catch ( Exception ex)
             {
+                transaction.Rollback();
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            return true;
+        }
+
+        public async Task<bool> CommitWithTransactionAsync(Action action)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+
+                action?.Invoke();
+                transaction.Commit();
+            }
+            catch ( Exception ex )
+            {
+              await  transaction.RollbackAsync();
                 Console.WriteLine(ex.Message);
                 throw;
             }

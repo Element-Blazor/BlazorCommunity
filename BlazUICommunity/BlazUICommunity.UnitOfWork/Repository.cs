@@ -666,6 +666,8 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
             var OriginalValues = dbEntityEntry.GetDatabaseValues();
             foreach ( var property in OriginalValues.Properties )
             {
+                if ( property.PropertyInfo is null )
+                    continue;
                 var original = property.PropertyInfo.GetValue(OriginalValues.ToObject());
                 var current = property.PropertyInfo.GetValue(entity);
                 //dbEntityEntry.CurrentValues.Properties.FirstOrDefault(p => p.Name == property.Name)?.PropertyInfo.GetValue(dbEntityEntry.CurrentValues.ToObject());

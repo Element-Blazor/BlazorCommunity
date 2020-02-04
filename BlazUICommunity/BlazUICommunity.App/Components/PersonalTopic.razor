@@ -1,0 +1,12 @@
+﻿@inherits BComponentBase
+<h3>PersonalTopic</h3>
+
+@code {
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        await base.OnAfterRenderAsync(firstRender);
+        MarkAsRequireRender();
+    }
+}

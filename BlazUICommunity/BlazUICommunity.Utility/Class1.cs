@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlazUICommunity.Utility
+namespace Blazui.Community.Utility
 {
     public class Class1
     {

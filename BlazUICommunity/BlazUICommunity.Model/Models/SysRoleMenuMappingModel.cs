@@ -1,4 +1,4 @@
-namespace BlazUICommunity.Model.Models
+namespace Blazui.Community.Model.Models
 {
     using System;
     using System.Collections.Generic;

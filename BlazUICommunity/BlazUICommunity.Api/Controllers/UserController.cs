@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Arch.EntityFrameworkCore.UnitOfWork;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
-using BlazUICommunity.DTO;
-using BlazUICommunity.Model.Models;
-using BlazUICommunity.Repository;
-using BlazUICommunity.Request;
-using BlazUICommunity.Utility.Extensions;
-using BlazUICommunity.Utility.Response;
+using Blazui.Community.DTO;
+using Blazui.Community.Model.Models;
+using Blazui.Community.Repository;
+using Blazui.Community.Request;
+using Blazui.Community.Utility.Extensions;
+using Blazui.Community.Utility.Response;
 using log4net.Repository.Hierarchy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace BlazUICommunity.Api.Controllers
+namespace Blazui.Community.Api.Controllers
 {
     /// <summary>
     /// 
@@ -73,7 +73,7 @@ namespace BlazUICommunity.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete("Delete/{Id}")]
-        public IActionResult Delete([FromRoute] int Id)
+        public IActionResult Delete([FromRoute] string Id)
         {
             _userRepository.Delete(Id);
             return Ok();
@@ -84,15 +84,15 @@ namespace BlazUICommunity.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut("Update/{Id}")]
-        public IActionResult Update([FromBody] BZUserDto Dto , [FromRoute] int Id)
+        public IActionResult Update([FromBody] BZUserDto Dto , [FromRoute] string Id)
         {
-            if ( Id < 1 )
+            if ( string.IsNullOrWhiteSpace(Id) )
                 return new BadRequestResponse("id is error");
             var user = _mapper.Map<BZUserModel>(Dto);
             user.Id = Id;
-
-            //_userRepository.Update(user);
-            _userRepository.UpdateSpecifiedField(user , p => p.Account);
+            //user.ConcurrencyStamp = Guid.NewGuid().ToString();
+            _userRepository.Update(user);
+            //_userRepository.UpdateSpecifiedField(user , p => p.Account);
             return Ok();
         }
 
@@ -101,12 +101,27 @@ namespace BlazUICommunity.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("Query/{Id}")]
-        public async Task<IActionResult> Query([FromRoute] int Id)
+        public async Task<IActionResult> Query([FromRoute] string Id)
         {
             var res = await _userRepository.FindAsync(Id);
             if ( res is null )
                 return new NoContentResponse();
-            return Ok(res);
+            return Ok(_mapper.Map<BZUserDto>(res));
+        }
+
+        /// <summary>
+        /// 根据UserName查询用户
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="UserName"></param>
+        [HttpGet("QueryUserByName/{UserName}")]
+        public async Task<IActionResult> QueryUserByName([FromRoute] string UserName)
+        {
+            var res = await _userRepository.GetFirstOrDefaultAsync(p=>p.UserName== UserName);
+            if ( res is null )
+                return new NoContentResponse();
+
+            return Ok(_mapper.Map<BZUserDto>(res));
         }
         /// <summary>
         /// 根据条件分页查询用户
@@ -153,12 +168,12 @@ namespace BlazUICommunity.Api.Controllers
         /// <param name="title"></param>
         /// <returns></returns>
         [HttpGet("Topic/{userId}/{pageSize}/{pageIndex}/{title}")]
-        public async Task<IActionResult> QueryTopic(int userId ,
+        public async Task<IActionResult> QueryTopic(string userId ,
             [SwaggerParameter(Required = false)] int pageSize = 20 ,
             [SwaggerParameter(Required = false)]int pageIndex = 1 ,
             [SwaggerParameter(Required = false)]string title = "")
         {
-            if ( userId < 1 )
+            if ( string.IsNullOrWhiteSpace(userId) )
                 return new BadRequestResponse(" user id  error");
 
             var repo = _unitOfWork.GetRepository<BZTopicModel>(true);
@@ -215,11 +230,11 @@ namespace BlazUICommunity.Api.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet("Follow/{userId}/{pageSize}/{pageIndex}")]
-        public async Task<IActionResult> QueryFollow(int userId ,
+        public async Task<IActionResult> QueryFollow(string userId ,
             [SwaggerParameter(Required = false)] int pageSize = 20 ,
             [SwaggerParameter(Required = false)]int pageIndex = 1)
         {
-            if ( userId < 1 )
+            if (string.IsNullOrWhiteSpace(userId))
                 return new BadRequestResponse(" user id  error");
 
             var repo = _unitOfWork.GetRepository<BZFollowModel>(true);

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BlazUICommunity.Utility.Filter
+namespace Blazui.Community.Utility.Filter
 {
     public class SwaggerAuthorizationFilter : IOperationFilter
     {

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace BlazUICommunity.Utility.Filter
+namespace Blazui.Community.Utility.Filter
 {
     /// <summary>
     /// 

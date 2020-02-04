@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Arch.EntityFrameworkCore.UnitOfWork;
 using Autofac;
-using BlazUICommunity.Model.Models;
-using BlazUICommunity.Repository;
-using BlazUICommunity.Utility;
-using BlazUICommunity.Utility.Configure;
-using BlazUICommunity.Utility.Extensions;
-using BlazUICommunity.Utility.MiddleWare;
+using Blazui.Community.Model.Models;
+using Blazui.Community.Repository;
+using Blazui.Community.Utility;
+using Blazui.Community.Utility.Configure;
+using Blazui.Community.Utility.Extensions;
+using Blazui.Community.Utility.MiddleWare;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -22,9 +22,9 @@ using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using AutoMapper;
-using BlazUICommunity.Utility.Jwt;
+using Blazui.Community.Utility.Jwt;
 
-namespace BlazUICommunity.Api
+namespace Blazui.Community.Api
 {
     public class Startup
     {
@@ -44,6 +44,8 @@ namespace BlazUICommunity.Api
             services.AddCustomMemoryCache();
             services.AddDbContext<BlazUICommunityContext>(opt => opt.UseMySql(Configuration.GetConnectionString("DbConnectionString")))
                 .AddUnitOfWork<BlazUICommunityContext>();//.AddCustomRepository<BZTopicModel , BZTopicRepository>(); ;
+
+            services.AddCustomRepository<BZUserModel , BZUserRepository>();
             services.AddSingleton(typeof(JwtService));
             services.AddAutoMapper(typeof(AutoMapConfiguration));
             services.AddJwtConfiguration(Configuration); 
@@ -69,8 +71,8 @@ namespace BlazUICommunity.Api
             }
 
             //Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
-
-            app.UseHttpsRedirection();
+            //app.UseHsts();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseCustomSwaggerUI(p => p.Title = "Blazui ÉçÇø WebApi Docs");

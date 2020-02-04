@@ -12,7 +12,7 @@ using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BlazUICommunity.Utility.MiddleWare
+namespace Blazui.Community.Utility.MiddleWare
 {
     /// <summary>
     /// 

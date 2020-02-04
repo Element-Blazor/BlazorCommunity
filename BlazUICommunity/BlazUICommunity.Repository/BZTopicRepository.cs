@@ -1,6 +1,6 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
-using BlazUICommunity.DTO;
-using BlazUICommunity.Model.Models;
+using Blazui.Community.DTO;
+using Blazui.Community.Model.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazUICommunity.Repository
+namespace Blazui.Community.Repository
 {
     public class BZTopicRepository : Repository<BZTopicModel>, IRepository<BZTopicModel>
     {

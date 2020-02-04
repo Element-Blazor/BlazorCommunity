@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace BlazUICommunity.Utility.Response
+namespace Blazui.Community.Utility.Response
 {
     class ValidationFailedResultModel : BaseResonse
     {

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Arch.EntityFrameworkCore.UnitOfWork;
-using BlazUICommunity.DTO;
-using BlazUICommunity.Model.Models;
-using BlazUICommunity.Repository;
-using BlazUICommunity.Utility;
-using BlazUICommunity.Utility.Filter;
-using BlazUICommunity.Utility.Jwt;
+using Blazui.Community.DTO;
+using Blazui.Community.Model.Models;
+using Blazui.Community.Repository;
+using Blazui.Community.Utility;
+using Blazui.Community.Utility.Filter;
+using Blazui.Community.Utility.Jwt;
 using IdentityModel;
 using IdentityModel.Client;
 using log4net.Repository.Hierarchy;
@@ -23,7 +23,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace BlazUICommunity.Api.Controllers
+namespace Blazui.Community.Api.Controllers
 {
     /// <summary>
     /// 

@@ -7,7 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace BlazUICommunity.Utility.Jwt
+namespace Blazui.Community.Utility.Jwt
 {
     public class JwtService
     {

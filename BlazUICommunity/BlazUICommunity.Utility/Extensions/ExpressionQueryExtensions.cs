@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace BlazUICommunity.Utility.Extensions
+namespace Blazui.Community.Utility.Extensions
 {
     public static class ExpressionQueryExtensions
     {

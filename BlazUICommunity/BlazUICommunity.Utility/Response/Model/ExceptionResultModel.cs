@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BlazUICommunity.Utility.Response
+namespace Blazui.Community.Utility.Response
 {
     public class ExceptionResultModel : BaseResonse
     {

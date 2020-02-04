@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazUICommunity.Utility
+namespace Blazui.Community.Utility
 {
     /// <summary>
     /// 

@@ -1,0 +1,90 @@
+﻿@page "/user"
+@inherits PersonCenterBase
+<div class="content-container">
+
+
+    <BLayout @ref="bLayout">
+        <West>
+            <div style="height:600px;">
+                <BCard Shadow="@ShadowShowType.Never">
+
+                    <Body>
+                        <div class="app-user-menu">
+                            <BMenu Mode="@MenuMode.Vertical" DefaultActive="0">
+                                <BMenuItem Icon="el-icon-user">
+                                    <BButton Type="@ButtonType.Text" Style="color:#000" Icon="" OnClick="e=>ChangeMenuIndex(0)">基本信息</BButton>
+                                </BMenuItem>
+                                <BMenuItem Icon="el-icon-headset">
+                                    <BButton Type="@ButtonType.Text" Style="color:#000" Icon="" OnClick="e=>ChangeMenuIndex(1)">修改头像</BButton>
+                                </BMenuItem>
+                                <BMenuItem Icon="el-icon-lock">
+                                    <BButton Type="@ButtonType.Text" Style="color:#000" Icon="" OnClick="e=>ChangeMenuIndex(2)">修改密码</BButton>
+                                </BMenuItem>
+                                <BMenuItem Icon="el-icon-collection-tag">
+                                    <BButton Type="@ButtonType.Text" Style="color:#000" Icon="" OnClick="e=>ChangeMenuIndex(3)">我的帖子</BButton>
+                                </BMenuItem>
+                            </BMenu>
+                        </div>
+                    </Body>
+                </BCard>
+            </div>
+        </West>
+        <Center>
+            <BTab Type="@TabType.Card" @ref="bTab">
+                @{
+                    var title = "基本信息";
+                    switch ( CurrentMenuIndex )
+                    {
+                        case 0:
+                        default:
+                            title = "基本信息";
+                            break;
+                        case 1:
+                            title = "修改头像";
+                            break;
+                        case 2:
+                            title = "修改密码"; 
+                            break;
+                        case 3:
+                            title = "我的帖子";
+                            break;
+                    }
+                }
+
+                <BTabPanel Title="@title">
+                    @switch ( CurrentMenuIndex )
+                    {
+                        case 0:
+                        default:
+                            @if ( Disabled )
+                            {
+                                <PersonalInfo @ref="personalInfo" EditUser="EditUser" SaveUser="SaveUser" Disabled="true"></PersonalInfo>
+                            }
+                            else
+                            {
+                                <PersonalInfo @ref="personalInfo" EditUser="EditUser" SaveUser="SaveUser" Disabled="false"></PersonalInfo>
+                            }
+
+                            break;
+                        case 1:
+                            <PersonalSet @ref="ava"></PersonalSet>
+                            break;
+                        case 2:
+                            <PersonalSet @ref="ava"></PersonalSet>
+
+                            break;
+                        case 3:
+                            <PersonalTopic @ref="top"></PersonalTopic>
+
+                            break;
+
+                    }
+                </BTabPanel>
+            </BTab>
+        </Center>
+    </BLayout>
+</div>
+
+@code {
+
+}

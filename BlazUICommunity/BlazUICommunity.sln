@@ -3,29 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.Api", "BlazUICommunity.Api\BlazUICommunity.Api.csproj", "{0A07D0EF-948B-4C0E-B123-8A202E5F6676}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Api", "BlazUICommunity.Api\Blazui.Community.Api.csproj", "{0A07D0EF-948B-4C0E-B123-8A202E5F6676}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.App", "BlazUICommunity.App\BlazUICommunity.App.csproj", "{7ED5522D-6335-4934-B910-08CF4DFA4731}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.App", "BlazUICommunity.App\Blazui.Community.App.csproj", "{7ED5522D-6335-4934-B910-08CF4DFA4731}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.Model", "BlazUICommunity.Model\BlazUICommunity.Model.csproj", "{A3F88305-6BC0-4FE5-A7E3-F6A611E6A3F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Model", "BlazUICommunity.Model\Blazui.Community.Model.csproj", "{A3F88305-6BC0-4FE5-A7E3-F6A611E6A3F1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.Utility", "BlazUICommunity.Utility\BlazUICommunity.Utility.csproj", "{0F08BA12-E388-4FCF-AB90-7E4E7CB2ADA4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.IdentityServer4", "BlazUICommunity.IdentityServer4\BlazUICommunity.IdentityServer4.csproj", "{5481E37B-6307-4DF9-89C1-06D91CDD3D33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Utility", "BlazUICommunity.Utility\Blazui.Community.Utility.csproj", "{0F08BA12-E388-4FCF-AB90-7E4E7CB2ADA4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestBZCommunity", "UnitTestBZCommunity\UnitTestBZCommunity.csproj", "{C622138C-465A-4FA8-9086-61C1508FB391}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.Test", "BlazUICommunity.Test\BlazUICommunity.Test.csproj", "{29877874-1FB2-455F-A970-3959E711E527}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Test", "BlazUICommunity.Test\Blazui.Community.Test.csproj", "{29877874-1FB2-455F-A970-3959E711E527}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.UnitOfWork", "BlazUICommunity.UnitOfWork\BlazUICommunity.UnitOfWork.csproj", "{4E0B8EC1-710D-4AFE-9FE6-89B7F0E3FB26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.UnitOfWork", "BlazUICommunity.UnitOfWork\Blazui.Community.UnitOfWork.csproj", "{4E0B8EC1-710D-4AFE-9FE6-89B7F0E3FB26}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.Repository", "BlazUICommunity.Repository\BlazUICommunity.Repository.csproj", "{BDEFA4C3-A69F-47BC-88CD-27B32D02456F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Repository", "BlazUICommunity.Repository\Blazui.Community.Repository.csproj", "{BDEFA4C3-A69F-47BC-88CD-27B32D02456F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.DTO", "BlazUICommunity.DTO\BlazUICommunity.DTO.csproj", "{EE2464C8-5E94-4C23-9DB8-92726F78A6B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.DTO", "BlazUICommunity.DTO\Blazui.Community.DTO.csproj", "{EE2464C8-5E94-4C23-9DB8-92726F78A6B8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazUICommunity.Request", "BlazUICommunity.Request\BlazUICommunity.Request.csproj", "{ED9778D8-1BB2-4158-8E67-0F689D02200C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Component", "..\..\..\github\Blazui\src\Blazui.Component\Blazui.Component.csproj", "{BD6C462D-CA9B-4B8C-9044-0765534478FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Request", "BlazUICommunity.Request\Blazui.Community.Request.csproj", "{ED9778D8-1BB2-4158-8E67-0F689D02200C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +45,6 @@ Global
 		{0F08BA12-E388-4FCF-AB90-7E4E7CB2ADA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F08BA12-E388-4FCF-AB90-7E4E7CB2ADA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F08BA12-E388-4FCF-AB90-7E4E7CB2ADA4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5481E37B-6307-4DF9-89C1-06D91CDD3D33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5481E37B-6307-4DF9-89C1-06D91CDD3D33}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5481E37B-6307-4DF9-89C1-06D91CDD3D33}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5481E37B-6307-4DF9-89C1-06D91CDD3D33}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C622138C-465A-4FA8-9086-61C1508FB391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C622138C-465A-4FA8-9086-61C1508FB391}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C622138C-465A-4FA8-9086-61C1508FB391}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,10 +69,6 @@ Global
 		{ED9778D8-1BB2-4158-8E67-0F689D02200C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED9778D8-1BB2-4158-8E67-0F689D02200C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED9778D8-1BB2-4158-8E67-0F689D02200C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BD6C462D-CA9B-4B8C-9044-0765534478FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD6C462D-CA9B-4B8C-9044-0765534478FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD6C462D-CA9B-4B8C-9044-0765534478FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD6C462D-CA9B-4B8C-9044-0765534478FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

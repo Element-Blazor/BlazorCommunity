@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace BlazUICommunity.Utility.Validate
+namespace Blazui.Community.Utility.Validate
 {
     public class StandardCharacterAttribute : ValidationAttribute
     {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BlazUICommunity.Utility
+namespace Blazui.Community.Utility
 {
     public static class Log4Extensions
     {

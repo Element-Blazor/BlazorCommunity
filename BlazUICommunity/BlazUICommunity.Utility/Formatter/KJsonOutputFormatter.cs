@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json;
 
-namespace BlazUICommunity.Utility.Formatter
+namespace Blazui.Community.Utility.Formatter
 {
     public class KJsonOutputFormatter : NewtonsoftJsonOutputFormatter
     {

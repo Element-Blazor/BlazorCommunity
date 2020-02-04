@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BlazUICommunity.Utility.Logger
+namespace Blazui.Community.Utility.Logger
 {
     public class EFLogger : ILogger
     {

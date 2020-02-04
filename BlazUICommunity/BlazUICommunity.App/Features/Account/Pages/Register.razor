@@ -1,61 +1,33 @@
 ﻿@page "/account/register"
-@inject UserManager<IdentityUser> userManager
-@inject NavigationManager navigationManager
-<div class="login-container">
-    <h1 class="title">Register</h1>
+@inherits RegisterBase
 
-    <EditForm Model="@registerAccountModel" OnValidSubmit="@RegisterUser">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-
-        <div class="field">
-            <label class="label">E-mail</label>
-            <div class="control">
-                <InputText name="email" id="email" class="input" type="email" @bind-Value="@registerAccountModel.Email"></InputText>
+    <div class="register-container">
+    
+        <BForm  @ref="registerForm" Value="Value">
+            <div class="title-container" style="text-align:center;">
+                <h3 class="title">
+                    Blazui社区注册
+                </h3>
             </div>
-        </div>
-        <div class="field">
-            <label class="label">Password</label>
-            <div class="control">
-                <InputText id="password" class="input" type="password" @bind-Value="@registerAccountModel.Password"></InputText>
-            </div>
-        </div>
-        <div class="field">
-            <label class="label">Confirm password</label>
-            <div class="control">
-                <InputText id="cpassword" class="input" type="password" @bind-Value="@registerAccountModel.ConfirmPassword"></InputText>
-            </div>
-        </div>
-        <div class="field">
-            <div class="control">
-                <button type="submit" class="button is-primary">Register</button>
-            </div>
-        </div>
-    </EditForm>
-</div>
-@code {
-
-    private RegisterAccountModel registerAccountModel = new RegisterAccountModel();
-
-    private async Task RegisterUser()
-    {
-        var result = await userManager.CreateAsync(new IdentityUser { UserName = registerAccountModel.Email, Email = registerAccountModel.Email, EmailConfirmed = true }, registerAccountModel.Password);
-
-        if (result.Succeeded)
-        {
-            navigationManager.NavigateTo("account/signin");
-            return;
-        }
-    }
-
-    public class RegisterAccountModel
-    {
-        [Required]
-        public string Email { get; set; }
-        [Required]
-        public string Password { get; set; }
-        [Required]
-        [Compare(nameof(Password))]
-        public string ConfirmPassword { get; set; }
-    }
-}
+            <BFormItem TValue="string" Label="用户账号" Name="@nameof(RegisterAccountDto.UserAccount)" IsRequired="true" >
+                <BInput TValue="string"  Placeholder="请输入账号"></BInput>
+            </BFormItem>
+            @*<BFormItem TValue="string" Label="手机号码" Name="@nameof(RegisterAccountModel.Mobile)" IsRequired="true">
+                <BInput TValue="string"></BInput>
+                <BButton Style="float:right;margin-top:10px;" Type="@ButtonType.Info" IsPlain="true" Icon="el-icon-message"> 发送验证码</BButton>
+            </BFormItem>
+            <BFormItem TValue="string" Label="验证码" Name="@nameof(RegisterAccountModel.VerifyCode)" IsRequired="true">
+                <BInput TValue="string"></BInput>
+            </BFormItem>*@
+            <BFormItem TValue="string" Label="密码" Name="@nameof(RegisterAccountDto.Password)" IsRequired="true">
+                <BInput TValue="string" PrefixIcon="el-icon-lock" SuffixIcon="el-icon-view" Type="@InputType.Password"  Placeholder="请输入密码"></BInput>
+            </BFormItem>
+            <BFormItem TValue="string" Label="确认密码" Name="@nameof(RegisterAccountDto.ConfirmPassword)" IsRequired="true">
+                <BInput  TValue="string" PrefixIcon="el-icon-lock" SuffixIcon="el-icon-view" Type="@InputType.Password"  Placeholder="请输入确认密码"></BInput>
+            </BFormItem>
+            <BFormActionItem>
+                <BButton Type="@ButtonType.Primary" OnClick="e=>RegisterUser()">立即注册</BButton>
+            </BFormActionItem>
+        </BForm>
+    </div>
+   

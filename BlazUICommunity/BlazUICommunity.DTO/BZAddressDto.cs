@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace BlazUICommunity.DTO
+namespace Blazui.Community.DTO
 {
     public class BZAddressDto
     {
@@ -29,6 +29,6 @@ namespace BlazUICommunity.DTO
         /// <summary>
         /// 用户ID
         /// </summary>
-        public int? UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

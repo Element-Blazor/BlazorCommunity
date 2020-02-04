@@ -3,22 +3,22 @@
 <BPopup></BPopup>
 <BLayout>
     <North>
-
+        <AppHeader></AppHeader>
     </North>
     <Center>
-        <BCard Shadow="@ShadowShowType.Never" Style="border:none;">
+        <div  class="main-layout-center">
+            <BCard Shadow="@ShadowShowType.Never" Style="border:none;">
 
-            <Body>
-                @Body
-            </Body>
-        </BCard>
+                <Body>
+                    @Body
+                </Body>
+            </BCard>
+        </div>
 
     </Center>
 
     <South>
-        <div class="el-footer">
-            下边
-        </div>
+        <AppFooter></AppFooter>
     </South>
 
 </BLayout>

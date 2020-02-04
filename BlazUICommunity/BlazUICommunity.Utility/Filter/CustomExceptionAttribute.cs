@@ -1,4 +1,4 @@
-﻿using BlazUICommunity.Utility.Response;
+﻿using Blazui.Community.Utility.Response;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using System;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
-namespace BlazUICommunity.Utility.Filter
+namespace Blazui.Community.Utility.Filter
 {
     public class CustomExceptionAttribute : IExceptionFilter
     {

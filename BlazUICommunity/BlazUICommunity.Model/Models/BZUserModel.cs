@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BlazUICommunity.Model.Models
+namespace Blazui.Community.Model.Models
 {
-    [Table("User")]
-    public partial class BZUserModel : BaseModel
+    [Table("aspnetusers")]
+    public partial class BZUserModel : IdentityUser
     {
         public BZUserModel()
         {
@@ -17,18 +18,16 @@ namespace BlazUICommunity.Model.Models
             Useraddress = new HashSet<BZAddressModel>();
             Userrealverification = new HashSet<BZUserRealVerificationModel>();
         }
-
-  
-        /// <summary>
-        /// 用户账号
-        /// </summary>
-        [StringLength(20)]
-        public string Account { get; set; }
-        /// <summary>
-        ///  IdentityUserId
-        /// </summary>
-        [StringLength(36)]
-        public Guid IdentityUser { get; set; }
+        ///// <summary>
+        ///// 用户账号
+        ///// </summary>
+        //[StringLength(20)]
+        //public string Account { get; set; }
+        ///// <summary>
+        /////  IdentityUserId
+        ///// </summary>
+        //[StringLength(36)]
+        //public string IdentityUser { get; set; }
         /// <summary>
         /// 昵称
         /// </summary>
@@ -44,12 +43,12 @@ namespace BlazUICommunity.Model.Models
         /// </summary>
         
         public string Avatar { get; set; }
-        /// <summary>
-        /// 邮箱
-        /// </summary>
-        #nullable enable
-        public string? Email { get; set; }
-        #nullable disable
+        ///// <summary>
+        ///// 邮箱
+        ///// </summary>
+        //#nullable enable
+        //public string? Email { get; set; }
+        //#nullable disable
         /// <summary>
         /// 性别0 男，1女，2呃...
         /// </summary>

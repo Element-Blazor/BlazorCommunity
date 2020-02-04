@@ -1,8 +1,8 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
-using BlazUICommunity.Model.Models;
+using Blazui.Community.Model.Models;
 using System;
 
-namespace BlazUICommunity.Repository
+namespace Blazui.Community.Repository
 {
     public class SysRoleRepository : Repository<SysRoleModel>, IRepository<SysRoleModel>
     {

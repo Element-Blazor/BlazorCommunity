@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace BlazUICommunity.Model
+namespace Blazui.Community.Model
 {
    public  class BaseModel
     {

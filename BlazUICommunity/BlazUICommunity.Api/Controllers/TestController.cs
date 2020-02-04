@@ -4,16 +4,16 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Arch.EntityFrameworkCore.UnitOfWork;
-using BlazUICommunity.Model.Models;
-using BlazUICommunity.Repository;
-using BlazUICommunity.Utility.Filter;
+using Blazui.Community.Model.Models;
+using Blazui.Community.Repository;
+using Blazui.Community.Utility.Filter;
 using log4net.Repository.Hierarchy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace BlazUICommunity.Api.Controllers
+namespace Blazui.Community.Api.Controllers
 {
   //  [HiddenApi]
     [Route("[controller]")]

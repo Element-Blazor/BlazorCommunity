@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazUICommunity.DTO\Blazui.Community.DTO.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.Model\Blazui.Community.Model.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.UnitOfWork\Blazui.Community.UnitOfWork.csproj" />
+  </ItemGroup>
+
+</Project>

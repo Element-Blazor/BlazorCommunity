@@ -1,0 +1,93 @@
+﻿@page "/"
+@inject AuthenticationStateProvider authenticationStateProvider
+<div class="content-container">
+    <BLayout EastWidth="200">
+        <North>
+            <ContentHeader></ContentHeader>
+        </North>
+        <Center>
+            <div  class="margin-top-10">
+                <BLayout WestWidth="0" NorthHeight="0">
+                    <Center>
+                        <BLayout>
+                            <North>
+                                <ContentAdvertisement></ContentAdvertisement>
+                            </North>
+                            <Center>
+                                <div class="margin-top-10 margin-left-0">
+                                    <BLayout NorthHeight="0">
+                                        <North>
+                                            <div class="content-card">
+                                                <BCard Shadow="@ShadowShowType.Never">
+                                                    <Body>
+                                                        <ContentTop></ContentTop>
+                                                    </Body>
+                                                </BCard>
+
+                                            </div>
+                                        </North>
+                                        <Center>
+                                            <div class="content-card">
+                                                <BCard Shadow="@ShadowShowType.Never">
+                                                    <Body>
+                                                        <ContentCenter></ContentCenter>
+                                                    </Body>
+                                                </BCard>
+
+                                            </div>
+                                        </Center>
+                                    </BLayout>
+                                </div>
+
+                            </Center>
+                        </BLayout>
+                    </Center>
+
+                </BLayout>
+            </div>
+        </Center>
+        <East>
+
+            <div class="margin-top-10" style="width:100%;">
+                <BLayout>
+                    <North>
+                        <div class="content-card">
+                            <BCard Shadow="@ShadowShowType.Never">
+                                <Body>
+                                    <ContentRight></ContentRight>
+                                </Body>
+                            </BCard>
+                        </div>
+                    </North>
+                    <Center>
+                        <div class="content-card">
+                            <BCard Shadow="@ShadowShowType.Never">
+                                <Body>
+                                    <ContentHot></ContentHot>
+                                </Body>
+                            </BCard>
+                        </div>
+                    </Center>
+                    <South>
+                        <div class="content-card">
+                            <BCard Shadow="@ShadowShowType.Never">
+                                <Body>
+                                    <ContentFooter></ContentFooter>
+                                </Body>
+                            </BCard>
+                        </div>
+                    </South>
+                </BLayout>
+            </div>
+        </East>
+    </BLayout>
+</div>
+
+
+
+@*@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await authenticationStateProvider.GetAuthenticationStateAsync();
+    }
+}*@

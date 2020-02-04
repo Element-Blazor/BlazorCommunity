@@ -1,4 +1,4 @@
-﻿using BlazUICommunity.Utility.Response;
+﻿using Blazui.Community.Utility.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BlazUICommunity.Utility.Filter
+namespace Blazui.Community.Utility.Filter
 {
     public class CustomValidateModelAttribute : ActionFilterAttribute
     {

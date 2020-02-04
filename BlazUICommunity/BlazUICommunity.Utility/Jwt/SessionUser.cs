@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BlazUICommunity.Utility.Jwt
+namespace Blazui.Community.Utility.Jwt
 {
     public class SessionUser
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string Name { get; set; }
 

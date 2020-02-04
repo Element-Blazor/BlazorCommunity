@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace BlazUICommunity.Utility
+namespace Blazui.Community.Utility
 {
     /// <summary>
     /// RSA ECC

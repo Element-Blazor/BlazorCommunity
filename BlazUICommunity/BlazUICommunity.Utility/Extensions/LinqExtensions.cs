@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace BlazUICommunity.Utility.Extensions
+namespace Blazui.Community.Utility.Extensions
 {
     public static class LinqExtensions
     {

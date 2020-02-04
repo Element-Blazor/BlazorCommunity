@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BlazUICommunity.DTO
+namespace Blazui.Community.DTO
 {
    public class ChangePwdModel
     {

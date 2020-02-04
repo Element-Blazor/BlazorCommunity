@@ -4,7 +4,7 @@
     "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:53434",
-      "sslPort": 44349
+      "sslPort": 0
     }
   },
   "profiles": {
@@ -15,10 +15,10 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "BlazUICommunity.App": {
+    "Blazui.Community.App": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "applicationUrl": "https://localhost:6001;http://localhost:6000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

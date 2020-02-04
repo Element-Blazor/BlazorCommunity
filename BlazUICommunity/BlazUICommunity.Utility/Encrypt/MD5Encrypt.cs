@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazUICommunity.Utility
+namespace Blazui.Community.Utility
 {
     /// <summary>
     /// 不可逆加密

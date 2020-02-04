@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BlazUICommunity.Model.Models
+namespace Blazui.Community.Model.Models
 {
     /// <summary>
     /// 我的关注 
@@ -26,7 +26,7 @@ namespace BlazUICommunity.Model.Models
         /// <summary>
         /// 用户ID
         /// </summary>
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
     }
 }

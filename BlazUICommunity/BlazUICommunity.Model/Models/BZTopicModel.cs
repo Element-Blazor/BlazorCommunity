@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BlazUICommunity.Model.Models
+namespace Blazui.Community.Model.Models
 {
-    [Table("TopicModel")]
+    [Table("Topic")]
     public partial class BZTopicModel : BaseModel
     {
         public BZTopicModel()
@@ -34,7 +34,7 @@ namespace BlazUICommunity.Model.Models
         /// <summary>
         /// 发帖人ID
         /// </summary>
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         /// <summary>
         /// 状态 0正常，-1 删除，1已结帖
         /// </summary>

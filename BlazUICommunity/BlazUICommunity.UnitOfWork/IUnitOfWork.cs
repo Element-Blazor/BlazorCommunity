@@ -17,6 +17,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
     public interface IUnitOfWork : IDisposable
     {
         bool CommitWithTransaction(Action action);
+        Task<bool> CommitWithTransactionAsync(Action action);
         /// <summary>
         /// Changes the database name. This require the databases in the same machine. NOTE: This only work for MySQL right now.
         /// </summary>

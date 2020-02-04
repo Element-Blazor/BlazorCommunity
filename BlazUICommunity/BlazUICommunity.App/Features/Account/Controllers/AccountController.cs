@@ -1,18 +1,19 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Blazui.Community.Model.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace BlazUICommunity.App.Features.Accounts.Controllers
+namespace Blazui.Community.App.Features.Accounts.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<BZUserModel> _userManager;
+        private readonly SignInManager<BZUserModel> _signInManager;
         private readonly IDataProtector _dataProtector;
 
-        public AccountController(IDataProtectionProvider dataProtectionProvider, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(IDataProtectionProvider dataProtectionProvider, UserManager<BZUserModel> userManager, SignInManager<BZUserModel> signInManager)
         {
             _dataProtector = dataProtectionProvider.CreateProtector("SignIn");
             _userManager = userManager;
@@ -27,9 +28,8 @@ namespace BlazUICommunity.App.Features.Accounts.Controllers
             var parts = data.Split('|');
 
             var identityUser = await _userManager.FindByIdAsync(parts[0]);
-
+        var user = await _userManager.GetUserAsync(HttpContext.User); 
             var isTokenValid = await _userManager.VerifyUserTokenAsync(identityUser, TokenOptions.DefaultProvider, "SignIn", parts[1]);
-
             if (isTokenValid)
             {
                 await _signInManager.SignInAsync(identityUser, true);
@@ -51,7 +51,7 @@ namespace BlazUICommunity.App.Features.Accounts.Controllers
         {
             await _signInManager.SignOutAsync();
 
-            return Redirect("/account/signedout");
+            return Redirect("/");
         }
     }
 }

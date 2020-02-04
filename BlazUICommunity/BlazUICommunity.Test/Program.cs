@@ -1,10 +1,7 @@
-﻿using Arch.EntityFrameworkCore.UnitOfWork;
-using BlazUICommunity.Model.Models;
-using BlazUICommunity.Repository;
+﻿using Blazui.Community.Model.Models;
 using System;
-using System.Security.Cryptography;
 
-namespace BlazUICommunity.Test
+namespace Blazui.Community.Test
 {
     class Program
     {
@@ -12,8 +9,8 @@ namespace BlazUICommunity.Test
         {
             Console.WriteLine("Hello World!");
 
-            Guid s1 = Guid.Parse("0edf5111-204c-404f-99fa-aeaf592884e7");
-            using ( BlazUICommunityContext  communityContext=new BlazUICommunityContext() )
+            //Guid s1 = Guid.Parse("0edf5111-204c-404f-99fa-aeaf592884e7");
+            using ( BlazUICommunityContext communityContext =new BlazUICommunityContext() )
             {
                 communityContext.Database.EnsureCreated();
                 //BZUserModel bZUserModel = new BZUserModel() { 

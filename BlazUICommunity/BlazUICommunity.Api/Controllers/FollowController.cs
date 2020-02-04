@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 using Arch.EntityFrameworkCore.UnitOfWork;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
-using BlazUICommunity.DTO;
-using BlazUICommunity.Model.Models;
-using BlazUICommunity.Request;
-using BlazUICommunity.Utility.Extensions;
-using BlazUICommunity.Utility.Response;
+using Blazui.Community.DTO;
+using Blazui.Community.Model.Models;
+using Blazui.Community.Request;
+using Blazui.Community.Utility.Extensions;
+using Blazui.Community.Utility.Response;
 using log4net.Repository.Hierarchy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace BlazUICommunity.Api.Controllers
+namespace Blazui.Community.Api.Controllers
 {
     /// <summary>
     /// 关注

@@ -1,11 +1,11 @@
-﻿using BlazUICommunity.Utility.Response;
+﻿using Blazui.Community.Utility.Response;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
-namespace BlazUICommunity.Utility.Response
+namespace Blazui.Community.Utility.Response
 {
 
 

@@ -1,5 +1,5 @@
 ﻿
-using BlazUICommunity.Utility.Filter;
+using Blazui.Community.Utility.Filter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Redis;
@@ -12,10 +12,10 @@ using System.Reflection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using BlazUICommunity.Utility.Formatter;
+using Blazui.Community.Utility.Formatter;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace BlazUICommunity.Utility.Configure
+namespace Blazui.Community.Utility.Configure
 {
     public static class ServiceCollectionExtensions
     {
@@ -152,7 +152,7 @@ namespace BlazUICommunity.Utility.Configure
                 {
                     DateFormatString = "yyyy-MM-dd HH:mm:ss" ,
                     ContractResolver = new DefaultContractResolver() ,
-                    NullValueHandling = NullValueHandling.Ignore ,
+                    //NullValueHandling = NullValueHandling.Ignore ,
                     DateFormatHandling = DateFormatHandling.IsoDateFormat ,
                     DateParseHandling = DateParseHandling.None ,
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore ,
@@ -190,7 +190,7 @@ namespace BlazUICommunity.Utility.Configure
         }
         public static IServiceCollection AddCustomMemoryCache(this IServiceCollection services)
         {
-            services.AddMemoryCache(p=>p.ExpirationScanFrequency=TimeSpan.FromMinutes(1));
+            services.AddMemoryCache(p=>p.ExpirationScanFrequency=TimeSpan.FromMinutes(5));
 
             return services;
         }

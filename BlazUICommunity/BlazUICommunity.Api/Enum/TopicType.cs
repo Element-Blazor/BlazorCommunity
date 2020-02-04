@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazUICommunity.Api.Enum
+namespace Blazui.Community.Api.Enum
 {
     /// <summary>
     /// 主题帖类型

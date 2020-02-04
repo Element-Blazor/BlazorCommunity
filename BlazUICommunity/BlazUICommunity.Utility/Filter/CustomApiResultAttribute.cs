@@ -1,4 +1,4 @@
-﻿using BlazUICommunity.Utility.Response;
+﻿using Blazui.Community.Utility.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BlazUICommunity.Utility.Filter
+namespace Blazui.Community.Utility.Filter
 {
     public class CustomApiResultAttribute : ActionFilterAttribute
     {

@@ -1,8 +1,9 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
-using BlazUICommunity.DTO;
-using BlazUICommunity.Model.Models;
-using BlazUICommunity.Utility;
+using Blazui.Community.DTO;
+using Blazui.Community.Model.Models;
+using Blazui.Community.Utility;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;
 using MySql.Data.MySqlClient;
 using System;
@@ -11,13 +12,12 @@ using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazUICommunity.Repository
+namespace Blazui.Community.Repository
 {
     public class BZUserRepository : Repository<BZUserModel>, IRepository<BZUserModel>
     {
         public BZUserRepository(BlazUICommunityContext dbContext) : base(dbContext)
         {
-
         }
         [Inject]
         private IMemoryCache memoryCache { get; set; }
@@ -58,7 +58,7 @@ namespace BlazUICommunity.Repository
             var users = memoryCache.Get<List<BZUserModel>>(nameof(BZUserModel));
             if ( users != null )
             {
-                return users.Single(p => p.Account == Account);
+                return users.Single(p => p.UserName == Account);
             }
             return null;
         }
@@ -156,5 +156,6 @@ namespace BlazUICommunity.Repository
             //}
             return dtos;
         }
+
     }
 }

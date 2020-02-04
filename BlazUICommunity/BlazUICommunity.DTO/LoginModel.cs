@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace BlazUICommunity.DTO
+namespace Blazui.Community.DTO
 {
     public class LoginModel
     {

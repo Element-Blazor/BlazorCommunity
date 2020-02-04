@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>Blazui.Community.Api.xml</DocumentationFile>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="nlog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
+    <PackageReference Include="NLog" Version="4.6.8" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.6.1" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazUICommunity.DTO\Blazui.Community.DTO.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.Model\Blazui.Community.Model.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.Repository\Blazui.Community.Repository.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.Request\Blazui.Community.Request.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.UnitOfWork\Blazui.Community.UnitOfWork.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.Utility\Blazui.Community.Utility.csproj" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="http://json.schemastore.org/mta" /></VisualStudio></ProjectExtensions>
+
+
+</Project>

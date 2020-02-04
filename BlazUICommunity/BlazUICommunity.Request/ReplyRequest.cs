@@ -1,11 +1,11 @@
-﻿using BlazUICommunity.Utility.Extensions;
-using BlazUICommunity.Utility.Request;
+﻿using Blazui.Community.Utility.Extensions;
+using Blazui.Community.Utility.Request;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace BlazUICommunity.Request
+namespace Blazui.Community.Request
 {
   public  class ReplyRequest : BaseRequest
     {
