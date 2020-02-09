@@ -1,4 +1,5 @@
 ﻿using Blazui.Community.App.Pages;
+using Blazui.Community.Model.Models;
 using Blazui.Component.NavMenu;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Blazui.Community.App.Shared
     {
 
         protected bool IsLogin = false;
+        protected BZUserModel BzUser { get;private set; }
         protected override async Task InitilizePageDataAsync()
         {
 
@@ -30,7 +32,7 @@ namespace Blazui.Community.App.Shared
         }
         protected void GotoUCentor()
         {
-            navigationManager.NavigateTo("/user" , forceLoad: true);
+            navigationManager.NavigateTo("/user/base" , forceLoad: true);
         }
         protected void LoginOut()
         {

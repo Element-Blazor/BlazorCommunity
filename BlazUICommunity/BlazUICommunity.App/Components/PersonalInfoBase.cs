@@ -1,43 +1,32 @@
-﻿using AutoMapper;
-using Blazui.Community.App.Model;
-using Blazui.Community.App.Pages;
-using Blazui.Community.App.Service;
-using Blazui.Community.DTO;
+﻿using Blazui.Community.App.Pages;
 using Blazui.Community.Model.Models;
-using Blazui.Community.Repository;
 using Blazui.Component;
 using Blazui.Component.EventArgs;
-using Blazui.Component.Form;
+using Blazui.Component.Input;
 using Blazui.Component.Radio;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Components
 {
-    public class PersonalInfoBase : PageBase
+    public class PersonalInfoBase : PersonalPageBase
     {
-        [Parameter]
-        public BForm userInfoForm { get; set; }
-        //[Parameter]
+        protected BForm userInfoForm { get; set; }
         protected BZUserModel User { get; set; }
-        [Parameter]
-        public bool Disabled { get; set; }
-
+        protected BInput<string> bInputSignature { get; set; }
+        protected bool Disabled { get; set; } = true;
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-     
+
             await base.OnAfterRenderAsync(firstRender);
-            userInfoForm?.MarkAsRequireRender();
-            this.MarkAsRequireRender();
-            if ( firstRender )
+
+            if (firstRender)
+            {
+                StateHasChanged();
+            }
+            else
             {
                 return;
             }
@@ -51,15 +40,78 @@ namespace Blazui.Community.App.Components
         {
             var userstatue = await authenticationStateTask;
             User = await userManager.GetUserAsync(userstatue.User);
-            //return Task.CompletedTask;
         }
 
-        [Parameter]
-        public EventCallback<MouseEventArgs> EditUser { get; set; }
-        [Parameter]
-        public EventCallback<MouseEventArgs> SaveUser { get; set; }
- 
+
+        protected override void InitTabTitle()
+        {
+            tabTitle = "基本信息";
+        }
+
+        /*
+          * / <summary>
+          * / 切换表单为可输入状态
+          * / </summary>
+          */
+        protected async Task EditUser()
+        {
+            Disabled = false;
+            StateHasChanged();
+             await   Task.CompletedTask;
+        }
+
+        /*
+		 * / <summary>
+		 * / 更新用户
+		 * / </summary>
+		 */
+        protected async Task SaveUser()
+        {
+            if (!userInfoForm.IsValid())
+                return;
+            await UpdateUser();
+        }
+
+
+        /*
+		 * / <summary>
+		 * / 更新用户提交DB
+		 * / </summary>
+		 * / <returns></returns>
+		 */
+        private async Task UpdateUser()
+        {
+            var model = userInfoForm.GetValue<BZUserModel>();
+            var user = await userManager.FindByNameAsync(model.UserName);
+
+            user.NickName = model.NickName;
+            user.Sex = model.Sex;
+            user.Signature = model.Signature;
+            //user.Email = model.Email;
+            //user.Avatar = model.Avatar;
+            //user.Mobile = model.Mobile;
+            //user.LastLoginAddr = model.LastLoginAddr;
+            var result = await userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                //User = user;
+                //Disabled = true;
+                //this.RequireRender = true;
+                //StateHasChanged();
+               await navigationToUpdateUserUI("/user/base");
+            }
+            else
+            {
+                MessageService.Show("更新失败", MessageType.Error);
+            }
+        }
+
+        protected override bool ShouldRender()
+        {
+            return true;
+        }
     }
 
- 
+
 }

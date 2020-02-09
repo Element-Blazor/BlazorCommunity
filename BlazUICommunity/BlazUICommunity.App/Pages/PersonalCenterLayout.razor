@@ -1,0 +1,33 @@
+﻿@using Blazui.Community.App.Pages
+@layout MainLayout
+@page "/user"
+@inherits PersonalCenterLayoutBase
+<div class="content-container">
+    <BLayout @ref="bLayout" EnableAlwaysRender="true">
+        <West>
+            <div style="height:600px;">
+                <BCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true" @ref="bCard">
+
+                    <Body>
+                        <div class="app-user-menu" style="min-height: 558px;">
+
+                            <BMenu Mode="@MenuMode.Vertical" DefaultActive="0" @ref="bmenu" EnableAlwaysRender="true">
+                                @if (personalCenterMenuModels != null)
+                                    @foreach (var menu in personalCenterMenuModels)
+                                    {
+                                        <BMenuItem Icon="@menu.Icon" Index="@menu.Index.ToString()" Route="@menu.Route" EnableAlwaysRender="true">
+                                            @menu.Title
+                                        </BMenuItem>
+                                    }
+                            </BMenu>
+                        </div>
+                    </Body>
+                </BCard>
+            </div>
+        </West>
+        <Center>
+            @Body
+        </Center>
+    </BLayout>
+</div>
+

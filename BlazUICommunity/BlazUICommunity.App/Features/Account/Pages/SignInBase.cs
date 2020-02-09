@@ -1,20 +1,11 @@
 ﻿using Blazui.Community.App.Pages;
-using Blazui.Community.App.Shared;
-using Blazui.Community.DTO;
-using Blazui.Community.Model.Models;
 using Blazui.Component;
-using Blazui.Component.Form;
-using Blazui.Component.Popup;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Features.Account.Pages

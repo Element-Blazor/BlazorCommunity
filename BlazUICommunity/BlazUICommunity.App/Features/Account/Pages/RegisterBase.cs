@@ -1,15 +1,8 @@
 ﻿using Blazui.Community.App.Pages;
 using Blazui.Community.DTO;
-using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
 using Blazui.Component;
-using Blazui.Component.Form;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Features.Account.Pages
@@ -33,7 +26,7 @@ namespace Blazui.Community.App.Features.Account.Pages
                 MessageService.Show("两次密码输入不一致",MessageType.Error);
                 return;
             }
-            var user = await userManager.FindByEmailAsync(registerAccountModel.UserAccount);
+            var user = await userManager.FindByNameAsync(registerAccountModel.UserAccount);
             if ( user != null )
             {
                 MessageService.Show("用户账号已存在", MessageType.Error);

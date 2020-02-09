@@ -18,7 +18,7 @@ namespace Blazui.Community.Repository
     {
         private UserManager<BZUserModel> _userManager;
         private IUnitOfWork _IUnitOfWork;
-        public BZUserIdentityRepository(BlazUICommunityIdentityContext dbContext , UserManager<BZUserModel> userManager , IUnitOfWork unitOfWork) : base(dbContext)
+        public BZUserIdentityRepository(BlazUICommunityContext dbContext , UserManager<BZUserModel> userManager , IUnitOfWork unitOfWork) : base(dbContext)
         {
             _IUnitOfWork = unitOfWork;
             _userManager = userManager;
@@ -162,10 +162,6 @@ namespace Blazui.Community.Repository
         }
 
 
-        public async Task<bool> CreateUserAsync(string userAccount , string Password)
-        {
-            return await CreateUserAsync(userAccount , Password);
-        }
 
         public async Task<bool> CreateUserAsync(string userAccount , string Password , string Mobile = null)
         {
@@ -173,6 +169,7 @@ namespace Blazui.Community.Repository
                  new BZUserModel
                  {
                      UserName = userAccount ,
+                     NickName=userAccount,
                      Email = "" ,
                      EmailConfirmed = false ,
                      NormalizedUserName = userAccount ,
@@ -181,7 +178,7 @@ namespace Blazui.Community.Repository
                      LastLoginDate = DateTime.Now ,
                      Status = 0 ,
                      Avatar = "/img/defaultAct.png" ,
-                     Mobile = Mobile??""
+                     PhoneNumber = Mobile??""
                  } , Password);
             if ( result.Succeeded )
             {

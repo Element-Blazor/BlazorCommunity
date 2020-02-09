@@ -1,12 +1,10 @@
-﻿@inherits BComponentBase
-<h3>PersonalTopic</h3>
+﻿@using Blazui.Community.App.Pages
+@layout PersonalCenterLayout
+@page "/user/topic"
+@inherits PersonalTopicBase
 
-@code {
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-
-        await base.OnAfterRenderAsync(firstRender);
-        MarkAsRequireRender();
-    }
-}
+<BTab Type="@TabType.Card" @ref="bTab" EnableAlwaysRender="true">
+    <BTabPanel Title="@tabTitle" @ref="bTabPanel" EnableAlwaysRender="true">
+        <h3>PersonalTopic</h3>
+    </BTabPanel>
+</BTab>

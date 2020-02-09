@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Blazui.Community.Model.Models
 {
-    public partial class BlazUICommunityContext : IdentityDbContext
+    public partial class BlazUICommunityContext : IdentityDbContext<BZUserModel, ApplicationRole, int>
     {
        // public static readonly ILoggerFactory MyLoggerFactory
        //= LoggerFactory.Create(builder =>
@@ -39,6 +39,8 @@ namespace Blazui.Community.Model.Models
         public virtual DbSet<SysUserModel> SysUser { get; set; }
         public virtual DbSet<SysMenuModel> SysMenu { get; set; }
         public virtual DbSet<SysRoleModel> SysRole { get; set; }
+        public virtual DbSet<BzVerifyCodeModel> BzVerifyCode { get; set; }
+        
         public virtual DbSet<SysRoleMenuMappingModel> SysRoleMenuMapping { get; set; }
         public virtual DbSet<SysUserMenuMappingModel> SysUserMenuMapping { get; set; }
         public virtual DbSet<SysUserRoleMappingModel> SysUserRoleMapping { get; set; }

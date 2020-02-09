@@ -26,7 +26,6 @@ namespace Blazui.Community.App.Pages
         public MessageService MessageService { get; set; }
         [Inject]
         public MessageBox MessageBox { get; set; }
-        public  BZUserModel BzUser { get; set; }
 
         [Inject]
         public IMapper mapper { get; set; }
@@ -38,11 +37,10 @@ namespace Blazui.Community.App.Pages
         [Inject]
         public NavigationManager navigationManager { get; set; }
 
-        MainLayoutBase mainLayoutBase;
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
-            if ( !firstRender )
+            if ( !firstRender)
             {
                 return;
             }
@@ -56,17 +54,25 @@ namespace Blazui.Community.App.Pages
                 });
                 await InitilizePageDataAsync();
                 LoadingService.CloseFullScreenLoading();
+                RequireRender = true;
+
+                StateHasChanged();
             }
             catch ( Exception  ex)
             {
+                await Task.Delay(100);
+                await InitilizePageDataAsync();
+                LoadingService.CloseFullScreenLoading();
+                RequireRender = true;
+                StateHasChanged();
                 Console.WriteLine(ex.Message);
             }
-          
-            RequireRender = true;
-            StateHasChanged();
-            //LoadingService.CloseFullScreenLoading();
         }
-     
+
+        protected override bool ShouldRender()
+        {
+            return true;
+        }
         protected abstract Task InitilizePageDataAsync();
     }
 }

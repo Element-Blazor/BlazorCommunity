@@ -84,9 +84,9 @@ namespace Blazui.Community.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut("Update/{Id}")]
-        public IActionResult Update([FromBody] BZUserDto Dto , [FromRoute] string Id)
+        public IActionResult Update([FromBody] BZUserDto Dto , [FromRoute] int Id)
         {
-            if ( string.IsNullOrWhiteSpace(Id) )
+            if (Id<1)
                 return new BadRequestResponse("id is error");
             var user = _mapper.Map<BZUserModel>(Dto);
             user.Id = Id;
@@ -168,12 +168,12 @@ namespace Blazui.Community.Api.Controllers
         /// <param name="title"></param>
         /// <returns></returns>
         [HttpGet("Topic/{userId}/{pageSize}/{pageIndex}/{title}")]
-        public async Task<IActionResult> QueryTopic(string userId ,
+        public async Task<IActionResult> QueryTopic(int userId ,
             [SwaggerParameter(Required = false)] int pageSize = 20 ,
             [SwaggerParameter(Required = false)]int pageIndex = 1 ,
             [SwaggerParameter(Required = false)]string title = "")
         {
-            if ( string.IsNullOrWhiteSpace(userId) )
+            if (userId<1)
                 return new BadRequestResponse(" user id  error");
 
             var repo = _unitOfWork.GetRepository<BZTopicModel>(true);
@@ -230,11 +230,11 @@ namespace Blazui.Community.Api.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet("Follow/{userId}/{pageSize}/{pageIndex}")]
-        public async Task<IActionResult> QueryFollow(string userId ,
+        public async Task<IActionResult> QueryFollow(int userId ,
             [SwaggerParameter(Required = false)] int pageSize = 20 ,
             [SwaggerParameter(Required = false)]int pageIndex = 1)
         {
-            if (string.IsNullOrWhiteSpace(userId))
+            if (userId<1)
                 return new BadRequestResponse(" user id  error");
 
             var repo = _unitOfWork.GetRepository<BZFollowModel>(true);

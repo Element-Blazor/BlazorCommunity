@@ -1,0 +1,22 @@
+﻿@using Blazui.Community.App.Pages
+@layout PersonalCenterLayout
+@page "/user/avator"
+@inherits PersonalAvatorBase
+<BTab Type="@TabType.Card" @ref="bTab" EnableAlwaysRender="true">
+    <BTabPanel Title="@tabTitle" @ref="bTabPanel" EnableAlwaysRender="true">
+        <BForm Style="width:400px;" @ref="bForm" Value="value">
+
+            <BFormItem TValue="IFileModel[]" Label="" Name="@nameof(UploadActivity.Previews)">
+                <UploadAvatar Url="@UploadApiUrl"
+                              UploadType="UploadType.Image"
+                              EnablePasteUpload="true" Limit="1"
+                              AllowExtensions="@(new string[] { " .jpg",".png"})">
+                </UploadAvatar>
+            </BFormItem>
+            <BFormActionItem>
+                <BButton Type="@ButtonType.Primary" Style="width:178px;" OnClick="e=>Submit()" IsPlain="true">保存</BButton>
+            </BFormActionItem>
+        </BForm>
+    </BTabPanel>
+</BTab>
+

@@ -7,17 +7,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Blazui.Community.Model.Models
 {
     [Table("aspnetusers")]
-    public partial class BZUserModel : IdentityUser
+    public partial class BZUserModel : IdentityUser<int>
     {
-        public BZUserModel()
-        {
-            Follow = new HashSet<BZFollowModel>();
-            Point = new HashSet<BZPointModel>();
-            Thirdaccount = new HashSet<BZThirdAccountModel>();
-            Topic = new HashSet<BZTopicModel>();
-            Useraddress = new HashSet<BZAddressModel>();
-            Userrealverification = new HashSet<BZUserRealVerificationModel>();
-        }
+        //public BZUserModel()
+        //{
+        //    Follow = new HashSet<BZFollowModel>();
+        //    Point = new HashSet<BZPointModel>();
+        //    Thirdaccount = new HashSet<BZThirdAccountModel>();
+        //    Topic = new HashSet<BZTopicModel>();
+        //    Useraddress = new HashSet<BZAddressModel>();
+        //    Userrealverification = new HashSet<BZUserRealVerificationModel>();
+        //}
         ///// <summary>
         ///// 用户账号
         ///// </summary>
@@ -33,11 +33,11 @@ namespace Blazui.Community.Model.Models
         /// </summary>
         [StringLength(50)]
         public string NickName { get; set; }
-        /// <summary>
-        /// 手机号码-11位
-        /// </summary>
-        [StringLength(11)]
-        public string Mobile { get; set; }
+        ///// <summary>
+        ///// 手机号码-11位
+        ///// </summary>
+        //[StringLength(11)]
+        //public string Mobile { get; set; }
         /// <summary>
         /// 头像
         /// </summary>
@@ -88,11 +88,11 @@ namespace Blazui.Community.Model.Models
         #nullable enable
         public string? LastLoginAddr { get; set; }
         #nullable disable
-        public virtual ICollection<BZFollowModel> Follow { get; set; }
-        public virtual ICollection<BZPointModel> Point { get; set; }
-        public virtual ICollection<BZThirdAccountModel> Thirdaccount { get; set; }
-        public virtual ICollection<BZTopicModel> Topic { get; set; }
-        public virtual ICollection<BZAddressModel> Useraddress { get; set; }
-        public virtual ICollection<BZUserRealVerificationModel> Userrealverification { get; set; }
+        //public virtual ICollection<BZFollowModel> Follow { get; set; }
+        //public virtual ICollection<BZPointModel> Point { get; set; }
+        //public virtual ICollection<BZThirdAccountModel> Thirdaccount { get; set; }
+        //public virtual ICollection<BZTopicModel> Topic { get; set; }
+        //public virtual ICollection<BZAddressModel> Useraddress { get; set; }
+        //public virtual ICollection<BZUserRealVerificationModel> Userrealverification { get; set; }
     }
 }

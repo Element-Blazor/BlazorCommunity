@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Blazui.Community.Test.Migrations
 {
-    public partial class MyFirstMigration : Migration
+    public partial class test2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,8 @@ namespace Blazui.Community.Test.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -26,7 +27,8 @@ namespace Blazui.Community.Test.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -41,19 +43,17 @@ namespace Blazui.Community.Test.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false),
-                    Account = table.Column<string>(maxLength: 20, nullable: true),
                     NickName = table.Column<string>(maxLength: 50, nullable: true),
                     Mobile = table.Column<string>(maxLength: 11, nullable: true),
                     Avatar = table.Column<string>(nullable: true),
                     Sex = table.Column<int>(nullable: true),
                     Signature = table.Column<string>(nullable: true),
-                    RegisterDate = table.Column<DateTime>(nullable: true),
+                    RegisterDate = table.Column<DateTime>(nullable: false),
                     Status = table.Column<int>(nullable: true),
                     Level = table.Column<int>(nullable: true),
                     Points = table.Column<int>(nullable: true),
-                    LastLoginDate = table.Column<DateTime>(nullable: true),
-                    LastLoginType = table.Column<int>(nullable: true),
+                    LastLoginDate = table.Column<DateTime>(nullable: false),
+                    LastLoginType = table.Column<int>(nullable: false),
                     LastLoginAddr = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -196,12 +196,28 @@ namespace Blazui.Community.Test.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Verify",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    VerifyCode = table.Column<string>(nullable: true),
+                    ExpireTime = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    VerifyType = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Verify", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -226,7 +242,7 @@ namespace Blazui.Community.Test.Migrations
                     Province = table.Column<string>(maxLength: 20, nullable: true),
                     City = table.Column<string>(maxLength: 20, nullable: true),
                     District = table.Column<string>(maxLength: 20, nullable: true),
-                    UserId = table.Column<string>(nullable: true)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -236,7 +252,7 @@ namespace Blazui.Community.Test.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -245,7 +261,7 @@ namespace Blazui.Community.Test.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -267,7 +283,7 @@ namespace Blazui.Community.Test.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -284,8 +300,8 @@ namespace Blazui.Community.Test.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    UserId = table.Column<int>(nullable: false),
+                    RoleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -308,7 +324,7 @@ namespace Blazui.Community.Test.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -333,7 +349,7 @@ namespace Blazui.Community.Test.Migrations
                     Access = table.Column<int>(nullable: true),
                     Score = table.Column<int>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -343,7 +359,7 @@ namespace Blazui.Community.Test.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -357,7 +373,7 @@ namespace Blazui.Community.Test.Migrations
                     OauthId = table.Column<string>(nullable: true),
                     NickName = table.Column<string>(maxLength: 20, nullable: true),
                     Photo = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
                     HomePage = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -368,11 +384,11 @@ namespace Blazui.Community.Test.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TopicModel",
+                name: "Topic",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -381,7 +397,7 @@ namespace Blazui.Community.Test.Migrations
                     Content = table.Column<string>(nullable: true),
                     PublishTime = table.Column<DateTime>(nullable: false),
                     ModifyTime = table.Column<DateTime>(nullable: true),
-                    UserId = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: true),
                     Hot = table.Column<int>(nullable: true),
                     Top = table.Column<int>(nullable: true),
@@ -391,36 +407,13 @@ namespace Blazui.Community.Test.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TopicModel", x => x.Id);
+                    table.PrimaryKey("PK_Topic", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TopicModel_AspNetUsers_UserId",
+                        name: "FK_Topic_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserRealverification",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    IdentityNo = table.Column<string>(nullable: true),
-                    UserName = table.Column<string>(nullable: true),
-                    PhotoFront = table.Column<string>(nullable: true),
-                    PhotoBehind = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRealverification", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserRealverification_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -432,15 +425,15 @@ namespace Blazui.Community.Test.Migrations
                     TopicId = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: true),
                     FollowTime = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Follow", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Follow_TopicModel_TopicId",
+                        name: "FK_Follow_Topic_TopicId",
                         column: x => x.TopicId,
-                        principalTable: "TopicModel",
+                        principalTable: "Topic",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -448,7 +441,7 @@ namespace Blazui.Community.Test.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -469,9 +462,9 @@ namespace Blazui.Community.Test.Migrations
                 {
                     table.PrimaryKey("PK_Reply", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reply_TopicModel_TopicId",
+                        name: "FK_Reply_Topic_TopicId",
                         column: x => x.TopicId,
-                        principalTable: "TopicModel",
+                        principalTable: "Topic",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -544,13 +537,8 @@ namespace Blazui.Community.Test.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TopicModel_UserId",
-                table: "TopicModel",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserRealverification_UserId",
-                table: "UserRealverification",
+                name: "IX_Topic_UserId",
+                table: "Topic",
                 column: "UserId");
         }
 
@@ -608,13 +596,13 @@ namespace Blazui.Community.Test.Migrations
                 name: "Thirdaccount");
 
             migrationBuilder.DropTable(
-                name: "UserRealverification");
+                name: "Verify");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "TopicModel");
+                name: "Topic");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

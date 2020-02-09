@@ -24,7 +24,7 @@ namespace Blazui.Community.Model.Models
         /// <summary>
         /// 用户ID
         /// </summary>
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
         public virtual BZUserModel User { get; set; }
     }

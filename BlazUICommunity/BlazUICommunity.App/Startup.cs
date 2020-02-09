@@ -34,7 +34,7 @@ namespace Blazui.Community.App
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BlazUICommunityIdentityContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"))).AddUnitOfWork<BlazUICommunityIdentityContext>();
+            services.AddDbContext<BlazUICommunityContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"))).AddUnitOfWork<BlazUICommunityContext>();
 
             AddIdentityVerify(services);
             services.AddMemoryCache();
@@ -104,7 +104,7 @@ namespace Blazui.Community.App
         private static void AddIdentityVerify(IServiceCollection services)
         {
             services.AddScoped<AuthenticationStateProvider , RevalidatingIdentityAuthenticationStateProvider<BZUserModel>>();
-            services.AddIdentity<BZUserModel , IdentityRole>(options =>
+            services.AddIdentity<BZUserModel , ApplicationRole>(options =>
             {
                 options.Password.RequiredLength = 4;
                 options.Password.RequireUppercase = false;
@@ -122,7 +122,7 @@ namespace Blazui.Community.App
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = false;
 
-            }).AddEntityFrameworkStores<BlazUICommunityIdentityContext>()
+            }).AddEntityFrameworkStores<BlazUICommunityContext>()
             .AddDefaultTokenProviders();
             services.Configure<CookiePolicyOptions>(options =>
             {

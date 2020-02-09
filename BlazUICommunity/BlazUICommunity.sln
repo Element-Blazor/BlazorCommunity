@@ -23,6 +23,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.DTO", "Bla
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Request", "BlazUICommunity.Request\Blazui.Community.Request.csproj", "{ED9778D8-1BB2-4158-8E67-0F689D02200C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Component", "..\..\Blazui\src\Blazui.Component\Blazui.Component.csproj", "{A1ED1725-3D6F-4CA1-BD0E-3E19F57458B7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Markdown", "..\..\Blazui.Markdown\src\Blazui.Markdown\Blazui.Markdown.csproj", "{053F5CAA-B2BA-4096-942A-EFB319626226}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp1", "BlazorApp1\BlazorApp1.csproj", "{F62CAB5F-4EB3-4D4D-B785-479E6FAE86F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +75,18 @@ Global
 		{ED9778D8-1BB2-4158-8E67-0F689D02200C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED9778D8-1BB2-4158-8E67-0F689D02200C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED9778D8-1BB2-4158-8E67-0F689D02200C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1ED1725-3D6F-4CA1-BD0E-3E19F57458B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1ED1725-3D6F-4CA1-BD0E-3E19F57458B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1ED1725-3D6F-4CA1-BD0E-3E19F57458B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1ED1725-3D6F-4CA1-BD0E-3E19F57458B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{053F5CAA-B2BA-4096-942A-EFB319626226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{053F5CAA-B2BA-4096-942A-EFB319626226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{053F5CAA-B2BA-4096-942A-EFB319626226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{053F5CAA-B2BA-4096-942A-EFB319626226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F62CAB5F-4EB3-4D4D-B785-479E6FAE86F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F62CAB5F-4EB3-4D4D-B785-479E6FAE86F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F62CAB5F-4EB3-4D4D-B785-479E6FAE86F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F62CAB5F-4EB3-4D4D-B785-479E6FAE86F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

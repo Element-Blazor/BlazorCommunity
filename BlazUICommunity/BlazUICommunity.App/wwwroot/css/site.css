@@ -197,7 +197,7 @@ html {
                     }
 
             html body > app div.nav {
-                background-color: #6666FF;
+                background-color: #7014e8;
             }
 
                 html body > app div.nav > div.container {
@@ -262,7 +262,7 @@ html {
 }
 
     .content-topic-tab .el-tabs__active-bar {
-        background-color: #6666FF;
+        background-color: #7014e8;
     }
 
 .content-card {
@@ -351,7 +351,7 @@ body > app > div > div.blaz-layout-north.blaz-layout-card > div > div > ul > li.
     }
 
 app > div .is-active {
-    color: #6666FF;
+    color: #7014e8;
 }
 
 .app-nav-avatar {
@@ -367,6 +367,63 @@ app > div .is-active {
     border: none;
     border-radius: 100%;
 }
+
 .app-user-menu .el-menu {
     border-right: none;
 }
+
+
+
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+}
+
+.avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+}
+
+.app-user-info {
+    font-size: 15px;
+}
+
+    .app-user-info .el-form-item__label {
+        font-weight: 600;
+        padding-right: 30px;
+    }
+
+.app-user-password {
+    padding-right: 10px;
+    padding-left: 10px;
+    background: #fdf6ec;
+    color: #909399;
+    border-color: #E6A23C;
+}
+
+    .app-user-password > div {
+        display: inline-block;
+    }
+
+    .app-user-password .mybind {
+        font-weight: bold;
+        color: #E6A23C;
+        cursor:pointer;
+    }

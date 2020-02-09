@@ -35,6 +35,34 @@
             <param name="token">刷新的请求 {"token": "refresh_token"}</param>
             <returns></returns>
         </member>
+        <member name="T:Blazui.Community.Api.Controllers.CodeController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Blazui.Community.Api.Controllers.CodeController._bZVerifyCodeRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.CodeController.#ctor(Blazui.Community.Repository.BZVerifyCodeRepository)">
+            <summary>
+            
+            </summary>
+            <param name="bZVerifyCodeRepository"></param>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.CodeController.CreateCode(System.Int32,System.Int32,System.String)">
+            <summary>
+            生成短信验证码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.CodeController.VerifyCode(System.Int32,System.Int32,System.String)">
+            <summary>
+            验证短信验证码
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Blazui.Community.Api.Controllers.FollowController">
             <summary>
             关注
@@ -353,7 +381,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.Update(Blazui.Community.DTO.BZUserDto,System.String)">
+        <member name="M:Blazui.Community.Api.Controllers.UserController.Update(Blazui.Community.DTO.BZUserDto,System.Int32)">
             <summary>
             更新用户
             </summary>
@@ -367,9 +395,10 @@
         </member>
         <member name="M:Blazui.Community.Api.Controllers.UserController.QueryUserByName(System.String)">
             <summary>
-            根据Id查询用户
+            根据UserName查询用户
             </summary>
             <returns></returns>
+            <param name="UserName"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.UserController.Query(Blazui.Community.Request.UsersRequest)">
             <summary>
@@ -384,7 +413,7 @@
             <param name="ActiveType">1：月榜，2：周榜</param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.QueryTopic(System.String,System.Int32,System.Int32,System.String)">
+        <member name="M:Blazui.Community.Api.Controllers.UserController.QueryTopic(System.Int32,System.Int32,System.Int32,System.String)">
             <summary>
             我的主贴
             </summary>
@@ -403,7 +432,7 @@
             <param name="pageSize"></param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.QueryFollow(System.String,System.Int32,System.Int32)">
+        <member name="M:Blazui.Community.Api.Controllers.UserController.QueryFollow(System.Int32,System.Int32,System.Int32)">
             <summary>
             我的关注
             </summary>

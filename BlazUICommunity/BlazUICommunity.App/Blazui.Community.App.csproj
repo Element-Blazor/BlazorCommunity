@@ -7,21 +7,24 @@
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Blazui.Component" Version="0.0.6.2" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
-    <PackageReference Include="Blazui.Markdown" Version="0.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Blazui.Markdown\src\Blazui.Markdown\Blazui.Markdown.csproj" />
+    <ProjectReference Include="..\..\..\Blazui\src\Blazui.Component\Blazui.Component.csproj" />
     <ProjectReference Include="..\BlazUICommunity.Repository\Blazui.Community.Repository.csproj" />
     <ProjectReference Include="..\BlazUICommunity.Request\Blazui.Community.Request.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
+    <Folder Include="Components\User\" />
+    <Folder Include="wwwroot\img\header\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

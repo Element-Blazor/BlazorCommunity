@@ -46,6 +46,7 @@ namespace Blazui.Community.Api
                 .AddUnitOfWork<BlazUICommunityContext>();//.AddCustomRepository<BZTopicModel , BZTopicRepository>(); ;
 
             services.AddCustomRepository<BZUserModel , BZUserRepository>();
+            services.AddCustomRepository<BzVerifyCodeModel, BZVerifyCodeRepository>();
             services.AddSingleton(typeof(JwtService));
             services.AddAutoMapper(typeof(AutoMapConfiguration));
             services.AddJwtConfiguration(Configuration); 

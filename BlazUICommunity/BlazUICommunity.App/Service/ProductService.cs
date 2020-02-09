@@ -42,5 +42,15 @@ namespace Blazui.Community.App.Service
             HttpContent httpContent = CreateContent(bZUserUIDto);
             return httpClient.GetJsonAsync<BaseResonse>($"api/user/Update/{bZUserUIDto.Id}", httpContent);
         }
+
+        public Task<BaseResonse> CreateAndSendVerifyCodeMessage(int UserId, int CodeType,string Mobile)
+        {
+            return httpClient.GetJsonAsync<BaseResonse>($"api/code/CreateCode/{UserId}/{CodeType}/{Mobile}");
+        }
+
+        public Task<BaseResonse> VerifyVerifyCode(int UserId, int CodeType,string Code)
+        {
+            return httpClient.GetJsonAsync<BaseResonse>($"api/code/VerifyCode/{UserId}/{CodeType}/{Code}");
+        }
     }
 }

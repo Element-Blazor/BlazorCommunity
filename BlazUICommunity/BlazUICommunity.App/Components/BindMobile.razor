@@ -1,0 +1,35 @@
+﻿@inherits BindMobileBase
+<BCard EnableAlwaysRender="true" @ref="bCard">
+    <Body>
+        <BForm @ref="bForm" Value="value" LabelAlign="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
+            <BFormItem TValue="string" Label="手机：" Name="@nameof(BindMobileModel.Mobile)" IsRequired="true">
+                <BInput TValue="string" Placeholder="请输入手机号码"></BInput>
+            </BFormItem>
+            <BFormActionItem @ref="ActionMsg" EnableAlwaysRender="true" Style="text-align-last:right;">
+
+                <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e => SendBindMobileMsg()" EnableAlwaysRender="true" @ref="btnSendmsg" IsDisabled="IsDisabled">
+                    @if (countdown > 0 && countdown < 10)
+                    {
+                        @($"请等待{countdown}s后重试")
+                    }
+                    else
+                    {
+                        @("发送验证码")
+                    }
+                </BButton>
+            </BFormActionItem>
+            @if (showMobileInput)
+            {
+                <BFormItem TValue="string" Label="验证码：" Name="@nameof(BindMobileModel.VerifyCode)" IsRequired="false">
+                    <BInput TValue="string" Placeholder="请输入验证码"></BInput>
+                </BFormItem>
+                <BFormActionItem @ref="ActionVerify" EnableAlwaysRender="true" Style="text-align-last:right;">
+                    <BButton Type="@ButtonType.Success" IsPlain="true" OnClick="e => CheckAndBindMobileVerifyCode()" @ref="btnBindMobile" EnableAlwaysRender="true">
+                        绑定
+                    </BButton>
+                </BFormActionItem>
+            }
+
+        </BForm>
+    </Body>
+</BCard>

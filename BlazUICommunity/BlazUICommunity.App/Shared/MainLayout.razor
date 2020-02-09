@@ -1,13 +1,13 @@
 ﻿@inherits MainLayoutBase
 
 <BPopup></BPopup>
-<BLayout>
+<BLayout EnableAlwaysRender="true" @ref="Blayout">
     <North>
-        <AppHeader></AppHeader>
+        <AppHeader EnableAlwaysRender="true" @ref="Appheader"></AppHeader>
     </North>
     <Center>
         <div  class="main-layout-center">
-            <BCard Shadow="@ShadowShowType.Never" Style="border:none;">
+            <BCard Shadow="@ShadowShowType.Never" @ref="Bcard" Style="border:none;" EnableAlwaysRender="true">
 
                 <Body>
                     @Body

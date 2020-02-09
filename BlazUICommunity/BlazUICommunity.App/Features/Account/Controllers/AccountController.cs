@@ -53,5 +53,15 @@ namespace Blazui.Community.App.Features.Accounts.Controllers
 
             return Redirect("/");
         }
+
+
+        [Authorize]
+        [HttpGet("account/signout2")]
+        public async Task<IActionResult> SignOut2()
+        {
+            await _signInManager.SignOutAsync();
+
+            return Redirect("/account/signin");
+        }
     }
 }
