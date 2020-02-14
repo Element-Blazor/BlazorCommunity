@@ -42,7 +42,7 @@ namespace Blazui.Community.Model.Models
         /// 头像
         /// </summary>
         
-        public string Avatar { get; set; }
+        public string Avator { get; set; }
         ///// <summary>
         ///// 邮箱
         ///// </summary>

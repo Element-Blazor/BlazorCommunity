@@ -35,7 +35,7 @@ namespace Blazui.Community.Api.Controllers
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="mapper"></param>
-        public ReplyController(IUnitOfWork unitOfWork ,
+        public ReplyController(IUnitOfWork unitOfWork,
             IMapper mapper)
         {
             _mapper = mapper;
@@ -49,11 +49,25 @@ namespace Blazui.Community.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("Add")]
-        public async Task<IActionResult> Add([FromBody] BZReplyDto dto)
+        public IActionResult Add([FromBody] BZReplyDto dto)
         {
-            var user = _mapper.Map<BZReplyModel>(dto);
-             await _replyRepository.InsertAsync(user);
-            return Ok();
+            var reply = _mapper.Map<BZReplyModel>(dto);
+            var topicRepostory = _unitOfWork.GetRepository<BZTopicModel>(true);
+            var replyRepository = _unitOfWork.GetRepository<BZReplyModel>();
+            var addResult = _unitOfWork.CommitWithTransaction(async () =>
+              {
+                  var result = await replyRepository.InsertAsync(reply);
+                  if (result.Entity.Id > 0)
+                  {
+                  
+                      var topic =  topicRepostory.GetFirstOrDefault(p=>p.Id== dto.TopicId);
+                      topic.ReplyCount++;
+                      topicRepostory.Update(topic);
+                  }
+              });
+            if (addResult)
+                return Ok();
+            return BadRequest("");
         }
 
 
@@ -74,9 +88,9 @@ namespace Blazui.Community.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut("Update/{Id}")]
-        public IActionResult Update([FromBody] BZReplyDto Dto , [FromRoute] int Id)
+        public IActionResult Update([FromBody] BZReplyDto Dto, [FromRoute] int Id)
         {
-            if ( Id < 1 )
+            if (Id < 1)
                 return new BadRequestResponse("id is error");
             var user = _mapper.Map<BZReplyModel>(Dto);
             user.Id = Id;
@@ -93,7 +107,7 @@ namespace Blazui.Community.Api.Controllers
         public async Task<IActionResult> Query([FromRoute] int Id)
         {
             var res = await _replyRepository.FindAsync(Id);
-            if ( res is null )
+            if (res is null)
                 return new NoContentResponse();
             return Ok(res);
         }
@@ -105,9 +119,9 @@ namespace Blazui.Community.Api.Controllers
         public async Task<IActionResult> Query([FromBody] ReplyRequest Request = null)
         {
             IPagedList<BZReplyModel> pagedList = null;
-            var query = Request.CreateQueryExpression<BZReplyModel , ReplyRequest>();
-            pagedList = query == null ? await _replyRepository.GetPagedListAsync(Request.pageInfo.PageIndex - 1 , Request.pageInfo.PageSize) :
-                       await _replyRepository.GetPagedListAsync(query , o => o.OrderBy(p => p.Id) , null , Request.pageInfo.PageIndex - 1 , Request.pageInfo.PageSize);
+            var query = Request.CreateQueryExpression<BZReplyModel, ReplyRequest>();
+            pagedList = query == null ? await _replyRepository.GetPagedListAsync(Request.pageInfo.PageIndex - 1, Request.pageInfo.PageSize) :
+                       await _replyRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.pageInfo.PageIndex - 1, Request.pageInfo.PageSize);
             return Ok(pagedList);
         }
     }

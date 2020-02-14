@@ -1,0 +1,37 @@
+﻿@inherits ReplyItemBase
+
+@if (ReplyModel != null)
+{
+    <div class="content-reply-base">
+        <BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
+            <Header>
+                <div class="content-topic-head">
+                    <div class="content-info">
+                        <div class="content-user">
+                            <div class="content-user-avator">
+                                @if (string.IsNullOrWhiteSpace(ReplyModel.Avator))
+                                {
+                                    <img class="reply-avator-img" src="/img/defaultAct.png" />
+                                }
+                                else
+                                {
+                                    <img class="reply-avator-img" src="@ReplyModel.Avator" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-flex-col">
+                        <div class="reply-user-name">@ReplyModel.NickName</div>
+                        <div class="content-time">
+                            @ReplyModel?.LastModifyTime
+                        </div>
+                    </div>
+                </div>
+            </Header>
+            <Body>
+                <BMarkdown Text="@ReplyModel.Content" EnableAlwaysRender="true"></BMarkdown>
+            </Body>
+        </BCard>
+    </div>
+}
+

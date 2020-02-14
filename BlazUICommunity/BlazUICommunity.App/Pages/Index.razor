@@ -1,66 +1,28 @@
 ﻿@page "/"
-@inject AuthenticationStateProvider authenticationStateProvider
+@inherits IndexBase
 <div class="content-container">
-    <BLayout EastWidth="200">
-        <North>
-            <ContentHeader></ContentHeader>
-        </North>
+    <BLayout EastWidth="350"  EnableAlwaysRender="true" @ref="blayout">
         <Center>
-            <div  class="margin-top-10">
-                <BLayout WestWidth="0" NorthHeight="0">
-                    <Center>
-                        <BLayout>
-                            <North>
-                                <ContentAdvertisement></ContentAdvertisement>
-                            </North>
-                            <Center>
-                                <div class="margin-top-10 margin-left-0">
-                                    <BLayout NorthHeight="0">
-                                        <North>
-                                            <div class="content-card">
-                                                <BCard Shadow="@ShadowShowType.Never">
-                                                    <Body>
-                                                        <ContentTop></ContentTop>
-                                                    </Body>
-                                                </BCard>
-
-                                            </div>
-                                        </North>
-                                        <Center>
-                                            <div class="content-card">
-                                                <BCard Shadow="@ShadowShowType.Never">
-                                                    <Body>
-                                                        <ContentCenter></ContentCenter>
-                                                    </Body>
-                                                </BCard>
-
-                                            </div>
-                                        </Center>
-                                    </BLayout>
-                                </div>
-
-                            </Center>
-                        </BLayout>
-                    </Center>
-
-                </BLayout>
-            </div>
+            <BTab TabPosition="@TabPosition.Top" OnActiveTabChanged="ActiveTabChanged" EnableAlwaysRender="true" @ref="btab">
+                @foreach (var item in Tabs)
+                {
+                    <MainContent Title="@item.Title" TopicType="@item.TopicType" @ref="@item.main" EnableAlwaysRender="true"></MainContent>
+                }
+            </BTab>
+           
         </Center>
+
         <East>
 
-            <div class="margin-top-10" style="width:100%;">
-                <BLayout>
+            <div class="margin-top-5" style="width:100%;">
+                <BLayout  NorthHeight="30">
                     <North>
-                        <div class="content-card">
-                            <BCard Shadow="@ShadowShowType.Never">
-                                <Body>
-                                    <ContentRight></ContentRight>
-                                </Body>
-                            </BCard>
+                        <div class="newtopic">
+                            <BButton Type="@ButtonType.Success" OnClick="e=>NewTopic()" IsPlain="true" Size="@ButtonSize.Small"> 发表新帖 </BButton>
                         </div>
                     </North>
                     <Center>
-                        <div class="content-card">
+                        <div class="content-card" style="margin-top:14px;">
                             <BCard Shadow="@ShadowShowType.Never">
                                 <Body>
                                     <ContentHot></ContentHot>
@@ -69,7 +31,7 @@
                         </div>
                     </Center>
                     <South>
-                        <div class="content-card">
+                        <div class="content-card margin-top-10">
                             <BCard Shadow="@ShadowShowType.Never">
                                 <Body>
                                     <ContentFooter></ContentFooter>
@@ -85,9 +47,3 @@
 
 
 
-@*@code {
-    protected override async Task OnInitializedAsync()
-    {
-        var state = await authenticationStateProvider.GetAuthenticationStateAsync();
-    }
-}*@

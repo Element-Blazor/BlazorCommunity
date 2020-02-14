@@ -1,5 +1,6 @@
 ﻿using Blazui.Component;
 using Blazui.Component.Dom;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Components
 {
+    [Authorize]
     public class UploadAvatarBase : BUploadBase
     {
         internal ElementReference hdnField;

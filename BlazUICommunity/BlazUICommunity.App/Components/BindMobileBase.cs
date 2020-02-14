@@ -5,12 +5,14 @@ using Blazui.Community.Model.Models;
 using Blazui.Component;
 using Blazui.Component.Button;
 using Blazui.Component.Container;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Threading.Tasks;
 using static Blazui.Community.App.Data.ConstantUtil;
 
 namespace Blazui.Community.App.Components
 {
+    [Authorize]
     public class BindMobileBase : PageBase
     {
 
@@ -55,7 +57,7 @@ namespace Blazui.Community.App.Components
          
             if (VerifyCode != activity.VerifyCode)
                 return;
-            var result = await ProductService.VerifyVerifyCode(User.Id, 2, VerifyCode);
+            var result = await NetService.VerifyVerifyCode(User.Id, 2, VerifyCode);
             if (result.IsSuccess)
             {
                 var bindMobile = await userManager.SetPhoneNumberAsync(User, activity.Mobile);
@@ -76,7 +78,7 @@ namespace Blazui.Community.App.Components
 
             var activity = bForm.GetValue<BindMobileModel>();
 
-            var result = await ProductService.CreateAndSendVerifyCodeMessage(User.Id, 2, activity.Mobile);
+            var result = await NetService.CreateAndSendVerifyCodeMessage(User.Id, 2, activity.Mobile);
             if(result.IsSuccess)
             {
                 VerifyCode = result.Data.ToString();
@@ -100,8 +102,8 @@ namespace Blazui.Community.App.Components
         protected BZUserModel User;
         protected override async Task InitilizePageDataAsync()
         {
-            var userstatue = await authenticationStateTask;
-             User = await userManager.GetUserAsync(userstatue.User);
+        
+             User = await GetUser();
             value = new BindMobileModel()
             {
                 Mobile = User?.PhoneNumber ?? "",

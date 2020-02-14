@@ -1,6 +1,7 @@
 ﻿using Blazui.Community.App.Model;
 using Blazui.Component.Container;
 using Blazui.Component.NavMenu;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Pages
 {
+    [Authorize]
     public class PersonalCenterLayoutBase : LayoutComponentBase
     {
         protected  List<PersonalCenterMenuModel> personalCenterMenuModels;
@@ -26,28 +28,9 @@ namespace Blazui.Community.App.Pages
         }
         protected BTabPanel bTabPanel { get; set; }
         protected BCard bCard { get; set; }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-            if (!firstRender)
-                return;
-            bLayout?.Refresh();
-            bTab?.Refresh();
-            bmenu?.Refresh();
-            bTabPanel?.Refresh();
-            bCard?.Refresh();
-        }
-        protected override bool ShouldRender()
-        {
-            
-            return true;
-        }
-
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-
             InitTabs();
         }
         private void InitTabs()

@@ -4,40 +4,40 @@
         <img src="img/logo.svg" width="146" height="38" />
         <div class="fill"></div>
         @*<div></div>*@
-        <BMenu  BackgroundColor="transparent" Mode="MenuMode.Horizontal" HoverColor="#6633CC" TextColor="#fff" DefaultActive="0" ActiveTextColor="#fff">
-            <BMenuItem Icon="el-icon-chat-dot-round" Route=""><BButton Type="@ButtonType.Text" Style="color:#fff" OnClick="e=>NavigateToRoot()">交流</BButton></BMenuItem>
-            <BMenuItem Icon="el-icon-position" Route=""><BButton Type="@ButtonType.Text" Style="color:#fff">组件</BButton></BMenuItem>
-            <BMenuItem Icon="el-icon-document" Route=""><BButton Type="@ButtonType.Text" Style="color:#fff">文档</BButton></BMenuItem>
+    <BMenu BackgroundColor="transparent" Mode="MenuMode.Horizontal" HoverColor="#6633CC" TextColor="#fff" DefaultActive="0" ActiveTextColor="#fff">
+        <BMenuItem Icon="el-icon-chat-dot-round" Route=""><BButton Type="@ButtonType.Text" Style="color:#fff" OnClick="e=>NavigateToRoot()">交流</BButton></BMenuItem>
+        <BMenuItem Icon="el-icon-position" Route=""><BButton Type="@ButtonType.Text" Style="color:#fff" OnClick="NavigateToComponent">组件</BButton></BMenuItem>
+        <BMenuItem Icon="el-icon-document" Route=""><BButton Type="@ButtonType.Text" Style="color:#fff" OnClick="NavigateToDoc">文档</BButton></BMenuItem>
+        <BMenuItem Icon="el-icon-view" Route=""><BButton Type="@ButtonType.Text" Style="color:#fff" OnClick="NavigateToDemo">Demo</BButton></BMenuItem>
+        <li role="menuitem" tabindex="0" class="el-menu-item" style="    background-color: transparent;  color: #fff;margin-left: 150px;">
+        </li>
 
-            <li role="menuitem" tabindex="0" class="el-menu-item" style="    background-color: transparent;  color: #fff;margin-left: 150px;">
-            </li>
+        <BMenuItem Icon="" Route="" Style="margin-left:200px;">
 
-            <BMenuItem Icon="" Route="" Style="margin-left:200px;">
+            @if (IsLogin && BzUser != null)
+            {
+                <BDropDown>
+                    <Trigger>
+                        <BButton Style="border:none;background:transparent;padding:0px;">
+                            <img src="@BzUser.Avator" class="app-nav-avatar-img" />
+                            <span class="el-dropdown-link" style="vertical-align:auto;color:#fff;">
+                                @BzUser.NickName  <i class="el-icon-arrow-down el-icon--right" style="color:#fff;"></i>
+                            </span>
+                        </BButton>
+                    </Trigger>
+                    <Items>
+                        <BDropDownItem OnClick="e=>GotoUCentor()">用户中心</BDropDownItem>
+                        <BDropDownItem OnClick="e=>LoginOut()">退出</BDropDownItem>
+                    </Items>
+                </BDropDown>
+            }
+            else
+            {
+                <BButton Type="@ButtonType.Text" OnClick="e=>NavigateToLogin()" Style="color:#fff;">登录</BButton>
+            }
+        </BMenuItem>
 
-                @if ( IsLogin&&BzUser!=null)
-                {
-                    <BDropDown>
-                        <Trigger>
-                            <BButton Style="border:none;background:transparent;padding:0px;">
-                                <img src="@BzUser.Avatar" class="app-nav-avatar-img" />
-                                <span class="el-dropdown-link" style="vertical-align:auto;color:#fff;">
-                                    @BzUser.NickName  <i class="el-icon-arrow-down el-icon--right" style="color:#fff;"></i>
-                                </span>
-                            </BButton>
-                        </Trigger>
-                        <Items>
-                            <BDropDownItem OnClick="e=>GotoUCentor()">用户中心</BDropDownItem>
-                            <BDropDownItem OnClick="e=>LoginOut()">退出</BDropDownItem>
-                        </Items>
-                    </BDropDown>
-                }
-                else
-                {
-                    <BButton Type="@ButtonType.Text" OnClick="e=>NavigateToLogin()" Style="color:#fff;">登录</BButton>
-                }
-            </BMenuItem>
-
-        </BMenu>
+    </BMenu>
 
     </div>
 </div>

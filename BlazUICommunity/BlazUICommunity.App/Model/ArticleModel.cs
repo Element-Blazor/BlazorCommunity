@@ -13,6 +13,10 @@ namespace Blazui.Community.App.Model
         public TopicType TopicType { get; set; }
     }
 
+    public class ReplyModel
+    {
+        public string Content { get; set; }
+    }
     /// <summary>
     /// 主题帖类型
     /// </summary>

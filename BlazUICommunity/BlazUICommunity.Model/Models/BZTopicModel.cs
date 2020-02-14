@@ -8,11 +8,7 @@ namespace Blazui.Community.Model.Models
     [Table("Topic")]
     public partial class BZTopicModel : BaseModel
     {
-        public BZTopicModel()
-        {
-            Follow = new HashSet<BZFollowModel>();
-            Reply = new HashSet<BZReplyModel>();
-        }
+    
      
        /// <summary>
        /// 标题
@@ -60,8 +56,5 @@ namespace Blazui.Community.Model.Models
         /// </summary>
         public int? ReplyCount { get; set; }
 
-        public virtual BZUserModel User { get; set; }
-        public virtual ICollection<BZFollowModel> Follow { get; set; }
-        public virtual ICollection<BZReplyModel> Reply { get; set; }
     }
 }

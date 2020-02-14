@@ -4,6 +4,7 @@ using Blazui.Component;
 using Blazui.Component.EventArgs;
 using Blazui.Component.Input;
 using Blazui.Component.Radio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
@@ -11,26 +12,27 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Components
 {
+    [Authorize]
     public class PersonalInfoBase : PersonalPageBase
     {
         protected BForm userInfoForm { get; set; }
         protected BZUserModel User { get; set; }
         protected BInput<string> bInputSignature { get; set; }
         protected bool Disabled { get; set; } = true;
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
+        //protected override async Task OnAfterRenderAsync(bool firstRender)
+        //{
 
-            await base.OnAfterRenderAsync(firstRender);
+        //    await base.OnAfterRenderAsync(firstRender);
 
-            if (firstRender)
-            {
-                StateHasChanged();
-            }
-            else
-            {
-                return;
-            }
-        }
+        //    if (firstRender)
+        //    {
+        //        StateHasChanged();
+        //    }
+        //    else
+        //    {
+        //        return;
+        //    }
+        //}
         protected void OnStatusChanging(BChangeEventArgs<RadioStatus> e)
         {
             e.DisallowChange = Disabled;
@@ -38,8 +40,7 @@ namespace Blazui.Community.App.Components
 
         protected override async Task InitilizePageDataAsync()
         {
-            var userstatue = await authenticationStateTask;
-            User = await userManager.GetUserAsync(userstatue.User);
+            User??= await GetUser();
         }
 
 
@@ -56,6 +57,7 @@ namespace Blazui.Community.App.Components
         protected async Task EditUser()
         {
             Disabled = false;
+            this.MarkAsRequireRender();
             StateHasChanged();
              await   Task.CompletedTask;
         }

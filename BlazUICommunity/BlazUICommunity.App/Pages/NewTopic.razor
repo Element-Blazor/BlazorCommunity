@@ -20,7 +20,13 @@
                     </div>
                 </BFormItem>
                 <BFormItem TValue="object">
-                    <BButton Type="@ButtonType.Primary" OnClick="e=>Submit()">立即发布</BButton>
+                    <div style="margin-right: 130px;text-align: right;">
+                        <BButton Type="@ButtonType.Success" OnClick="e=>Submit()" IsPlain="true" Style="float: left; margin-left:10px;">立即发布</BButton>
+                        <div class="go-home" style="float: right;">
+                            <BButton Type="@ButtonType.Text" Icon="el-icon-back" Size="@ButtonSize.Medium"></BButton>
+                            <BButton Type="@ButtonType.Text" OnClick="e=>GoHome()" IsPlain="true" Size="@ButtonSize.Medium">Go Back</BButton>
+                        </div>
+                    </div>
                 </BFormItem>
             </BForm>
         </BTabPanel>

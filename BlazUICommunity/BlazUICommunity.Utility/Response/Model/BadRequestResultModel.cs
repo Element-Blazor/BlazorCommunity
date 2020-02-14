@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Blazui.Community.Utility.Response
 {
-    public class BadRequestResultModel : BaseResonse
+    public class BadRequestResultModel : BaseResponse
     {
         public BadRequestResultModel(string message)
         {

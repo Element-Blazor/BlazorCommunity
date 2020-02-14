@@ -177,7 +177,7 @@ namespace Blazui.Community.Repository
                      Sex = 0 ,
                      LastLoginDate = DateTime.Now ,
                      Status = 0 ,
-                     Avatar = "/img/defaultAct.png" ,
+                     Avator = "/img/defaultAct.png" ,
                      PhoneNumber = Mobile??""
                  } , Password);
             if ( result.Succeeded )

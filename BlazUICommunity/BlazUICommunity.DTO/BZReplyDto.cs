@@ -26,7 +26,7 @@ namespace Blazui.Community.Model.Models
         /// <summary>
         /// 用户ID
         /// </summary>
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         /// <summary>
         /// 回复的主题帖ID
         /// </summary>
@@ -39,5 +39,26 @@ namespace Blazui.Community.Model.Models
         /// 点赞数量
         /// </summary>
         public int? Favor { get; set; }
+    }
+
+   public class BZReplyDtoWithUser: BZReplyDto
+    {
+        /// <summary>
+        /// 用户名称
+        /// </summary>
+        public string UserName { get; set; }
+        /// <summary>
+        /// 用户昵称
+        /// </summary>
+        public string NickName { get; set; }
+
+        /// <summary>
+        /// 头像
+        /// </summary>
+        public string Avator { get; set; }
+        /// <summary>
+        /// 最后修改时间
+        /// </summary>
+        public string LastModifyTime { get; set; }
     }
 }

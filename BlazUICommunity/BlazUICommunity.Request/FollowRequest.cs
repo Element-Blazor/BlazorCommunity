@@ -19,12 +19,12 @@ namespace Blazui.Community.Request
         /// 关注时间开始
         /// </summary>
         [ExpressionQuery(OperationType.GreaterThanOrEqual , "FollowTime")]
-        public DateTime FollowTimeStart { get; set; }
+        public DateTime? FollowTimeStart { get; set; }
         /// <summary>
         /// 关注时间结束
         /// </summary>
         [ExpressionQuery(OperationType.LessThanOrEqual , "FollowTime")]
-        public DateTime FollowTimeEnd { get; set; }
+        public DateTime? FollowTimeEnd { get; set; }
 
         /// <summary>
         /// 用户ID

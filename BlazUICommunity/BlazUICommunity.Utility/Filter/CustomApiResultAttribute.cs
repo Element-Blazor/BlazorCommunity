@@ -16,6 +16,7 @@ namespace Blazui.Community.Utility.Filter
         }
         public override void OnResultExecuting(ResultExecutingContext context)
         {
+            base.OnResultExecuting(context);
             var objectResult = context.Result as ObjectResult;
             if (context.Result is ValidationFailedResponse)
             {
@@ -31,7 +32,7 @@ namespace Blazui.Community.Utility.Filter
             }
             else
             {
-                context.Result = new OkObjectResult(new BaseResonse(code: 200, result: objectResult?.Value, message: "success"));
+                context.Result =  new OkObjectResult(new BaseResponse(code: 200, result: (dynamic)objectResult?.Value, message: "success"));
             }
         }
     }

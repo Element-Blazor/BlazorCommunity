@@ -21,13 +21,6 @@ namespace Blazui.Community.App.Pages
             base.OnInitialized();
         }
 
-        protected override Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (!firstRender)
-                return Task.CompletedTask;
-            return base.OnAfterRenderAsync(firstRender);
-        }
-
         protected async Task Submit()
         {
             if (!form.IsValid())
@@ -45,6 +38,7 @@ namespace Blazui.Community.App.Pages
 
         private async Task AddTopic(ArticleModel article)
         {
+            var User = await GetUser();
             BZTopicDto bZTopicDto = new BZTopicDto()
             {
                 Content = article.Content,
@@ -57,12 +51,9 @@ namespace Blazui.Community.App.Pages
                 Title = article.Title,
                 TopicType = (int)article.TopicType,
                 Top = 0,
-                //UserId = BzUser.Id
+                UserId = User.Id
             };
-            var userstatue = await authenticationStateTask;
-            var User = await userManager.GetUserAsync(userstatue.User);
-            bZTopicDto.UserId = User.Id;
-            var result = await ProductService.AddTopic(bZTopicDto);
+            var result = await NetService.AddTopic(bZTopicDto);
             if (result.IsSuccess)
             {
                 MessageService.Show($"发布成功", MessageType.Success);
@@ -74,10 +65,15 @@ namespace Blazui.Community.App.Pages
             }
         }
 
-        protected override Task InitilizePageDataAsync()
+        protected override async Task InitilizePageDataAsync()
         {
             article = new ArticleModel() { Title = "", Content = "" };
-            return Task.CompletedTask;
+            await Task.CompletedTask;
+        }
+
+        internal void GoHome()
+        {
+            navigationManager.NavigateTo("/");
         }
     }
 }

@@ -1,25 +1,28 @@
 ﻿using Blazui.Community.App.Pages;
 using Blazui.Community.Model.Models;
 using Blazui.Component;
+using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Components
 {
+    [Authorize]
     public class PersonalAvatorBase : PersonalPageBase
     {
 
-        protected string UploadApiUrl { get; private set; }
+        protected static string UploadApiUrl { get; private set; }
+
+ 
         protected override async Task InitilizePageDataAsync()
         {
             await Task.CompletedTask;
         }
+
         protected override void OnInitialized()
         {
-
-            UploadApiUrl = "api/upload/uploadavator";
+            UploadApiUrl ??= "api/upload/uploadavator";
             base.OnInitialized();
-
         }
 
         protected BZUserModel User { get; set; }
@@ -27,18 +30,17 @@ namespace Blazui.Community.App.Components
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
-            var userstatue = await authenticationStateTask;
-            User = await userManager.GetUserAsync(userstatue.User);
+            User ??= await GetUser();
             value = new UploadActivity()
             {
                 Previews = new UploadModel[]
-                 {
+              {
                  new UploadModel()
                 {
-                    FileName  = User?.Avatar,
-                    Url  = User?.Avatar
+                    FileName  = User?.Avator,
+                    Url  = User?.Avator
                 }
-                 }
+              }
             };
         }
 
@@ -52,7 +54,7 @@ namespace Blazui.Community.App.Components
             }
             var activity = bForm.GetValue<UploadActivity>();
             var upload = activity.Previews.FirstOrDefault();
-            User.Avatar = upload?.Id;
+            User.Avator = upload?.Id;
            
            var identityResult= await userManager.UpdateAsync(User);
             if( identityResult.Succeeded )

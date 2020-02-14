@@ -3,8 +3,16 @@
 @page "/user/topic"
 @inherits PersonalTopicBase
 
-<BTab Type="@TabType.Card" @ref="bTab" EnableAlwaysRender="true">
-    <BTabPanel Title="@tabTitle" @ref="bTabPanel" EnableAlwaysRender="true">
-        <h3>PersonalTopic</h3>
-    </BTabPanel>
-</BTab>
+<BCard   Shadow="@ShadowShowType.Always" @ref="bCard" EnableAlwaysRender="true">
+    <Body>
+        <BTab  @ref="mybTab" EnableAlwaysRender="true" Type="TabType.Card">
+            <BTabPanel Title="我发布的" @ref="bTabPanelPush" EnableAlwaysRender="true">
+                <PersonalTopicTable ></PersonalTopicTable>
+            </BTabPanel>
+            <BTabPanel Title="我收藏的" @ref="bTabPanelCollection" EnableAlwaysRender="true">
+                <PersonalFollowTable ></PersonalFollowTable>
+            </BTabPanel>
+        </BTab>
+    </Body>
+
+</BCard>

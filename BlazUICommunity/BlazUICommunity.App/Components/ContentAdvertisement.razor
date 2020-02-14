@@ -1,9 +1,14 @@
 ﻿<div class="content-ad">
-<div class="ad-container">
-    ad
-</div>
+    <div class="ad-container">
+        <img src="@advertisImages?.FirstOrDefault()" style="width:100%;height:100%;" />
+    </div>
 </div>
 
 @code {
-
+    protected string[] advertisImages { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        advertisImages =new string[] { "/img/ad/blazor.png"};
+    }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Arch.EntityFrameworkCore.UnitOfWork;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
+using Blazui.Community.Api.Extensions;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Request;
@@ -35,7 +36,7 @@ namespace Blazui.Community.Api.Controllers
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="mapper"></param>
-        public FollowController(IUnitOfWork unitOfWork ,
+        public FollowController(IUnitOfWork unitOfWork,
             IMapper mapper)
         {
             _mapper = mapper;
@@ -52,7 +53,7 @@ namespace Blazui.Community.Api.Controllers
         public async Task<IActionResult> Add([FromBody] BZFollowDto dto)
         {
             var user = _mapper.Map<BZFollowModel>(dto);
-             await _followRepository.InsertAsync(user);
+            await _followRepository.InsertAsync(user);
             return Ok();
         }
 
@@ -74,9 +75,9 @@ namespace Blazui.Community.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut("Update/{Id}")]
-        public IActionResult Update([FromBody] BZFollowDto Dto , [FromRoute] int Id)
+        public IActionResult Update([FromBody] BZFollowDto Dto, [FromRoute] int Id)
         {
-            if ( Id < 1 )
+            if (Id < 1)
                 return new BadRequestResponse("id is error");
             var user = _mapper.Map<BZFollowModel>(Dto);
             user.Id = Id;
@@ -93,7 +94,7 @@ namespace Blazui.Community.Api.Controllers
         public async Task<IActionResult> Query([FromRoute] int Id)
         {
             var res = await _followRepository.FindAsync(Id);
-            if ( res is null )
+            if (res is null)
                 return new NoContentResponse();
             return Ok(res);
         }
@@ -105,10 +106,26 @@ namespace Blazui.Community.Api.Controllers
         public async Task<IActionResult> Query([FromBody] FollowRequest Request = null)
         {
             IPagedList<BZFollowModel> pagedList = null;
-            var query = Request.CreateQueryExpression<BZFollowModel , FollowRequest>();
-            pagedList = query == null ? await _followRepository.GetPagedListAsync(Request.pageInfo.PageIndex - 1 , Request.pageInfo.PageSize) :
-                       await _followRepository.GetPagedListAsync(query , o => o.OrderBy(p => p.Id) , null , Request.pageInfo.PageIndex - 1 , Request.pageInfo.PageSize);
-            return Ok(pagedList);
+            var query = Request.CreateQueryExpression<BZFollowModel, FollowRequest>();
+            pagedList = query == null ? await _followRepository.GetPagedListAsync(Request.pageInfo.PageIndex - 1, Request.pageInfo.PageSize) :
+                       await _followRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.pageInfo.PageIndex - 1, Request.pageInfo.PageSize);
+            if (pagedList.TotalCount > 0)
+            {
+                var pagedatas = pagedList.ConvertToPageData<BZFollowModel, BZTopicModel>();
+                var topicRepository = _unitOfWork.GetRepository<BZTopicModel>();
+                var topics = await topicRepository.GetAllAsync(p => pagedList.Items.Select(d => d.TopicId).Contains(p.Id));
+                foreach (BZFollowModel follow in pagedList.Items)
+                {
+                    var topic = topics.FirstOrDefault(p => p.Id == follow.TopicId);
+                    topic.PublishTime = follow.FollowTime;
+                    pagedatas.Items.Add(topic);
+                }
+                return Ok(pagedatas);
+            }
+            else
+                return NoContent();
         }
+
+
     }
 }

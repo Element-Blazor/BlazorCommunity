@@ -1,0 +1,24 @@
+﻿@inherits PersonalTopicTableBase
+@using Blazui.Community.App.Model.Condition
+
+
+<BForm Inline="true" @ref="searchForm">
+    <BFormItem TValue="string" Label="标题" Name="@nameof(SearchPersonalTopicCondition.Title)" IsRequired="false">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+    <BFormItem TValue="TopicType?" Label="类型" IsRequired="false" Name="@nameof(SearchPersonalTopicCondition.TopicType)">
+        <BSelect @bind-Value="TopicType">
+        </BSelect>
+    </BFormItem>
+    <BFormActionItem>
+        <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
+    </BFormActionItem>
+</BForm>
+<div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
+<BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true">
+    <BTableColumns>
+        <BTableTemplateColumn Text="操作">
+            <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Mini" OnClick="@(e=> Del(context))">删除</BButton>
+        </BTableTemplateColumn>
+    </BTableColumns>
+</BTable>

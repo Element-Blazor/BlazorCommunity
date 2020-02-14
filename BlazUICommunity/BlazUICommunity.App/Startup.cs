@@ -51,7 +51,7 @@ namespace Blazui.Community.App
             });
             
             services.AddAutoMapper(typeof(AutoMapConfiguration));
-            services.AddScoped<ProductService>();
+            services.AddScoped<NetworkService>();
         }
 
      

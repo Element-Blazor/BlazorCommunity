@@ -5,13 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blazui.Community.DTO
 {
-    public partial class BZTopicDto 
+    public partial class BZTopicDto
     {
-      
-     
-       /// <summary>
-       /// 标题
-       /// </summary>
+
+        public int Id { get; set; }
+
+        /// <summary>
+        /// 标题
+        /// </summary>
         [StringLength(100)]
         public string Title { get; set; }
         /// <summary>
@@ -54,5 +55,24 @@ namespace Blazui.Community.DTO
         /// 回帖数量
         /// </summary>
         public int? ReplyCount { get; set; }
+    }
+
+    public class BZTopicDtoWithUser : BZTopicDto
+    {
+        /// <summary>
+        /// 用户名称
+        /// </summary>
+        public string UserName { get; set; }
+        /// <summary>
+        /// 用户昵称
+        /// </summary>
+        public string NickName { get; set; }
+        
+        /// <summary>
+        /// 头像
+        /// </summary>
+        public string Avator { get; set; }
+
+   
     }
 }

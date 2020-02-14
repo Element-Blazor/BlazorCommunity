@@ -1,6 +1,14 @@
-﻿<div class="content-top">
-    top
-</div>
+﻿@inherits ContentTopBase
+    <div class="content-top">
+        @if (Topics.Any())
+        {
+            <div class="top-top"><span style="margin-left:10px;">置顶</span></div>
+            @foreach (var topic in Topics)
+            {
+                <TopicItem Topic="@topic"></TopicItem>
+            }
+        }
+    </div>
 
 @code {
 

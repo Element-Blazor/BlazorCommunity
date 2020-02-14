@@ -1,0 +1,10 @@
+﻿@inherits ReplyNowBase
+
+<BForm Inline="false" @ref="form" Value="article" LabelAlign="@LabelAlign.Left">
+    <BFormItem TValue="string" IsRequired="true" Name="@nameof(ReplyModel.Content)">
+            <BMarkdownEditor @ref="bMarkdownEditor" UploadUrl="/api/test/upload" DisableFileUpload="true" DisableImageUpload="true" Height="300"></BMarkdownEditor>
+    </BFormItem>
+    <BFormItem TValue="object" Style="text-align:right;margin-right:10px;">
+        <BButton Type="@ButtonType.Success" OnClick="e=>ReplyNow()" IsPlain="true">提交回复</BButton>
+    </BFormItem>
+</BForm>

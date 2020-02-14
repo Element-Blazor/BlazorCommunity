@@ -28,7 +28,7 @@ namespace Blazui.Community.App.Features.Accounts.Controllers
             var parts = data.Split('|');
 
             var identityUser = await _userManager.FindByIdAsync(parts[0]);
-        var user = await _userManager.GetUserAsync(HttpContext.User); 
+            //var user = await _userManager.GetUserAsync(HttpContext.User); 
             var isTokenValid = await _userManager.VerifyUserTokenAsync(identityUser, TokenOptions.DefaultProvider, "SignIn", parts[1]);
             if (isTokenValid)
             {

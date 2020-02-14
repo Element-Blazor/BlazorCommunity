@@ -14,7 +14,7 @@ namespace Blazui.Community.Utility.Response
         public NoContentResponse(string message = "no data")
             : base(new NoContentResultModel(message))
         {
-            StatusCode = 444;
+            StatusCode = 204;
         }
     }
 }

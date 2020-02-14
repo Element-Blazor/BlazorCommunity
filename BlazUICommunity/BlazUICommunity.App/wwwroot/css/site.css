@@ -1,12 +1,17 @@
-﻿body {
+﻿
+html body {
     margin: 0;
-    overflow-y: hidden;
+    padding: 0;
+    display: flex;
+    height: 100%;
+    overflow: hidden;
 }
 
-    body app {
-        display: flex;
-        height: 100vh;
-    }
+body app {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
 
 .login-container {
     display: flex;
@@ -107,10 +112,6 @@ register-container {
     text-align: center;
 }
 
-app > .el-container {
-    /*margin-bottom: 40px;*/
-}
-
 .login-icon {
     padding: 0 5px;
     text-align: left;
@@ -152,85 +153,73 @@ a {
         text-decoration: none;
     }
 
-html {
-    height: 100%;
+html body > app {
+    display: flex;
+    flex: 1;
+    /*overflow-y: auto;*/
 }
 
-    html body {
-        margin: 0;
-        padding: 0;
+    html body > app div.blaz-layout-west {
         display: flex;
+        align-items: flex-end;
+        flex-direction: column;
         height: 100%;
-        overflow: hidden;
     }
 
-        html body > app {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
+        html body > app div.blaz-layout-west > ul.el-menu {
+            height: 100%;
         }
 
-            html body > app div.blaz-layout-west {
-                display: flex;
-                align-items: flex-end;
-                flex-direction: column;
-                height: 100%;
+            html body > app div.blaz-layout-west > ul.el-menu > li div.el-submenu__title i {
+                /*display: none;*/
+                color: #fff;
             }
 
-                html body > app div.blaz-layout-west > ul.el-menu {
-                    height: 100%;
+            html body > app div.blaz-layout-west > ul.el-menu > li ul.el-menu li.el-menu-item i {
+                /*display: none;*/
+                color: #fff;
+            }
+
+            html body > app div.blaz-layout-west > ul.el-menu > li > i {
+                /*display: none;*/
+                color: #fff;
+            }
+
+    html body > app div.nav {
+        background-color: #7014e8;
+    }
+
+        html body > app div.nav > div.container {
+            height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+            html body > app div.nav > div.container > img {
+                vertical-align: middle;
+            }
+
+            html body > app div.nav > div.container > div.fill {
+                flex: 1;
+            }
+
+            html body > app div.nav > div.container > ul.el-menu {
+                background-color: transparent;
+                border-bottom: 1px solid transparent;
+            }
+
+                html body > app div.nav > div.container > ul.el-menu > li {
+                    overflow: hidden;
                 }
 
-                    html body > app div.blaz-layout-west > ul.el-menu > li div.el-submenu__title i {
+                    html body > app div.nav > div.container > ul.el-menu > li > i {
                         /*display: none;*/
                         color: #fff;
                     }
 
-                    html body > app div.blaz-layout-west > ul.el-menu > li ul.el-menu li.el-menu-item i {
-                        /*display: none;*/
-                        color: #fff;
-                    }
-
-                    html body > app div.blaz-layout-west > ul.el-menu > li > i {
-                        /*display: none;*/
-                        color: #fff;
-                    }
-
-            html body > app div.nav {
-                background-color: #7014e8;
-            }
-
-                html body > app div.nav > div.container {
-                    height: 80px;
-                    display: flex;
-                    align-items: center;
-                }
-
-                    html body > app div.nav > div.container > img {
-                        vertical-align: middle;
-                    }
-
-                    html body > app div.nav > div.container > div.fill {
-                        flex: 1;
-                    }
-
-                    html body > app div.nav > div.container > ul.el-menu {
-                        background-color: transparent;
-                        border-bottom: 1px solid transparent;
-                    }
-
-                        html body > app div.nav > div.container > ul.el-menu > li {
-                            overflow: hidden;
-                        }
-
-                            html body > app div.nav > div.container > ul.el-menu > li > i {
-                                /*display: none;*/
-                                color: #fff;
-                            }
-
-            html body > app div.container {
-                margin: 0 365px;
-            }
+    html body > app div.container {
+        margin: 0 365px;
+    }
 
 .footer-main {
     text-align: center;
@@ -238,11 +227,12 @@ html {
 }
 
 .footer {
-    /*background-color: #f6f0f0;*/
     width: 100%;
     text-align: center;
     height: 60px;
-    background: #f6f0f0;
+    background: #f7fbfd;
+    position: fixed;
+    bottom: 0px;
 }
 
 .el-menu--horizontal > .el-menu-item.is-active {
@@ -251,6 +241,7 @@ html {
 
 .content-container {
     margin: 0px 350px;
+    height: 100%;
 }
 
 .content-header {
@@ -267,6 +258,7 @@ html {
 
 .content-card {
     overflow: hidden;
+    /*height:30px;*/
 }
 
     .content-card .el-card__body {
@@ -285,53 +277,69 @@ html {
 .ad-container {
     height: 150px;
     /*padding: 10px 10px 10px 0px;*/
-    background: #20a0ff;
+    /*background: #20a0ff;*/
     /*margin: 0px;*/
-    margin: 10px;
+    margin: 4px;
 }
 
 .content-top {
-    background-color: red;
+    /*background-color: red;*/
     padding: 0px 0px 10px 0px;
-    height: 150px;
+    /*height: 290px;*/
 }
 
 .content-center {
-    padding: 10px 10px 0 10px;
-    background-color: crimson;
-    height: 450px;
+    /*padding: 10px 10px 0 10px;*/
+    /*background-color: crimson;*/
+    height: 100%;
 }
 
 app .blaz-layout > .blaz-layout-container > .blaz-layout-center {
     margin-left: 0px;
+    overflow-y: auto;
+    font-size: 14px;
 }
 
 .content-right {
     /*margin-top:10px;*/
     height: 150px;
     width: 100%;
-    background: #4ee25e
+    /*background: #4ee25e*/
 }
 
 .content-hot {
     height: 300px;
     width: 100%;
-    background: #4ee25e
+    /*background: #4ee25e*/
 }
 
 .content-footer {
     width: 100%;
     height: 350px;
-    background: #4ee25e
+    /*background: #4ee25e*/
 }
 
 .main-layout-center .el-card__body {
-    max-height: 750px;
-    overflow: hidden;
+    /*max-height: 700px;*/
+    /*overflow-y: auto;*/
+}
+
+.main-layout-center .content-top {
+    /*max-height: 700px;*/
+    overflow-y: hidden;
+}
+
+.main-layout-center .content-center {
+    /*max-height: 700px;*/
+    overflow-y: hidden;
 }
 
 .margin-top-10 {
     margin-top: 10px;
+}
+
+.margin-top-5 {
+    margin-top: 5px;
 }
 
 .margin-left-0 {
@@ -425,5 +433,238 @@ app > div .is-active {
     .app-user-password .mybind {
         font-weight: bold;
         color: #E6A23C;
-        cursor:pointer;
+        cursor: pointer;
     }
+
+.cell {
+    text-align: center;
+    /*border-bottom: 1px solid #EBEEF5;*/
+}
+
+.content-center .blaz-layout > .blaz-layout-container > .blaz-layout-card {
+    min-height: 90px;
+    max-height: 90px;
+}
+
+app > .blaz-layout > .blaz-layout-container {
+    height: 80%;
+}
+
+.content-center .blaz-layout > .blaz-layout-container > .blaz-layout-card .el-card {
+    border-radius: 0px;
+}
+
+.content-top .blaz-layout > .blaz-layout-container > .blaz-layout-card {
+    min-height: 90px;
+    max-height: 90px;
+}
+
+    .content-top .blaz-layout > .blaz-layout-container > .blaz-layout-card .el-card {
+        border-radius: 0px;
+    }
+
+.app-topic-img {
+    margin-top: 3px;
+    width: 80%;
+    height: 80%;
+}
+
+.el-card__body {
+    padding: 10px;
+}
+
+.topic-item {
+    /*height:45%;*/
+    line-height: 40px;
+    display: inline-flex;
+}
+
+.topic-wrap {
+    display: flex; /* 复合属性。设置或检索伸缩盒对象的子元素如何分配空间。 */
+    flex-direction: column;
+    justify-content: space-between; /* 水平平均分布 //设置或检索弹性盒子元素在主轴（横轴）方向上的对齐方式。 */
+    align-items: flex-start; /* 垂直居中    //定义flex子项在flex容器的当前行的侧轴（纵轴）方向上的对齐方式。 */
+    height: 100%;
+    /*background: lightgoldenrodyellow;*/
+}
+
+.top-top {
+    width: 100%;
+    line-height: 35px;
+    /*background: rebeccapurple;*/
+    background-color: rgba(238,238,238,0.1);
+    color: #000;
+}
+
+.topic-type {
+    margin: 0 5px;
+}
+
+.topic-title {
+    margin-left: 20px;
+}
+
+.topic-tag {
+    position: absolute;
+    right: 10px;
+}
+
+.topic-author {
+    margin: 0 2px;
+    color: #909399;
+    text-align: center;
+}
+
+.topic-time {
+    margin: 0 20px;
+    color: #909399;
+    text-align: center;
+}
+
+.topic-reply {
+    position: absolute;
+    right: 12px;
+}
+
+.topic-pagination {
+    margin: 25px 0px 15px 0px;
+    text-align: right;
+    height: 30px;
+    line-height: 30px;
+}
+
+
+
+/*滚动条*/
+app .blaz-layout > .blaz-layout-container > .blaz-layout-center::-webkit-scrollbar, *::-webkit-scrollbar-thumb {
+    width: 1px;
+    height: 10px;
+    border-radius: 13px;
+    background-clip: padding-box;
+}
+
+.newtopic {
+    margin-left: -10px;
+    text-align: right;
+    margin-right: 5px;
+    width: 360px;
+    border-bottom: 2px solid #EBEEF5;
+    padding-bottom: 1px;
+}
+
+.newtopic-reply {
+    text-align: right;
+    margin-right: 5px;
+    width: 100%;
+    /*border-bottom: 1px solid #EBEEF5;*/
+    padding-bottom: 5px;
+}
+
+.content-topic-head {
+    display: flex;
+    color: #303133;
+}
+
+
+.content-info {
+    padding: 5px;
+    display: flex;
+    width: 80px;
+    height: 80px;
+    border: 1px solid #EBEEF5;
+    margin-bottom: 5px;
+}
+
+.content-user {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin: 0 auto;
+    flex-direction: column;
+}
+
+.content-tag {
+    margin-left: 10px;
+}
+
+.content-user-avator {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.content-user-name {
+    text-align: center;
+    margin-top: -10px;
+}
+
+.content-reply {
+    margin-top: 30px;
+    position: absolute;
+    right: 17px;
+}
+
+.content-topic-base .el-card__header {
+    padding: 10px 10px 0px 10px;
+    border-bottom: 1px solid #EBEEF5;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.content-reply-base .el-card__header {
+    padding: 10px 10px 0px 10px;
+    border-bottom: 1px solid #EBEEF5;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.content-topic-img {
+    margin-top: 3px;
+    width: 80%;
+    height: 80%;
+    /*border: none;
+    border-radius: 100%;*/
+}
+
+.content-info-title {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+}
+
+.content-title {
+    margin-left: 10px;
+    font-size: 15px;
+    font-weight: 900;
+    margin-top: 2px;
+}
+
+.content-flex-col {
+    display: flex;
+    flex-direction: column;
+}
+.content-flex-row {
+    display: flex;
+    flex-direction: row;
+}
+.content-time {
+    margin-left: 13px;
+    /* text-align: center; */
+    margin-top: 10px;
+    color: #606266;
+}
+.go-home {
+    display: flex;
+}
+.reply-user-name {
+    margin-left: 13px;
+    text-align: left;
+    margin-top: 40px;
+}
+.reply-avator-img {
+    margin-top: 8px;
+    width: 80%;
+    height: 80%;
+}
+.reply-now .el-card__header {
+    padding:0px;
+}

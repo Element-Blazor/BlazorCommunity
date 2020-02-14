@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Blazui.Community.App.Model;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
 using System;
@@ -8,43 +9,28 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.App
 {
-    public class AutoMapConfiguration: Profile
+    public class AutoMapConfiguration : Profile
     {
         public AutoMapConfiguration()
         {
-            CreateMap<BZUserModel , BZUserUIDto>();
-            CreateMap<BZUserUIDto , BZUserModel>().ForMember(dest => dest.Id , option => option.Ignore());
-            CreateMap<BZUserModel , BZUserDto>();
-            CreateMap<BZUserDto , BZUserModel>().ForMember(dest => dest.Id , option => option.Ignore());
-            //CreateMap<BZTopicModel , BZTopicDto>();
-            //CreateMap<BZTopicDto , BZTopicModel>().ForMember(dest => dest.Id , option => option.Ignore());
+            CreateMap<BZUserModel, BZUserUIDto>();
+            CreateMap<BZUserUIDto, BZUserModel>().ForMember(dest => dest.Id, option => option.Ignore());
+            CreateMap<BZUserModel, BZUserDto>();
+            CreateMap<BZUserDto, BZUserModel>().ForMember(dest => dest.Id, option => option.Ignore());
+            CreateMap<BZTopicDto, PersonalTopicModel>();
 
-            //CreateMap<BZFollowModel , BZFollowDto>();
-            //CreateMap<BZFollowDto , BZFollowModel>().ForMember(dest => dest.Id , option => option.Ignore());
+            CreateMap<BZTopicDtoWithUser, TopicItemModel>()
+                //.ForMember(target => target.ReplyCount, dto => dto.MapFrom(src => src.ReplyCount))
+                //.ForMember(target => target.Avator, dto => dto.MapFrom(src => src.Avatar))
+                //.ForMember(target => target.Title, dto => dto.MapFrom(src => src.Title))
+                //.ForMember(target => target.TopicType, dto => dto.MapFrom(src => src.Category))
 
-            //CreateMap<BZPointModel , BZPointDto>();
-            //CreateMap<BZPointDto , BZPointModel>().ForMember(dest => dest.Id , option => option.Ignore());
+                .ForMember(target => target.Category, dto => dto.Ignore())
+                .ForMember(target => target.ReleaseTime, dto => dto.MapFrom(src => src.PublishTime.ToString("yyyy-MM-dd")))
+                .ForMember(target => target.Author, dto => dto.MapFrom(src => src.NickName))
+                //.ForMember(target => target.Status, dto => dto.MapFrom(src => src.Status))
+                .ForMember(target => target.IsBest, dto => dto.MapFrom(src => src.Good == 1));
 
-            //CreateMap<BZPointModel , BZPointDto>();
-            //CreateMap<BZPointDto , BZPointModel>().ForMember(dest => dest.Id , option => option.Ignore());
-
-            //CreateMap<BZReplyModel , BZReplyDto>();
-            //CreateMap<BZReplyDto , BZReplyModel>().ForMember(dest => dest.Id , option => option.Ignore());
-
-            //CreateMap<BZThirdAccountModel , BZThirdAccountDto>();
-            //CreateMap<BZThirdAccountDto , BZThirdAccountModel>().ForMember(dest => dest.Id , option => option.Ignore());
-
-            //CreateMap<BZUserRealVerificationModel , BZUserRealVerificationDto>();
-            //CreateMap<BZUserRealVerificationDto , BZUserRealVerificationModel>().ForMember(dest => dest.Id , option => option.Ignore());
-
-            //CreateMap<BZAddressModel , BZAddressDto>();
-            //CreateMap<BZAddressDto , BZAddressModel>().ForMember(dest => dest.Id , option => option.Ignore());
-
-            //CreateMap<SysLogModel , SysLogDto>();
-            //CreateMap<SysLogDto , SysLogModel>().ForMember(dest => dest.Id , option => option.Ignore());
-
-            //CreateMap<SysUserModel , SysUserDto>();
-            //CreateMap<SysUserDto , SysUserModel>().ForMember(dest => dest.Id , option => option.Ignore());
         }
     }
 }

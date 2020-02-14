@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Blazui.Community.Utility.Response
 {
-    public class ExceptionResultModel : BaseResonse
+    public class ExceptionResultModel : BaseResponse
     {
         public ExceptionResultModel(int? code, Exception exception)
         {

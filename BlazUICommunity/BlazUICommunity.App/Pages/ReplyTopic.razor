@@ -1,0 +1,85 @@
+﻿@page "/topic/reply"
+@inherits ReplyTopicBase
+
+<div class="content-container">
+    @if (TopicId > 0)
+    {
+
+        <BLayout EastWidth="350" EnableAlwaysRender="true" @ref="bLayout">
+            <North>
+                <div class="content-flex-row" style="width:100%;border-bottom: 1px solid #EBEEF5;">
+                    <div class="go-home">
+                        <BButton Type="@ButtonType.Text" Icon="el-icon-back" Size="@ButtonSize.Medium"></BButton>
+                        <BButton Type="@ButtonType.Text" OnClick="e=>GoHome()" IsPlain="true" Size="@ButtonSize.Medium">Go Back</BButton>
+                    </div>
+                    <div class="newtopic-reply">
+                        <BButton Type="@ButtonType.Success" OnClick="e=>NewTopic()" IsPlain="true" Size="@ButtonSize.Small"> 发表新帖 </BButton>
+                    </div>
+                </div>
+            </North>
+            <Center>
+                <div class="margin-top-5"></div>
+                <TopicContent TopicId="@TopicId" EnableAlwaysRender="true" @ref="TopicContent" ></TopicContent>
+                <div class="margin-top-5"></div>
+                <BCard @ref="bCard" EnableAlwaysRender="true">
+                    <Header>
+                        <div class="el-divider el-divider--horizontal">
+                            <div class="el-divider__text is-center">
+                                回帖
+                            </div>
+                        </div>
+                    </Header>
+                    <Body>
+                        <ReplyList  EnableAlwaysRender="true" @ref="replyList"></ReplyList>
+                        <div class="reply-now">
+                            <BCard EnableAlwaysRender="true">
+                                <Header>
+                                    <div style="margin:25px;font-weight:800;">发表回复</div>
+                                </Header>
+                                <Body>
+                                    <ReplyNow  EnableAlwaysRender="true"></ReplyNow>
+                                </Body>
+                            </BCard>
+                        </div>
+                    </Body>
+
+                </BCard>
+
+            </Center>
+
+            <East>
+                <div class="margin-top-5" style="width:100%;">
+                    <BLayout>
+                        <North>
+                            <div class="content-card">
+                                <BCard Shadow="@ShadowShowType.Never">
+                                    <Body>
+                                        <ContentHot></ContentHot>
+                                    </Body>
+                                </BCard>
+                            </div>
+                        </North>
+                        <Center>
+                            <div class="content-card margin-top-5">
+                                <BCard Shadow="@ShadowShowType.Never">
+                                    <Body>
+                                        <ContentHot></ContentHot>
+                                    </Body>
+                                </BCard>
+                            </div>
+                        </Center>
+                        <South>
+                            <div class="content-card margin-top-10">
+                                <BCard Shadow="@ShadowShowType.Never">
+                                    <Body>
+                                        <ContentFooter></ContentFooter>
+                                    </Body>
+                                </BCard>
+                            </div>
+                        </South>
+                    </BLayout>
+                </div>
+            </East>
+        </BLayout>
+    }
+</div>

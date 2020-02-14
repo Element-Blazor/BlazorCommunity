@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Blazui.Community.Utility.Response
 {
-    public class NoContentResultModel : BaseResonse
+    public class NoContentResultModel : BaseResponse
     {
         public NoContentResultModel(string message)
         {
-            Code = 444;//没有数据
+            Code = 204;//没有数据
             Message = message;
             Data = null;
         }

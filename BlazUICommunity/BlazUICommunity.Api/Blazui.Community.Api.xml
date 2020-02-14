@@ -335,6 +335,16 @@
             <param name="pageIndex"></param>
             <returns></returns>
         </member>
+        <member name="M:Blazui.Community.Api.Controllers.TopicController.QueryTopicsByOrder(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            根据类型，排序查询
+            </summary>
+            <param name="orderType">排序类型 0：综合，1：人气，2：精华，3：已结帖</param>
+            <param name="topicType">帖子类型 0：提问，1：分享，2：讨论，3：建议，4：公告</param>
+            <param name="pageSize"></param>
+            <param name="pageIndex"></param>
+            <returns></returns>
+        </member>
         <member name="M:Blazui.Community.Api.Controllers.TopicController.QueryBest(System.Int32)">
             <summary>
             查询精华帖子
@@ -477,6 +487,15 @@
             <summary>
             4：公告
             </summary>
+        </member>
+        <member name="M:Blazui.Community.Api.Extensions.PageExtensions.ConvertToPageData``2(Arch.EntityFrameworkCore.UnitOfWork.Collections.IPagedList{``0})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="K"></typeparam>
+            <param name="pagedList"></param>
+            <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Program.Main(System.String[])">
             <summary>

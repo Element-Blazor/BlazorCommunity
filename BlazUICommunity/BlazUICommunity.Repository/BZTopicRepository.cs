@@ -43,6 +43,18 @@ namespace Blazui.Community.Repository
             else throw new InvalidCastException($"{result} 转换成int 失败");
         }
 
+        public async Task<IEnumerable<BZTopicDtoWithUser>> QueryTops(int topSize)
+        {
+            string sql =$"select t1.*,t2.UserName,t2.NickName,t2.Avator from topic t1 left join aspnetusers t2 on t1.UserId=t2.id where t1.Top=1 and t1.`Status`=0 order by t1.PublishTime desc limit {topSize}";
+           return await QueryDataFromSql<BZTopicDtoWithUser>(sql);
+            
+        }
 
+        public async Task<IEnumerable<BZTopicDtoWithUser>> QueryTopById(int topicId)
+        {
+            string sql = $"select t1.*,t2.UserName,t2.NickName,t2.Avator from topic t1 left join aspnetusers t2 on t1.UserId=t2.id where t1.Id={topicId} and t1.`Status`=0 ";
+            return await QueryDataFromSql<BZTopicDtoWithUser>(sql);
+
+        }
     }
 }

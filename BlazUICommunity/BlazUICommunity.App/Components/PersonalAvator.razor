@@ -4,7 +4,7 @@
 @inherits PersonalAvatorBase
 <BTab Type="@TabType.Card" @ref="bTab" EnableAlwaysRender="true">
     <BTabPanel Title="@tabTitle" @ref="bTabPanel" EnableAlwaysRender="true">
-        <BForm Style="width:400px;" @ref="bForm" Value="value">
+        <BForm Style="width:400px;" @ref="bForm" Value="value" EnableAlwaysRender="true">
 
             <BFormItem TValue="IFileModel[]" Label="" Name="@nameof(UploadActivity.Previews)">
                 <UploadAvatar Url="@UploadApiUrl"

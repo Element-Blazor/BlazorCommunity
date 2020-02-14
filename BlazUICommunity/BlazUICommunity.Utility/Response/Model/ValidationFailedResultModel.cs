@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Blazui.Community.Utility.Response
 {
-    class ValidationFailedResultModel : BaseResonse
+    class ValidationFailedResultModel : BaseResponse
     {
         public ValidationFailedResultModel(ModelStateDictionary modelState)
         {

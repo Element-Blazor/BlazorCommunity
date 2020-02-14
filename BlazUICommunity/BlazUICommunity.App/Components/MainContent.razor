@@ -1,0 +1,149 @@
+﻿@inherits MainContentBase
+<BTabPanel Title="@Title" EnableAlwaysRender="true">
+    <BLayout WestWidth="0" NorthHeight="0" EnableAlwaysRender="true">
+        <Center>
+            @if (TopicType == -1)
+            {
+                <BLayout EnableAlwaysRender="true">
+                    <North>
+                        <ContentAdvertisement></ContentAdvertisement>
+                    </North>
+                    <Center>
+                        <div class="margin-top-10 margin-left-0">
+                            <BLayout NorthHeight="0" EnableAlwaysRender="true">
+                                <North>
+                                    <div class="content-card">
+                                        <BCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true">
+                                            <Body>
+                                                <ContentTop EnableAlwaysRender="true"></ContentTop>
+                                            </Body>
+                                        </BCard>
+
+                                    </div>
+                                </North>
+                                <Center>
+                                    <div style="height:10px;background:#EBEEF5;margin:2px auto;"></div>
+                                    <div class="content-card">
+                                        <BCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true">
+                                            <Body>
+                                                <ContentCenter TopicType="-1" EnableAlwaysRender="true"> </ContentCenter>
+                                            </Body>
+                                        </BCard>
+
+                                    </div>
+                                </Center>
+                            </BLayout>
+                        </div>
+
+                    </Center>
+                </BLayout>
+            }
+            else if (TopicType == 0)
+            {
+                <BLayout EnableAlwaysRender="true" @ref="contentlayout">
+                    <Center>
+                        <div class="margin-top-10 margin-left-0">
+                            <BLayout NorthHeight="0" EnableAlwaysRender="true" @ref="blayout_north">
+                                <Center>
+                                    <div style="height:10px;background:#EBEEF5;margin:2px auto;"></div>
+                                    <div class="content-card">
+                                        <BCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true" @ref="bcard">
+                                            <Body>
+                                                <ContentCenter TopicType="0" EnableAlwaysRender="true" @ref="contentCenter"></ContentCenter>
+                                            </Body>
+                                        </BCard>
+                                    </div>
+                                </Center>
+                            </BLayout>
+                        </div>
+                    </Center>
+                </BLayout>
+            }
+            else if (TopicType == 1)
+            {
+                <BLayout EnableAlwaysRender="true" @ref="contentlayout">
+                    <Center>
+                        <div class="margin-top-10 margin-left-0">
+                            <BLayout NorthHeight="0" EnableAlwaysRender="true" @ref="blayout_north">
+                                <Center>
+                                    <div style="height:10px;background:#EBEEF5;margin:2px auto;"></div>
+                                    <div class="content-card">
+                                        <BCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true" @ref="bcard">
+                                            <Body>
+                                                <ContentCenter TopicType="1" EnableAlwaysRender="true" @ref="contentCenter"></ContentCenter>
+                                            </Body>
+                                        </BCard>
+                                    </div>
+                                </Center>
+                            </BLayout>
+                        </div>
+                    </Center>
+                </BLayout>
+            }
+            else if (TopicType == 2)
+            {
+                <BLayout EnableAlwaysRender="true" @ref="contentlayout">
+                    <Center>
+                        <div class="margin-top-10 margin-left-0">
+                            <BLayout NorthHeight="0" EnableAlwaysRender="true" @ref="blayout_north">
+                                <Center>
+                                    <div style="height:10px;background:#EBEEF5;margin:2px auto;"></div>
+                                    <div class="content-card">
+                                        <BCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true" @ref="bcard">
+                                            <Body>
+                                                <ContentCenter TopicType="2" EnableAlwaysRender="true" @ref="contentCenter"></ContentCenter>
+                                            </Body>
+                                        </BCard>
+                                    </div>
+                                </Center>
+                            </BLayout>
+                        </div>
+                    </Center>
+                </BLayout>
+            }
+            else if (TopicType == 3)
+            {
+                <BLayout EnableAlwaysRender="true" @ref="contentlayout">
+                    <Center>
+                        <div class="margin-top-10 margin-left-0">
+                            <BLayout NorthHeight="0" EnableAlwaysRender="true" @ref="blayout_north">
+                                <Center>
+                                    <div style="height:10px;background:#EBEEF5;margin:2px auto;"></div>
+                                    <div class="content-card">
+                                        <BCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true" @ref="bcard">
+                                            <Body>
+                                                <ContentCenter TopicType="3" EnableAlwaysRender="true" @ref="contentCenter"></ContentCenter>
+                                            </Body>
+                                        </BCard>
+                                    </div>
+                                </Center>
+                            </BLayout>
+                        </div>
+                    </Center>
+                </BLayout>
+            }
+            else if (TopicType == 4)
+            {
+                <BLayout EnableAlwaysRender="true" @ref="contentlayout">
+                    <Center>
+                        <div class="margin-top-10 margin-left-0">
+                            <BLayout NorthHeight="0" EnableAlwaysRender="true" @ref="blayout_north">
+                                <Center>
+                                    <div style="height:10px;background:#EBEEF5;margin:2px auto;"></div>
+                                    <div class="content-card">
+                                        <BCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true" @ref="bcard">
+                                            <Body>
+                                                <ContentCenter TopicType="4" EnableAlwaysRender="true" @ref="contentCenter"></ContentCenter>
+                                            </Body>
+                                        </BCard>
+                                    </div>
+                                </Center>
+                            </BLayout>
+                        </div>
+                    </Center>
+                </BLayout>
+            }
+        </Center>
+
+    </BLayout>
+</BTabPanel>
