@@ -10,7 +10,7 @@ namespace Blazui.Community.Model.Models
     /// </summary>
     public partial class BZFollowDto
     {
-    
+        public int Id { get; set; }
         /// <summary>
         /// 主题帖ID
         /// </summary>
@@ -26,7 +26,7 @@ namespace Blazui.Community.Model.Models
         /// <summary>
         /// 用户ID
         /// </summary>
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
     }
 }

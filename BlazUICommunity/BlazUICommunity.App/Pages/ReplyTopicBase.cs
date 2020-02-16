@@ -30,11 +30,10 @@ namespace Blazui.Community.App.Pages
                 MessageService.Show("topicid error", Component.MessageType.Warning);
                 return;
             }
-          
             await Task.CompletedTask;
         }
 
-  
+
         protected override bool ShouldRender()
         {
             return true;

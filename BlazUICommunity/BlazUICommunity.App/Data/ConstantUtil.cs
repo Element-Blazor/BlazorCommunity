@@ -19,7 +19,7 @@ namespace Blazui.Community.App.Data
         /// <summary>
         /// 文档地址
         /// </summary>
-        public static string DocsUrl = "https://github.com/wzxinchen/Blazui";
+        public static string DocsUrl = "https://www.cnblogs.com/wzxinchen/p/12096092.html";// "https://github.com/wzxinchen/Blazui";
 
         public static string DemoUrl = "http://blazui.com:9000/";
     }

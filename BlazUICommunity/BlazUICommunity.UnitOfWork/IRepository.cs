@@ -408,7 +408,13 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
 
         Task<IEnumerable<T>> QueryDataFromSql<T>(string sql , params DbParameter[] parameters) where T : class, new();
         Task<T> ExecuteScalarAsync<T>(string sql , params DbParameter[] parameters);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        Task<bool> ExecuteSqlCmd(string sql, params DbParameter[] parameters);
         #endregion
     }
 }

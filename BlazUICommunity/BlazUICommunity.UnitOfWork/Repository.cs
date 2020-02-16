@@ -1010,6 +1010,11 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
             }
             return default;
         }
+
+        public async Task<bool> ExecuteSqlCmd(string sql, params DbParameter[] parameters)
+        {
+          return await _dbContext.Database.ExecuteSqlRawAsync(sql)>0;
+        }
         #endregion
     }
 }

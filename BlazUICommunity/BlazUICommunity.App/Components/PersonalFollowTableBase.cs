@@ -14,7 +14,7 @@ namespace Blazui.Community.App.Components
     public class PersonalFollowTableBase : PageBase
     {
 
-        protected int pageSize = 5;
+        protected int pageSize = 6;
         protected int currentPage = 1;
         internal bool requireRender = false;
         protected List<PersonalTopicModel> Datas = new List<PersonalTopicModel>();
@@ -67,16 +67,16 @@ namespace Blazui.Community.App.Components
         /// <param name="topic"></param>
         public async Task Del(object topic)
         {
-            MessageBoxResult Confirm = await MessageBox.ConfirmAsync("确定要删除收藏？");
+            MessageBoxResult Confirm = await MessageBox.ConfirmAsync("确定要取消收藏？");
             if (Confirm == MessageBoxResult.Ok)
                 if (topic is PersonalTopicModel followModel)
                 {
-                    MessageService.Show($"正在删除 {followModel.Title}", MessageType.Warning);
-                    var result = await NetService.DelFollows(followModel.Id);
+                    //MessageService.Show($"正在删除 {followModel.Title}", MessageType.Warning);
+                    var result = await NetService.DelFollows(followModel.Id,User.Id);
                     if (result.IsSuccess)
                     {
                         await LoadDatas();
-                        MessageService.Show($"{ followModel.Title} 已删除", MessageType.Warning);
+                        MessageService.Show($"取消收藏了", MessageType.Warning);
                     }
                 }
         }
@@ -100,6 +100,8 @@ namespace Blazui.Community.App.Components
             User ??= await GetUser();
             condition = CreateCondition(condition);
             var result = await NetService.GetFollows(condition);
+            if (result == null)
+                return;
             ConvertDataToDto(result);
             UpdateUI();
         }
@@ -114,7 +116,7 @@ namespace Blazui.Community.App.Components
 
         private void ConvertDataToDto(BaseResponse<PageDatas<BZTopicDto>> result)
         {
-            if (result.IsSuccess && result.Data.TotalCount > 0)
+            if (result.IsSuccess && result.Data!=null&& result.Data.TotalCount > 0)
             {
                 Datas = mapper.Map<List<PersonalTopicModel>>(result.Data.Items);
                 DataCount = result.Data.TotalCount;

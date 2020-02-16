@@ -18,6 +18,8 @@ using System;
 using Blazui.Community.App.Service;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 
 namespace Blazui.Community.App
 {
@@ -46,7 +48,6 @@ namespace Blazui.Community.App
             services.AddCustomRepository<BZUserModel , BZUserIdentityRepository>();
             services.AddHttpClient("product" , client =>
             {
-           
                 client.BaseAddress = new Uri(Configuration["ServerUrl"]?? "http://localhost:5000");
             });
             

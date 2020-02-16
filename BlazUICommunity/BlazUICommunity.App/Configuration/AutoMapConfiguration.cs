@@ -31,6 +31,9 @@ namespace Blazui.Community.App
                 //.ForMember(target => target.Status, dto => dto.MapFrom(src => src.Status))
                 .ForMember(target => target.IsBest, dto => dto.MapFrom(src => src.Good == 1));
 
+
+            CreateMap<BZFollowDto, BZFollowModel>();
+            CreateMap<BZFollowModel, BZFollowDto>();
         }
     }
 }

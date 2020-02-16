@@ -29,6 +29,6 @@ namespace Blazui.Community.DTO
         /// <summary>
         /// 用户ID
         /// </summary>
-        public string UserId { get; set; }
+        public int UserId { get; set; }
     }
 }

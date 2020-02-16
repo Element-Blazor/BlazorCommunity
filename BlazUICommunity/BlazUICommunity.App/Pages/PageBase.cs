@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace Blazui.Community.App.Pages
 {
     public abstract class PageBase : BComponentBase
     {
+        [Inject]
+        public ILogger<PageBase> _logger { get; set; }
         [Inject]
         public IMemoryCache memoryCache { get; set; }
         [Inject]
@@ -40,6 +43,7 @@ namespace Blazui.Community.App.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+        
             await base.OnAfterRenderAsync(firstRender);
             if (!firstRender)
             {
@@ -61,12 +65,7 @@ namespace Blazui.Community.App.Pages
             }
             catch (Exception ex)
             {
-                //await Task.Delay(100);
-                //await InitilizePageDataAsync();
-                //LoadingService.CloseFullScreenLoading();
-                //RequireRender = true;
-                //StateHasChanged();
-                Console.WriteLine(ex.Message);
+                _logger.LogInformation($"OnAfterRenderAsync----->>{ex.StackTrace}");
             }
         }
 
@@ -84,7 +83,7 @@ namespace Blazui.Community.App.Pages
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogInformation($"PageBase-->>GetUser------->>{ex.StackTrace}");
                 return null;
             }
             finally
@@ -98,7 +97,12 @@ namespace Blazui.Community.App.Pages
         {
             var userstatue = await authenticationStateTask;
             if (userstatue.User.Identity.IsAuthenticated)
-                return await userManager.GetUserAsync(userstatue.User);
+            {
+                return await memoryCache.GetOrCreateAsync(userstatue.User, async p =>
+                {
+                    return await userManager.GetUserAsync(userstatue.User);
+                });
+            }
             else return null;
         }
         protected abstract Task InitilizePageDataAsync();

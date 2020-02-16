@@ -68,7 +68,7 @@
             关注
             </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.FollowController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
+        <member name="M:Blazui.Community.Api.Controllers.FollowController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZFollowRepository)">
             <summary>
             
             </summary>
@@ -102,6 +102,24 @@
         <member name="M:Blazui.Community.Api.Controllers.FollowController.Query(Blazui.Community.Request.FollowRequest)">
             <summary>
             根据条件分页查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.FollowController.IsStar(System.Int32,System.Int32)">
+            <summary>
+            查询指定用户是否收藏了指定帖子
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.FollowController.ToggleFollow(Blazui.Community.Model.Models.BZFollowDto)">
+            <summary>
+            改变是否收藏状态
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.FollowController.CancelFollow(System.Int32,System.Int32)">
+            <summary>
+            改变是否收藏状态
             </summary>
             <returns></returns>
         </member>
@@ -456,6 +474,24 @@
             修改密码
             </summary>
             <param name="change"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Blazui.Community.Api.Controllers.VersionController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.VersionController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="unitOfWork"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.VersionController.Get(System.Int32)">
+            <summary>
+            获取版本数据
+            </summary>
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.Enum.TopicType">

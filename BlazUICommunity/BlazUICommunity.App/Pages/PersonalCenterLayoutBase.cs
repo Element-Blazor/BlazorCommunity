@@ -13,7 +13,7 @@ namespace Blazui.Community.App.Pages
     [Authorize]
     public class PersonalCenterLayoutBase : LayoutComponentBase
     {
-        protected  List<PersonalCenterMenuModel> personalCenterMenuModels;
+        protected List<PersonalCenterMenuModel> personalCenterMenuModels;
         protected BLayout bLayout
         {
             get; set;
@@ -58,13 +58,13 @@ namespace Blazui.Community.App.Pages
                     Index   = 2,
                        Route="user/pwd"
                 },
-                      new PersonalCenterMenuModel()
-                {
-                    Icon    = "el-icon-mobile",
-                    Title   = "我的绑定",
-                    Index   = 3,
-                       Route="user/bind"
-                },
+                //      new PersonalCenterMenuModel()
+                //{
+                //    Icon    = "el-icon-mobile",
+                //    Title   = "我的绑定",
+                //    Index   = 3,
+                //       Route="user/bind"
+                //},
                 new PersonalCenterMenuModel()
                 {
                     Icon    = "el-icon-star-on",

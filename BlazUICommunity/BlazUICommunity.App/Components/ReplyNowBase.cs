@@ -46,6 +46,7 @@ namespace Blazui.Community.App.Components
 
             var parsedQuery = HttpUtility.ParseQueryString(new Uri(navigationManager.Uri).Query);
             int.TryParse(parsedQuery["tpid"], out int TopicId);
+
             if(TopicId<0)
             {
                 navigationManager.NavigateTo("/");
@@ -72,6 +73,7 @@ namespace Blazui.Community.App.Components
             else
             {
                 MessageService.Show("发布失败", MessageType.Error);
+                return;
             }
         }
 

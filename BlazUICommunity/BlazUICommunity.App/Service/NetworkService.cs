@@ -89,6 +89,7 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public Task<BaseResponse> DelTopic(int Id)
         {
+            //return httpClient.GetJsonAsync<BaseResponse>($"api/Topic/Delete/{Id}", HttpMethod.Delete);
             return httpClient.GetJsonAsync<BaseResponse>($"api/Topic/Delete/{Id}", HttpMethod.Delete);
         }
 
@@ -108,9 +109,11 @@ namespace Blazui.Community.App.Service
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public Task<BaseResponse> DelFollows(int Id)
+        public Task<BaseResponse> DelFollows(int TopicId,int UserId)
         {
-            return httpClient.GetJsonAsync<BaseResponse>($"api/follow/delete/{Id}", HttpMethod.Delete);
+            //return httpClient.GetJsonAsync<BaseResponse>($"api/follow/delete/{Id}", HttpMethod.Delete);
+
+            return httpClient.GetJsonAsync<BaseResponse>($"api/follow/Cancel/{TopicId}/{UserId}", HttpMethod.Delete);
         }
 
 
@@ -151,7 +154,7 @@ namespace Blazui.Community.App.Service
         /// </summary>
         /// <param name="topicId"></param>
         /// <returns></returns>
-        public Task<BaseResponse<PageDatas<BZReplyDtoWithUser>>> GetReplys(int topicId,int pageindex,int pagesize)
+        public Task<BaseResponse<PageDatas<BZReplyDtoWithUser>>> GetReplys(int topicId, int pageindex, int pagesize)
         {
             return httpClient.GetJsonAsync<BaseResponse<PageDatas<BZReplyDtoWithUser>>>($"api/topic/Reply/{topicId}/{pagesize}/{pageindex}", HttpMethod.Get);
         }
@@ -164,6 +167,37 @@ namespace Blazui.Community.App.Service
         {
             HttpContent httpContent = CreateContent(bZReplyDto);
             return httpClient.GetJsonAsync<BaseResponse>($"api/Reply/Add", httpContent);
+        }
+
+
+        /// <summary>
+        /// 获取版本数据
+        /// </summary>
+        /// <returns></returns>
+        public Task<BaseResponse<List<BZVersionModel>>> GetVersions(int Project)
+        {
+            return httpClient.GetJsonAsync<BaseResponse<List<BZVersionModel>>>($"api/Version/Query/{Project}");
+        }
+
+
+        /// <summary>
+        /// 检查是否收藏了该帖子
+        /// </summary>
+        /// <returns></returns>
+        public Task<BaseResponse<BZFollowModel>> IsStar(int UserId, int TopicId)
+        {
+            return httpClient.GetJsonAsync<BaseResponse<BZFollowModel>>($"api/Follow/IsStar/{UserId}/{TopicId}");
+        }
+
+
+        /// <summary>
+        ///  改变是否收藏状态
+        /// </summary>
+        /// <returns></returns>
+        public Task<BaseResponse> ToggleFollow(BZFollowDto dto)
+        {
+            HttpContent httpContent = CreateContent(dto);
+            return httpClient.GetJsonAsync<BaseResponse>($"api/Follow/Toggle", httpContent);
         }
     }
 }

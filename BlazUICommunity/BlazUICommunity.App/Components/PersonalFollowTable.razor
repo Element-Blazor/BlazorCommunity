@@ -7,7 +7,7 @@
         <BTableColumn Width="150" Format="yyyy-MM-dd" Property="@nameof(PersonalTopicModel.PublishTime)" Text="收藏时间"></BTableColumn>
 
         <BTableTemplateColumn Text="操作">
-            <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Mini" OnClick="@(e=> Del(context))">取消收藏</BButton>
+            <BButton Type="@ButtonType.Text" Style="color:crimson;font-size:18px" Size="@ButtonSize.Medium" IsPlain="true" Icon="el-icon-delete" OnClick="@(e=> Del(context))"></BButton>
         </BTableTemplateColumn>
     </BTableColumns>
 </BTable>

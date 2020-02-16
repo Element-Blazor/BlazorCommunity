@@ -11,6 +11,10 @@ namespace Blazui.Community.App.Model
         public string Title { get; set; }
         public string Content { get; set; }
         public TopicType TopicType { get; set; }
+        public int versionId { get; set; }
+        public int Project { get; set; }
+        //public string VerName { get; set; }
+        //public string VerNo { get; set; }
     }
 
     public class ReplyModel

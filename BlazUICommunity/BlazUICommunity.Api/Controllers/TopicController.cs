@@ -81,7 +81,10 @@ namespace Blazui.Community.Api.Controllers
         {
             try
             {
-                _topicRepository.Delete(Id);
+                //_topicRepository.Delete(Id);
+                var topic = _topicRepository.Find(Id);
+                topic.Status = -1;
+                _topicRepository.Update(topic);
                 return Ok();
             }
             catch (Exception ex)
@@ -137,6 +140,7 @@ namespace Blazui.Community.Api.Controllers
 
             IPagedList<BZTopicModel> pagedList = null;
             var query = Request.CreateQueryExpression<BZTopicModel, TopicRequest>();
+            query = query.And(p => p.Status == 0);
             pagedList = query == null ? await _topicRepository.GetPagedListAsync(Request.pageInfo.PageIndex - 1, Request.pageInfo.PageSize) :
                        await _topicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.pageInfo.PageIndex - 1, Request.pageInfo.PageSize);
             return Ok(pagedList);

@@ -50,7 +50,7 @@ namespace Blazui.Community.App.Pages
             LoadingService.Show(new LoadingOption()
             {
                 Background = "rgba(0, 0, 0, 0.1)",
-                Text = "拼命加载中",
+                Text = "",
                 IconClass = "el-icon-loading"
             });
             await Task.Delay(500);

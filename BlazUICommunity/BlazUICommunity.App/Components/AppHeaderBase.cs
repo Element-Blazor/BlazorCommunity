@@ -33,17 +33,16 @@ namespace Blazui.Community.App.Shared
         }
         protected void NavigateToComponent()
         {
-
             navigationManager.NavigateTo(ConstantUtil.ComponentUrl, forceLoad: true);
         }
         protected void NavigateToDemo()
         {
-
             navigationManager.NavigateTo(ConstantUtil.DemoUrl, forceLoad: true);
         }
         
         protected void NavigateToDoc()
         {
+            //MessageService.Show("开发中...",Component.MessageType.Success);
             navigationManager.NavigateTo(ConstantUtil.DocsUrl, forceLoad: true);
         }
         protected void GotoUCentor()

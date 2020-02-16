@@ -1,10 +1,13 @@
 ﻿using Blazui.Community.App.Model;
 using Blazui.Community.App.Service;
 using Blazui.Community.DTO;
+using Blazui.Community.Model.Models;
 using Blazui.Component;
+using Blazui.Component.Select;
 using Blazui.Markdown;
 using Microsoft.AspNetCore.Authorization;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Pages
@@ -16,6 +19,9 @@ namespace Blazui.Community.App.Pages
         internal ArticleModel article;
         protected BMarkdownEditor bMarkdownEditor;
         protected TopicType _TopicType;
+        protected int Project { get; set; }
+        protected List<BZVersionModel> bZVersions;
+        protected BSelect<int> bSelect;
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -51,7 +57,8 @@ namespace Blazui.Community.App.Pages
                 Title = article.Title,
                 TopicType = (int)article.TopicType,
                 Top = 0,
-                UserId = User.Id
+                UserId = User.Id,
+                versionId = 0
             };
             var result = await NetService.AddTopic(bZTopicDto);
             if (result.IsSuccess)
@@ -67,7 +74,12 @@ namespace Blazui.Community.App.Pages
 
         protected override async Task InitilizePageDataAsync()
         {
+            Project = 0;
             article = new ArticleModel() { Title = "", Content = "" };
+            
+             var resut= await NetService.GetVersions(-1);
+            if (resut.IsSuccess)
+                bZVersions = resut.Data;
             await Task.CompletedTask;
         }
 

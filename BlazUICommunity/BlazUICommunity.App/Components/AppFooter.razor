@@ -1,11 +1,38 @@
 ﻿<footer class="footer">
     <div class="container">
         <div class="footer-main">
-           @copyright
+            <span>
+                @copyright   
+            <a href="http://www.beian.miit.gov.cn">@RecordNumber</a>
+            </span>
+            <span > Powered by .NET Core 3.1.1 Blazor-Blazui on Linux</span>
         </div>
     </div>
 </footer>
+
+<style type="text/css">
+    a:link {
+        color: inherit;
+        text-decoration: none;
+    }
+    /* 未访问的链接 */
+    a:visited {
+        color: #303133;
+        text-decoration: none;
+    }
+
+    /* 已访问的链接 */
+    a:hover {
+        color: red;
+        text-decoration: none;
+    }
+    /* 鼠标移动到链接上 */
+    a:active {
+        color: red;
+    }
+</style>
 @code   {
 
-    protected string copyright = " Blazui社区 2020 © blazui.com";
+    protected string RecordNumber = "粤ICP备19142061号";
+    protected string copyright = "Copyright © 2020 Blazui社区 ";
 }

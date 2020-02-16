@@ -18,7 +18,7 @@
 <BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true">
     <BTableColumns>
         <BTableTemplateColumn Text="操作">
-            <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Mini" OnClick="@(e=> Del(context))">删除</BButton>
+            <BButton  Type="@ButtonType.Text" Style="color:crimson;font-size:18px" Size="@ButtonSize.Medium" IsPlain="true" Icon="el-icon-delete" OnClick="@(e=> Del(context))"></BButton>
         </BTableTemplateColumn>
     </BTableColumns>
 </BTable>

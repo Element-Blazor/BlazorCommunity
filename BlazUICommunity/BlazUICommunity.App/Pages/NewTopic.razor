@@ -5,12 +5,38 @@
     <BTab>
         <BTabPanel Title="发表新帖">
             <BForm Inline="false" @ref="form" Value="article" LabelAlign="@LabelAlign.Left">
-                <BFormItem TValue="TopicType" Label="类型" IsRequired="true" Name="@nameof(ArticleModel.TopicType)">
-                    <div class="el-form-item-custom">
-                        <BSelect Value="TopicType.Ask">
-                        </BSelect>
-                    </div>
-                </BFormItem>
+
+                <div class="form-inline">
+                    <BFormItem TValue="TopicType" Label="类型" IsRequired="true" Name="@nameof(ArticleModel.TopicType)">
+                        <div class="el-form-item-custom">
+                            <BSelect Value="TopicType.Ask">
+                            </BSelect>
+                        </div>
+                    </BFormItem>
+                    @*<BFormItem TValue="int" Label="项目" IsRequired="true" Name="@nameof(ArticleModel.Project)" Style="margin-left: 20px;">
+                        <div class="el-form-item-custom">
+                            <BSelect  Value="Project" @ref="bSelect">
+                                <BSelectOption Value="0" Text="Blazui"></BSelectOption>
+                                <BSelectOption Value="1" Text="BAdmin"></BSelectOption>
+                                <BSelectOption Value="2" Text="BMarkdown"></BSelectOption>
+                            </BSelect>
+                        </div>
+                    </BFormItem>
+                    <BFormItem TValue="int" Label="版本" IsRequired="true" Name="@nameof(ArticleModel.versionId)" Style="margin-left: 20px;">
+                        <div class="el-form-item-custom">
+                            <BSelect TValue="int">
+                                @if (bZVersions != null && bZVersions.Any())
+                                {
+                                    foreach (var ver in bZVersions)
+                                    {
+                                        <BSelectOption Value="@ver.Id" Text="@ver.VerNo"></BSelectOption>
+                                    }
+                                }
+                            </BSelect>
+                        </div>
+                    </BFormItem>*@
+                </div>
+
                 <BFormItem TValue="string" Label="标题" Name="@nameof(ArticleModel.Title)" IsRequired="true">
                     <BInput TValue="string" Style="min-width:500px;max-width:600px;margin-left:-30px;"></BInput>
                 </BFormItem>

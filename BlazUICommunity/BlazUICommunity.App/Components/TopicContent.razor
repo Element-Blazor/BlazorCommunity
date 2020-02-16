@@ -3,7 +3,7 @@
 @if (TopicModel != null)
 {
     <div class="content-topic-base">
-        <BCard Shadow="@ShadowShowType.Always">
+        <BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true" @ref="bCard">
             <Header>
                 <div class="content-topic-head">
                     <div class="content-info">
@@ -42,20 +42,31 @@
                             <div class="content-title">@TopicModel.Title</div>
                         </div>
                         <div class="content-time">
-                          
+
                             @TopicModel?.ReleaseTime
 
                         </div>
                     </div>
 
                     <div class="content-reply">
+
                         @if (TopicModel.IsBest)
                         {
                             <span class="el-tag el-tag--danger el-tag--mini el-tag--dark">精华</span>
                         }
+                        <div class="content-star" @onclick="ToggleStar">
+                            @if (IsStar)
+                            {
+                                <i class="el-icon-star-on"></i>
+                            }
+                            else
+                            {
+                                <i class="el-icon-star-off"></i>
+                            }
+                        </div>
                         @if (TopicModel.ReplyCount > 0)
                         {
-                            <div style="margin-left: 5px;" class="margin-top-10">
+                            <div style="margin-left: 0px;" class="margin-top-10">
                                 <i class="el-icon-chat-dot-square" style="color: #909399;"></i>
                                 <span style="margin-left:0px;color: #909399;">@TopicModel?.ReplyCount</span>
                             </div>

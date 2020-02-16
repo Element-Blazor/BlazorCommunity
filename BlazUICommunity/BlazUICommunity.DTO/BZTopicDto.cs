@@ -55,6 +55,10 @@ namespace Blazui.Community.DTO
         /// 回帖数量
         /// </summary>
         public int? ReplyCount { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? versionId { get; set; }
     }
 
     public class BZTopicDtoWithUser : BZTopicDto
@@ -72,7 +76,5 @@ namespace Blazui.Community.DTO
         /// 头像
         /// </summary>
         public string Avator { get; set; }
-
-   
     }
 }

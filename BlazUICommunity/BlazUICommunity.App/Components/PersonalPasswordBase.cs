@@ -31,6 +31,123 @@ namespace Blazui.Community.App.Components
         protected BCard BCard2 { get; set; }
 
         protected string VerifyCode = "";
+
+        protected BForm bformOldpwd;
+
+
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            if (firstRender)
+                UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            bformOldpwd?.Refresh();
+            bFormActionItemMsg?.Refresh();
+            checkChangePwdForm?.Refresh();
+            btnSendmsg?.Refresh();
+            BTabPanel?.Refresh();
+            Btab?.Refresh();
+            BCard1?.Refresh();
+        }
+
+        protected override bool ShouldRender()
+        {
+            return true;
+        }
+
+
+        protected async Task CheckVerifyCode()
+        {
+            if (!checkChangePwdForm.IsValid())
+                return;
+            var PasswordModel = checkChangePwdForm.GetValue<PasswordModel>();
+            if (VerifyCode != PasswordModel.VerifyCode)
+                return;
+            var result = await NetService.VerifyVerifyCode(User.Id, 1, VerifyCode);
+            IsCheckBindMobileSuccess = result==null?false:result.IsSuccess;
+        }
+
+
+        /// <summary>
+        /// 短信验证是否成功
+        /// </summary>
+        protected bool IsCheckBindMobileSuccess = false;
+
+        protected BZUserModel User;
+        protected override async Task InitilizePageDataAsync()
+        {
+            IsCheckBindMobileSuccess = false;
+
+            User = await GetUser();
+            valueCheckChangePwd = new PasswordModel()
+            {
+                Mobile = User?.PhoneNumber ?? "",
+                Email = User?.Email ?? ""
+            };
+        }
+
+        protected async Task ChangePwdByMobile()
+        {
+            if (!changePwdForm.IsValid())
+                return;
+            if (!CheckConfirmPassword())
+                return;
+            await ResetPassword(changePwdForm);
+        }
+
+        protected async Task ChangePwdByOld()
+        {
+            if (!bformOldpwd.IsValid())
+                return;
+            if (!await CheckOldPassword())
+                return;
+            if (!CheckConfirmPassword())
+                return;
+            await ResetPassword(bformOldpwd);
+        }
+
+        private async Task<bool> CheckOldPassword()
+        {
+            var PasswordModel = bformOldpwd.GetValue<PasswordModel>();
+            var checkOld = await userManager.CheckPasswordAsync(User, PasswordModel.OldPassword);
+            if (!checkOld)
+            {
+                MessageService.Show("旧密码错误", MessageType.Error);
+                return false;
+            }
+            return true;
+        }
+        private bool CheckConfirmPassword()
+        {
+            var PasswordModel = bformOldpwd.GetValue<PasswordModel>();
+            if (PasswordModel.Password != PasswordModel.ConfirmPassword)
+            {
+                MessageService.Show("新密码与确认密码不一致", MessageType.Error);
+                return false;
+            }
+            return true;
+        }
+
+        private async Task ResetPassword(BForm bForm)
+        {
+            var PasswordModel = bForm.GetValue<PasswordModel>();
+            var token = await userManager.GeneratePasswordResetTokenAsync(User);
+            var result = await userManager.ResetPasswordAsync(User, token, PasswordModel.Password);
+            if (result.Succeeded)
+            {
+                //MessageService.Show("密码重置成功,需要重新登录", MessageType.Success);
+                MessageService.Show("密码重置成功,下次登录请使用新密码", MessageType.Success);
+                bForm.Reset();
+                //await Task.Delay(1000);
+                //navigationManager.NavigateTo("/account/signout2", forceLoad: true);
+            }
+        }
+
+
         protected async Task SendMsg()
         {
             if (!checkChangePwdForm.IsValid())
@@ -58,90 +175,6 @@ namespace Blazui.Community.App.Components
                 UpdateUI();
             }
         }
-
-        protected override async Task OnParametersSetAsync()
-        {
-            await base.OnParametersSetAsync();
-
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-            if (firstRender)
-                UpdateUI();
-        }
-
-        private void UpdateUI()
-        {
-            bFormActionItemMsg?.Refresh();
-            checkChangePwdForm?.Refresh();
-            btnSendmsg?.Refresh();
-            BTabPanel?.Refresh();
-            Btab?.Refresh();
-            BCard1?.Refresh();
-        }
-
-        protected override bool ShouldRender()
-        {
-            return true;
-        }
-
-
-        protected async Task CheckVerifyCode()
-        {
-            if (!checkChangePwdForm.IsValid())
-            {
-                return;
-            }
-            var activity = checkChangePwdForm.GetValue<PasswordModel>();
-            if (VerifyCode != activity.VerifyCode)
-                return;
-            var result = await NetService.VerifyVerifyCode(User.Id, 1, VerifyCode);
-            if (result.IsSuccess)
-            {
-                IsCheckBindMobileSuccess = true;
-            }
-        }
-
-
-
-        protected bool IsCheckBindMobileSuccess = false;
-
-
-
-
-        protected BZUserModel User;
-        protected override async Task InitilizePageDataAsync()
-        {
-            IsCheckBindMobileSuccess = false;
-          
-            User = await GetUser();
-            valueCheckChangePwd = new PasswordModel()
-            {
-                Mobile = User?.PhoneNumber ?? "",
-                Email = User?.Email ?? ""
-            };
-        }
-
-        protected async Task ChangePwd()
-        {
-            if (!changePwdForm.IsValid())
-                return;
-            var activity = changePwdForm.GetValue<PasswordModel>();
-            if (activity.Password == activity.ConfirmPassword)
-            {
-                var token = await userManager.GeneratePasswordResetTokenAsync(User);
-                var result = await userManager.ResetPasswordAsync(User, token, activity.Password);
-                if (result.Succeeded)
-                {
-                    MessageService.Show("修改成功,需要重新登录", MessageType.Success);
-                    await Task.Delay(1000);
-                    navigationManager.NavigateTo("/account/signout2", forceLoad: true);
-                }
-            }
-        }
-
         protected override void InitTabTitle()
         {
             tabTitle = "我的密码";

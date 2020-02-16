@@ -222,18 +222,25 @@ html body > app {
     }
 
 .footer-main {
+    color: #303133;
     text-align: center;
-    line-height: 60px;
+    /*line-height: 60px;*/
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    margin-top:20px;
 }
-
-.footer {
-    width: 100%;
-    text-align: center;
-    height: 60px;
-    background: #f7fbfd;
-    position: fixed;
-    bottom: 0px;
-}
+    .footer-main >span{
+        padding:3px;
+    }
+    .footer {
+        width: 100%;
+        text-align: center;
+        height: 80px;
+        background: #f7fbfd;
+        position: fixed;
+        bottom: 0px;
+    }
 
 .el-menu--horizontal > .el-menu-item.is-active {
     border-bottom-color: #409EFF;
@@ -378,6 +385,7 @@ app > div .is-active {
 
 .app-user-menu .el-menu {
     border-right: none;
+    min-height: 615px;
 }
 
 
@@ -600,7 +608,7 @@ app .blaz-layout > .blaz-layout-container > .blaz-layout-center::-webkit-scrollb
 }
 
 .content-reply {
-    margin-top: 30px;
+    /*margin-top: 30px;*/
     position: absolute;
     right: 17px;
 }
@@ -611,12 +619,14 @@ app .blaz-layout > .blaz-layout-container > .blaz-layout-center::-webkit-scrollb
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
+
 .content-reply-base .el-card__header {
     padding: 10px 10px 0px 10px;
     border-bottom: 1px solid #EBEEF5;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
+
 .content-topic-img {
     margin-top: 3px;
     width: 80%;
@@ -642,29 +652,47 @@ app .blaz-layout > .blaz-layout-container > .blaz-layout-center::-webkit-scrollb
     display: flex;
     flex-direction: column;
 }
+
 .content-flex-row {
     display: flex;
     flex-direction: row;
 }
+
 .content-time {
     margin-left: 13px;
     /* text-align: center; */
     margin-top: 10px;
     color: #606266;
 }
+
 .go-home {
     display: flex;
 }
+
 .reply-user-name {
     margin-left: 13px;
     text-align: left;
     margin-top: 40px;
 }
+
 .reply-avator-img {
     margin-top: 8px;
     width: 80%;
     height: 80%;
 }
+
 .reply-now .el-card__header {
-    padding:0px;
+    padding: 0px;
+}
+
+.form-inline {
+    display: flex;
+}
+
+.content-star {
+    font-size: 20px;
+    margin-left: 10px;
+    margin-top: 10px;
+    color: #909399;
+    cursor: pointer;
 }

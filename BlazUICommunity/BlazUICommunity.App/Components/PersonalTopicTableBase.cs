@@ -22,7 +22,7 @@ namespace Blazui.Community.App.Components
     public class PersonalTopicTableBase : PageBase
     {
 
-        protected int pageSize = 5;
+        protected int pageSize = 6;
         protected int currentPage = 1;
         protected TopicType? TopicType;
         internal bool requireRender = false;
@@ -81,12 +81,12 @@ namespace Blazui.Community.App.Components
             if (Confirm == MessageBoxResult.Ok)
                 if (topic is PersonalTopicModel topicModel)
                 {
-                    MessageService.Show($"正在删除 {topicModel.Title}", MessageType.Warning);
+                    //MessageService.Show($"正在删除 {topicModel.Title}", MessageType.Warning);
                     var result = await NetService.DelTopic(topicModel.Id);
                     if (result.IsSuccess)
                     {
                         await LoadDatas();
-                        MessageService.Show($"{ topicModel.Title} 已删除", MessageType.Warning);
+                        MessageService.Show($"删除成功", MessageType.Success);
                     }
                 }
         }

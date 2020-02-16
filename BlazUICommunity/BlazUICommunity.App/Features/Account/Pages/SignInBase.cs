@@ -58,20 +58,21 @@ namespace Blazui.Community.App.Features.Account.Pages
 
         protected void FindPwd()
         {
-            navigationManager.NavigateTo("/account/register" , forceLoad: true);
+            MessageService.Show("尚未实现", MessageType.Info);
+            //navigationManager.NavigateTo("/account/register" , forceLoad: true);
         }
 
         protected async Task SSOWX()
         {
-            Console.WriteLine("SSOWX");
+            MessageService.Show("尚未实现", MessageType.Info);
         }
         protected async Task SSOQQ()
         {
-            Console.WriteLine("SSOQQ");
+            MessageService.Show("尚未实现", MessageType.Info);
         }
         protected async Task SSOGithub()
         {
-            Console.WriteLine("SSOGithub");
+            MessageService.Show("尚未实现", MessageType.Info);
         }
 
         protected override Task InitilizePageDataAsync()

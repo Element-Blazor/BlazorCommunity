@@ -55,6 +55,9 @@ namespace Blazui.Community.Model.Models
         /// 回帖数量
         /// </summary>
         public int? ReplyCount { get; set; }
-
+        /// <summary>
+        /// 版本Id
+        /// </summary>
+        public int? versionId { get; set; }
     }
 }

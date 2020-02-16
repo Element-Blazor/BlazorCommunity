@@ -40,6 +40,7 @@ namespace Blazui.Community.Model.Models
         public virtual DbSet<SysMenuModel> SysMenu { get; set; }
         public virtual DbSet<SysRoleModel> SysRole { get; set; }
         public virtual DbSet<BzVerifyCodeModel> BzVerifyCode { get; set; }
+        public virtual DbSet<BZVersionModel> BZVersionModel { get; set; }
         
         public virtual DbSet<SysRoleMenuMappingModel> SysRoleMenuMapping { get; set; }
         public virtual DbSet<SysUserMenuMappingModel> SysUserMenuMapping { get; set; }
