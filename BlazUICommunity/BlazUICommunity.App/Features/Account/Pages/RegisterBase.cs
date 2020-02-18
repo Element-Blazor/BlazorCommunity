@@ -3,6 +3,7 @@ using Blazui.Community.DTO;
 using Blazui.Community.Repository;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Features.Account.Pages
@@ -14,33 +15,45 @@ namespace Blazui.Community.App.Features.Account.Pages
 
         protected BForm registerForm;
         internal RegisterAccountDto Value;
+        readonly string CheckChinaPattern = @"[\u4e00-\u9fa5]";//检查汉字的正则表达式
         protected async Task RegisterUser()
         {
-            if ( !registerForm.IsValid() )
+            if (!registerForm.IsValid())
             {
                 return;
             }
             var registerAccountModel = registerForm.GetValue<RegisterAccountDto>();
-            if ( !registerAccountModel.Password.Equals(registerAccountModel.ConfirmPassword) )
+            if (ContainsChineseCharacters(registerAccountModel.UserAccount))
             {
-                MessageService.Show("两次密码输入不一致",MessageType.Error);
+                MessageService.Show("不支持中文账号", MessageType.Error);
+                return;
+            }
+
+            if (!registerAccountModel.Password.Equals(registerAccountModel.ConfirmPassword))
+            {
+                MessageService.Show("两次密码输入不一致", MessageType.Error);
                 return;
             }
             var user = await userManager.FindByNameAsync(registerAccountModel.UserAccount);
-            if ( user != null )
+            if (user != null)
             {
                 MessageService.Show("用户账号已存在", MessageType.Error);
             }
-            var result = await _bZUserRepository.CreateUserAsync(registerAccountModel.UserAccount , registerAccountModel.Password);
-            if ( result )
+            var result = await _bZUserRepository.CreateUserAsync(registerAccountModel.UserAccount, registerAccountModel.Password);
+            if (result)
             {
 
-                navigationManager.NavigateTo("account/signin" , true);
+                navigationManager.NavigateTo("account/signin", true);
                 return;
             }
             MessageService.Show("注册失败", MessageType.Error);
         }
 
+        private bool ContainsChineseCharacters(string input)
+        {
+            return Regex.Matches(input, CheckChinaPattern)?.Count>0;
+          
+        }
 
         protected override Task OnParametersSetAsync()
         {

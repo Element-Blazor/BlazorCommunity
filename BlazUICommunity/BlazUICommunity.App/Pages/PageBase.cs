@@ -65,7 +65,9 @@ namespace Blazui.Community.App.Pages
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"OnAfterRenderAsync----->>{ex.StackTrace}");
+                MessageService.Show(ex.Message, MessageType.Error);
+                await InitilizePageDataAsync();
+                _logger.LogError($"OnAfterRenderAsync----->>{ex.StackTrace}");
             }
         }
 
