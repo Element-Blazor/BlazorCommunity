@@ -14,7 +14,8 @@ namespace Blazui.Community.Api
         {
             CreateMap<BZUserModel, BZUserDto>();
             CreateMap<BZUserDto, BZUserModel>().ForMember(dest => dest.Id, option => option.Ignore());
-
+            CreateMap<BZUserModel, BZUserUIDto>();
+            CreateMap<BZUserUIDto, BZUserModel>().ForMember(dest => dest.Id, option => option.Ignore());
             CreateMap<BZTopicModel, BZTopicDto>();
             CreateMap<BZTopicDto, BZTopicModel>().ForMember(dest => dest.Id, option => option.Ignore());
 
@@ -54,12 +55,17 @@ namespace Blazui.Community.Api
             .ForMember(dest => dest.UserName, option => option.Ignore())
             .ForMember(dest => dest.Avator, option => option.Ignore())
             .ForMember(dest => dest.NickName, option => option.Ignore())
-             .ForMember(dest => dest.UserId, option => option.Ignore());
+             .ForMember(dest => dest.UserId, option => option.Ignore())
+             .ForMember(dest => dest.GoodDisplay, option => option.Ignore())
+              .ForMember(dest => dest.TopDisplay, option => option.Ignore())
+             .ForMember(dest => dest.StatusDisplay, option => option.Ignore());
+
 
             CreateMap<BZReplyModel, BZReplyDtoWithUser>()
              .ForMember(dest => dest.UserName, option => option.Ignore())
              .ForMember(dest => dest.Avator, option => option.Ignore())
              .ForMember(dest => dest.NickName, option => option.Ignore())
+             .ForMember(dest => dest.StatusDisplay, option => option.Ignore())
               .ForMember(dest => dest.UserId, option => option.Ignore());
 
         }

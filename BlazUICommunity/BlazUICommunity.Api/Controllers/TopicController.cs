@@ -31,10 +31,10 @@ namespace Blazui.Community.Api.Controllers
     public class TopicController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IRepository<BZTopicModel> _topicRepository;
         private readonly IMapper _mapper;
         private readonly BZTopicRepository _bZTopicRepository;
-
+        private readonly IRepository<BZFollowModel> _bZFollowRepository;
+        private readonly IRepository<BZReplyModel> _bZReplyRepository;
         /// <summary>
         /// 
         /// </summary>
@@ -47,7 +47,8 @@ namespace Blazui.Community.Api.Controllers
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _bZTopicRepository = bZTopicRepository;
-            _topicRepository = unitOfWork.GetRepository<BZTopicModel>(true);
+            _bZFollowRepository = unitOfWork.GetRepository<BZFollowModel>();
+            _bZReplyRepository = unitOfWork.GetRepository<BZReplyModel>();
         }
 
 
@@ -59,38 +60,98 @@ namespace Blazui.Community.Api.Controllers
         public async Task<IActionResult> Add([FromBody] BZTopicDto dto)
         {
             var user = _mapper.Map<BZTopicModel>(dto);
-            try
-            {
-                await _topicRepository.InsertAsync(user);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await _bZTopicRepository.InsertAsync(user);
             return Ok();
         }
 
 
-
         /// <summary>
-        /// 根据ID删除帖子
+        /// 置顶或取消置顶
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpGet("TopTopic/{Id}")]
+        public IActionResult TopTopic([FromRoute] int Id)
+        {
+            var topic = _bZTopicRepository.Find(Id);
+            if (topic != null)
+            {
+                topic.Top = topic.Top == 1 ? 0 : 1;
+                _bZTopicRepository.Update(topic);
+            }
+            return Ok();
+        }
+        /// <summary>
+        /// 加精或取消加精
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpGet("BestTopic/{Id}")]
+        public IActionResult BestTopic([FromRoute] int Id)
+        {
+            var topic = _bZTopicRepository.Find(Id);
+            if (topic != null)
+            {
+                topic.Good = topic.Good == 1 ? 0 : 1;
+                _bZTopicRepository.Update(topic);
+            }
+            return Ok();
+        }
+        /// <summary>
+        /// 结贴
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpGet("EndTopic/{Id}")]
+        public IActionResult EndTopic([FromRoute] int Id)
+        {
+            var topic = _bZTopicRepository.Find(Id);
+            if (topic != null)
+            {
+                topic.Status = topic.Status == 1 ? 0 : 1 ;
+                _bZTopicRepository.Update(topic);
+            }
+            return Ok();
+        }
+        /// <summary>
+        /// 根据ID删除帖子--假删除--前后台均调用
         /// </summary>
         /// <returns></returns>
         [HttpDelete("Delete/{Id}")]
         public IActionResult Delete([FromRoute] int Id)
         {
-            try
-            {
-                //_topicRepository.Delete(Id);
-                var topic = _topicRepository.Find(Id);
-                topic.Status = -1;
-                _topicRepository.Update(topic);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            DeleteOrActiveTopic(Id, -1);
+            return Ok();
+        }   /// <summary>
+            /// 恢复帖子
+            /// </summary>
+            /// <returns></returns>
+        [HttpDelete("Active/{Id}")]
+        public IActionResult Active([FromRoute] int Id)
+        {
+            DeleteOrActiveTopic(Id, 0);
+            return Ok();
+        }
+
+        private bool DeleteOrActiveTopic(int Id,int status)
+        {
+            return _unitOfWork.CommitWithTransaction
+                (() =>
+                {
+                    var topic = _bZTopicRepository.Find(Id);
+                    if (topic != null)
+                    {
+                        topic.Status = status;
+                        var follows = _bZFollowRepository.GetAll(p => p.TopicId == Id).ToList();
+                        follows.ForEach(p => p.Status = status);
+                        _bZFollowRepository.Update(follows);
+                        _bZTopicRepository.Update(topic);
+                        var replys = _bZReplyRepository.GetAll(p => p.TopicId == Id).ToList();
+                        replys.ForEach(p => p.Status = status);
+                        _bZReplyRepository.Update(replys);
+                    }
+                }
+                );
         }
 
         /// <summary>
@@ -105,15 +166,8 @@ namespace Blazui.Community.Api.Controllers
             var user = _mapper.Map<BZTopicModel>(Dto);
             user.Id = Id;
 
-            try
-            {
-                _topicRepository.Update(user);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _bZTopicRepository.Update(user);
+            return Ok();
         }
 
         /// <summary>
@@ -123,27 +177,88 @@ namespace Blazui.Community.Api.Controllers
         [HttpGet("Query/{Id}")]
         public async Task<IActionResult> Query([FromRoute] int Id)
         {
-            //var res = await _topicRepository.FindAsync(Id);
+            //var res = await _bZTopicRepository.FindAsync(Id);
             var res = await _bZTopicRepository.QueryTopById(Id);
             if (res is null)
                 return new NoContentResponse();
-     
+
             return Ok(res.FirstOrDefault());
         }
         /// <summary>
-        /// 根据条件分页查询帖子
+        /// 根据条件分页查询帖子---后台
         /// </summary>
         /// <returns></returns>
         [HttpPost("Query")]
-        public async Task<IActionResult> Query([FromBody] TopicRequest Request = null)
+        public async Task<IActionResult> Query([FromBody] TopicRequest Request = null, [SwaggerParameter(Required = false)] string userName="")
         {
 
             IPagedList<BZTopicModel> pagedList = null;
             var query = Request.CreateQueryExpression<BZTopicModel, TopicRequest>();
+            var userRepository = _unitOfWork.GetRepository<BZUserModel>();
+            if (!string.IsNullOrWhiteSpace(userName))
+            {
+                var Users = await userRepository.GetAllAsync(p => p.UserName.Contains(userName));
+                if (Users != null)
+                {
+                    query = query.And(p => Users.Select(x => x.Id).Contains(p.UserId));
+                }
+            }
+            pagedList =   await _bZTopicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.pageInfo.PageIndex - 1, Request.pageInfo.PageSize);
+            if(pagedList!=null&&pagedList.Items.Any())
+            {
+                var pagedatas = pagedList.ConvertToPageData<BZTopicModel, BZTopicDtoWithUser>();
+         
+                var users = await userRepository.GetAllAsync(p => pagedList.Items.Select(d => d.UserId).Contains(p.Id));
+                foreach (BZTopicModel topic in pagedList.Items)
+                {
+                    var topicwithuser = _mapper.Map<BZTopicDtoWithUser>(topic);
+                    var user = users.FirstOrDefault(p => p.Id == topic.UserId);
+                    topicwithuser.UserName = user.UserName;
+                    topicwithuser.Avator = user.Avator;
+                    topicwithuser.NickName = user.NickName;
+                    pagedatas.Items.Add(topicwithuser);
+                }
+                if (pagedatas is null || pagedatas.TotalCount == 0)
+                    return new NoContentResponse();
+                return Ok(pagedatas);
+            }
+  
+            return new NoContentResponse();
+        }
+
+        /// <summary>
+        /// 根据条件分页查询帖子---前端
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("AppQuery")]
+        public async Task<IActionResult> AppQuery([FromBody] TopicRequest Request = null)
+        {
+
+            IPagedList<BZTopicModel> pagedList = null;
+            var query = Request.CreateQueryExpression<BZTopicModel, TopicRequest>();
+            var userRepository = _unitOfWork.GetRepository<BZUserModel>();
             query = query.And(p => p.Status == 0);
-            pagedList = query == null ? await _topicRepository.GetPagedListAsync(Request.pageInfo.PageIndex - 1, Request.pageInfo.PageSize) :
-                       await _topicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.pageInfo.PageIndex - 1, Request.pageInfo.PageSize);
-            return Ok(pagedList);
+                pagedList = await _bZTopicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.pageInfo.PageIndex - 1, Request.pageInfo.PageSize);
+            if (pagedList != null && pagedList.Items.Any())
+            {
+                var pagedatas = pagedList.ConvertToPageData<BZTopicModel, BZTopicDtoWithUser>();
+
+                var users = await userRepository.GetAllAsync(p => pagedList.Items.Select(d => d.UserId).Contains(p.Id));
+                foreach (BZTopicModel topic in pagedList.Items)
+                {
+                    var topicwithuser = _mapper.Map<BZTopicDtoWithUser>(topic);
+                    var user = users.FirstOrDefault(p => p.Id == topic.UserId);
+                    topicwithuser.UserName = user.UserName;
+                    topicwithuser.Avator = user.Avator;
+                    topicwithuser.NickName = user.NickName;
+                    pagedatas.Items.Add(topicwithuser);
+                }
+                if (pagedatas is null || pagedatas.TotalCount == 0)
+                    return new NoContentResponse();
+                return Ok(pagedatas);
+            }
+
+            return new NoContentResponse();
         }
 
         /// <summary>
@@ -163,23 +278,25 @@ namespace Blazui.Community.Api.Controllers
 
             var repo = _unitOfWork.GetRepository<BZReplyModel>(true);
 
-            var pagedList = await repo.GetPagedListAsync(p => p.TopicId == topicId, o => o.OrderBy(p => p.PublishTime), null, pageIndex - 1, pageSize);
+            var pagedList = await repo.GetPagedListAsync(p => p.TopicId == topicId&&p.Status==0, o => o.OrderBy(p => p.PublishTime), null, pageIndex - 1, pageSize);
             if (pagedList.TotalCount > 0)
             {
+                var topic =await _bZTopicRepository.GetFirstOrDefaultAsync(p => p.Id == topicId);
                 var pagedatas = pagedList.ConvertToPageData<BZReplyModel, BZReplyDtoWithUser>();
                 var userRepository = _unitOfWork.GetRepository<BZUserModel>();
                 var users = await userRepository.GetAllAsync(p => pagedList.Items.Select(d => d.UserId).Contains(p.Id));
-                foreach (var replyDtoWithUser in pagedList.Items)
+                foreach (var replyDto in pagedList.Items)
                 {
-                    var user = users.FirstOrDefault(p => p.Id == replyDtoWithUser.UserId);
-                    var replywithuser = _mapper.Map<BZReplyDtoWithUser>(replyDtoWithUser);
+                    var user = users.FirstOrDefault(p => p.Id == replyDto.UserId);
+                    var replywithuser = _mapper.Map<BZReplyDtoWithUser>(replyDto);
                     pagedatas.Items.Add(replywithuser);
-                    if(user !=null)
+                    if (user != null)
                     {
                         replywithuser.NickName = user?.NickName;
                         replywithuser.Avator = user?.Avator;
                         replywithuser.UserName = user?.UserName;
                         replywithuser.UserId = user.Id;
+                        replywithuser.Title = topic?.Title;
                     }
                 }
                 pagedatas.Items = pagedatas.Items.OrderBy(p => p.PublishTime).ToList();
@@ -224,7 +341,7 @@ namespace Blazui.Community.Api.Controllers
 
 
         /// <summary>
-        /// 根据类型查询帖子
+        /// 根据类型查询帖子---前端
         /// </summary>
         /// <param name="topicType">帖子类型 0：提问，1：分享，2：讨论，3：建议，4：公告</param>
         /// <param name="pageSize"></param>
@@ -238,7 +355,7 @@ namespace Blazui.Community.Api.Controllers
             if (topicType < 0)
                 return new BadRequestResponse(" topicType id  error");
             var topicRepo = _unitOfWork.GetRepository<BZTopicModel>(true);
-            var Topics = await _topicRepository.GetPagedListAsync(p => p.TopicType == topicType, o => o.OrderBy(o => o.Top == 1).ThenByDescending(o => o.PublishTime), null, pageIndex-1, pageSize);
+            var Topics = await _bZTopicRepository.GetPagedListAsync(p => p.TopicType == topicType, o => o.OrderBy(o => o.Top == 1).ThenByDescending(o => o.PublishTime), null, pageIndex - 1, pageSize);
             if (Topics is null || Topics.TotalCount == 0)
                 return new NoContentResponse();
             var ResultDtos = _mapper.Map<List<BZTopicDto>>(Topics.Items);
@@ -246,7 +363,7 @@ namespace Blazui.Community.Api.Controllers
         }
 
         /// <summary>
-        /// 根据类型，排序查询
+        /// 根据类型，排序查询---前端
         /// </summary>
         /// <param name="orderType">排序类型 0：综合，1：人气，2：精华，3：已结帖</param>
         /// <param name="topicType">帖子类型 0：提问，1：分享，2：讨论，3：建议，4：公告</param>
@@ -262,27 +379,27 @@ namespace Blazui.Community.Api.Controllers
             if (orderType < 0)
                 return new BadRequestResponse(" topicType id  error");
             var topicRepo = _unitOfWork.GetRepository<BZTopicModel>(true);
-            IPagedList<BZTopicModel> pagedList=null;
-            Expression<Func<BZTopicModel, bool>> predicate = p => p.Status!=-1;//-1 已删除
+            IPagedList<BZTopicModel> pagedList = null;
+            Expression<Func<BZTopicModel, bool>> predicate = p => p.Status != -1;//-1 已删除
             if (topicType != -1)
             {
-                predicate= predicate.And(p => p.TopicType == topicType);
+                predicate = predicate.And(p => p.TopicType == topicType);
             }
             switch (orderType)
             {
                 case 0:
-                     pagedList = await _topicRepository.GetPagedListAsync(predicate, o => o.OrderBy(o => (o.ReplyCount*1.5+o.Hot) ).ThenByDescending(o => o.ModifyTime), null, pageIndex - 1, pageSize);
+                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderBy(o => (o.ReplyCount * 1.5 + o.Hot)).ThenByDescending(o => o.ModifyTime), null, pageIndex - 1, pageSize);
                     break;
                 case 1:
-                    pagedList = await _topicRepository.GetPagedListAsync(predicate, o => o.OrderBy(o => ( o.Hot)).ThenByDescending(o => o.ModifyTime), null, pageIndex - 1, pageSize);
+                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderBy(o => (o.Hot)).ThenByDescending(o => o.ModifyTime), null, pageIndex - 1, pageSize);
                     break;
                 case 2:
                     predicate = predicate.And(p => p.Good == 1);//精华帖
-                    pagedList = await _topicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => (o.Good)).ThenByDescending(o => o.ModifyTime), null, pageIndex - 1, pageSize);
+                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => (o.Good)).ThenByDescending(o => o.ModifyTime), null, pageIndex - 1, pageSize);
                     break;
                 case 3:
-                    Expression<Func<BZTopicModel, bool>> predicateEnd = p => p.Status==1;//1 已结帖
-                    pagedList = await _topicRepository.GetPagedListAsync(predicateEnd, o=>o.OrderByDescending(p=>p.ModifyTime), null, pageIndex - 1, pageSize);
+                    Expression<Func<BZTopicModel, bool>> predicateEnd = p => p.Status == 1;//1 已结帖
+                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicateEnd, o => o.OrderByDescending(p => p.ModifyTime), null, pageIndex - 1, pageSize);
                     break;
                 default:
                     break;
@@ -315,7 +432,7 @@ namespace Blazui.Community.Api.Controllers
         public async Task<IActionResult> QueryBest([SwaggerParameter(Required = false)] int pageSize = 5)
         {
             var topicRepo = _unitOfWork.GetRepository<BZTopicModel>(true);
-            var Topics = await _topicRepository.GetPagedListAsync(p => p.Good == 1, o => o.OrderByDescending(o => o.PublishTime),null, 0, pageSize);
+            var Topics = await _bZTopicRepository.GetPagedListAsync(p => p.Good == 1, o => o.OrderByDescending(o => o.PublishTime), null, 0, pageSize);
             if (Topics is null || Topics.TotalCount == 0)
                 return new NoContentResponse();
             var ResultDtos = _mapper.Map<List<BZTopicDto>>(Topics.Items);
@@ -330,13 +447,9 @@ namespace Blazui.Community.Api.Controllers
         [HttpGet("Top/{pageSize}")]
         public async Task<IActionResult> QueryTop([SwaggerParameter(Required = false)] int pageSize = 3)
         {
-            var topicRepo = _unitOfWork.GetRepository<BZTopicModel>(true);
-            //var Topics = await _topicRepository.GetPagedListAsync(p => p.Top == 1, o => o.OrderByDescending(o => o.PublishTime), null, 0, pageSize);
-
             var Topics = await _bZTopicRepository.QueryTops(pageSize);
             if (Topics is null || Topics.Count() == 0)
                 return new NoContentResponse();
-            //var ResultDtos = _mapper.Map<List<BZTopicDto>>(Topics);
             return Ok(Topics);
         }
 
@@ -357,14 +470,11 @@ namespace Blazui.Community.Api.Controllers
             };
             var topicRepo = _unitOfWork.GetRepository<BZTopicModel>(true);
             Expression<Func<BZTopicModel, bool>> predicate = p => p.PublishTime >= DateTime.Now.AddDays(beforeDays) && p.PublishTime <= DateTime.Now;
-            var Topics = await _topicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => o.Hot).ThenByDescending(o => o.ReplyCount), null, 1, 10);
+            var Topics = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => o.Hot).ThenByDescending(o => o.ReplyCount), null, 1, 10);
             if (Topics is null || Topics.TotalCount == 0)
                 return new NoContentResponse();
             var ResultDtos = _mapper.Map<List<BZTopicDto>>(Topics.Items);
             return Ok(ResultDtos);
         }
-
-
-
     }
 }

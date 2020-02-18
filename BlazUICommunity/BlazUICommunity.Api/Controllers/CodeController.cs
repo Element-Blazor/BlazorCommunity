@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
 using Blazui.Community.Utility;
+using Blazui.Community.Utility.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -49,7 +50,7 @@ namespace Blazui.Community.Api.Controllers
             }
             else
             {
-                return BadRequest("生成验证码失败");
+                return new BadRequestResponse("生成验证码失败");
             }
         }
 
@@ -65,7 +66,7 @@ namespace Blazui.Community.Api.Controllers
             var result = await _bZVerifyCodeRepository.GetFirstOrDefaultAsync(p => p.VerifyCode == Code && p.UserId == userId && p.VerifyType == CodeType );
             if (result != null&& !result.IsExpired)
                 return Ok(result);
-            return BadRequest("验证失败");
+            return new BadRequestResponse("验证失败");
         }
     }
 }

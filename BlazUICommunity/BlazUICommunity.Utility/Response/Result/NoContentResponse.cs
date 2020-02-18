@@ -12,9 +12,8 @@ namespace Blazui.Community.Utility.Response
     public class NoContentResponse : ObjectResult
     {
         public NoContentResponse(string message = "no data")
-            : base(new NoContentResultModel(message))
+            : base(message)
         {
-            StatusCode = 204;
         }
     }
 }

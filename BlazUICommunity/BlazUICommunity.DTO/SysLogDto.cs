@@ -1,4 +1,4 @@
-namespace Blazui.Community.Model.Models
+namespace Blazui.Community.DTO
 {
     using System;
     using System.Collections.Generic;

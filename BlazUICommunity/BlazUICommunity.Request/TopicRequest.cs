@@ -46,7 +46,7 @@ namespace Blazui.Community.Request
         /// 状态 0正常，-1 删除，1已结帖
         /// </summary>
         [ExpressionQuery(OperationType.Equal)]
-        public int? Status { get; set; } = 0;
+        public int? Status { get; set; } 
 
         /// <summary>
         /// 是否置顶0否-1置顶

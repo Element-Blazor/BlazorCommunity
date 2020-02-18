@@ -1,7 +1,7 @@
 ﻿@inherits BindMobileBase
 <BCard EnableAlwaysRender="true" @ref="bCard">
     <Body>
-        @if (value != null)
+        @if(value!=null&&!string.IsNullOrWhiteSpace(value.Mobile))
         {
             <BForm @ref="bForm" Value="value" LabelAlign="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
                 <BFormItem TValue="string" Label="" Name="@nameof(BindMobileModel.Mobile)" IsRequired="false">

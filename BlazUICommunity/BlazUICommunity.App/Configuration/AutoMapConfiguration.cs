@@ -26,7 +26,7 @@ namespace Blazui.Community.App
                 //.ForMember(target => target.TopicType, dto => dto.MapFrom(src => src.Category))
 
                 .ForMember(target => target.Category, dto => dto.Ignore())
-                .ForMember(target => target.ReleaseTime, dto => dto.MapFrom(src => src.PublishTime.ToString("yyyy-MM-dd")))
+                .ForMember(target => target.ReleaseTime, dto => dto.MapFrom(src => src.PublishTime.ToString("yyyy-MM-dd HH:mm:ss")))
                 .ForMember(target => target.Author, dto => dto.MapFrom(src => src.NickName))
                 //.ForMember(target => target.Status, dto => dto.MapFrom(src => src.Status))
                 .ForMember(target => target.IsBest, dto => dto.MapFrom(src => src.Good == 1));

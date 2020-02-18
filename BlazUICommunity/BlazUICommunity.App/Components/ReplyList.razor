@@ -4,7 +4,7 @@
 {
     foreach (var reply in Replys)
     {
-        <ReplyItem ReplyModel="reply" EnableAlwaysRender="true"></ReplyItem>
+        <ReplyItem ReplyModel="reply" EnableAlwaysRender="true" DeleteReply="e=>DeleteRep(reply.Id)"></ReplyItem>
     }
 
 

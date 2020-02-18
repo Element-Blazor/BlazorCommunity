@@ -86,8 +86,15 @@ namespace Blazui.Community.App.Components
                 //    //result = await NetService.GetReplys(TopicId, currentPage, PageSize);
                 //}
                 HandData(result);
-
             }
+            else
+            {
+                Total = 0;
+                Replys = new List<BZReplyDtoWithUser>();
+            }
+
+            MarkAsRequireRender();
+            StateHasChanged();
         }
 
         private void HandData(BaseResponse<PageDatas<BZReplyDtoWithUser>> result)
@@ -101,10 +108,22 @@ namespace Blazui.Community.App.Components
                     item.LastModifyTime = Convert.ToDateTime(item.ModifyTime).ConvertToDateDiffStr();
                 }
             }
-            MarkAsRequireRender();
-            StateHasChanged();
         }
 
+
+        protected async Task DeleteRep(int replyId)
+        {
+            MessageBoxResult Confirm = await MessageBox.ConfirmAsync("确定要删除？");
+            if (Confirm == MessageBoxResult.Ok)
+            {
+                var result = await NetService.DelRelpy(replyId);
+                if (result.IsSuccess)
+                {
+                    MessageService.Show($"删除成功", MessageType.Success);
+                    await LoadData();
+                }
+            }
+        }
         internal async Task CurrentPageChangedAsync(int page)
         {
             CurrentPage = page;
@@ -122,5 +141,9 @@ namespace Blazui.Community.App.Components
             await Task.CompletedTask;
         }
 
+        protected override bool ShouldRender()
+        {
+            return true;
+        }
     }
 }

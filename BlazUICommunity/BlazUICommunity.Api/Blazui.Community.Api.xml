@@ -75,7 +75,7 @@
             <param name="unitOfWork"></param>
             <param name="mapper"></param>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.FollowController.Add(Blazui.Community.Model.Models.BZFollowDto)">
+        <member name="M:Blazui.Community.Api.Controllers.FollowController.Add(Blazui.Community.DTO.BZFollowDto)">
             <summary>
             新增关注
             </summary>
@@ -87,7 +87,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.FollowController.Update(Blazui.Community.Model.Models.BZFollowDto,System.Int32)">
+        <member name="M:Blazui.Community.Api.Controllers.FollowController.Update(Blazui.Community.DTO.BZFollowDto,System.Int32)">
             <summary>
             更新关注
             </summary>
@@ -111,7 +111,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.FollowController.ToggleFollow(Blazui.Community.Model.Models.BZFollowDto)">
+        <member name="M:Blazui.Community.Api.Controllers.FollowController.ToggleFollow(Blazui.Community.DTO.BZFollowDto)">
             <summary>
             改变是否收藏状态
             </summary>
@@ -135,7 +135,7 @@
             <param name="unitOfWork"></param>
             <param name="mapper"></param>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Part3Controller.Add(Blazui.Community.Model.Models.BZThirdAccountDto)">
+        <member name="M:Blazui.Community.Api.Controllers.Part3Controller.Add(Blazui.Community.DTO.BZThirdAccountDto)">
             <summary>
             新增
             </summary>
@@ -147,7 +147,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Part3Controller.Update(Blazui.Community.Model.Models.BZThirdAccountDto,System.Int32)">
+        <member name="M:Blazui.Community.Api.Controllers.Part3Controller.Update(Blazui.Community.DTO.BZThirdAccountDto,System.Int32)">
             <summary>
             更新
             </summary>
@@ -171,7 +171,7 @@
             <param name="unitOfWork"></param>
             <param name="mapper"></param>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.PointController.Add(Blazui.Community.Model.Models.BZPointDto)">
+        <member name="M:Blazui.Community.Api.Controllers.PointController.Add(Blazui.Community.DTO.BZPointDto)">
             <summary>
             新增
             </summary>
@@ -183,7 +183,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.PointController.Update(Blazui.Community.Model.Models.BZPointDto,System.Int32)">
+        <member name="M:Blazui.Community.Api.Controllers.PointController.Update(Blazui.Community.DTO.BZPointDto,System.Int32)">
             <summary>
             更新
             </summary>
@@ -248,16 +248,23 @@
             回帖相关
             </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.ReplyController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
+        <member name="M:Blazui.Community.Api.Controllers.ReplyController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,Blazui.Community.Repository.BZReplyRepository,AutoMapper.IMapper)">
             <summary>
             
             </summary>
             <param name="unitOfWork"></param>
+            <param name="bZReplyRepository"></param>
             <param name="mapper"></param>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.ReplyController.Add(Blazui.Community.Model.Models.BZReplyDto)">
+        <member name="M:Blazui.Community.Api.Controllers.ReplyController.Add(Blazui.Community.DTO.BZReplyDto)">
             <summary>
             新增回帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.ReplyController.GetByUserId(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            根据ID删除帖子
             </summary>
             <returns></returns>
         </member>
@@ -267,7 +274,13 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.ReplyController.Update(Blazui.Community.Model.Models.BZReplyDto,System.Int32)">
+        <member name="M:Blazui.Community.Api.Controllers.ReplyController.DeleteOrActive(System.Int32)">
+            <summary>
+            删除或激活帖子
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.ReplyController.Update(Blazui.Community.DTO.BZReplyDto,System.Int32)">
             <summary>
             更新回帖
             </summary>
@@ -280,6 +293,12 @@
             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.ReplyController.Query(Blazui.Community.Request.ReplyRequest)">
+            <summary>
+            根据条件分页查询回帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.ReplyController.QueryReplys(Blazui.Community.Request.ReplyRequest,System.String,System.String)">
             <summary>
             根据条件分页查询回帖
             </summary>
@@ -304,9 +323,36 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Blazui.Community.Api.Controllers.TopicController.TopTopic(System.Int32)">
+            <summary>
+            置顶或取消置顶
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.TopicController.BestTopic(System.Int32)">
+            <summary>
+            加精或取消加精
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.TopicController.EndTopic(System.Int32)">
+            <summary>
+            结贴
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
         <member name="M:Blazui.Community.Api.Controllers.TopicController.Delete(System.Int32)">
             <summary>
-            根据ID删除帖子
+            根据ID删除帖子--假删除--前后台均调用
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.TopicController.Active(System.Int32)">
+            <summary>
+            恢复帖子
             </summary>
             <returns></returns>
         </member>
@@ -322,9 +368,15 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.Query(Blazui.Community.Request.TopicRequest)">
+        <member name="M:Blazui.Community.Api.Controllers.TopicController.Query(Blazui.Community.Request.TopicRequest,System.String)">
             <summary>
-            根据条件分页查询帖子
+            根据条件分页查询帖子---后台
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.TopicController.AppQuery(Blazui.Community.Request.TopicRequest)">
+            <summary>
+            根据条件分页查询帖子---前端
             </summary>
             <returns></returns>
         </member>
@@ -346,7 +398,7 @@
         </member>
         <member name="M:Blazui.Community.Api.Controllers.TopicController.QueryTopic(System.Int32,System.Int32,System.Int32)">
             <summary>
-            根据类型查询帖子
+            根据类型查询帖子---前端
             </summary>
             <param name="topicType">帖子类型 0：提问，1：分享，2：讨论，3：建议，4：公告</param>
             <param name="pageSize"></param>
@@ -355,7 +407,7 @@
         </member>
         <member name="M:Blazui.Community.Api.Controllers.TopicController.QueryTopicsByOrder(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
-            根据类型，排序查询
+            根据类型，排序查询---前端
             </summary>
             <param name="orderType">排序类型 0：综合，1：人气，2：精华，3：已结帖</param>
             <param name="topicType">帖子类型 0：提问，1：分享，2：讨论，3：建议，4：公告</param>
@@ -389,7 +441,7 @@
             
             </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZUserRepository)">
+        <member name="M:Blazui.Community.Api.Controllers.UserController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZUserRepository,Microsoft.AspNetCore.Identity.UserManager{Blazui.Community.Model.Models.BZUserModel})">
             <summary>
             
             </summary>
@@ -403,9 +455,27 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.Delete(System.String)">
+        <member name="M:Blazui.Community.Api.Controllers.UserController.Delete(System.Int32)">
             <summary>
             根据ID删除用户
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.UserController.Frozen(System.Int32)">
+            <summary>
+            冻结
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.UserController.UnFrozen(System.Int32)">
+            <summary>
+            解封
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.UserController.ResetPassword(System.Int32)">
+            <summary>
+            重置密码
             </summary>
             <returns></returns>
         </member>
@@ -415,18 +485,17 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.Query(System.String)">
+        <member name="M:Blazui.Community.Api.Controllers.UserController.Query(System.Int32)">
             <summary>
             根据Id查询用户
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.QueryUserByName(System.String)">
+        <member name="M:Blazui.Community.Api.Controllers.UserController.QueryByName(System.String)">
             <summary>
-            根据UserName查询用户
+            根据Id查询用户
             </summary>
             <returns></returns>
-            <param name="UserName"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.UserController.Query(Blazui.Community.Request.UsersRequest)">
             <summary>
@@ -439,34 +508,6 @@
             活跃度
             </summary>
             <param name="ActiveType">1：月榜，2：周榜</param>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.QueryTopic(System.Int32,System.Int32,System.Int32,System.String)">
-            <summary>
-            我的主贴
-            </summary>
-            <param name="userId">用户ID</param>
-            <param name="pageIndex"></param>
-            <param name="pageSize"></param>
-            <param name="title"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.QueryReply(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            我的回帖
-            </summary>
-            <param name="userId">用户ID</param>
-            <param name="pageIndex"></param>
-            <param name="pageSize"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.QueryFollow(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            我的关注
-            </summary>
-            <param name="userId">用户ID</param>
-            <param name="pageIndex"></param>
-            <param name="pageSize"></param>
             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.UserController.ChangPasswod(Blazui.Community.DTO.ChangePwdModel)">
@@ -493,36 +534,6 @@
             获取版本数据
             </summary>
             <returns></returns>
-        </member>
-        <member name="T:Blazui.Community.Api.Enum.TopicType">
-            <summary>
-            主题帖类型
-            </summary>
-        </member>
-        <member name="F:Blazui.Community.Api.Enum.TopicType.Ask">
-            <summary>
-            0：提问
-            </summary>
-        </member>
-        <member name="F:Blazui.Community.Api.Enum.TopicType.Share">
-            <summary>
-            1：分享
-            </summary>
-        </member>
-        <member name="F:Blazui.Community.Api.Enum.TopicType.Discuss">
-            <summary>
-            2：讨论
-            </summary>
-        </member>
-        <member name="F:Blazui.Community.Api.Enum.TopicType.Suggest">
-            <summary>
-            3：建议
-            </summary>
-        </member>
-        <member name="F:Blazui.Community.Api.Enum.TopicType.Notice">
-            <summary>
-            4：公告
-            </summary>
         </member>
         <member name="M:Blazui.Community.Api.Extensions.PageExtensions.ConvertToPageData``2(Arch.EntityFrameworkCore.UnitOfWork.Collections.IPagedList{``0})">
             <summary>

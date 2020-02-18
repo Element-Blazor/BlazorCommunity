@@ -23,6 +23,8 @@ using NLog.Extensions.Logging;
 using NLog.Web;
 using AutoMapper;
 using Blazui.Community.Utility.Jwt;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Blazui.Community.Api
 {
@@ -44,12 +46,33 @@ namespace Blazui.Community.Api
             services.AddCustomMemoryCache();
             services.AddDbContext<BlazUICommunityContext>(opt => opt.UseMySql(Configuration.GetConnectionString("DbConnectionString")))
                 .AddUnitOfWork<BlazUICommunityContext>();//.AddCustomRepository<BZTopicModel , BZTopicRepository>(); ;
-
-            services.AddCustomRepository<BZUserModel , BZUserRepository>();
-            services.AddCustomRepository<BzVerifyCodeModel, BZVerifyCodeRepository>();
-            services.AddSingleton(typeof(JwtService));
+            //services.AddCustomRepository<BZUserModel , BZUserRepository>();
+            //services.AddCustomRepository<BzVerifyCodeModel, BZVerifyCodeRepository>();
+            //services.AddSingleton(typeof(JwtService));
             services.AddAutoMapper(typeof(AutoMapConfiguration));
-            services.AddJwtConfiguration(Configuration); 
+            //services.AddJwtConfiguration(Configuration); 
+            services.AddIdentity<BZUserModel, ApplicationRole>(
+                options =>
+                {
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.SignIn.RequireConfirmedEmail = true;
+                    // Lockout settings.
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                    options.Lockout.MaxFailedAccessAttempts = 5;
+                    options.Lockout.AllowedForNewUsers = true;
+
+                    // User settings.
+                    options.User.AllowedUserNameCharacters =
+                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                    options.User.RequireUniqueEmail = false;
+
+                }).AddEntityFrameworkStores<BlazUICommunityContext>()
+            .AddDefaultTokenProviders(); ;
+
         }
         /// <summary>
         /// 

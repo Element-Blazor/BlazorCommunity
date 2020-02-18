@@ -42,9 +42,7 @@ namespace Blazui.Community.Api.Controllers
         {
             Expression<Func<BZVersionModel, bool>> expression = p => p.Status==0;
             if(Project!=-1)
-            {
                 expression = expression.And(p => p.Project == Project);
-            }
             var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
             var versions =await verRepository.GetAllAsync(expression);
             if(versions!=null&&versions.Any())

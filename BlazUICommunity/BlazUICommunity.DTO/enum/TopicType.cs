@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Blazui.Community.Api.Enum
+namespace Blazui.Community.DTO
 {
     /// <summary>
     /// 主题帖类型

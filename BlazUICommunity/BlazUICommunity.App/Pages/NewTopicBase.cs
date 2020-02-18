@@ -3,9 +3,11 @@ using Blazui.Community.App.Service;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
 using Blazui.Component;
+using Blazui.Component.EventArgs;
 using Blazui.Component.Select;
 using Blazui.Markdown;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,9 +21,10 @@ namespace Blazui.Community.App.Pages
         internal ArticleModel article;
         protected BMarkdownEditor bMarkdownEditor;
         protected TopicType _TopicType;
-        protected int Project { get; set; }
         protected List<BZVersionModel> bZVersions;
         protected BSelect<int> bSelect;
+        internal BSelect<string> bverNoSelect;
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -71,16 +74,31 @@ namespace Blazui.Community.App.Pages
                 MessageService.Show($"发布失败{result.Message}", MessageType.Error);
             }
         }
+        protected async Task OnChange(ProjectType value)
+        {
+            await   LoadProjects(value);
+            form?.Refresh();
+            RequireRender = true;
+            bverNoSelect?.Refresh();
+            MarkAsRequireRender();
+            StateHasChanged();
+        }
 
         protected override async Task InitilizePageDataAsync()
         {
-            Project = 0;
             article = new ArticleModel() { Title = "", Content = "" };
-            
-             var resut= await NetService.GetVersions(-1);
+
+            await LoadProjects(ProjectType.Blazui);
+            await Task.CompletedTask;
+        }
+
+        private async Task LoadProjects(ProjectType type)
+        {
+            var resut = await NetService.GetVersions((int)type);
             if (resut.IsSuccess)
                 bZVersions = resut.Data;
-            await Task.CompletedTask;
+            else
+                bZVersions = new List<BZVersionModel>();
         }
 
         internal void GoHome()

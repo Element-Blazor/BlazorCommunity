@@ -26,7 +26,7 @@ namespace Blazui.Community.Model.Models
         /// <summary>
         /// 修改时间
         /// </summary>
-        public DateTime? ModifyTime { get; set; }
+        public DateTime ModifyTime { get; set; }
         /// <summary>
         /// 发帖人ID
         /// </summary>
@@ -34,27 +34,27 @@ namespace Blazui.Community.Model.Models
         /// <summary>
         /// 状态 0正常，-1 删除，1已结帖
         /// </summary>
-        public int? Status { get; set; }
+        public int Status { get; set; }
         /// <summary>
         /// 人气--浏览量
         /// </summary>
-        public int? Hot { get; set; }
+        public int Hot { get; set; }
         /// <summary>
         /// 是否置顶0否-1置顶
         /// </summary>
-        public int? Top { get; set; }
+        public int Top { get; set; }
         /// <summary>
         /// 是否精华帖0否，1-是
         /// </summary>
-        public int? Good { get; set; }
+        public int Good { get; set; }
         /// <summary>
         /// 主题帖类型 0：提问，1：分享，2：讨论，3：建议，4：公告
         /// </summary>
-        public int? TopicType { get; set; }
+        public int TopicType { get; set; }
         /// <summary>
         /// 回帖数量
         /// </summary>
-        public int? ReplyCount { get; set; }
+        public int ReplyCount { get; set; }
         /// <summary>
         /// 版本Id
         /// </summary>

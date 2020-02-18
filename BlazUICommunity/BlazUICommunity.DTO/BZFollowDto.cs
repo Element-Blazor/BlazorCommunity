@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Blazui.Community.Model.Models
+namespace Blazui.Community.DTO
 {
     /// <summary>
     /// 我的关注 

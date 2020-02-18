@@ -1,5 +1,6 @@
 ﻿using Blazui.Community.App.Model;
 using Blazui.Community.App.Pages;
+using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Utility;
 using Blazui.Component.Container;
@@ -35,9 +36,9 @@ namespace Blazui.Community.App.Components
             if (TopicId > 0)
             {
                 var result = await NetService.GetTopicById(TopicId);
-                if (result.IsSuccess)
+                if (result.IsSuccess&&result.Data!=null)
                     TopicModel = mapper.Map<TopicItemModel>(result.Data);
-                TopicModel.ReleaseTime = Convert.ToDateTime(TopicModel.ReleaseTime).ConvertToDateDiffStr();
+                TopicModel.ReleaseTime = result.Data.PublishTime.ConvertToDateDiffStr();
                 var user = await GetUser();
                 if (user != null)
                 {

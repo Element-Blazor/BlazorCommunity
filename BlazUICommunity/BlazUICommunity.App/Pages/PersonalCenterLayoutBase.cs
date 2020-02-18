@@ -58,13 +58,13 @@ namespace Blazui.Community.App.Pages
                     Index   = 2,
                        Route="user/pwd"
                 },
-                //      new PersonalCenterMenuModel()
-                //{
-                //    Icon    = "el-icon-mobile",
-                //    Title   = "我的绑定",
-                //    Index   = 3,
-                //       Route="user/bind"
-                //},
+                      new PersonalCenterMenuModel()
+                {
+                    Icon    = "el-icon-mobile",
+                    Title   = "我的绑定",
+                    Index   = 3,
+                       Route="user/bind"
+                },
                 new PersonalCenterMenuModel()
                 {
                     Icon    = "el-icon-star-on",

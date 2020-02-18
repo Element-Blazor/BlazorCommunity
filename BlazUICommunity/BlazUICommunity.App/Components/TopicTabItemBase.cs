@@ -73,7 +73,7 @@ namespace Blazui.Community.App.Components
         private async Task LoadData()
         {
             var datas = await NetService.GetTopicsByOrder(OrderType, TopicType, currentPage, PageSize);
-            if (datas!=null&&datas.IsSuccess)
+            if (datas!=null&&datas.IsSuccess&&datas.Data.Items!=null)
             {
                 Topics = mapper.Map<List<TopicItemModel>>(datas.Data.Items);
                 Total = datas.Data.TotalCount;

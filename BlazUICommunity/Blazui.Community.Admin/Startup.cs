@@ -1,17 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Blazui.Community.Admin.Data;
 using Blazui.Community.Model.Models;
 using BlazAdmin.ServerRender;
+using Microsoft.EntityFrameworkCore;
+using Blazui.Community.Admin.Service;
+using Blazui.Community.Admin.AutoConfiguration;
+using AutoMapper;
+using System;
 
 namespace Blazui.Community.Admin
 {
@@ -30,13 +28,24 @@ namespace Blazui.Community.Admin
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
-            services.AddDbContext<BlazUICommunityContext>(options =>
+            services.AddDbContext<BlazUICommunityAdminDbContext>(options =>
             {
-                //options.UseInMemoryDatabase("demo");
+                options.UseMySql(Configuration.GetConnectionString("DbConnection"));
             });
-            services.AddBlazAdmin<BlazUICommunityContext>();
-            services.AddSingleton<WeatherForecastService>();
+            services.AddHttpClient("product", client =>
+            {
+                client.BaseAddress = new Uri(Configuration["ServerUrl"] ?? "http://localhost:5000");
+            });
+            services.AddBlazAdmin<BlazUICommunityAdminDbContext>();
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                options.SlidingExpiration = true;
+            });
+            services.AddScoped<NetworkService>();
+            services.AddAutoMapper(typeof(AutoMapConfiguration));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blazui.Community.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,45 +13,24 @@ namespace Blazui.Community.App.Model
         public string Content { get; set; }
         public TopicType TopicType { get; set; }
         public int versionId { get; set; }
-        public int Project { get; set; }
+        public ProjectType Project { get; set; }
         //public string VerName { get; set; }
-        //public string VerNo { get; set; }
+        public string VerNo { get; set; }
     }
 
     public class ReplyModel
     {
         public string Content { get; set; }
     }
-    /// <summary>
-    /// 主题帖类型
-    /// </summary>
-    public enum TopicType
-    {
-        /// <summary>
-        /// 0：提问
-        /// </summary>
-        [Description("提问")]
-        Ask,
-        /// <summary>
-        /// 1：分享
-        /// </summary>
-        [Description("分享")]
-        Share,
-        /// <summary>
-        /// 2：讨论
-        /// </summary>
-        [Description("讨论")]
-        Discuss,
-        /// <summary>
-        /// 3：建议
-        /// </summary>
-        [Description("建议")]
-        Suggest,
-        /// <summary>
-        /// 4：公告
-        /// </summary>
-        [Description("公告")]
-        Notice
+   
 
+    public enum ProjectType
+    {
+        [Description("Blazui")]
+        Blazui,
+        [Description("BAdmin")]
+        BAdmin,
+        [Description("BMarkdown")]
+        BMarkdown
     }
 }

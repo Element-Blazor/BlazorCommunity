@@ -13,9 +13,6 @@ namespace Blazui.Community.App.Components
     {
         protected BCard bCard { get; set; }
         protected BTab mybTab { get; set; }
-        protected BTabPanel bTabPanelPush { get; set; }
-
-        protected BTabPanel bTabPanelCollection { get; set; }
         protected override async Task InitilizePageDataAsync()
         {
             await Task.CompletedTask;

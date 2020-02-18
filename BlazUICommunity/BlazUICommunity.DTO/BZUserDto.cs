@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blazui.Community.DTO
 {
-    public  class BZUserDto 
+    public class BZUserDto
     {
 
         /// <summary>
@@ -77,29 +75,15 @@ namespace Blazui.Community.DTO
 
     public partial class BZUserUIDto
     {
+        public string UserName { get; set; }
+        public int Id { get; set; }
 
-        public string Id { get; set; }
-
-        /// <summary>
-        /// 用户账号
-        /// </summary>
-        [StringLength(20)]
-        public string Account { get; set; }
-        /// <summary>
-        ///  IdentityUserId
-        /// </summary>
-        //[StringLength(36)]
-        //public string IdentityUser { get; set; }
-        /// <summary>
-        /// 昵称
-        /// </summary>
-        [StringLength(50)]
         public string NickName { get; set; }
         /// <summary>
         /// 手机号码-11位
         /// </summary>
         [StringLength(11)]
-        public string Mobile { get; set; }
+        public string PhoneNumber { get; set; }
         /// <summary>
         /// 头像
         /// </summary>
@@ -116,6 +100,19 @@ namespace Blazui.Community.DTO
         /// </summary>
 
         public int? Sex { get; set; }
+
+        public string SexDisplay
+        {
+            get
+            {
+                return Sex switch
+                {
+                    0 => "男",
+                    1 => "女",
+                    _ => "人妖"
+                };
+            }
+        }
         /// <summary>
         /// 座右铭
         /// </summary>
@@ -126,6 +123,22 @@ namespace Blazui.Community.DTO
 #nullable enable
         public string? LastLoginAddr { get; set; }
 #nullable disable
+        public DateTime? RegisterDate { get; set; }
 
+        public DateTime? LastLoginDate { get; set; }
+
+        public int Status { get; set; }
+        public string StatusDisplay
+        {
+            get
+            {
+                return Status switch
+                {
+                    0 => "正常",
+                    -1 => "禁用",
+                    _ => "正常"
+                };
+            }
+        }
     }
 }

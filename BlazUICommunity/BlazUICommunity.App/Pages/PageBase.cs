@@ -105,6 +105,8 @@ namespace Blazui.Community.App.Pages
             }
             else return null;
         }
-        protected abstract Task InitilizePageDataAsync();
+        protected virtual Task InitilizePageDataAsync() {
+            return Task.CompletedTask;
+        }
     }
 }

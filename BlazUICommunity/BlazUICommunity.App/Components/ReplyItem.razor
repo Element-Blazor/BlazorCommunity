@@ -3,7 +3,7 @@
 @if (ReplyModel != null)
 {
     <div class="content-reply-base">
-        <BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
+        <BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true" @ref="bCard">
             <Header>
                 <div class="content-topic-head">
                     <div class="content-info">
@@ -26,6 +26,11 @@
                             @ReplyModel?.LastModifyTime
                         </div>
                     </div>
+                    @if (IsSelefReply)
+                    {
+                        <div style="position: absolute; right: 17px;"><BButton Type="ButtonType.Text" Style="color:#F56C6C" IsPlain="true" IsCircle="true" Size="ButtonSize.Default" Icon="el-icon-close" OnClick="DeleteReply" EnableAlwaysRender="true" @ref="bbutton"></BButton></div>
+                    }
+
                 </div>
             </Header>
             <Body>

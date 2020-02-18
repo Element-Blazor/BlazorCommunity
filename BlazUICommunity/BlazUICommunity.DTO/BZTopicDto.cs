@@ -76,5 +76,44 @@ namespace Blazui.Community.DTO
         /// 头像
         /// </summary>
         public string Avator { get; set; }
+        [NotMapped]
+        public string StatusDisplay
+        {
+            get
+            {
+                return Status switch
+                {
+                    0 => "正常",
+                    -1 => "已删除",
+                    _ => "已结帖"
+                };
+            }
+        }
+        [NotMapped]
+        public string GoodDisplay
+        {
+            get
+            {
+                return Good switch
+                {
+                    0 => "否",
+                    1 => "是",
+                    _ => "否"
+                };
+            }
+        }
+        [NotMapped]
+        public string TopDisplay
+        {
+            get
+            {
+                return Top switch
+                {
+                    0 => "否",
+                    1 => "是",
+                    _ => "否"
+                };
+            }
+        }
     }
 }

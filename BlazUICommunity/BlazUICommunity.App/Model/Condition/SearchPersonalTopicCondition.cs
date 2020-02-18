@@ -1,4 +1,5 @@
-﻿using Blazui.Community.Utility.Request;
+﻿using Blazui.Community.DTO;
+using Blazui.Community.Utility.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;

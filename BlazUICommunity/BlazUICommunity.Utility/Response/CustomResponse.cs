@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Blazui.Community.Utility.Response
 {
-    public  abstract class CustomResponse
+    public   class CustomResponse
     {
         /// <summary>
         /// 200 是 正常  其他都是错误
@@ -18,6 +18,6 @@ namespace Blazui.Community.Utility.Response
 
         //[JsonIgnore]
         [JsonProperty("IsSuccess")]
-        public bool IsSuccess => Code == (int)HttpStatusCode.OK;
+        public bool IsSuccess => Message == "success";
     }
 }

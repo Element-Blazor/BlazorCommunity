@@ -90,6 +90,11 @@ namespace Blazui.Community.App.Components
                     }
                 }
         }
+        protected void LinktoTopic(object topic)
+        {
+            if(topic is PersonalTopicModel topicModel)
+            navigationManager.NavigateTo($"/topic/reply?tpid={topicModel.Id}");
+        }
 
         protected override bool ShouldRender()
         {
@@ -124,7 +129,7 @@ namespace Blazui.Community.App.Components
 
         private void ConvertDataToDto(BaseResponse<PageDatas<BZTopicDto>> result)
         {
-            if (result.IsSuccess && result.Data.TotalCount > 0)
+            if (result.IsSuccess && result.Data!=null&& result.Data.TotalCount > 0)
             {
                 Datas = mapper.Map<List<PersonalTopicModel>>(result.Data.Items);
                 DataCount = result.Data.TotalCount;

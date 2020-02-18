@@ -11,7 +11,10 @@ namespace Blazui.Community.Utility.Response
 
     public class BaseResponse: CustomResponse
     {
+        public BaseResponse()
+        {
 
+        }
         public BaseResponse(int? code = null, string message = null, object result = null)
         {
             this.Code = code;

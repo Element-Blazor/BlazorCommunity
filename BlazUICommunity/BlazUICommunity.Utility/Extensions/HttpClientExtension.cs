@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Blazui.Community.Utility.Response;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -10,7 +11,7 @@ namespace Blazui.Community.Utility.Extensions
 {
   public static class HttpClientExtension
     {
-        public static async Task<T> GetJsonAsync<T>(this HttpClient httpClient , string url,HttpMethod httpMethod=HttpMethod.Get)
+        private static async Task<T> GetResult<T>(this HttpClient httpClient , string url,HttpMethod httpMethod=HttpMethod.Get)
         {
             if ( httpClient is null )
             {
@@ -40,8 +41,8 @@ namespace Blazui.Community.Utility.Extensions
             return await DeserializeHttpResponseMessage<T>(response);
         }
 
-     
-        public static async Task<T> GetJsonAsync<T>(this HttpClient httpClient , string url, HttpContent httpContent)
+
+        private static async Task<T> PostResult<T>(this HttpClient httpClient , string url, HttpContent httpContent)
         {
             if (httpClient is null)
             {
@@ -69,7 +70,46 @@ namespace Blazui.Community.Utility.Extensions
                 return default;
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(content);
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(content);
+            }
+            catch (Exception ex)
+            {
+                return default;
+            }
+        }
+
+
+
+        private static BaseResponse Result(BaseResponse response)
+        {
+            if (response == null)
+                return new BaseResponse();
+            return response;
+        }
+        private static BaseResponse<T> Result<T>(BaseResponse<T> response)
+        {
+            if (response == null)
+                return new BaseResponse<T>();
+            return response;
+        }
+        public static async Task<BaseResponse<T>> PostJsonAsync<T>(this HttpClient httpClient,string url, HttpContent httpContent = null)
+        {
+            return Result(await httpClient.PostResult<BaseResponse<T>>(url, httpContent));
+        }
+        public static async Task<BaseResponse> PostJsonAsync(this HttpClient httpClient,string url, HttpContent httpContent = null)
+        {
+            return Result(await httpClient.PostResult<BaseResponse>(url, httpContent));
+        }
+
+        public static async Task<BaseResponse<T>> GetJsonAsync<T>(this HttpClient httpClient,string url, HttpMethod method = HttpMethod.Get)
+        {
+            return Result(await httpClient.GetResult<BaseResponse<T>>(url, method));
+        }
+        public static async Task<BaseResponse> GetJsonAsync(this HttpClient httpClient,string url, HttpMethod method = HttpMethod.Get)
+        {
+            return Result(await httpClient.GetResult<BaseResponse>(url, method));
         }
     }
 

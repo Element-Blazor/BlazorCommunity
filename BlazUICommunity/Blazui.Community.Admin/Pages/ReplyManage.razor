@@ -1,0 +1,56 @@
+﻿@page "/manage/reply"
+@using Blazui.Community.Admin.Data
+@using Blazui.Community.Admin.QueryCondition
+@using Blazui.Community.DTO;
+@inherits ReplyManageBase
+
+<BForm Inline="true" @ref="searchForm">
+    <BFormItem TValue="string" Label="主贴标题" Name="@nameof(QueryReplyCondition.TopicId)" IsRequired="false">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+    <BFormItem TValue="string" Label="回帖用户" Name="@nameof(QueryReplyCondition.UserId)" IsRequired="false">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+    <BFormItem TValue="string" Label="状态" Name="@nameof(QueryReplyCondition.Status)" IsRequired="false">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+    <BFormItem TValue="DateTime?" Label="回复时间" IsRequired="false" Name="@nameof(QueryReplyCondition.PublishTimeStart)">
+        <BDatePicker></BDatePicker>
+    </BFormItem>
+    <BFormItem TValue="DateTime?" Label="至" IsRequired="false" Name="@nameof(QueryReplyCondition.PublishTimeEnd)">
+        <BDatePicker></BDatePicker>
+    </BFormItem>
+    <BFormActionItem>
+        <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
+    </BFormActionItem>
+</BForm>
+
+<div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
+
+<BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
+    <BTableColumns>
+        <BTableColumn Width="100" Property="@nameof(BZReplyDtoWithUser.UserName)" Text="回帖人" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="200" Property="@nameof(BZReplyDtoWithUser.Title)" Text="主贴标题" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="300" Property="@nameof(BZReplyDtoWithUser.Content)" Text="回帖内容" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(BZReplyDtoWithUser.StatusDisplay)" Text="状态" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="200" Property="@nameof(BZReplyDtoWithUser.PublishTime)" Format="yyyy-MM-dd" Text="发表时间" Style="text-align:center;"></BTableColumn>
+        <BTableTemplateColumn Text="操作" Width="200">
+            <BButton Type="@ButtonType.Success" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Detail(context))">查看</BButton>
+
+            <BDropDown Style="cursor:pointer;">
+                <Trigger>
+                    <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" IsPlain="true">操作</BButton>
+                </Trigger>
+                <Items>
+                    <BDropDownItem OnClick="@(e=> Delete(context))">
+                        @{
+                            var reply = (BZReplyDtoWithUser)context;
+                            var menu =reply?.Status==0?"删除":"恢复" ;
+                        }
+                        @menu
+                    </BDropDownItem>
+                </Items>
+            </BDropDown>
+        </BTableTemplateColumn>
+    </BTableColumns>
+</BTable>

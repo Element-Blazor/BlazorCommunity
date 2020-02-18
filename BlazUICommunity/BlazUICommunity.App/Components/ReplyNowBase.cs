@@ -1,5 +1,6 @@
 ﻿using Blazui.Community.App.Model;
 using Blazui.Community.App.Pages;
+using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
 using Blazui.Component;
 using Blazui.Markdown;
@@ -66,13 +67,13 @@ namespace Blazui.Community.App.Components
             var addResult = await NetService.AddReply(bZReplyDto);
             if (addResult.IsSuccess)
             {
-                MessageService.Show("发布成功", MessageType.Success);
+                MessageService.Show("回复成功", MessageType.Success);
                 await Task.Delay(500);
                 navigationManager.NavigateTo(navigationManager.Uri,true);//跳转到+"&golast=1"
             }
             else
             {
-                MessageService.Show("发布失败", MessageType.Error);
+                MessageService.Show("回复失败", MessageType.Error);
                 return;
             }
         }

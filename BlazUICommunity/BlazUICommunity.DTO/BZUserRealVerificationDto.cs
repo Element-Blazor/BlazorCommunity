@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Blazui.Community.Model.Models
+namespace Blazui.Community.DTO
 {
 
     public partial class BZUserRealVerificationDto 

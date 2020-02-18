@@ -21,6 +21,8 @@ namespace Blazui.Community.App.Features.Account.Pages
         public  BForm signInForm;
         protected async Task Login()
         {
+            if (!signInForm.IsValid())
+                return;
             var signInModel = signInForm.GetValue<SignInModel>();
             var user = await userManager.FindByNameAsync(signInModel.userAccount);
 

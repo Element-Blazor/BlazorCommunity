@@ -15,10 +15,12 @@
     </BFormActionItem>
 </BForm>
 <div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
-<BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true">
-    <BTableColumns>
-        <BTableTemplateColumn Text="操作">
-            <BButton  Type="@ButtonType.Text" Style="color:crimson;font-size:18px" Size="@ButtonSize.Medium" IsPlain="true" Icon="el-icon-delete" OnClick="@(e=> Del(context))"></BButton>
+<BTable  DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true">
+    <BTableColumns >
+        <BTableTemplateColumn Text="操作" Width="200">
+            <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Mini" IsPlain="true" Icon="el-icon-remove-outline" OnClick="@(e=> Del(context))"></BButton>
+            <BButton Type="@ButtonType.Success" Size="@ButtonSize.Mini" IsPlain="true" Icon="el-icon-link" OnClick="@(e=> LinktoTopic(context))"></BButton>
+         
         </BTableTemplateColumn>
     </BTableColumns>
 </BTable>

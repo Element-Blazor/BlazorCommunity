@@ -17,6 +17,7 @@ using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Arch.EntityFrameworkCore.UnitOfWork
 {
@@ -978,7 +979,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
             List<T> listT = new List<T>();
             if ( !TempEntityPropertiesDic.TryGetValue(typeof(T) , out PropertyInfo[] propertyInfos) )
             {
-                propertyInfos = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
+                propertyInfos = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(p=>!p.IsDefined(typeof(NotMappedAttribute),false)).ToArray();
             }
             while ( await reader.ReadAsync() )
             {

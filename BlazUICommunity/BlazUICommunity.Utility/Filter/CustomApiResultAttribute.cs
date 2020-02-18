@@ -28,11 +28,11 @@ namespace Blazui.Community.Utility.Filter
             }
             else if (context.Result is NoContentResponse)
             {
-                context.Result = objectResult;// new CustomNoContentResultModel(objectResult?.Value.ToString());
+                context.Result = new OkObjectResult(new BaseResponse(code: 200, result: objectResult?.Value, message: objectResult?.Value?.ToString()));
             }
             else
             {
-                context.Result =  new OkObjectResult(new BaseResponse(code: 200, result: (dynamic)objectResult?.Value, message: "success"));
+                context.Result =  new OkObjectResult(new BaseResponse(code: 200, result: objectResult?.Value, message: "success"));
             }
         }
     }

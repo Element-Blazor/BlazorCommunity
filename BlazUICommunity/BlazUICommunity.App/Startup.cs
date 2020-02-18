@@ -134,7 +134,7 @@ namespace Blazui.Community.App
             {
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
 
                 options.LoginPath = "/account/signin";
                 options.SlidingExpiration = true;

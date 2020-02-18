@@ -9,7 +9,7 @@ namespace Blazui.Community.Utility.Response
     {
         public NoContentResultModel(string message)
         {
-            Code = 204;//没有数据
+            Code = 200;//没有数据
             Message = message;
             Data = null;
         }

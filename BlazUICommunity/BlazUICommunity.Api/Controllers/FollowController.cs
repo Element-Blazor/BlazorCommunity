@@ -174,7 +174,7 @@ namespace Blazui.Community.Api.Controllers
                 return Ok();
             }
             else
-                return BadRequest();
+                return new BadRequestResponse(" CancelFollow error");
         }
     }
 }
