@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Pages
@@ -23,7 +24,7 @@ namespace Blazui.Community.App.Pages
         protected TopicType _TopicType;
         protected List<BZVersionModel> bZVersions;
         protected BSelect<int> bSelect;
-        internal BSelect<string> bverNoSelect;
+        internal BSelect<int> bverNoSelect;
 
         protected override void OnInitialized()
         {
@@ -40,6 +41,11 @@ namespace Blazui.Community.App.Pages
             if (article is null)
             {
                 form.Toast("验证不通过");
+                return;
+            }
+            if (article.Title.Length > 100)
+            {
+                form.Toast("标题不能超过100");
                 return;
             }
             await AddTopic(article);
@@ -61,17 +67,18 @@ namespace Blazui.Community.App.Pages
                 TopicType = (int)article.TopicType,
                 Top = 0,
                 UserId = User.Id,
-                versionId = 0
+                versionId = (int)article.Project
             };
             var result = await NetService.AddTopic(bZTopicDto);
             if (result.IsSuccess)
             {
-                MessageService.Show($"发布成功", MessageType.Success);
+                ToastSuccess("发布成功");
+                 await Task.Delay(1000);
                 navigationManager.NavigateTo("/", true);
             }
             else
             {
-                MessageService.Show($"发布失败{result.Message}", MessageType.Error);
+                ToastError($"发布失败{result.Message}");
             }
         }
         protected async Task OnChange(ProjectType value)
@@ -94,11 +101,8 @@ namespace Blazui.Community.App.Pages
 
         private async Task LoadProjects(ProjectType type)
         {
-            var resut = await NetService.GetVersions((int)type);
-            if (resut.IsSuccess)
-                bZVersions = resut.Data;
-            else
-                bZVersions = new List<BZVersionModel>();
+            var resut = await QueryVersions();
+            bZVersions = resut.Where(p => p.Project == (int)type).ToList();
         }
 
         internal void GoHome()

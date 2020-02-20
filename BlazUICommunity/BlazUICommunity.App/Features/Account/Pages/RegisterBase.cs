@@ -11,7 +11,7 @@ namespace Blazui.Community.App.Features.Account.Pages
     public class RegisterBase : PageBase
     {
         [Inject]
-         BZUserIdentityRepository _bZUserRepository { get; set; }
+         BZUserIdentityRepository BZUserRepository { get; set; }
 
         protected BForm registerForm;
         internal RegisterAccountDto Value;
@@ -25,28 +25,28 @@ namespace Blazui.Community.App.Features.Account.Pages
             var registerAccountModel = registerForm.GetValue<RegisterAccountDto>();
             if (ContainsChineseCharacters(registerAccountModel.UserAccount))
             {
-                MessageService.Show("不支持中文账号", MessageType.Error);
+                ToastError("不支持中文账号");
                 return;
             }
 
             if (!registerAccountModel.Password.Equals(registerAccountModel.ConfirmPassword))
             {
-                MessageService.Show("两次密码输入不一致", MessageType.Error);
+                ToastError("两次密码输入不一致");
                 return;
             }
             var user = await userManager.FindByNameAsync(registerAccountModel.UserAccount);
             if (user != null)
             {
-                MessageService.Show("用户账号已存在", MessageType.Error);
+                ToastError("用户账号已存在");
+                return;
             }
-            var result = await _bZUserRepository.CreateUserAsync(registerAccountModel.UserAccount, registerAccountModel.Password);
+            var result = await BZUserRepository.CreateUserAsync(registerAccountModel.UserAccount, registerAccountModel.Password);
             if (result)
             {
-
                 navigationManager.NavigateTo("account/signin", true);
                 return;
             }
-            MessageService.Show("注册失败", MessageType.Error);
+            ToastError("注册失败");
         }
 
         private bool ContainsChineseCharacters(string input)

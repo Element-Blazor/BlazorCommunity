@@ -25,8 +25,8 @@
             <BFormItem TValue="string" Label="确认密码" Name="@nameof(RegisterAccountDto.ConfirmPassword)" IsRequired="true">
                 <BInput  TValue="string" PrefixIcon="el-icon-lock" SuffixIcon="el-icon-view" Type="@InputType.Password"  Placeholder="请输入确认密码"></BInput>
             </BFormItem>
-            <BFormActionItem>
-                <BButton Type="@ButtonType.Primary" OnClick="e=>RegisterUser()">立即注册</BButton>
+            <BFormActionItem  >
+                <BButton Type="@ButtonType.Primary" OnClick="e=>RegisterUser()" IsPlain="true" Style="width:100%">立即注册</BButton>
             </BFormActionItem>
         </BForm>
     </div>

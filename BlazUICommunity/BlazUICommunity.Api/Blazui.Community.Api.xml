@@ -87,12 +87,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.FollowController.Update(Blazui.Community.DTO.BZFollowDto,System.Int32)">
-            <summary>
-            更新关注
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:Blazui.Community.Api.Controllers.FollowController.Query(System.Int32)">
             <summary>
             根据Id查询
@@ -114,6 +108,12 @@
         <member name="M:Blazui.Community.Api.Controllers.FollowController.ToggleFollow(Blazui.Community.DTO.BZFollowDto)">
             <summary>
             改变是否收藏状态
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.FollowController.Update(Blazui.Community.DTO.BZFollowDto)">
+            <summary>
+            更新关注
             </summary>
             <returns></returns>
         </member>
@@ -286,6 +286,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Blazui.Community.Api.Controllers.ReplyController.UpdateContent(Blazui.Community.DTO.BZTopicDto)">
+            <summary>
+            更新主题帖
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Blazui.Community.Api.Controllers.ReplyController.Query(System.Int32)">
             <summary>
             根据Id查询回帖
@@ -356,7 +362,13 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.Update(Blazui.Community.DTO.BZTopicDto,System.Int32)">
+        <member name="M:Blazui.Community.Api.Controllers.TopicController.UpdateContent(Blazui.Community.DTO.BZTopicDto)">
+            <summary>
+            更新主题帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.TopicController.Update(Blazui.Community.DTO.BZTopicDto)">
             <summary>
             更新主题帖
             </summary>
@@ -529,7 +541,25 @@
             <param name="unitOfWork"></param>
             <param name="mapper"></param>
         </member>
+        <member name="M:Blazui.Community.Api.Controllers.VersionController.Delete(System.Int32)">
+            <summary>
+            删除
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Blazui.Community.Api.Controllers.VersionController.Get(System.Int32)">
+            <summary>
+            获取版本数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.VersionController.GetAll">
+            <summary>
+            获取版本数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.VersionController.GetPageList(System.Int32,System.Int32,System.Int32)">
             <summary>
             获取版本数据
             </summary>

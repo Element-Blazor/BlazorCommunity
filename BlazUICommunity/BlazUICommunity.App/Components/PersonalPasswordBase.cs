@@ -116,7 +116,7 @@ namespace Blazui.Community.App.Components
             var checkOld = await userManager.CheckPasswordAsync(User, PasswordModel.OldPassword);
             if (!checkOld)
             {
-                MessageService.Show("旧密码错误", MessageType.Error);
+                ToastError("旧密码错误");
                 return false;
             }
             return true;
@@ -126,7 +126,7 @@ namespace Blazui.Community.App.Components
             var PasswordModel = bformOldpwd.GetValue<PasswordModel>();
             if (PasswordModel.Password != PasswordModel.ConfirmPassword)
             {
-                MessageService.Show("新密码与确认密码不一致", MessageType.Error);
+                ToastError("新密码与确认密码不一致");
                 return false;
             }
             return true;
@@ -139,11 +139,8 @@ namespace Blazui.Community.App.Components
             var result = await userManager.ResetPasswordAsync(User, token, PasswordModel.Password);
             if (result.Succeeded)
             {
-                //MessageService.Show("密码重置成功,需要重新登录", MessageType.Success);
-                MessageService.Show("密码重置成功,下次登录请使用新密码", MessageType.Success);
+                ToastSuccess("密码重置成功,下次登录请使用新密码");
                 bForm.Reset();
-                //await Task.Delay(1000);
-                //navigationManager.NavigateTo("/account/signout2", forceLoad: true);
             }
         }
 

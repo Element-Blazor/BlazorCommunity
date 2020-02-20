@@ -1,4 +1,5 @@
-﻿using Blazui.Community.Request;
+﻿using Blazui.Community.DTO;
+using Blazui.Community.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,11 +31,11 @@ namespace Blazui.Community.Admin.QueryCondition
         /// <summary>
         /// 发帖人ID
         /// </summary>
-        public object UserId { get; set; } 
+        public object UserId { get; set; }
         /// <summary>
         /// 状态 0正常，-1 删除，1已结帖
         /// </summary>
-        public int? Status { get; set; } = 0;
+        public ModelStatus? Status { get; set; }
 
         /// <summary>
         /// 回复的主题帖ID

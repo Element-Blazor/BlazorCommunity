@@ -1,6 +1,6 @@
 ﻿@inherits TopicContentBase
 
-@if (TopicModel != null)
+@if (TopicModel != null&&TopicModel.Id>0)
 {
     <div class="content-topic-base">
         <BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true" @ref="bCard">
@@ -39,7 +39,16 @@
                                     </div>
                                 }
                             }
-                            <div class="content-title">@TopicModel.Title</div>
+                        <div class="content-title">
+                            <div class="el-badge item" style="margin-top: -5px;">
+                                <span> @TopicModel.Title</span>
+                                @if (TopicModel.IsBest)
+                                {
+                                    <sup class="el-badge__content el-badge__content--undefined is-fixed">精华</sup>
+                                }
+                            </div>
+                           
+                        </div>
                         </div>
                         <div class="content-time">
 
@@ -48,34 +57,60 @@
                         </div>
                     </div>
 
-                    <div class="content-reply">
-
-                        @if (TopicModel.IsBest)
-                        {
-                            <span class="el-tag el-tag--danger el-tag--mini el-tag--dark">精华</span>
-                        }
-                        <div class="content-star" @onclick="ToggleStar">
-                            @if (IsStar)
+                    <div class="content-good">
+                        <div style="padding-bottom:10px;">
+                            @if (!string.IsNullOrEmpty(projectName))
                             {
-                                <i class="el-icon-star-on"></i>
-                            }
-                            else
-                            {
-                                <i class="el-icon-star-off"></i>
+                                <span class="el-tag el-tag--success el-tag--light el-tag--mini ">
+                                    @projectName
+                                </span>
                             }
                         </div>
-                        @if (TopicModel.ReplyCount > 0)
-                        {
-                            <div style="margin-left: 0px;" class="margin-top-10">
-                                <i class="el-icon-chat-dot-square" style="color: #909399;"></i>
-                                <span style="margin-left:0px;color: #909399;">@TopicModel?.ReplyCount</span>
+                     
+                        <div class="content-reply">
+                            <div class="content-star" @onclick="ToggleStar">
+                                @if (IsStar)
+                                {
+                                    <i class="el-icon-star-on" style=" color:#67C23A;"></i>
+                                }
+                                else
+                                {
+                                    <i class="el-icon-star-off"></i>
+                                }
                             </div>
-                        }
+                            @if (IsSelf)
+                            {
+                                var buttonedit = "color:#67C23A;margin-left: 12px;font-size: 25px; margin-top: 4px;";
+                                var buttonsave = "color:#909399;margin-left: 12px;font-size: 25px; margin-top: 4px;";
+
+                                <BButton Icon=@(ShoudEdit?"el-icon-check":"el-icon-edit-outline") Style=@(ShoudEdit?buttonedit:buttonsave)
+                                         Type="ButtonType.Text" IsPlain="true" Size="ButtonSize.Medium" OnClick="ToggleEditStatus">
+                                </BButton>
+                            }
+                            @if (TopicModel.ReplyCount > 0)
+                            {
+
+                                <div class="el-badge item" style="margin-top: 15px;margin-left: 10px">
+                                    <i class="el-icon-chat-dot-round" style="color: #909399;font-size: 25px;"></i>
+                                    <sup class="el-badge__content el-badge__content--undefined is-fixed">@TopicModel?.ReplyCount</sup>
+                                </div>
+
+                            }
+                        </div>
                     </div>
+
                 </div>
             </Header>
             <Body>
-                <BMarkdown Text="@TopicModel.Content"></BMarkdown>
+                @if (!ShoudEdit)
+                {
+
+                    <BMarkdown Text="@TopicModel.Content"></BMarkdown>
+                }
+                else
+                {
+                    <BMarkdownEditor @bind-Value="@TopicModel.Content" UploadUrl="@UploadTopicFileUrl" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="300" Height="300"></BMarkdownEditor>
+                }
             </Body>
         </BCard>
     </div>

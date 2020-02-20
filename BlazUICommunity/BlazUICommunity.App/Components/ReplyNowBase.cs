@@ -27,9 +27,9 @@ namespace Blazui.Community.App.Components
 
             if (user is null || user.Id == 0)
             {
-                Toast("请先登录");
-                await Task.Delay(1000);
-                navigationManager.NavigateTo("/account/signin?returnUrl=" + WebUtility.UrlEncode(new Uri(navigationManager.Uri).PathAndQuery));
+                ToastWarning("请先登录");
+                //await Task.Delay(1000);
+                //navigationManager.NavigateTo("/account/signin?returnUrl=" + WebUtility.UrlEncode(new Uri(navigationManager.Uri).PathAndQuery));
                 return;
             }
 
@@ -67,13 +67,13 @@ namespace Blazui.Community.App.Components
             var addResult = await NetService.AddReply(bZReplyDto);
             if (addResult.IsSuccess)
             {
-                MessageService.Show("回复成功", MessageType.Success);
+                ToastSuccess("回复成功");
                 await Task.Delay(500);
                 navigationManager.NavigateTo(navigationManager.Uri,true);//跳转到+"&golast=1"
             }
             else
             {
-                MessageService.Show("回复失败", MessageType.Error);
+                ToastError("回复失败");
                 return;
             }
         }

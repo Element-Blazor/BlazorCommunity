@@ -24,7 +24,7 @@ namespace Blazui.Community.App.Shared
       
         protected void NavigateToLogin()
         {
-            navigationManager.NavigateTo("/account/signin" , forceLoad: true);
+            navigationManager.NavigateTo("/account/signin?returnUrl=" + System.Net.WebUtility.UrlEncode(new Uri(navigationManager.Uri).PathAndQuery));
         }
 
         protected void NavigateToRoot()
@@ -42,7 +42,6 @@ namespace Blazui.Community.App.Shared
         
         protected void NavigateToDoc()
         {
-            //MessageService.Show("开发中...",Component.MessageType.Success);
             navigationManager.NavigateTo(ConstantUtil.DocsUrl, forceLoad: true);
         }
         protected void GotoUCentor()
@@ -51,7 +50,7 @@ namespace Blazui.Community.App.Shared
         }
         protected void LoginOut()
         {
-            navigationManager.NavigateTo("/account/signout" , forceLoad: true);
+            navigationManager.NavigateTo("/account/signout2?returnUrl=" + System.Net.WebUtility.UrlEncode(new Uri(navigationManager.Uri).PathAndQuery),true);
         }
     }
 }

@@ -414,7 +414,9 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="sql"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        Task<bool> ExecuteSqlCmd(string sql, params DbParameter[] parameters);
+        bool ExecuteSqlCmd(string sql, params DbParameter[] parameters);
+
+        Task<bool> ExecuteSqlCmdAsync(string sql, params DbParameter[] parameters);
         #endregion
     }
 }

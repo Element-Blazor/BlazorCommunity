@@ -73,21 +73,7 @@ namespace Blazui.Community.Api.Controllers
             return Ok();
         }
 
-        /// <summary>
-        /// 更新关注
-        /// </summary>
-        /// <returns></returns>
-        [HttpPut("Update/{Id}")]
-        public IActionResult Update([FromBody] BZFollowDto Dto, [FromRoute] int Id)
-        {
-            if (Id < 1)
-                return new BadRequestResponse("id is error");
-            var user = _mapper.Map<BZFollowModel>(Dto);
-            user.Id = Id;
 
-            _followRepository.Update(user);
-            return Ok();
-        }
 
         /// <summary>
         /// 根据Id查询
@@ -151,16 +137,25 @@ namespace Blazui.Community.Api.Controllers
         public async Task<IActionResult> ToggleFollow([FromBody] BZFollowDto Dto)
         {
             if (Dto.Id == 0)
-            {
                 return await Add(Dto);
-            }
             else
-            {
-                return Update(Dto, Dto.Id);
-            }
+                await _bZFollowRepository.ToggleFollow(Dto.Id, Dto.Status ?? 0);
+            return Ok();
         }
 
-
+        /// <summary>
+        /// 更新关注
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("Update")]
+        public IActionResult Update([FromBody] BZFollowDto Dto)
+        {
+            if (Dto.Id < 1)
+                return new BadRequestResponse("id is error");
+            var follow = _mapper.Map<BZFollowModel>(Dto);
+            _followRepository.Update(follow);
+            return Ok();
+        }
         /// <summary>
         /// 改变是否收藏状态
         /// </summary>

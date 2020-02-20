@@ -72,19 +72,12 @@ namespace Blazui.Community.App.Components
 
             if (TopicId < 0)
             {
-                MessageService.Show("topicid error", MessageType.Warning);
+                ToastError("topicid error");
                 return;
             }
             var result = await NetService.GetReplys(TopicId, currentPage, PageSize);
             if (result != null && result.IsSuccess)
             {
-                //if (Golast == 1)
-                //{
-                //    currentPage = result.Data.TotalPages;
-
-                //  await  CurrentPageChanged.InvokeAsync(currentPage);
-                //    //result = await NetService.GetReplys(TopicId, currentPage, PageSize);
-                //}
                 HandData(result);
             }
             else
@@ -119,7 +112,7 @@ namespace Blazui.Community.App.Components
                 var result = await NetService.DelRelpy(replyId);
                 if (result.IsSuccess)
                 {
-                    MessageService.Show($"删除成功", MessageType.Success);
+                    ToastSuccess("删除成功");
                     await LoadData();
                 }
             }
@@ -141,9 +134,6 @@ namespace Blazui.Community.App.Components
             await Task.CompletedTask;
         }
 
-        protected override bool ShouldRender()
-        {
-            return true;
-        }
+        protected override bool ShouldRender() => true;
     }
 }

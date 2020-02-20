@@ -71,12 +71,11 @@ namespace Blazui.Community.App.Components
             if (Confirm == MessageBoxResult.Ok)
                 if (topic is PersonalTopicModel followModel)
                 {
-                    //MessageService.Show($"正在删除 {followModel.Title}", MessageType.Warning);
                     var result = await NetService.DelFollows(followModel.Id,User.Id);
                     if (result.IsSuccess)
                     {
                         await LoadDatas();
-                        MessageService.Show($"取消收藏了", MessageType.Warning);
+                        ToastWarning("取消收藏了");
                     }
                 }
         }

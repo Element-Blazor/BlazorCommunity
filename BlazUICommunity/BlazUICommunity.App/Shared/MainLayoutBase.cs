@@ -23,15 +23,44 @@ namespace Blazui.Community.App.Shared
         protected AppHeader Appheader { get; set; }
         protected BCard Bcard { get; set; }
 
+        //protected override async Task OnParametersSetAsync()
+        //{
+        //    try
+        //    {
+        //        await base.OnParametersSetAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("OnParametersSetAsync" + ex.Message);
+        //    }
+        //}
+        //protected override async Task OnInitializedAsync()
+        //{
+        //    try
+        //    {
+        //        await base.OnInitializedAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("OnInitializedAsync" + ex.Message);
+        //    }
+        //}
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await base.OnAfterRenderAsync(firstRender);
-            if (!firstRender)
-                return;
+            try
+            {
+                await base.OnAfterRenderAsync(firstRender);
+                if (!firstRender)
+                    return;
 
-            Blayout.Refresh();
-            Appheader.Refresh();
-            Bcard.Refresh();
+                Blayout.Refresh();
+                Appheader.Refresh();
+                Bcard.Refresh();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("OnAfterRenderAsync"+ex.Message);
+            }
         }
     }
 }

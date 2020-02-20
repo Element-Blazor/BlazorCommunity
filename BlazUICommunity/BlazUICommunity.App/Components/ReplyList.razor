@@ -4,10 +4,8 @@
 {
     foreach (var reply in Replys)
     {
-        <ReplyItem ReplyModel="reply" EnableAlwaysRender="true" DeleteReply="e=>DeleteRep(reply.Id)"></ReplyItem>
+        <ReplyItem ReplyModel="reply" EnableAlwaysRender="true" DeleteReply="e=>DeleteRep(reply.Id)" > </ReplyItem>
     }
-
-
     <div class="el-table__column-resize-proxy" style="display: none;"></div>
     @if (Math.Ceiling((float)Total / PageSize) > 1 || !NoPaginationOnSinglePage)
     {

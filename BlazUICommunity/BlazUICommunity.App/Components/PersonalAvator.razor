@@ -7,7 +7,7 @@
         <BForm Style="width:400px;" @ref="bForm" Value="value" EnableAlwaysRender="true">
 
             <BFormItem TValue="IFileModel[]" Label="" Name="@nameof(UploadActivity.Previews)">
-                <UploadAvatar Url="@UploadApiUrl"
+                <UploadAvatar Url="@UploadHeadUrl"
                               UploadType="UploadType.Image"
                               EnablePasteUpload="true" Limit="1"
                               AllowExtensions="@(new string[] { " .jpg",".png"})">

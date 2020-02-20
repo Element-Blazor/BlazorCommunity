@@ -34,6 +34,23 @@ namespace Blazui.Community.Api.Controllers
             _mapper = mapper;
         }
         /// <summary>
+        /// 删除
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Delete/{Id}")]
+        public  IActionResult Delete(int Id)
+        {
+            var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
+            var version = verRepository.Find(Id);
+            if (version != null && version.Id > 0)
+            {
+                version.Status = version.Status == -1 ? 0 : -1;
+            }
+            verRepository.Update(version);
+            return Ok();
+
+        }
+        /// <summary>
         /// 获取版本数据
         /// </summary>
         /// <returns></returns>
@@ -45,9 +62,42 @@ namespace Blazui.Community.Api.Controllers
                 expression = expression.And(p => p.Project == Project);
             var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
             var versions =await verRepository.GetAllAsync(expression);
-            if(versions!=null&&versions.Any())
+ 
                 return Ok(versions);
-            return new NoContentResponse();
+          
+        }
+
+        /// <summary>
+        /// 获取版本数据
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            Expression<Func<BZVersionModel, bool>> expression = p => p.Status == 0;
+            var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
+            var versions = await verRepository.GetAllAsync(expression);
+                return Ok(versions);
+        }
+
+        /// <summary>
+        /// 获取版本数据
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetPageList/{projectId}/{pageSize}/{pageIndex}")]
+        public async Task<IActionResult> GetPageList(int projectId,int pageSize,int pageIndex)
+        {
+            var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
+            if (projectId<0)
+            {
+                var versions = await verRepository.GetPagedListAsync(pageIndex-1, pageSize);
+                return Ok(versions);
+            }
+            else
+            {
+                var versions = await verRepository.GetPagedListAsync(p => p.Project == projectId, orderBy: o => o.OrderByDescending(p => p.VerDate), null, pageIndex-1, pageSize) ;
+                return Ok(versions);
+            }
         }
     }
 }

@@ -178,6 +178,29 @@ namespace Blazui.Community.App.Service
         {
             return await httpClient.GetJsonAsync<BZTopicDtoWithUser>($"api/topic/Query/{topicId}");
         }
+
+
+     /// <summary>
+     /// 修改主贴内容
+     /// </summary>
+     /// <param name="dto"></param>
+     /// <returns></returns>
+        public async Task<BaseResponse> UpdateTopic(BZTopicDto dto)
+        {
+            HttpContent httpContent = BuildHttpContent(dto);
+            return await httpClient.PostJsonAsync($"api/topic/UpdateContent", httpContent);
+        }
+
+        /// <summary>
+        /// 修改回贴内容
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        public async Task<BaseResponse> UpdateReply(BZReplyDto dto)
+        {
+            HttpContent httpContent = BuildHttpContent(dto);
+            return await httpClient.PostJsonAsync($"api/reply/UpdateContent", httpContent);
+        }
         /// <summary>
         /// 根据帖子Id查询回帖
         /// </summary>
@@ -207,7 +230,14 @@ namespace Blazui.Community.App.Service
         {
             return await httpClient.GetJsonAsync<List<BZVersionModel>>($"api/Version/Query/{Project}");
         }
-
+        /// <summary>
+        /// 获取版本数据
+        /// </summary>
+        /// <returns></returns>
+        public async Task<BaseResponse<List<BZVersionModel>>> GetAllVersions()
+        {
+            return await httpClient.GetJsonAsync<List<BZVersionModel>>($"api/Version/GetAll");
+        }
 
         /// <summary>
         /// 检查是否收藏了该帖子

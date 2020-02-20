@@ -19,6 +19,9 @@ namespace Blazui.Community.App.Pages
 {
     public abstract class PageBase : BComponentBase
     {
+        public static string UploadHeadUrl= "api/upload/uploadavator";
+
+        public static string UploadTopicFileUrl = "api/upload/UploadFile";
         [Inject]
         public ILogger<PageBase> _logger { get; set; }
         [Inject]
@@ -65,16 +68,38 @@ namespace Blazui.Community.App.Pages
             }
             catch (Exception ex)
             {
-                MessageService.Show(ex.Message, MessageType.Error);
+                ToastError(ex.Message);
                 await InitilizePageDataAsync();
                 _logger.LogError($"OnAfterRenderAsync----->>{ex.StackTrace}");
             }
         }
 
-        protected override bool ShouldRender()
-        {
-            return true;
-        }
+        //protected override async Task OnParametersSetAsync()
+        //{
+        //    try
+        //    {
+        //        await base.OnParametersSetAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("OnParametersSetAsync" + ex.Message);
+        //    }
+        //}
+        //protected override async Task OnInitializedAsync()
+        //{
+        //    try
+        //    {
+        //        await base.OnInitializedAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("OnInitializedAsync" + ex.Message);
+        //    }
+        //}
+
+
+        protected override bool ShouldRender() => true;
+       
         static readonly SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
         protected virtual async Task<BZUserModel> GetUser()
         {
@@ -94,6 +119,17 @@ namespace Blazui.Community.App.Pages
             }
 
         }
+        protected async Task<List<BZVersionModel>> QueryVersions()
+        {
+            return await memoryCache.GetOrCreateAsync("Version", async p =>
+            {
+                p.SetSlidingExpiration(TimeSpan.FromMinutes(10));
+                var result= await NetService.GetAllVersions();
+                if (result.IsSuccess)
+                    return result.Data;
+                else return new List<BZVersionModel>();
+            });
+        }
 
         private async Task<BZUserModel> QueryUser()
         {
@@ -102,13 +138,31 @@ namespace Blazui.Community.App.Pages
             {
                 return await memoryCache.GetOrCreateAsync(userstatue.User, async p =>
                 {
+                    p.SetSlidingExpiration(TimeSpan.FromMinutes(10));
                     return await userManager.GetUserAsync(userstatue.User);
                 });
             }
             else return null;
         }
         protected virtual Task InitilizePageDataAsync() {
+         
             return Task.CompletedTask;
+        }
+     protected void ToastError(string message="操作失败")
+        {
+            MessageService.Show(message, MessageType.Error);
+        }
+        protected void ToastInfo(string message = "普通消息")
+        {
+            MessageService.Show(message, MessageType.Info);
+        }
+        protected void ToastSuccess(string message = "操作成功")
+        {
+            MessageService.Show(message, MessageType.Success);
+        }
+        protected void ToastWarning(string message = "警告消息")
+        {
+            MessageService.Show(message, MessageType.Warning);
         }
     }
 }

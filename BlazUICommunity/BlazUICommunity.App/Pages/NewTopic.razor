@@ -19,14 +19,14 @@
                             </BSelect>
                         </div>
                     </BFormItem>
-                    <BFormItem TValue="string" Label="版本" IsRequired="true" Name="@nameof(ArticleModel.VerNo)" Style="margin-left: 20px;">
+                    <BFormItem TValue="int" Label="版本" IsRequired="true" Name="@nameof(ArticleModel.Project)" Style="margin-left: 20px;">
                         <div class="el-form-item-custom">
-                            <BSelect TValue="string" @ref="bverNoSelect">
+                            <BSelect TValue="int" @ref="bverNoSelect">
                                 @if (bZVersions != null && bZVersions.Any())
                                 {
                                     foreach (var ver in bZVersions)
                                     {
-                                        <BSelectOption Value="@ver.VerNo" Text="@ver.VerNo"></BSelectOption>
+                                        <BSelectOption Value="@ver.Project" Text="@ver.VerNo"></BSelectOption>
                                     }
                                 }
                             </BSelect>
@@ -39,7 +39,8 @@
                 </BFormItem>
                 <BFormItem TValue="string" IsRequired="true" Name="@nameof(ArticleModel.Content)">
                     <div style="width:90%;">
-                        <BMarkdownEditor @ref="bMarkdownEditor" UploadUrl="/api/test/upload" DisableFileUpload="true" DisableImageUpload="true"></BMarkdownEditor>
+                        <BMarkdownEditor @ref="bMarkdownEditor" UploadUrl="@UploadTopicFileUrl" DisableFileUpload="true" DisableImageUpload="false" FileMaxSize="300"
+                                          ImageMaxSize="300"></BMarkdownEditor>
                     </div>
                 </BFormItem>
                 <BFormItem TValue="object">

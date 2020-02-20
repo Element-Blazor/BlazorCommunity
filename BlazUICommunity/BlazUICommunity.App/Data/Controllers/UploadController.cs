@@ -17,50 +17,62 @@ namespace Blazui.Community.App.Data.Controllers
     public class UploadController : ControllerBase
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private static string headerpath = "/img/header/";
+        private static string topicpath = "/img/topic/";
         public UploadController(IWebHostEnvironment webHostEnvironment)
         {
             _hostingEnvironment = webHostEnvironment;
         }
         [HttpPost("UploadAvator")]
-        public async Task<IActionResult> UploadAsync([FromForm]IFormFile fileContent)
+        public async Task<IActionResult> UploadHeaderAsync([FromForm]IFormFile fileContent)
+        {
+            return   await Upload(headerpath, fileContent) ;
+        }
+
+        private async Task<IActionResult> Upload(string savepath, IFormFile fileContent)
         {
             try
             {
-                await Task.Delay(new Random().Next(500));
-
-                if ( ExistsFile(fileContent , out string filepath) )
-                {
-                    return Ok(filepath);
-                }
-                string fileExt = Path.GetExtension(fileContent.FileName); //文件扩展名
-                //long fileSize = fileContent.Length; //获得文件大小，以字节为单位
-                var imgId = Guid.NewGuid().ToString();
-                string newFileName = imgId + fileExt; //随机生成新的文件名
-                var path = _hostingEnvironment.WebRootPath + "/img/header/";
-                if ( !Directory.Exists(path) )
+                var path = _hostingEnvironment.WebRootPath + savepath;
+                if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
                 }
-                var filePath = Path.Combine(path , newFileName);
-                using var stream = new FileStream(filePath , FileMode.Create);
+                await Task.Delay(new Random().Next(500));
+
+                if (ExistsFile(fileContent, out string filename))
+                {
+                    return OkResult(filename, headerpath);
+                }
+                string fileExt = Path.GetExtension(fileContent.FileName); //文件扩展名
+                //long fileSize = fileContent.Length; //获得文件大小，以字节为单位
+                var fileId = Guid.NewGuid().ToString();
+                string newFileName = fileId + fileExt; //随机生成新的文件名
+
+                var filePath = Path.Combine(path, newFileName);
+                using var stream = new FileStream(filePath, FileMode.Create);
                 await fileContent.CopyToAsync(stream);
-                return Ok(newFileName);
+                return OkResult(newFileName, savepath);
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 return BadRequest(ex);
             }
         }
-
-        private IActionResult Ok(string newFileName)
+        [HttpPost("UploadFile")]
+        public async Task<IActionResult> UploadFileAsync([FromForm]IFormFile fileContent)
+        {
+            return await Upload(topicpath, fileContent);
+        }
+        private IActionResult OkResult(string newFileName,string path)
         {
             return Content(JsonConvert.SerializeObject(new
             {
                 //0表示成功
                 code = 0 ,
                 //id为文件唯一标识符
-                id = "/img/header/" + newFileName ,
-                url = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + "/img/header/" + newFileName
+                id = path + newFileName ,
+                url = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + path + newFileName
             }) , "application/json");
         }
 

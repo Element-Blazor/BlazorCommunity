@@ -97,15 +97,11 @@ namespace Blazui.Community.App.Components
 
             if (result.Succeeded)
             {
-                //User = user;
-                //Disabled = true;
-                //this.RequireRender = true;
-                //StateHasChanged();
                await navigationToUpdateUserUI("/user/base");
             }
             else
             {
-                MessageService.Show("更新失败", MessageType.Error);
+                ToastError("更新失败");
             }
         }
 

@@ -69,7 +69,7 @@ namespace Blazui.Community.App.Components
                     if (result.IsSuccess)
                     {
                         await LoadDatas();
-                        MessageService.Show($"删除成功", MessageType.Success);
+                        ToastSuccess("删除成功");
                     }
                 }
         }

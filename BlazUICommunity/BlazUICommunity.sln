@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Model", "B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Utility", "BlazUICommunity.Utility\Blazui.Community.Utility.csproj", "{0F08BA12-E388-4FCF-AB90-7E4E7CB2ADA4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestBZCommunity", "UnitTestBZCommunity\UnitTestBZCommunity.csproj", "{C622138C-465A-4FA8-9086-61C1508FB391}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Test", "BlazUICommunity.Test\Blazui.Community.Test.csproj", "{29877874-1FB2-455F-A970-3959E711E527}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.UnitOfWork", "BlazUICommunity.UnitOfWork\Blazui.Community.UnitOfWork.csproj", "{4E0B8EC1-710D-4AFE-9FE6-89B7F0E3FB26}"
@@ -32,6 +30,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazAdmin", "..\..\BlazAdmin\src\BlazAdmin\BlazAdmin.csproj", "{95D6474E-CAE4-4785-9FC6-4ED8B6775168}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazAdmin.ServerRender", "..\..\BlazAdmin.ServerRender\src\BlazAdmin.ServerRender\BlazAdmin.ServerRender.csproj", "{BCB24D6E-D129-4974-AA9C-4B61272267A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.MSTest", "Blazui.Community.MSTest\Blazui.Community.MSTest.csproj", "{35E899CC-8F56-4501-A23C-F746B5D68B52}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.XUnitTest", "Blazui.Community.XUnitTest\Blazui.Community.XUnitTest.csproj", "{60B5907C-2BF3-44A1-9271-DABEA072BA4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +57,6 @@ Global
 		{0F08BA12-E388-4FCF-AB90-7E4E7CB2ADA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F08BA12-E388-4FCF-AB90-7E4E7CB2ADA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F08BA12-E388-4FCF-AB90-7E4E7CB2ADA4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C622138C-465A-4FA8-9086-61C1508FB391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C622138C-465A-4FA8-9086-61C1508FB391}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C622138C-465A-4FA8-9086-61C1508FB391}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C622138C-465A-4FA8-9086-61C1508FB391}.Release|Any CPU.Build.0 = Release|Any CPU
 		{29877874-1FB2-455F-A970-3959E711E527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{29877874-1FB2-455F-A970-3959E711E527}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29877874-1FB2-455F-A970-3959E711E527}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -99,6 +97,14 @@ Global
 		{BCB24D6E-D129-4974-AA9C-4B61272267A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCB24D6E-D129-4974-AA9C-4B61272267A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCB24D6E-D129-4974-AA9C-4B61272267A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35E899CC-8F56-4501-A23C-F746B5D68B52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35E899CC-8F56-4501-A23C-F746B5D68B52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35E899CC-8F56-4501-A23C-F746B5D68B52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35E899CC-8F56-4501-A23C-F746B5D68B52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60B5907C-2BF3-44A1-9271-DABEA072BA4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60B5907C-2BF3-44A1-9271-DABEA072BA4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60B5907C-2BF3-44A1-9271-DABEA072BA4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60B5907C-2BF3-44A1-9271-DABEA072BA4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

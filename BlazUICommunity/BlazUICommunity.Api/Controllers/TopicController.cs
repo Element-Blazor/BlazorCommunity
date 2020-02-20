@@ -153,20 +153,35 @@ namespace Blazui.Community.Api.Controllers
                 }
                 );
         }
+        /// <summary>
+        /// 更新主题帖
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("UpdateContent")]
+        public IActionResult UpdateContent([FromBody] BZTopicDto Dto)
+        {
+            if (Dto.Id < 1)
+                return new BadRequestResponse("id is error");
+            var topic = _bZTopicRepository.Find(Dto.Id);
+            if(topic==null)
+                return new BadRequestResponse("no this topic");
+            topic.Content = Dto.Content;
+            topic.ModifyTime = DateTime.Now;
+            _bZTopicRepository.Update(topic);
+            return Ok();
+        }
 
         /// <summary>
         /// 更新主题帖
         /// </summary>
         /// <returns></returns>
-        [HttpPut("Update/{Id}")]
-        public IActionResult Update([FromBody] BZTopicDto Dto, [FromRoute] int Id)
+        [HttpPut("Update")]
+        public IActionResult Update([FromBody] BZTopicDto Dto)
         {
-            if (Id < 1)
+            if (Dto?.Id < 1)
                 return new BadRequestResponse("id is error");
-            var user = _mapper.Map<BZTopicModel>(Dto);
-            user.Id = Id;
-
-            _bZTopicRepository.Update(user);
+            var topic = _mapper.Map<BZTopicModel>(Dto);
+            _bZTopicRepository.Update(topic);
             return Ok();
         }
 

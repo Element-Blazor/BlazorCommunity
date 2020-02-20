@@ -27,7 +27,7 @@
             Name = "帖子管理",
             Title = "帖子管理",
             Children = new List<MenuModel>()
-    {
+{
                 new MenuModel()
         {
             Label = "主贴管理",
@@ -47,7 +47,15 @@
         }
             }
         });
-
+        Menus.Add(new MenuModel()
+        {
+            Label = "版本管理",
+            Icon = "el-icon-cherry",
+            Flex = true,
+            Name = "version",
+            Title = "版本管理",
+            Route = "/manage/ver"
+        });
     }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)

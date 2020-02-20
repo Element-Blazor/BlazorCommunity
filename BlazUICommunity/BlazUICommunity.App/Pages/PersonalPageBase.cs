@@ -54,7 +54,7 @@ namespace Blazui.Community.App.Pages
                 IconClass = "el-icon-loading"
             });
             await Task.Delay(500);
-            MessageService.Show("更新成功", MessageType.Success);
+            ToastSuccess("更新成功");
             LoadingService.CloseFullScreenLoading();
             navigationManager.NavigateTo(Uri, true);
         }

@@ -25,7 +25,11 @@ namespace Blazui.Community.App.Features.Account.Pages
                 return;
             var signInModel = signInForm.GetValue<SignInModel>();
             var user = await userManager.FindByNameAsync(signInModel.userAccount);
-
+            if (user.Status != 0)
+            {
+                ToastError("账号已被封，请联系管理员");
+                return;
+            }
             if ( user != null && await userManager.CheckPasswordAsync(user , signInModel.Password) )
             {
                 var token = await userManager.GenerateUserTokenAsync(user , TokenOptions.DefaultProvider , "SignIn");
@@ -47,7 +51,7 @@ namespace Blazui.Community.App.Features.Account.Pages
             }
             else
             {
-                MessageService.Show("登录失败，用户名或密码错误" , MessageType.Error);
+                ToastError("登录失败，用户名或密码错误");
                 return;
             }
 
@@ -60,21 +64,20 @@ namespace Blazui.Community.App.Features.Account.Pages
 
         protected void FindPwd()
         {
-            MessageService.Show("尚未实现", MessageType.Info);
-            //navigationManager.NavigateTo("/account/register" , forceLoad: true);
+            ToastInfo("尚未实现");
         }
 
-        protected async Task SSOWX()
+        protected void SSOWX()
         {
-            MessageService.Show("尚未实现", MessageType.Info);
+            ToastInfo("尚未实现");
         }
-        protected async Task SSOQQ()
+        protected void SSOQQ()
         {
-            MessageService.Show("尚未实现", MessageType.Info);
+            ToastInfo("尚未实现");
         }
-        protected async Task SSOGithub()
+        protected void SSOGithub()
         {
-            MessageService.Show("尚未实现", MessageType.Info);
+            ToastInfo("尚未实现");
         }
 
         protected override Task InitilizePageDataAsync()

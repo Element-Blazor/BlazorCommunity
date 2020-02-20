@@ -27,20 +27,20 @@ namespace Blazui.Community.Repository
         /// </summary>
         /// <param name="replyId"></param>
         /// <returns></returns>
-        public async Task<bool> FakeDelete(int replyId)
+        public bool FakeDelete(int replyId)
         {
-            return await DeleteOrActive(replyId, -1);
+            return  DeleteOrActive(replyId, -1);
         }
         /// <summary>
         /// 删除或激活
         /// </summary>
         /// <param name="replyId"></param>
         /// <returns></returns>
-        public async Task<bool> DeleteOrActive(int replyId, int status)
+        public bool DeleteOrActive(int replyId, int status)
         {
             string sql = $" update Reply set status={status} where id={replyId}; ";
 
-            return await ExecuteSqlCmd(sql);
+            return  ExecuteSqlCmd(sql);
         }
 
     }

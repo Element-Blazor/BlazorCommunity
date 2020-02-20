@@ -97,12 +97,13 @@ namespace Blazui.Community.Api.Controllers
         [HttpDelete("Delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] int Id)
         {
-            var topicRepo = _unitOfWork.GetRepository<BZTopicModel>();
-            var result = await _unitOfWork.CommitWithTransactionAsync(async () =>
+
+            await _unitOfWork.CommitWithTransactionAsync(() =>
             {
-                await _replyRepository.FakeDelete(Id);
-                var reply = await _replyRepository.FindAsync(Id);
-                var topic = await topicRepo.GetFirstOrDefaultAsync(p => p.Id == reply.TopicId);
+                var reply = _replyRepository.Find(Id);
+                var delete = _replyRepository.FakeDelete(Id);
+                var topicRepo = _unitOfWork.GetRepository<BZTopicModel>();
+                var topic = topicRepo.GetFirstOrDefault(p => p.Id == reply.TopicId);
                 if (topic != null)
                 {
                     topic.ReplyCount--;
@@ -120,13 +121,13 @@ namespace Blazui.Community.Api.Controllers
         public async Task<IActionResult> DeleteOrActive([FromRoute] int Id)
         {
             var topicRepo = _unitOfWork.GetRepository<BZTopicModel>();
-            var result = await _unitOfWork.CommitWithTransactionAsync(async () =>
+            var result = await _unitOfWork.CommitWithTransactionAsync( () =>
             {
-                var reply = await _replyRepository.FindAsync(Id);
+                var reply =  _replyRepository.Find(Id);
 
-                await _replyRepository.DeleteOrActive(Id, reply.Status == 0 ? -1 : 0);
+                 _replyRepository.DeleteOrActive(Id, reply.Status == 0 ? -1 : 0);
 
-                var topic = await topicRepo.GetFirstOrDefaultAsync(p => p.Id == reply.TopicId);
+                var topic =  topicRepo.GetFirstOrDefault(p => p.Id == reply.TopicId);
                 if (topic != null)
                 {
                     if (reply.Status == 0)
@@ -152,13 +153,30 @@ namespace Blazui.Community.Api.Controllers
         {
             if (Id < 1)
                 return new BadRequestResponse("id is error");
-            var user = _mapper.Map<BZReplyModel>(Dto);
-            user.Id = Id;
+            var reply = _mapper.Map<BZReplyModel>(Dto);
+            reply.Id = Id;
 
-            _replyRepository.Update(user);
+            _replyRepository.Update(reply);
             return Ok();
         }
 
+        /// <summary>
+        /// 更新主题帖
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("UpdateContent")]
+        public IActionResult UpdateContent([FromBody] BZTopicDto Dto)
+        {
+            if (Dto.Id < 1)
+                return new BadRequestResponse("id is error");
+            var reply = _replyRepository.Find(Dto.Id);
+            if (reply == null)
+                return new BadRequestResponse("no this error");
+            reply.Content = Dto.Content;
+            reply.ModifyTime = DateTime.Now;
+            _replyRepository.Update(reply);
+            return Ok();
+        }
         /// <summary>
         /// 根据Id查询回帖
         /// </summary>

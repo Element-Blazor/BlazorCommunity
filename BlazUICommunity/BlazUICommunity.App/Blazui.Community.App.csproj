@@ -35,6 +35,7 @@
   <ItemGroup>
     <Folder Include="Components\User\" />
     <Folder Include="wwwroot\img\header\" />
+    <Folder Include="wwwroot\img\topic\" />
   </ItemGroup>
 
   <ItemGroup>

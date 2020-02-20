@@ -11,7 +11,7 @@ namespace Blazui.Community.App.Components
     public class PersonalAvatorBase : PersonalPageBase
     {
 
-        protected static string UploadApiUrl { get; private set; }
+      
 
  
         protected override async Task InitilizePageDataAsync()
@@ -19,11 +19,7 @@ namespace Blazui.Community.App.Components
             await Task.CompletedTask;
         }
 
-        protected override void OnInitialized()
-        {
-            UploadApiUrl ??= "api/upload/uploadavator";
-            base.OnInitialized();
-        }
+      
 
         protected BZUserModel User { get; set; }
 

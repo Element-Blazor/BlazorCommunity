@@ -81,12 +81,11 @@ namespace Blazui.Community.App.Components
             if (Confirm == MessageBoxResult.Ok)
                 if (topic is PersonalTopicModel topicModel)
                 {
-                    //MessageService.Show($"正在删除 {topicModel.Title}", MessageType.Warning);
                     var result = await NetService.DelTopic(topicModel.Id);
                     if (result.IsSuccess)
                     {
                         await LoadDatas();
-                        MessageService.Show($"删除成功", MessageType.Success);
+                        ToastSuccess("删除成功");
                     }
                 }
         }

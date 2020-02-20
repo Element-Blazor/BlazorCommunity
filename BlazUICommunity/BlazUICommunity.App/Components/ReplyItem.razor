@@ -26,15 +26,30 @@
                             @ReplyModel?.LastModifyTime
                         </div>
                     </div>
-                    @if (IsSelefReply)
+                    @if (IsSelfReply)
                     {
-                        <div style="position: absolute; right: 17px;"><BButton Type="ButtonType.Text" Style="color:#F56C6C" IsPlain="true" IsCircle="true" Size="ButtonSize.Default" Icon="el-icon-close" OnClick="DeleteReply" EnableAlwaysRender="true" @ref="bbutton"></BButton></div>
+                        var buttonedit = "color:#67C23A;font-size:25px;";
+                        var buttonsave = "color:#909399;font-size:25px;";
+                        <div style="position: absolute; right: 17px;">
+                            <BButtonGroup>
+                                <BButton Icon=@(ShoudEdit?"el-icon-check":"el-icon-edit-outline") Style=@(ShoudEdit?buttonedit:buttonsave) Type="ButtonType.Text" IsPlain="true"  OnClick="EditReply"> </BButton>
+                                <BButton Type="ButtonType.Text" Style="color:#F56C6C;font-size:25px;" IsPlain="true" Size="ButtonSize.Default" Icon="el-icon-close" OnClick="DeleteReply"></BButton>
+                            </BButtonGroup>
+                        </div>
                     }
 
                 </div>
             </Header>
             <Body>
-                <BMarkdown Text="@ReplyModel.Content" EnableAlwaysRender="true"></BMarkdown>
+                @if (!ShoudEdit)
+                {
+                    <BMarkdown Text="@ReplyModel.Content"></BMarkdown>
+                }
+                else
+                {
+                    <BMarkdownEditor @bind-Value="@ReplyModel.Content" UploadUrl="@UploadTopicFileUrl" DisableFileUpload="true"
+                                     DisableImageUpload="false" ImageMaxSize="300" Height="300"></BMarkdownEditor>
+                }
             </Body>
         </BCard>
     </div>

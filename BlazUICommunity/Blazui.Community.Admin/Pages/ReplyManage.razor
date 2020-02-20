@@ -4,26 +4,26 @@
 @using Blazui.Community.DTO;
 @inherits ReplyManageBase
 
-<BForm Inline="true" @ref="searchForm">
-    <BFormItem TValue="string" Label="主贴标题" Name="@nameof(QueryReplyCondition.TopicId)" IsRequired="false">
-        <BInput TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="string" Label="回帖用户" Name="@nameof(QueryReplyCondition.UserId)" IsRequired="false">
-        <BInput TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="string" Label="状态" Name="@nameof(QueryReplyCondition.Status)" IsRequired="false">
-        <BInput TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="DateTime?" Label="回复时间" IsRequired="false" Name="@nameof(QueryReplyCondition.PublishTimeStart)">
-        <BDatePicker></BDatePicker>
-    </BFormItem>
-    <BFormItem TValue="DateTime?" Label="至" IsRequired="false" Name="@nameof(QueryReplyCondition.PublishTimeEnd)">
-        <BDatePicker></BDatePicker>
-    </BFormItem>
-    <BFormActionItem>
-        <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
-    </BFormActionItem>
-</BForm>
+    <BForm Inline="true" @ref="searchForm">
+        <BFormItem TValue="string" Label="主贴标题" Name="@nameof(QueryReplyCondition.TopicId)" IsRequired="false">
+            <BInput TValue="string"></BInput>
+        </BFormItem>
+        <BFormItem TValue="string" Label="回帖用户" Name="@nameof(QueryReplyCondition.UserId)" IsRequired="false">
+            <BInput TValue="string"></BInput>
+        </BFormItem>
+        <BFormItem TValue="ModelStatus?" Label="状态" Name="@nameof(QueryReplyCondition.Status)" IsRequired="false">
+            <div style="width:100px;"><BSelect TValue="ModelStatus?"></BSelect></div>
+        </BFormItem>
+        <BFormItem TValue="DateTime?" Label="回复时间" IsRequired="false" Name="@nameof(QueryReplyCondition.PublishTimeStart)">
+            <BDatePicker></BDatePicker>
+        </BFormItem>
+        <BFormItem TValue="DateTime?" Label="至" IsRequired="false" Name="@nameof(QueryReplyCondition.PublishTimeEnd)">
+            <BDatePicker></BDatePicker>
+        </BFormItem>
+        <BFormActionItem>
+            <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
+        </BFormActionItem>
+    </BForm>
 
 <div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
 

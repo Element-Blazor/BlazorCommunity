@@ -63,7 +63,8 @@ namespace Blazui.Community.App.Components
                 var bindMobile = await userManager.SetPhoneNumberAsync(User, activity.Mobile);
                 if (bindMobile.Succeeded)
                 {
-                    MessageService.Show("绑定手机成功", MessageType.Success);
+                    ToastSuccess("绑定手机成功");
+                    UpdateUI();
                 }
             }
 

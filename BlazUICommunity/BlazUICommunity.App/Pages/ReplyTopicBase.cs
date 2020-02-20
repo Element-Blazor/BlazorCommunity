@@ -24,7 +24,8 @@ namespace Blazui.Community.App.Pages
 
             if (TopicId < 0)
             {
-                MessageService.Show("topicid error", Component.MessageType.Warning);
+                ToastError("帖子不存");
+                navigationManager.NavigateTo("/");
                 return;
             }
             await Task.CompletedTask;

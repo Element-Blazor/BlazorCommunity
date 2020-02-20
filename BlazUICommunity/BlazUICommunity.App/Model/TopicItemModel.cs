@@ -69,5 +69,6 @@ namespace Blazui.Community.App.Model
         /// 内容
         /// </summary>
         public string Content { get; set; }
+
     }
 }

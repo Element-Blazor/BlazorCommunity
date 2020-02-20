@@ -2,6 +2,7 @@
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Utility.Extensions;
+using Blazui.Community.Utility.Request;
 using Blazui.Community.Utility.Response;
 using Newtonsoft.Json;
 using System;
@@ -93,6 +94,26 @@ namespace Blazui.Community.Admin.Service
             if (!string.IsNullOrWhiteSpace(username))
                 url += $"?username={username}";
             return await httpClient.PostJsonAsync<PageDatas<BZTopicDtoWithUser>>(url, BuildHttpContent(querycondition));
+        }
+
+        /// <summary>
+        /// 查询版本
+        /// </summary>
+        /// <param name="pageInfo"></param>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse<PageDatas<BZVersionModel>>> GetVersions(PageInfo pageInfo,int projectId=-1)
+        {
+            return await httpClient.GetJsonAsync<PageDatas<BZVersionModel>>($"api/version/GetPageList/{projectId}/{pageInfo.PageSize}/{pageInfo.PageIndex}");
+        }
+        /// <summary>
+        /// 删除帖子
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse> DeleteVersion(int Id)
+        {
+            return await httpClient.GetJsonAsync($"api/version/Delete/{Id}");
         }
         /// <summary>
         /// 查询回复贴

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Blazui.Community.Admin.Data;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
 
@@ -14,7 +15,9 @@ namespace Blazui.Community.Admin.AutoConfiguration
             CreateMap<BZUserUIDto, BZUserModel>().ForMember(dest => dest.Id, option => option.Ignore());
             CreateMap<BZUserModel, BZUserDto>();
             CreateMap<BZUserDto, BZUserModel>().ForMember(dest => dest.Id, option => option.Ignore());
-          
+
+            CreateMap<VersionModel, BZVersionModel>();
+            CreateMap<BZVersionModel, VersionModel>();
         }
     }
 }
