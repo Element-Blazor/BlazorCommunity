@@ -1,6 +1,7 @@
 ﻿using Blazui.Community.Enums;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -44,7 +45,11 @@ namespace Blazui.Community.Api.Service
                 return Task.FromResult(false);
             if (string.IsNullOrWhiteSpace(Content))
                 return Task.FromResult(false);
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             _smtpClientService.SendEmail(Email,Content,Subject);
+            stopwatch.Stop();
+            Console.WriteLine("_smtpClientService-SendEmail：" + stopwatch.ElapsedMilliseconds);
             return Task.FromResult(true);
         }
 

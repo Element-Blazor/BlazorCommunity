@@ -707,6 +707,12 @@
             <param name="codeService"></param>
             <param name="messageService"></param>
         </member>
+        <member name="M:Blazui.Community.Api.Controllers.Client.CodeController.Send">
+            <summary>
+            发送验证码
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.CodeController.SendVerifyCode(System.Int32,System.String,System.String)">
             <summary>
             发送验证码

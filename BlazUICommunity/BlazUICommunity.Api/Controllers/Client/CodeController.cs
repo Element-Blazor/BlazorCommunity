@@ -43,7 +43,16 @@ namespace Blazui.Community.Api.Controllers.Client
             _messageService = messageService;
             _bZVerifyCodeRepository = bZVerifyCodeRepository;
         }
-
+        /// <summary>
+        /// 发送验证码
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Send")]
+        public async Task<IActionResult> Send()
+        {
+            await _messageService.SendEmail("279225040@qq.com", "3333", VerifyCodeType.EmailBind);
+            return Ok();
+        }
         /// <summary>
         /// 发送验证码
         /// </summary>
