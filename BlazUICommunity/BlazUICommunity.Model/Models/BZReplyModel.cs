@@ -9,38 +9,32 @@ namespace Blazui.Community.Model.Models
     /// <summary>
     /// 回帖
     /// </summary>
-    [Table("Reply")]
+    [Table("BZReply")]
     public partial class BZReplyModel : BaseModel
-    { 
+    {
         /// <summary>
         /// 内容
         /// </summary>
-    public string Content { get; set; }
-        /// <summary>
-        /// 回帖时间
-        /// </summary>
-        public DateTime PublishTime { get; set; }
-        /// <summary>
-        /// 修改时间
-        /// </summary>
-        public DateTime? ModifyTime { get; set; }
-        /// <summary>
-        /// 用户ID
-        /// </summary>
-        public int UserId { get; set; }
+        public string Content { get; set; }
+
         /// <summary>
         /// 回复的主题帖ID
         /// </summary>
-        public int TopicId { get; set; }
-        /// <summary>
-        /// 状态 0正常-1删除
-        /// </summary>
-        public int? Status { get; set; }
+        [Column("TopicId", TypeName = "varchar(36)")]
+        public string TopicId { get; set; }
         /// <summary>
         /// 点赞数量
         /// </summary>
         public int? Favor { get; set; }
 
-        public virtual BZTopicModel Topic { get; set; }
+        /// <summary>
+        /// 是否置顶0否-1置顶
+        /// </summary>
+        public int Top { get; set; }
+        /// <summary>
+        /// 是否精华帖0否，1-是
+        /// </summary>
+        public int Good { get; set; }
+
     }
 }

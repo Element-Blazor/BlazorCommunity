@@ -1,0 +1,72 @@
+﻿@page   "/manage/topic"
+@using Blazui.Community.Admin.QueryCondition
+@using Blazui.Community.DTO;
+@inherits TopicManageBase
+
+    <BForm Inline="true" @ref="searchForm">
+        <BFormItem TValue="string" Label="标题" Name="@nameof(QueryTopicCondition.Title)" IsRequired="false">
+            <BInput TValue="string"></BInput>
+        </BFormItem>
+        <BFormItem TValue="object" Label="作者" Name="@(nameof(QueryTopicCondition.UserId))" IsRequired="false">
+            <BInput TValue="object"></BInput>
+        </BFormItem>
+        <BFormItem TValue="DelStatus?" Label="状态" Name="@nameof(QueryTopicCondition.Status)" IsRequired="false">
+            <div style="width:100px;"><BSelect TValue="DelStatus?"></BSelect></div>
+        </BFormItem>
+        <BFormItem TValue="TopicCategory?" Label="类型" Name="@nameof(QueryTopicCondition.Category)" IsRequired="false">
+            <div style="width:100px;"><BSelect TValue="TopicCategory?"></BSelect></div>
+</BFormItem>
+        <BFormItem TValue="DateTime?" Label="发布时间" IsRequired="false" Name="@nameof(QueryTopicCondition.CreateDateStart)">
+            <BDatePicker></BDatePicker>
+        </BFormItem>
+        <BFormItem TValue="DateTime?" Label="至" IsRequired="false" Name="@nameof(QueryTopicCondition.CreateDateEnd)">
+            <BDatePicker></BDatePicker>
+        </BFormItem>
+        <BFormActionItem>
+            <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
+        </BFormActionItem>
+    </BForm>
+
+<div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
+
+<BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
+    <BTableColumns>
+        <BTableColumn Width="100" Property="@nameof(BZTopicDto.UserName)" Text="作者" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(BZTopicDto.CategoryDisplay)" Text="类型" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="300" Property="@nameof(BZTopicDto.Title)" Text="标题" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(BZTopicDto.StatusDisplay)" Text="状态" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(BZTopicDto.ReplyCount)" Text="回复" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(BZTopicDto.GoodDisplay)" Text="精华" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(BZTopicDto.TopDisplay)" Text="置顶" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="150" Property="@nameof(BZTopicDto.CreateDate)" Format="yyyy-MM-dd" Text="发表时间" Style="text-align:center;"></BTableColumn>
+        <BTableTemplateColumn Text="操作" Width="200">
+            <BButton Type="@ButtonType.Success" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Detail(context))">查看</BButton>
+
+            <BDropDown Style="cursor:pointer;">
+                <Trigger>
+                    <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" IsPlain="true">操作</BButton>
+                </Trigger>
+                <Items>
+                    @{
+
+                        if (context is BZTopicDto topic)
+                        {
+                            var topmenu = topic.Top == 0 ? "置顶" : "取消置顶";
+                            var bestmenu = topic.Good == 0 ? "加精" : "取消加精";
+                            var endmenu = topic.Status == 1 ? "取消结贴" : "结贴";
+                            var deletemenu = topic.Status == -1 ? "恢复" : "删除";
+
+                            if (topic.Status != -1)
+                            {
+                                <BDropDownItem OnClick="@(e=> Top(context))">  @topmenu</BDropDownItem>
+                                <BDropDownItem OnClick="@(e=> Best(context))">@bestmenu</BDropDownItem>
+                                <BDropDownItem OnClick="@(e=> End(context))">@endmenu</BDropDownItem>
+                            }
+                            <BDropDownItem OnClick="@(e=> Del(context))">@deletemenu</BDropDownItem>
+                        }
+                    }
+                </Items>
+            </BDropDown>
+        </BTableTemplateColumn>
+    </BTableColumns>
+</BTable>

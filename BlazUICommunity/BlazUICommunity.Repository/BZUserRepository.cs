@@ -1,8 +1,6 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
-using Blazui.Community.Utility;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;
 using MySql.Data.MySqlClient;
@@ -19,87 +17,7 @@ namespace Blazui.Community.Repository
         public BZUserRepository(BlazUICommunityContext dbContext) : base(dbContext)
         {
         }
-        [Inject]
-        private IMemoryCache memoryCache { get; set; }
-
-        public (bool success, string message) ChangePwd(string Account , string OldPwd , string NewPwd)
-        {
-            if ( string.IsNullOrWhiteSpace(Account) )
-            {
-                throw new ArgumentException("message" , nameof(Account));
-            }
-
-            if ( string.IsNullOrWhiteSpace(OldPwd) )
-            {
-                throw new ArgumentException("message" , nameof(OldPwd));
-            }
-
-            if ( string.IsNullOrWhiteSpace(NewPwd) )
-            {
-                throw new ArgumentException("message" , nameof(NewPwd));
-            }
-
-            var checkUser = CheckAndGetUser(Account , OldPwd , out BZUserModel user);
-            if ( checkUser )
-            {
-                //user.IdentityUser = MD5Encrypt.Encrypt(NewPwd);
-                //Commit();
-                return (true, "修改成功");
-            }
-            else
-            {
-                return (false, "用户名或旧密码错误");
-            }
-        }
-
-
-        private BZUserModel GetUserFromCache(string Account)
-        {
-            var users = memoryCache.Get<List<BZUserModel>>(nameof(BZUserModel));
-            if ( users != null )
-            {
-                return users.Single(p => p.UserName == Account);
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// 检查用户是否存在并且返回用户
-        /// </summary>
-        /// <param name="Account"></param>
-        /// <param name="Password"></param>
-        /// <returns>BZUserModel</returns>
-        private bool CheckAndGetUser(string Account , string Password , out BZUserModel bZUser)
-        {
-            if ( string.IsNullOrWhiteSpace(Account) )
-            {
-                throw new ArgumentException("message" , nameof(Account));
-            }
-
-            if ( string.IsNullOrWhiteSpace(Password) )
-            {
-                throw new ArgumentException("message" , nameof(Password));
-            }
-
-            bZUser = GetUserFromCache(Account);
-            //return bZUser == null? false:MD5Encrypt.Encrypt(Password) == bZUser.IdentityUser;
-            return false;
-         
-        }
-
-        /// <summary>
-        /// 登录
-        /// </summary>
-        /// <param name="Account"></param>
-        /// <param name="Pwd"></param>
-        /// <returns></returns>
-        public (bool success, string message, BZUserModel user) Login(string Account , string Pwd)
-        {
-            var checkUser = CheckAndGetUser(Account , Pwd , out BZUserModel user);
-
-            return checkUser ? (true, "登录成功", user) : (false, "登录失败", null);
-
-        }
+       
 
         /// <summary>
         /// 查询指定时间用户发表的主题帖数量
@@ -111,7 +29,7 @@ namespace Blazui.Community.Repository
         {
             if ( start.ToString("yyyy-MM-dd") == end.ToString("yyyy-MM-dd") )
                 end = end.AddDays(1);
-            string exeSql = $"select  t.*,u.NickName as `Name` from (select `UserId`,count(`Id`) as count from `topic` where PublishTime>=@start and PublishTime<=@end GROUP BY `UserId`) t left JOIN `user` u on t.UserId=u.Id order BY t.count desc limit 0,20;";
+            string exeSql = $"select  t.*,u.NickName as `Name` from (select `UserId`,count(`Id`) as count from `bztopic` where CreateDate>=@start and CreateDate<=@end GROUP BY `UserId`) t left JOIN `bzuser` u on t.UserId=u.Id order BY t.count desc limit 0,20;";
             DbParameter sqlTopicIdParameter = new MySqlParameter("start" , start);
             DbParameter sqlReplyIdParameter = new MySqlParameter("end" , end);
             var topActive = await QueryDataFromSql<UserActiveDto>(exeSql , sqlTopicIdParameter , sqlReplyIdParameter);
@@ -128,7 +46,7 @@ namespace Blazui.Community.Repository
         {
             if ( start.ToString("yyyy-MM-dd") == end.ToString("yyyy-MM-dd") )
                 end = end.AddDays(1);
-            string exeSql = $"select  t.*,u.NickName as `Name` from (select `UserId`,count(`Id`) as count from `reply` where PublishTime>=@start and PublishTime<=@end GROUP BY `UserId`) t left JOIN `user` u on t.UserId=u.Id order BY t.count desc limit 0,20;";
+            string exeSql = $"select  t.*,u.NickName as `Name` from (select `UserId`,count(`Id`) as count from `bzreply` where CreateDate>=@start and CreateDate<=@end GROUP BY `UserId`) t left JOIN `bzuser` u on t.UserId=u.Id order BY t.count desc limit 0,20;";
             DbParameter sqlTopicIdParameter = new MySqlParameter("start" , start);
             DbParameter sqlReplyIdParameter = new MySqlParameter("end" , end);
             var replyActive = await QueryDataFromSql<UserActiveDto>(exeSql , sqlTopicIdParameter , sqlReplyIdParameter);

@@ -1,27 +1,30 @@
-﻿@page "/topic/reply"
+﻿@page "/topic/{TopicId}"
+@using Blazui.Community.App.Components.Topic
 @inherits ReplyTopicBase
 
 <div class="content-container">
-    @if (TopicId > 0)
+    @if (!string.IsNullOrWhiteSpace(TopicId))
     {
-
-        <BLayout EastWidth="350" EnableAlwaysRender="true" @ref="bLayout">
+        <BLayout EastWidth="350" EnableAlwaysRender="true"  >
             <North>
                 <div class="content-flex-row" style="width:100%;border-bottom: 1px solid #EBEEF5;">
-                    <div class="go-home">
-                        <BButton Type="@ButtonType.Text" Icon="el-icon-back" Size="@ButtonSize.Medium"></BButton>
-                        <BButton Type="@ButtonType.Text" OnClick="e=>GoHome()" IsPlain="true" Size="@ButtonSize.Medium">Go Back</BButton>
+                    <div class="go-home custome-button-hover">
+                        <BButton Type="@ButtonType.Text" Icon="el-icon-back" Size="@ButtonSize.Medium" Style="color:#909399"></BButton>
+                        <BButton Type="@ButtonType.Text" OnClick="e=>GoHome()" IsPlain="true" Size="@ButtonSize.Medium" Style="color:#909399">Go Back</BButton>
                     </div>
                     <div class="newtopic-reply">
-                        <BButton Type="@ButtonType.Success" OnClick="e=>NewTopic()" IsPlain="true" Size="@ButtonSize.Small"> 发表新帖 </BButton>
+                        <NewTopicAndSearch></NewTopicAndSearch>
                     </div>
                 </div>
             </North>
             <Center>
                 <div class="margin-top-5"></div>
-                <TopicContent TopicId="@TopicId" EnableAlwaysRender="true" @ref="TopicContent" ></TopicContent>
+                <TopicContent  EnableAlwaysRender="true"  TopicModel="@TopicModel" IsFollow="@IsFollow" IsMySelf="@IsMySelf" IsEditing="@IsEditing"
+                              OnFollowStatusChanging="@ToggleFollow" OnEditStatusChanging="ToggleEditing">
+
+                </TopicContent>
                 <div class="margin-top-5"></div>
-                <BCard @ref="bCard" EnableAlwaysRender="true">
+                <BCard  EnableAlwaysRender="true" >
                     <Header>
                         <div class="el-divider el-divider--horizontal">
                             <div class="el-divider__text is-center">
@@ -30,17 +33,7 @@
                         </div>
                     </Header>
                     <Body>
-                        <ReplyList  EnableAlwaysRender="true" @ref="replyList"></ReplyList>
-                        <div class="reply-now">
-                            <BCard EnableAlwaysRender="true">
-                                <Header>
-                                    <div style="margin:25px;font-weight:800;">发表回复</div>
-                                </Header>
-                                <Body>
-                                    <ReplyNow  EnableAlwaysRender="true"></ReplyNow>
-                                </Body>
-                            </BCard>
-                        </div>
+                        <ReplyList TopicId="@TopicId" OnItemDeleted="OnReplyDelete" OnNewReply="OnReplySuccess"></ReplyList> @*  OnNewReply="OnReplySuccess"*@
                     </Body>
 
                 </BCard>
@@ -54,7 +47,7 @@
                             <div class="content-card">
                                 <BCard Shadow="@ShadowShowType.Never">
                                     <Body>
-                                        <ContentHot></ContentHot>
+                                        <RightTop></RightTop>
                                     </Body>
                                 </BCard>
                             </div>
@@ -63,7 +56,7 @@
                             <div class="content-card margin-top-5">
                                 <BCard Shadow="@ShadowShowType.Never">
                                     <Body>
-                                        <ContentHot></ContentHot>
+                                        <RightCenter></RightCenter>
                                     </Body>
                                 </BCard>
                             </div>
@@ -72,7 +65,7 @@
                             <div class="content-card margin-top-10">
                                 <BCard Shadow="@ShadowShowType.Never">
                                     <Body>
-                                        <ContentFooter></ContentFooter>
+                                        <RightBottom></RightBottom>
                                     </Body>
                                 </BCard>
                             </div>

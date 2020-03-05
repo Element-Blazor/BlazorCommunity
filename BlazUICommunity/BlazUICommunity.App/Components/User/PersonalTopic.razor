@@ -1,0 +1,22 @@
+﻿@using Blazui.Community.App.Pages
+@layout PersonalCenterLayout
+@page "/user/topic"
+@inherits PersonalTopicBase
+
+<BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
+    <Body>
+        <BTab EnableAlwaysRender="true" Type="TabType.Card">
+            <BTabPanel Title="我发布的" EnableAlwaysRender="true">
+                <PersonalTopicTable></PersonalTopicTable>
+            </BTabPanel>
+            <BTabPanel Title="我回复的" EnableAlwaysRender="true">
+                <PersonalReplyTable></PersonalReplyTable>
+            </BTabPanel>
+            <BTabPanel Title="我收藏的" EnableAlwaysRender="true">
+                <PersonalFollowTable></PersonalFollowTable>
+            </BTabPanel>
+
+        </BTab>
+    </Body>
+
+</BCard>

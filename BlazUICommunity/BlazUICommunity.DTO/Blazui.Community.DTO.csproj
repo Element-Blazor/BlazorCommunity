@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Blazui.Community.Enums\Blazui.Community.Enums.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.Utility\Blazui.Community.Utility.csproj" />
+  </ItemGroup>
+
 </Project>

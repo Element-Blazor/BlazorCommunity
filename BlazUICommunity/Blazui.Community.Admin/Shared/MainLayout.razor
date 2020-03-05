@@ -1,5 +1,13 @@
-﻿@inherits LayoutComponentBase
-<BAdmin Menus="Menus" NavigationTitle="Blazui社区后台管理" EnablePermissionMenus="false"></BAdmin>
+﻿@using Blazui.Community.Admin.Pages
+@inherits LayoutComponentBase
+<BAdmin Menus="Menus" NavigationTitle="Blazui社区后台管理" EnablePermissionMenus="false">
+    <CreatePage>
+        <AdminCreatePage></AdminCreatePage>
+    </CreatePage>
+    <LoginPage>
+        <AdminBLogin></AdminBLogin>
+    </LoginPage>
+</BAdmin>
 
 @code{
 
@@ -8,6 +16,8 @@
     protected List<MenuModel> Menus { get; set; } = new List<MenuModel>();
     [Inject]
     public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+    [Parameter]
+    public RenderFragment MyCreatePage { get; set; }
     protected override void OnInitialized()
     {
         Menus.Add(new MenuModel()
@@ -21,22 +31,14 @@
         });
         Menus.Add(new MenuModel()
         {
-            Label = "帖子管理",
-            Icon = "el-icon-position",
-            Flex = true,
-            Name = "帖子管理",
-            Title = "帖子管理",
-            Children = new List<MenuModel>()
-{
-                new MenuModel()
-        {
             Label = "主贴管理",
             Icon = "el-icon-position",
             Flex = true,
             Name = "主贴管理",
             Title = "主贴管理",
             Route = "/manage/topic"
-        },  new MenuModel()
+        });
+        Menus.Add(new MenuModel()
         {
             Label = "回帖管理",
             Icon = "el-icon-position",
@@ -44,8 +46,6 @@
             Name = "回帖管理",
             Title = "回帖管理",
             Route = "/manage/reply"
-        }
-            }
         });
         Menus.Add(new MenuModel()
         {
@@ -56,16 +56,14 @@
             Title = "版本管理",
             Route = "/manage/ver"
         });
-    }
-
-    protected async override Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-        if (firstRender)
+        Menus.Add(new MenuModel()
         {
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            if (authState.User.Identity.IsAuthenticated)
-                NavigationManager.NavigateTo("/manage/user");
-        }
+            Label = "Banner管理",
+            Icon = "el-icon-cherry",
+            Flex = true,
+            Name = "Banner",
+            Title = "Banner管理",
+            Route = "/manage/banner"
+        });
     }
 }

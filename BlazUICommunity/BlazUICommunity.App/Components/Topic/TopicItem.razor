@@ -1,0 +1,65 @@
+﻿@inherits TopicItemBase
+@if (Topic != null)
+{
+    <BLayout WestWidth="90" Height="78" EnableAlwaysRender="true">
+        <West>
+            <BCard Shadow="@ShadowShowType.Always" Style="text-align: center;" EnableAlwaysRender="true">
+                <Body>
+                    @if (string.IsNullOrWhiteSpace(Topic.Avator))
+                    {
+                        <img class="app-topic-img" src="/img/defaultAct.png" />
+                    }
+                    else
+                    {
+                        <img class="app-topic-img" src="@Topic.Avator" />
+                    }
+                </Body>
+            </BCard>
+        </West>
+        <Center>
+            <BCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true">
+                <Body>
+                    <div class="topic-wrap">
+                        <div class="topic-item">
+                            <div class="topic-type">
+                                @if (Topic.Status == 1)
+                                {
+                                    <span class="el-tag el-tag--info el-tag--mini el-tag--light">已结帖</span>
+                                }
+                                else
+                                {
+                                    @if (!string.IsNullOrWhiteSpace(Topic.CategoryDisplay))
+                                    {
+                                        <span class="el-tag el-tag--success el-tag--mini el-tag--light">@Topic.CategoryDisplay</span>
+                                    }
+                                }
+
+                            </div>
+                            <div class="topic-title"><BButton Type="ButtonType.Text" Style="color:#000033" OnClick="e=>NavigationToReply(Topic?.Id)">@Topic?.Title</BButton></div>
+                            <div class="topic-tag">
+                                @if (Topic.Good==1)
+                                {
+                                    <span class="el-tag el-tag--danger el-tag--mini el-tag--dark">精华</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="topic-item">
+                            <div class="topic-author">@Topic?.NickName</div>
+                            <div class="topic-time">@Topic?.CreateDateDisplay</div>
+                            @if (Topic.ReplyCount > 0)
+                            {
+                                <div class="topic-reply">
+                                    <div>
+                                        <i class="el-icon-chat-dot-square" style="color: #909399;"></i>
+                                        <span style="margin-left:0px;color: #909399;">@Topic?.ReplyCount</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </Body>
+            </BCard>
+        </Center>
+
+    </BLayout>
+}

@@ -11,6 +11,7 @@ using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Blazui.Community.Utility.Response;
 
 namespace Blazui.Community.Utility.MiddleWare
 {
@@ -152,7 +153,7 @@ namespace Blazui.Community.Utility.MiddleWare
                 response.StatusCode = (int)HttpStatusCode.BadRequest;
             response.ContentType = context.Request.Headers["Accept"];
             response.ContentType = "application/json";
-            await response.WriteAsync(JsonConvert.SerializeObject(new BadRequestResult()))
+            await response.WriteAsync(JsonConvert.SerializeObject(new BadRequestResponse(exception.Message)))
                 .ConfigureAwait(false);
 
         }

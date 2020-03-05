@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Blazui.Community.DTO
 {
-  public partial  class UserActiveDto
+    public partial class UserActiveDto
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public int Count { get; set; }
 

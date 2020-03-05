@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Blazui.Community.Model.Models
 {
 
-    [Table("Address")]
+    [Table("BZAddress")]
     public partial class BZAddressModel: BaseModel
     {
     
@@ -33,8 +33,9 @@ namespace Blazui.Community.Model.Models
         /// <summary>
         /// 用户ID
         /// </summary>
-        public int UserId { get; set; }
 
-        public virtual BZUserModel User { get; set; }
+        [Column("UserId", TypeName = "varchar(36)")]
+        public string UserId { get; set; }
+
     }
 }

@@ -1,0 +1,33 @@
+﻿@page "/manage/banner"
+@using Blazui.Community.Admin.ViewModel
+@inherits BannerManageBase
+
+<BForm Inline="true">
+    <BFormItem Style="text-align:right;" TValue="object">
+        <BButton Type="@ButtonType.Success" Icon="el-icon-plus" OnClick="New" IsPlain="true" IsDisabled="false">NewBanner</BButton>
+    </BFormItem>
+</BForm>
+
+<div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
+
+<BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
+    <BTableColumns>
+        <BTableColumn Width="300" Property="@nameof(BannerAutoGenerateColumnsDto.BannerImg)" Text="图片" Style="text-align:center;">
+            @{
+                BannerAutoGenerateColumnsDto banner = ((BannerAutoGenerateColumnsDto)context);
+                <img src="@(banner.BannerImg)" style="width:100%;height:100px;" title="@banner.Title" />
+            }
+        </BTableColumn>
+        <BTableColumn Width="300" Property="@nameof(BannerAutoGenerateColumnsDto.Title)" Text="图片描述" Style="text-align:center;"> </BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(BannerAutoGenerateColumnsDto.CreateDate)" Format="yyyy-MM-dd" Text="创建时间" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(BannerAutoGenerateColumnsDto.Show)" Text="是否显示" Style="text-align:center;"></BTableColumn>
+        <BTableTemplateColumn Text="操作" Width="100">
+            @{
+                var reply = (BannerAutoGenerateColumnsDto)context;
+                var menu = reply?.Status == 0 ? "删除" : "恢复";
+                <BButton Type="@(reply?.Status==-1?ButtonType.Success:ButtonType.Danger)" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Delete(context))">   @menu</BButton>
+                <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Modify(context))" IsDisabled="false">   编辑   </BButton>
+            }
+        </BTableTemplateColumn>
+    </BTableColumns>
+</BTable>

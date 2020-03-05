@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Blazui.Community.DTO
 {
- public   class SysUserDto
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    public  class SysUserDto : BaseDto
     {
 
         public string Name { get; set; }
 
         public string Password { get; set; }
 
-        public byte Status { get; set; }
 
         public string Phone { get; set; }
 
@@ -29,12 +29,5 @@ namespace Blazui.Community.DTO
 
         public DateTime? LastLoginTime { get; set; }
 
-        public DateTime CreateTime { get; set; }
-
-        public int CreateId { get; set; }
-
-        public DateTime? LastModifyTime { get; set; }
-
-        public int? LastModifyId { get; set; }
     }
 }

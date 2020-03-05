@@ -5,10 +5,10 @@ namespace Blazui.Community.Model.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("SysUserRoleMapping")]
+    [Table("SysUserRole")]
     public partial class SysUserRoleMappingModel : BaseModel
     {
-
+     
         public int SysUserId { get; set; }
 
         public int SysRoleId { get; set; }

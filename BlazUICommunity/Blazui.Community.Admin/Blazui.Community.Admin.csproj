@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>4bc06f89-1948-4d2c-b073-4b92a7d2e343</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +19,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +28,11 @@
     <ProjectReference Include="..\BlazUICommunity.DTO\Blazui.Community.DTO.csproj" />
     <ProjectReference Include="..\BlazUICommunity.Model\Blazui.Community.Model.csproj" />
     <ProjectReference Include="..\BlazUICommunity.Request\Blazui.Community.Request.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.Utility\Blazui.Community.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

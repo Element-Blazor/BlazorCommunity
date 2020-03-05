@@ -20,6 +20,11 @@ using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using Blazui.Community.DTO;
+using System.IO;
+using Blazui.Community.Enums;
+using Blazui.Community.Utility.Configure;
+using NLog.LayoutRenderers;
 
 namespace Blazui.Community.App
 {
@@ -36,26 +41,31 @@ namespace Blazui.Community.App
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BlazUICommunityContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"))).AddUnitOfWork<BlazUICommunityContext>();
+            services.AddDbContext<BlazUICommunityContext>(options => options.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>();
+            services.AddHttpClient("BlazuiCommunitiyApp", client => client.BaseAddress = new Uri(Configuration["ServerUrl"] ?? throw new ArgumentNullException("ServerUrl is null")));
+            services.AddCustomAspIdenitty<BZUserModel, BlazUICommunityContext>();
 
-            AddIdentityVerify(services);
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.SlidingExpiration = false;
+            });
+
             services.AddMemoryCache();
             services.AddRazorPages();
             services.AddControllers();
             services.AddServerSideBlazor();
             services.AddBlazuiServices();
             services.AddMarkdown();
-            services.AddCustomRepository<BZUserModel , BZUserIdentityRepository>();
-            services.AddHttpClient("product" , client =>
-            {
-                client.BaseAddress = new Uri(Configuration["ServerUrl"]?? "http://localhost:5000");
-            });
-            
+            services.AddCustomRepository<BZUserModel, BZUserIdentityRepository>();
             services.AddAutoMapper(typeof(AutoMapConfiguration));
             services.AddScoped<NetworkService>();
+            services.AddScoped<TokenService>();
         }
 
-     
+
 
         /// <summary>
         /// 
@@ -70,10 +80,10 @@ namespace Blazui.Community.App
             builder.RegisterModule<CustomAutofacModule>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app , IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            if ( env.IsDevelopment() )
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
@@ -83,7 +93,7 @@ namespace Blazui.Community.App
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
+            LayoutRenderer.Register("basedir", p => env.ContentRootPath);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -97,52 +107,6 @@ namespace Blazui.Community.App
                 endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
-            });
-        }
-
-
-
-        private static void AddIdentityVerify(IServiceCollection services)
-        {
-            services.AddScoped<AuthenticationStateProvider , RevalidatingIdentityAuthenticationStateProvider<BZUserModel>>();
-            services.AddIdentity<BZUserModel , ApplicationRole>(options =>
-            {
-                options.Password.RequiredLength = 4;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.SignIn.RequireConfirmedEmail = true;
-                // Lockout settings.
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.AllowedForNewUsers = true;
-
-                // User settings.
-                options.User.AllowedUserNameCharacters =
-                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = false;
-
-            }).AddEntityFrameworkStores<BlazUICommunityContext>()
-            .AddDefaultTokenProviders();
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-            services.ConfigureApplicationCookie(options =>
-            {
-                // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
-
-                options.LoginPath = "/account/signin";
-                options.SlidingExpiration = true;
-            });
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("RequireAdmin" , c => c.RequireRole("Admin"));
-
             });
         }
     }

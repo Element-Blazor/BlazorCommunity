@@ -17,7 +17,6 @@ namespace Blazui.Community.Model.Models
         [StringLength(64)]
         public string Password { get; set; }
 
-        public byte Status { get; set; }
 
         [StringLength(20)]
         public string Phone { get; set; }
@@ -40,12 +39,5 @@ namespace Blazui.Community.Model.Models
 
         public DateTime? LastLoginTime { get; set; }
 
-        public DateTime CreateTime { get; set; }
-
-        public int CreateId { get; set; }
-
-        public DateTime? LastModifyTime { get; set; }
-
-        public int? LastModifyId { get; set; }
     }
 }

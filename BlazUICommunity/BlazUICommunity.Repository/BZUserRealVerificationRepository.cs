@@ -4,7 +4,7 @@ using System;
 
 namespace Blazui.Community.Repository
 {
-    public class BZUserRealVerificationRepository : Repository<BZUserRealVerificationModel>, IRepository<BZUserRealVerificationModel>
+    public class BZUserRealVerificationRepository : Repository<BZIDCardModel>, IRepository<BZIDCardModel>
     {
         public BZUserRealVerificationRepository(BlazUICommunityContext dbContext) : base(dbContext)
         {

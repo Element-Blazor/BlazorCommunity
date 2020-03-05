@@ -1,5 +1,9 @@
 ﻿using Blazui.Community.Model.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using System.Threading;
 
 namespace Blazui.Community.Test
 {
@@ -7,27 +11,31 @@ namespace Blazui.Community.Test
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello World! Start");
 
-            //Guid s1 = Guid.Parse("0edf5111-204c-404f-99fa-aeaf592884e7");
-            //using ( BlazUICommunityContext communityContext =new BlazUICommunityContext() )
+
+            List<string> vs = new List<string>() { "1","2","3"};
+            var s = vs.FirstOrDefault(p => p == "34");
+
+            //using (BlazUICommunityContext communityContext = new BlazUICommunityContext())
             //{
+            //    communityContext.Database.EnsureDeleted();
             //    communityContext.Database.EnsureCreated();
-            //    //BZUserModel bZUserModel = new BZUserModel() { 
-            //    // Account="abcdefg123", Avatar="http://www.baidu.com/image/ssa", Cypher="321312213",
-            //    //  Email="212718@qq.com",  LastLoginAddr="2131", LastLoginDate=DateTime.Now, LastLoginType=0,
-            //    //   Level=1,Mobile ="12131321321312", NickName="vicky", Points=100,  RegisterDate=DateTime.Now, Sex=0, Signature=" stay hangur stay foolish", Status=0
-            //    //};
-
-            //    var s = communityContext.Find<BZUserModel>(1);
-            //    //communityContext.SaveChanges();
-            //    //UnitOfWork<BlazUICommunityContext> UnitOfWork = new UnitOfWork<BlazUICommunityContext>(communityContext);
-
-            //    //var userRepository = UnitOfWork.GetRepository<BZUserModel>(true);
-            //    //userRepository.Insert(bZUserModel);
-            //    //var user=     userRepository.GetFirstOrDefault();
-
             //}
+            //////string id = Guid.NewGuid().ToString();
+            //using (BlazUICommunityContext communityContext = new BlazUICommunityContext())
+            //{
+            //    //communityContext.BZUser.Add(new BZUserModel() { CreateDate = DateTime.Now, Avator = "", CreatorId = "", Email = "", EmailConfirmed = false, LastLoginAddr = "", LastLoginDate = DateTime.Now, Level = 0, NickName = "", PhoneNumber = "1321321313", Sex = 0, UserName = "admin", Status = 0, Signature = "", Points = 0 });
+            //    //communityContext.BZTopic.Add(new BZTopicModel() { Good = 0, CreateDate = DateTime.Now, Title = "", Content = "1312321", CreatorId = Guid.NewGuid().ToString(), LastModifyDate = DateTime.Now, Status = 0, });
+            //    //
+
+            //    var set = communityContext.Set<BZTopicModel>();
+            //    set.AddAsync(new BZTopicModel() { Good = 0, CreateDate = DateTime.Now, Title = "", Content = "1312321", CreatorId = Guid.NewGuid().ToString(), LastModifyDate = DateTime.Now, Status = 0, }, default);
+
+
+            //    communityContext.SaveChanges();
+            //}
+            Console.WriteLine("Hello World! End");
             Console.ReadLine();
         }
     }

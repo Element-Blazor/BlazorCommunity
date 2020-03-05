@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Blazui.Community.Api.Extensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class PageExtensions
     {
 
@@ -18,8 +21,6 @@ namespace Blazui.Community.Api.Extensions
         {
             PageDatas<K> pageDatas = new PageDatas<K>
             {
-                HasPreviousPage = pagedList.HasPreviousPage,
-                HasNextPage = pagedList.HasNextPage,
                 IndexFrom = pagedList.IndexFrom,
                 PageIndex = pagedList.PageIndex,
                 PageSize = pagedList.PageSize,

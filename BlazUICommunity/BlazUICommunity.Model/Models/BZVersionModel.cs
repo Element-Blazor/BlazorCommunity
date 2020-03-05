@@ -6,7 +6,7 @@ using System.Text;
 namespace Blazui.Community.Model.Models
 {
 
-    [Table("version")]
+    [Table("BZVersion")]
   public  class BZVersionModel:BaseModel
     {
         /// <summary>
@@ -26,10 +26,6 @@ namespace Blazui.Community.Model.Models
         /// </summary>
         public string VerDescription { get; set; }
         /// <summary>
-        /// 版本发布日期
-        /// </summary>
-        public DateTime VerDate { get; set; }
-        /// <summary>
         /// 版本nuget包地址
         /// </summary>
         public string VerNuget { get; set; }
@@ -38,8 +34,8 @@ namespace Blazui.Community.Model.Models
         /// </summary>
         public string VerDownUrl { get; set; }
         /// <summary>
-        /// -1已删除，已废弃，0-正常
+        /// 文档地址
         /// </summary>
-        public int Status { get; set; }
+        public string VerDocUrl { get; set; }
     }
 }

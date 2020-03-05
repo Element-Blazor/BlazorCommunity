@@ -1,0 +1,14 @@
+﻿@inherits FullScreenMarkdownBase
+
+    <div class="markdown-fullscreen">
+        <BForm Style="height:100%;margin:0px;padding:0px;" @ref="form" Value="model" LabelAlign="@LabelAlign.Right">
+            <BFormItem TValue="string"  Name="@nameof(ReplyModel.Content)" IsRequired="false" EnableAlwaysRender="true">
+                <BMarkdownEditor  DisableFileUpload="true" DisableImageUpload="false"  ImageMaxSize="300" EnableAlwaysRender="true" UploadUrl="@UploadApiUrl"></BMarkdownEditor>
+            </BFormItem>
+            <BFormItem TValue="object"  Style="text-align:right;position:absolute;top:5px;right:50px;float:right;width:100%;text-align:right;">
+                <div class="custome-button-hover">
+                    <BButton Type="@ButtonType.Text" IsPlain="true" OnClick="e => ReplyNow()" Icon="el-icon-check" Style="font-size:20px;color:#606266"></BButton>
+                </div>
+            </BFormItem>
+        </BForm>
+    </div>

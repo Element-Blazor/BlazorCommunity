@@ -8,28 +8,15 @@ namespace Blazui.Community.Model.Models
     /// <summary>
     /// 我的关注 
     /// </summary>
-    [Table("Follow")]
+    [Table("BZFollow")]
     public partial class BZFollowModel : BaseModel
     {
-    
         /// <summary>
         /// 主题帖ID
         /// </summary>
-        public int TopicId { get; set; }
-        /// <summary>
-        /// 状态 0 正常，-1已取消
-        /// </summary>
-        public int? Status { get; set; }
-       /// <summary>
-       /// 关注时间
-       /// </summary>
-        public DateTime FollowTime { get; set; }
-        /// <summary>
-        /// 用户ID
-        /// </summary>
-        public int UserId { get; set; }
+        [Column("TopicId", TypeName = "varchar(36)")]
+        public string TopicId { get; set; }
 
-        public virtual BZTopicModel Topic { get; set; }
-        public virtual BZUserModel User { get; set; }
+     
     }
 }

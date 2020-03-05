@@ -1,0 +1,24 @@
+﻿@inherits PersonalFollowTableBase
+@using Blazui.Community.App.Model.Condition
+
+    <BForm Inline="true" @ref="searchForm">
+        <BFormItem TValue="string" Label="标题" Name="@nameof(SearchPersonalFollowCondition.TopicTitle)" IsRequired="false">
+            <BInput TValue="string" Placeholder="输入帖子标题"></BInput>
+        </BFormItem>
+        <BFormActionItem>
+            <BButton Type="@ButtonType.Default" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
+        </BFormActionItem>
+    </BForm>
+<div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
+<BTable DataSource="Datas" AutoGenerateColumns="false" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true">
+    <BTableColumns>
+        <BTableColumn Width="150" Property="@nameof(PersonalTopicModel.NickName)" Text="作者"></BTableColumn>
+        <BTableColumn Width="400" Property="@nameof(PersonalTopicModel.Title)" Text="标题"></BTableColumn>
+        <BTableColumn Width="150" Format="yyyy-MM-dd" Property="@nameof(PersonalTopicModel.CreateDate)" Text="收藏时间"></BTableColumn>
+
+        <BTableTemplateColumn Text="操作">
+            <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Mini" Style="border-color:transparent !important" IsPlain="true" IsCircle="true"  Icon="el-icon-remove-outline" OnClick="@(e=> Del(context))"></BButton>
+            <BButton Type="@ButtonType.Success" Size="@ButtonSize.Mini"  Style="border-color:transparent !important" IsPlain="true"  IsCircle="true"  Icon="el-icon-link" OnClick="@(e=> LinktoTopic(context))"></BButton>
+        </BTableTemplateColumn>
+    </BTableColumns>
+</BTable>

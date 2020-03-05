@@ -1,12 +1,9 @@
-﻿using Blazui.Community.Utility.Request;
+﻿using Blazui.Community.Request;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.QueryCondition
 {
-    public class QueryUserCondition : BaseRequest
+    public class QueryUserCondition : QueryBaseCondition
     {
         /// <summary>
         /// 用户账号
@@ -21,7 +18,8 @@ namespace Blazui.Community.Admin.QueryCondition
         /// </summary>
         public string Email { get; set; }
 
-        public DateTime? RegisterDateStart { get; set; }
-        public DateTime? RegisterDateEnd { get; set; }
+        public DateTime? CreateDateStart { get; set; }
+        public DateTime? CreateDateEnd { get; set; }
+
     }
 }

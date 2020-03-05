@@ -1,0 +1,21 @@
+﻿@using Blazui.Community.App.Pages
+@layout PersonalCenterLayout
+@page "/user/bind"
+@inherits PersonalBindBase
+<BTab Type="@TabType.Card" EnableAlwaysRender="true">
+    <BTabPanel Title="@tabTitle" EnableAlwaysRender="true">
+        <BTab>
+            <BTabPanel Title="邮箱绑定">
+                <BindEmail></BindEmail>
+            </BTabPanel>
+            <BTabPanel Title="手机绑定">
+                努力完善中
+                @*<BindMobile></BindMobile>*@
+            </BTabPanel>
+        </BTab>
+    </BTabPanel>
+</BTab>
+
+@code {
+
+}

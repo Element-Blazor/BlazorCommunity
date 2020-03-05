@@ -20,6 +20,11 @@ namespace Blazui.Community.App.Features.Accounts.Controllers
             _signInManager = signInManager;
         }
 
+        /// <summary>
+        /// 用户登录
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         [HttpGet("account/signinactual")]
         public async Task<IActionResult> SignInActual(string t)
         {
@@ -28,7 +33,6 @@ namespace Blazui.Community.App.Features.Accounts.Controllers
             var parts = data.Split('|');
 
             var identityUser = await _userManager.FindByIdAsync(parts[0]);
-            //var user = await _userManager.GetUserAsync(HttpContext.User); 
             var isTokenValid = await _userManager.VerifyUserTokenAsync(identityUser, TokenOptions.DefaultProvider, "SignIn", parts[1]);
             if (isTokenValid)
             {
@@ -45,6 +49,10 @@ namespace Blazui.Community.App.Features.Accounts.Controllers
             }
         }
 
+        /// <summary>
+        /// 登出
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet("account/signout")]
         public async Task<IActionResult> SignOut()
@@ -54,7 +62,10 @@ namespace Blazui.Community.App.Features.Accounts.Controllers
             return Redirect("/");
         }
 
-
+        /// <summary>
+        /// 登出
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet("account/signout2")]
         public async Task<IActionResult> SignOut2()

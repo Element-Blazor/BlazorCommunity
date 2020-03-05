@@ -10,6 +10,7 @@ using Blazui.Community.Admin.Service;
 using Blazui.Community.Admin.AutoConfiguration;
 using AutoMapper;
 using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace Blazui.Community.Admin
 {
@@ -28,15 +29,10 @@ namespace Blazui.Community.Admin
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddDbContext<BlazUICommunityAdminDbContext>(options =>
-            {
-                options.UseMySql(Configuration.GetConnectionString("DbConnection"));
-            });
-            services.AddHttpClient("product", client =>
-            {
-                client.BaseAddress = new Uri(Configuration["ServerUrl"] ?? "http://localhost:5000");
-            });
-            services.AddBlazAdmin<BlazUICommunityAdminDbContext>();
+            services.AddDbContext<BlazUICommunityAdminDbContext>(options => options.UseMySql(Configuration.GetConnectionString("DbConnectionString")));
+            services.AddHttpClient("BlazuiCommunitiyAdmin", client => client.BaseAddress = new Uri(Configuration["ServerUrl"] ?? throw new ArgumentNullException("ServerUrl is null")));
+            services.AddBlazAdmin<IdentityUser, AdminUserService, BlazUICommunityAdminDbContext>(null);
+            services.AddScoped<AdminUserService>();
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings

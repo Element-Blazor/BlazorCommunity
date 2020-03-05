@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Blazui.Community.Model.Logger;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,12 @@ namespace Blazui.Community.Model.Models
         public BlazUICommunityAdminDbContext(DbContextOptions<BlazUICommunityAdminDbContext> options) : base(options)
         {
 
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLoggerFactory(new CustomEFCoreLoggerFactory());
         }
 
         /// <summary>

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Blazui.Community.Model.Models
 {
 
-    [Table("point")]
+    [Table("BZPoint")]
     public partial class BZPointModel : BaseModel
     {
         /// <summary>
@@ -24,8 +24,8 @@ namespace Blazui.Community.Model.Models
         /// <summary>
         /// 用户ID
         /// </summary>
-        public int UserId { get; set; }
+        [Column("UserId", TypeName = "varchar(36)")]
+        public string UserId { get; set; }
 
-        public virtual BZUserModel User { get; set; }
     }
 }

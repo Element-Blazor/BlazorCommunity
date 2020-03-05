@@ -49,7 +49,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// </remarks>
         public virtual void ChangeTable(string table)
         {
-            if ( _dbContext.Model.FindEntityType(typeof(TEntity)) is IConventionEntityType relational )
+            if (_dbContext.Model.FindEntityType(typeof(TEntity)) is IConventionEntityType relational)
             {
                 relational.SetTableName(table);
             }
@@ -76,33 +76,33 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <returns>An <see cref="IPagedList{TEntity}"/> that contains elements that satisfy the condition specified by <paramref name="predicate"/>.</returns>
         /// <remarks>Ex: This method defaults to a read-only, no-tracking query.</remarks>
         public IQueryable<TEntity> GetAll(
-            Expression<Func<TEntity , bool>> predicate = null ,
-            Func<IQueryable<TEntity> , IOrderedQueryable<TEntity>> orderBy = null ,
-            Func<IQueryable<TEntity> , IIncludableQueryable<TEntity , object>> include = null , bool disableTracking = true , bool ignoreQueryFilters = false)
+            Expression<Func<TEntity, bool>> predicate = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null, bool disableTracking = true, bool ignoreQueryFilters = false)
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if ( disableTracking )
+            if (disableTracking)
             {
                 query = query.AsNoTracking();
             }
 
-            if ( include != null )
+            if (include != null)
             {
                 query = include(query);
             }
 
-            if ( predicate != null )
+            if (predicate != null)
             {
                 query = query.Where(predicate);
             }
 
-            if ( ignoreQueryFilters )
+            if (ignoreQueryFilters)
             {
                 query = query.IgnoreQueryFilters();
             }
 
-            if ( orderBy != null )
+            if (orderBy != null)
             {
                 return orderBy(query);
             }
@@ -123,53 +123,53 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="ignoreQueryFilters">Ignore query filters</param>
         /// <returns>An <see cref="IPagedList{TEntity}"/> that contains elements that satisfy the condition specified by <paramref name="predicate"/>.</returns>
         /// <remarks>This method default no-tracking query.</remarks>
-        public virtual IPagedList<TEntity> GetPagedList(Expression<Func<TEntity , bool>> predicate = null ,
-                                                Func<IQueryable<TEntity> , IOrderedQueryable<TEntity>> orderBy = null ,
-                                                Func<IQueryable<TEntity> , IIncludableQueryable<TEntity , object>> include = null ,
-                                                int pageIndex = 0 ,
-                                                int pageSize = 20 ,
-                                                bool disableTracking = true ,
+        public virtual IPagedList<TEntity> GetPagedList(Expression<Func<TEntity, bool>> predicate = null,
+                                                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                                Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                                int pageIndex = 0,
+                                                int pageSize = 20,
+                                                bool disableTracking = true,
                                                 bool ignoreQueryFilters = false)
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if ( disableTracking )
+            if (disableTracking)
             {
                 query = query.AsNoTracking();
             }
 
-            if ( include != null )
+            if (include != null)
             {
                 query = include(query);
             }
 
-            if ( predicate != null )
+            if (predicate != null)
             {
                 query = query.Where(predicate);
             }
 
-            if ( ignoreQueryFilters )
+            if (ignoreQueryFilters)
             {
                 query = query.IgnoreQueryFilters();
             }
 
-            if ( orderBy != null )
+            if (orderBy != null)
             {
-                return orderBy(query).ToPagedList(pageIndex , pageSize);
+                return orderBy(query).ToPagedList(pageIndex, pageSize);
             }
             else
             {
-                return query.ToPagedList(pageIndex , pageSize);
+                return query.ToPagedList(pageIndex, pageSize);
             }
         }
-        public virtual Task<IPagedList<TEntity>> GetPagedListAsync(int pageIndex = 0 , int pageSize = 20 , bool disableTracking = true , CancellationToken cancellationToken = default(CancellationToken))
+        public virtual Task<IPagedList<TEntity>> GetPagedListAsync(int pageIndex = 0, int pageSize = 20, bool disableTracking = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             IQueryable<TEntity> query = _dbSet;
-            if ( disableTracking )
+            if (disableTracking)
             {
                 query = query.AsNoTracking();
             }
-            return query.ToPagedListAsync(pageIndex , pageSize , 0 , cancellationToken);
+            return query.ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
         }
         /// <summary>
         /// Gets the <see cref="IPagedList{TEntity}"/> based on a predicate, orderby delegate and page information. This method default no-tracking query.
@@ -186,44 +186,44 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="ignoreQueryFilters">Ignore query filters</param>
         /// <returns>An <see cref="IPagedList{TEntity}"/> that contains elements that satisfy the condition specified by <paramref name="predicate"/>.</returns>
         /// <remarks>This method default no-tracking query.</remarks>
-        public virtual Task<IPagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity , bool>> predicate = null ,
-                                                           Func<IQueryable<TEntity> , IOrderedQueryable<TEntity>> orderBy = null ,
-                                                           Func<IQueryable<TEntity> , IIncludableQueryable<TEntity , object>> include = null ,
-                                                           int pageIndex = 0 ,
-                                                           int pageSize = 20 ,
-                                                           bool disableTracking = true ,
-                                                           CancellationToken cancellationToken = default(CancellationToken) ,
+        public virtual Task<IPagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> predicate = null,
+                                                           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                                           Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                                           int pageIndex = 0,
+                                                           int pageSize = 20,
+                                                           bool disableTracking = true,
+                                                           CancellationToken cancellationToken = default(CancellationToken),
                                                            bool ignoreQueryFilters = false)
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if ( disableTracking )
+            if (disableTracking)
             {
                 query = query.AsNoTracking();
             }
 
-            if ( include != null )
+            if (include != null)
             {
                 query = include(query);
             }
 
-            if ( predicate != null )
+            if (predicate != null)
             {
                 query = query.Where(predicate);
             }
 
-            if ( ignoreQueryFilters )
+            if (ignoreQueryFilters)
             {
                 query = query.IgnoreQueryFilters();
             }
 
-            if ( orderBy != null )
+            if (orderBy != null)
             {
-                return orderBy(query).ToPagedListAsync(pageIndex , pageSize , 0 , cancellationToken);
+                return orderBy(query).ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
             }
             else
             {
-                return query.ToPagedListAsync(pageIndex , pageSize , 0 , cancellationToken);
+                return query.ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
             }
         }
 
@@ -240,45 +240,45 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="ignoreQueryFilters">Ignore query filters</param>
         /// <returns>An <see cref="IPagedList{TResult}"/> that contains elements that satisfy the condition specified by <paramref name="predicate"/>.</returns>
         /// <remarks>This method default no-tracking query.</remarks>
-        public virtual IPagedList<TResult> GetPagedList<TResult>(Expression<Func<TEntity , TResult>> selector ,
-                                                         Expression<Func<TEntity , bool>> predicate = null ,
-                                                         Func<IQueryable<TEntity> , IOrderedQueryable<TEntity>> orderBy = null ,
-                                                         Func<IQueryable<TEntity> , IIncludableQueryable<TEntity , object>> include = null ,
-                                                         int pageIndex = 0 ,
-                                                         int pageSize = 20 ,
-                                                         bool disableTracking = true ,
+        public virtual IPagedList<TResult> GetPagedList<TResult>(Expression<Func<TEntity, TResult>> selector,
+                                                         Expression<Func<TEntity, bool>> predicate = null,
+                                                         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                                         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                                         int pageIndex = 0,
+                                                         int pageSize = 20,
+                                                         bool disableTracking = true,
                                                          bool ignoreQueryFilters = false)
             where TResult : class
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if ( disableTracking )
+            if (disableTracking)
             {
                 query = query.AsNoTracking();
             }
 
-            if ( include != null )
+            if (include != null)
             {
                 query = include(query);
             }
 
-            if ( predicate != null )
+            if (predicate != null)
             {
                 query = query.Where(predicate);
             }
 
-            if ( ignoreQueryFilters )
+            if (ignoreQueryFilters)
             {
                 query = query.IgnoreQueryFilters();
             }
 
-            if ( orderBy != null )
+            if (orderBy != null)
             {
-                return orderBy(query).Select(selector).ToPagedList(pageIndex , pageSize);
+                return orderBy(query).Select(selector).ToPagedList(pageIndex, pageSize);
             }
             else
             {
-                return query.Select(selector).ToPagedList(pageIndex , pageSize);
+                return query.Select(selector).ToPagedList(pageIndex, pageSize);
             }
         }
 
@@ -298,46 +298,46 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="ignoreQueryFilters">Ignore query filters</param>
         /// <returns>An <see cref="IPagedList{TEntity}"/> that contains elements that satisfy the condition specified by <paramref name="predicate"/>.</returns>
         /// <remarks>This method default no-tracking query.</remarks>
-        public virtual Task<IPagedList<TResult>> GetPagedListAsync<TResult>(Expression<Func<TEntity , TResult>> selector ,
-                                                                    Expression<Func<TEntity , bool>> predicate = null ,
-                                                                    Func<IQueryable<TEntity> , IOrderedQueryable<TEntity>> orderBy = null ,
-                                                                    Func<IQueryable<TEntity> , IIncludableQueryable<TEntity , object>> include = null ,
-                                                                    int pageIndex = 0 ,
-                                                                    int pageSize = 20 ,
-                                                                    bool disableTracking = true ,
-                                                                    CancellationToken cancellationToken = default(CancellationToken) ,
+        public virtual Task<IPagedList<TResult>> GetPagedListAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
+                                                                    Expression<Func<TEntity, bool>> predicate = null,
+                                                                    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                                                    Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                                                    int pageIndex = 0,
+                                                                    int pageSize = 20,
+                                                                    bool disableTracking = true,
+                                                                    CancellationToken cancellationToken = default(CancellationToken),
                                                                     bool ignoreQueryFilters = false)
             where TResult : class
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if ( disableTracking )
+            if (disableTracking)
             {
                 query = query.AsNoTracking();
             }
 
-            if ( include != null )
+            if (include != null)
             {
                 query = include(query);
             }
 
-            if ( predicate != null )
+            if (predicate != null)
             {
                 query = query.Where(predicate);
             }
 
-            if ( ignoreQueryFilters )
+            if (ignoreQueryFilters)
             {
                 query = query.IgnoreQueryFilters();
             }
 
-            if ( orderBy != null )
+            if (orderBy != null)
             {
-                return orderBy(query).Select(selector).ToPagedListAsync(pageIndex , pageSize , 0 , cancellationToken);
+                return orderBy(query).Select(selector).ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
             }
             else
             {
-                return query.Select(selector).ToPagedListAsync(pageIndex , pageSize , 0 , cancellationToken);
+                return query.Select(selector).ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
             }
         }
 
@@ -351,35 +351,35 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="ignoreQueryFilters">Ignore query filters</param>
         /// <returns>An <see cref="IPagedList{TEntity}"/> that contains elements that satisfy the condition specified by <paramref name="predicate"/>.</returns>
         /// <remarks>This method default no-tracking query.</remarks>
-        public virtual TEntity GetFirstOrDefault(Expression<Func<TEntity , bool>> predicate = null ,
-                                         Func<IQueryable<TEntity> , IOrderedQueryable<TEntity>> orderBy = null ,
-                                         Func<IQueryable<TEntity> , IIncludableQueryable<TEntity , object>> include = null ,
-                                         bool disableTracking = true ,
+        public virtual TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> predicate = null,
+                                         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                         bool disableTracking = true,
                                          bool ignoreQueryFilters = false)
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if ( disableTracking )
+            if (disableTracking)
             {
                 query = query.AsNoTracking();
             }
 
-            if ( include != null )
+            if (include != null)
             {
                 query = include(query);
             }
 
-            if ( predicate != null )
+            if (predicate != null)
             {
                 query = query.Where(predicate);
             }
 
-            if ( ignoreQueryFilters )
+            if (ignoreQueryFilters)
             {
                 query = query.IgnoreQueryFilters();
             }
 
-            if ( orderBy != null )
+            if (orderBy != null)
             {
                 return orderBy(query).FirstOrDefault();
             }
@@ -391,35 +391,35 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
 
 
         /// <inheritdoc />
-        public virtual async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity , bool>> predicate = null ,
-            Func<IQueryable<TEntity> , IOrderedQueryable<TEntity>> orderBy = null ,
-            Func<IQueryable<TEntity> , IIncludableQueryable<TEntity , object>> include = null ,
-            bool disableTracking = true ,
+        public virtual async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+            bool disableTracking = true,
             bool ignoreQueryFilters = false)
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if ( disableTracking )
+            if (disableTracking)
             {
                 query = query.AsNoTracking();
             }
 
-            if ( include != null )
+            if (include != null)
             {
                 query = include(query);
             }
 
-            if ( predicate != null )
+            if (predicate != null)
             {
                 query = query.Where(predicate);
             }
 
-            if ( ignoreQueryFilters )
+            if (ignoreQueryFilters)
             {
                 query = query.IgnoreQueryFilters();
             }
 
-            if ( orderBy != null )
+            if (orderBy != null)
             {
                 return await orderBy(query).FirstOrDefaultAsync();
             }
@@ -440,36 +440,36 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="ignoreQueryFilters">Ignore query filters</param>
         /// <returns>An <see cref="IPagedList{TEntity}"/> that contains elements that satisfy the condition specified by <paramref name="predicate"/>.</returns>
         /// <remarks>This method default no-tracking query.</remarks>
-        public virtual TResult GetFirstOrDefaultEx<TResult>(Expression<Func<TEntity , TResult>> selector ,
-                                                  Expression<Func<TEntity , bool>> predicate = null ,
-                                                  Func<IQueryable<TEntity> , IOrderedQueryable<TEntity>> orderBy = null ,
-                                                  Func<IQueryable<TEntity> , IIncludableQueryable<TEntity , object>> include = null ,
-                                                  bool disableTracking = true ,
+        public virtual TResult GetFirstOrDefaultEx<TResult>(Expression<Func<TEntity, TResult>> selector,
+                                                  Expression<Func<TEntity, bool>> predicate = null,
+                                                  Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                                  Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                                  bool disableTracking = true,
                                                   bool ignoreQueryFilters = false)
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if ( disableTracking )
+            if (disableTracking)
             {
                 query = query.AsNoTracking();
             }
 
-            if ( include != null )
+            if (include != null)
             {
                 query = include(query);
             }
 
-            if ( predicate != null )
+            if (predicate != null)
             {
                 query = query.Where(predicate);
             }
 
-            if ( ignoreQueryFilters )
+            if (ignoreQueryFilters)
             {
                 query = query.IgnoreQueryFilters();
             }
 
-            if ( orderBy != null )
+            if (orderBy != null)
             {
                 return orderBy(query).Select(selector).FirstOrDefault();
             }
@@ -480,35 +480,35 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         }
 
         /// <inheritdoc />
-        public virtual async Task<TResult> GetFirstOrDefaultExAsync<TResult>(Expression<Func<TEntity , TResult>> selector ,
-                                                  Expression<Func<TEntity , bool>> predicate = null ,
-                                                  Func<IQueryable<TEntity> , IOrderedQueryable<TEntity>> orderBy = null ,
-                                                  Func<IQueryable<TEntity> , IIncludableQueryable<TEntity , object>> include = null ,
-                                                  bool disableTracking = true , bool ignoreQueryFilters = false)
+        public virtual async Task<TResult> GetFirstOrDefaultExAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
+                                                  Expression<Func<TEntity, bool>> predicate = null,
+                                                  Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                                  Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                                  bool disableTracking = true, bool ignoreQueryFilters = false)
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if ( disableTracking )
+            if (disableTracking)
             {
                 query = query.AsNoTracking();
             }
 
-            if ( include != null )
+            if (include != null)
             {
                 query = include(query);
             }
 
-            if ( predicate != null )
+            if (predicate != null)
             {
                 query = query.Where(predicate);
             }
 
-            if ( ignoreQueryFilters )
+            if (ignoreQueryFilters)
             {
                 query = query.IgnoreQueryFilters();
             }
 
-            if ( orderBy != null )
+            if (orderBy != null)
             {
                 return await orderBy(query).Select(selector).FirstOrDefaultAsync();
             }
@@ -524,7 +524,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="sql">The raw SQL.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>An <see cref="IQueryable{TEntity}" /> that contains elements that satisfy the condition specified by raw SQL.</returns>
-        public virtual IQueryable<TEntity> FromSql(string sql , params object[] parameters) => _dbSet.FromSqlRaw(sql , parameters);
+        public virtual IQueryable<TEntity> FromSql(string sql, params object[] parameters) => _dbSet.FromSqlRaw(sql, parameters);
 
         /// <summary>
         /// Finds an entity with the given primary key values. If found, is attached to the context and returned. If no entity is found, then null is returned.
@@ -546,16 +546,16 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="keyValues">The values of the primary key for the entity to be found.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
         /// <returns>A <see cref="Task{TEntity}"/> that represents the asynchronous find operation. The task result contains the found entity or null.</returns>
-        public virtual ValueTask<TEntity> FindAsync(object[] keyValues , CancellationToken cancellationToken) => _dbSet.FindAsync(keyValues , cancellationToken);
+        public virtual ValueTask<TEntity> FindAsync(object[] keyValues, CancellationToken cancellationToken) => _dbSet.FindAsync(keyValues, cancellationToken);
 
         /// <summary>
         /// Gets the count based on a predicate.
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public virtual int Count(Expression<Func<TEntity , bool>> predicate = null)
+        public virtual int Count(Expression<Func<TEntity, bool>> predicate = null)
         {
-            if ( predicate == null )
+            if (predicate == null)
             {
                 return _dbSet.Count();
             }
@@ -570,9 +570,9 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public bool Exists(Expression<Func<TEntity , bool>> predicate = null)
+        public bool Exists(Expression<Func<TEntity, bool>> predicate = null)
         {
-            if ( predicate == null )
+            if (predicate == null)
             {
                 return _dbSet.Any();
             }
@@ -620,9 +620,9 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="entity">The entity to insert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
         /// <returns>A <see cref="Task"/> that represents the asynchronous insert operation.</returns>
-        public virtual ValueTask<EntityEntry<TEntity>> InsertAsync(TEntity entity , CancellationToken cancellationToken = default(CancellationToken))
+        public virtual ValueTask<EntityEntry<TEntity>> InsertAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var ValueTaskResult = _dbSet.AddAsync(entity , cancellationToken);
+            var ValueTaskResult = _dbSet.AddAsync(entity, cancellationToken);
             Commit();
             return ValueTaskResult;
             // Shadow properties?
@@ -650,9 +650,9 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="entities">The entities to insert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
         /// <returns>A <see cref="Task"/> that represents the asynchronous insert operation.</returns>
-        public virtual Task InsertAsync(IEnumerable<TEntity> entities , CancellationToken cancellationToken = default(CancellationToken))
+        public virtual Task InsertAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Task result = _dbSet.AddRangeAsync(entities , cancellationToken);
+            Task result = _dbSet.AddRangeAsync(entities, cancellationToken);
             Commit();
             return result;
         }
@@ -665,14 +665,14 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         {
             var dbEntityEntry = _dbContext.Entry(entity);
             var OriginalValues = dbEntityEntry.GetDatabaseValues();
-            foreach ( var property in OriginalValues.Properties )
+            foreach (var property in OriginalValues.Properties)
             {
-                if ( property.PropertyInfo is null )
+                if (property.PropertyInfo is null)
                     continue;
                 var original = property.PropertyInfo.GetValue(OriginalValues.ToObject());
                 var current = property.PropertyInfo.GetValue(entity);
                 //dbEntityEntry.CurrentValues.Properties.FirstOrDefault(p => p.Name == property.Name)?.PropertyInfo.GetValue(dbEntityEntry.CurrentValues.ToObject());
-                if ( original != null && current != null && !original.Equals(current) )
+                if (original != null && current != null && !original.Equals(current))
                 {
                     dbEntityEntry.Property(property.Name).IsModified = true;
                 }
@@ -686,10 +686,10 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="entity"></param>
         /// <param name="property"></param>
         /// <returns></returns>
-        public void UpdateSpecifiedField(TEntity entity , params Expression<Func<TEntity , object>>[] property)
+        public void UpdateSpecifiedField(TEntity entity, params Expression<Func<TEntity, object>>[] property)
         {
             var dbEntityEntry = _dbContext.Entry(entity);
-            foreach ( var item in property )
+            foreach (var item in property)
             {
                 var propName = GetFieldNameByLambda(item.Body);
                 dbEntityEntry.Property(propName).IsModified = true;
@@ -701,17 +701,17 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         private string GetFieldNameByLambda(Expression exprBody)
         {
             var property = "";
-            if ( exprBody is UnaryExpression )
+            if (exprBody is UnaryExpression)
             {
-                property = ( ( MemberExpression ) ( ( UnaryExpression ) exprBody ).Operand ).Member.Name;
+                property = ((MemberExpression)((UnaryExpression)exprBody).Operand).Member.Name;
             }
-            else if ( exprBody is MemberExpression )
+            else if (exprBody is MemberExpression)
             {
-                property = ( ( MemberExpression ) exprBody ).Member.Name;
+                property = ((MemberExpression)exprBody).Member.Name;
             }
-            else if ( exprBody is ParameterExpression )
+            else if (exprBody is ParameterExpression)
             {
-                property = ( ( ParameterExpression ) exprBody ).Type.Name;
+                property = ((ParameterExpression)exprBody).Type.Name;
             }
             return property;
         }
@@ -766,16 +766,16 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
             var typeInfo = typeof(TEntity).GetTypeInfo();
             var key = _dbContext.Model.FindEntityType(typeInfo).FindPrimaryKey().Properties.FirstOrDefault();
             var property = typeInfo.GetProperty(key?.Name);
-            if ( property != null )
+            if (property != null)
             {
                 var entity = Activator.CreateInstance<TEntity>();
-                property.SetValue(entity , id);
+                property.SetValue(entity, id);
                 _dbContext.Entry(entity).State = EntityState.Deleted;
             }
             else
             {
                 var entity = _dbSet.Find(id);
-                if ( entity != null )
+                if (entity != null)
                 {
                     _dbSet.Remove(entity);
                 }
@@ -822,34 +822,34 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="ignoreQueryFilters">Ignore query filters</param>
         /// <returns>An <see cref="IPagedList{TEntity}"/> that contains elements that satisfy the condition specified by <paramref name="predicate"/>.</returns>
         /// <remarks>Ex: This method defaults to a read-only, no-tracking query.</remarks>
-        public async Task<IList<TEntity>> GetAllAsync(Expression<Func<TEntity , bool>> predicate = null ,
-            Func<IQueryable<TEntity> , IOrderedQueryable<TEntity>> orderBy = null ,
-            Func<IQueryable<TEntity> , IIncludableQueryable<TEntity , object>> include = null ,
-            bool disableTracking = true , bool ignoreQueryFilters = false)
+        public async Task<IList<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+            bool disableTracking = true, bool ignoreQueryFilters = false)
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if ( disableTracking )
+            if (disableTracking)
             {
                 query = query.AsNoTracking();
             }
 
-            if ( include != null )
+            if (include != null)
             {
                 query = include(query);
             }
 
-            if ( predicate != null )
+            if (predicate != null)
             {
                 query = query.Where(predicate);
             }
 
-            if ( ignoreQueryFilters )
+            if (ignoreQueryFilters)
             {
                 query = query.IgnoreQueryFilters();
             }
 
-            if ( orderBy != null )
+            if (orderBy != null)
             {
                 return await orderBy(query).ToListAsync();
             }
@@ -870,88 +870,88 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
 
         public void BulkInsert(IEnumerable<TEntity> entities)
         {
-            _dbContext.BulkInsert(entities , options =>
-            {
-                options.InsertIfNotExists = true;
-                options.BatchSize = 100;
-                options.AutoMapOutputDirection = false;
-            });
+            _dbContext.BulkInsert(entities, options =>
+           {
+               options.InsertIfNotExists = true;
+               options.BatchSize = 100;
+               options.AutoMapOutputDirection = false;
+           });
         }
 
         public async Task BulkInsertAsync(IEnumerable<TEntity> entities)
         {
-            await _dbContext.BulkInsertAsync(entities , options =>
-        {
-            options.InsertIfNotExists = true;
-            options.BatchSize = 100;
-            options.AutoMapOutputDirection = false;
-        });
+            await _dbContext.BulkInsertAsync(entities, options =>
+       {
+           options.InsertIfNotExists = true;
+           options.BatchSize = 100;
+           options.AutoMapOutputDirection = false;
+       });
         }
 
 
         public void BulkDelete(IEnumerable<TEntity> entities)
         {
-            _dbContext.BulkDelete(entities , options =>
+            _dbContext.BulkDelete(entities, options =>
+          {
+              options.BatchSize = 1000;
+              options.AutoMapOutputDirection = false;
+          });
+        }
+
+        public async Task BulkDeleteAsync(IEnumerable<TEntity> entities)
+        {
+            await _dbContext.BulkDeleteAsync(entities, options =>
            {
                options.BatchSize = 1000;
                options.AutoMapOutputDirection = false;
            });
         }
 
-        public async Task BulkDeleteAsync(IEnumerable<TEntity> entities)
-        {
-            await _dbContext.BulkDeleteAsync(entities , options =>
-            {
-                options.BatchSize = 1000;
-                options.AutoMapOutputDirection = false;
-            });
-        }
-
         public void BulkUpdate(IEnumerable<TEntity> entities)
         {
-            _dbContext.BulkUpdate(entities , options =>
-            {
-                options.BatchSize = 100;
-                options.AutoMapOutputDirection = false;
-            });
+            _dbContext.BulkUpdate(entities, options =>
+           {
+               options.BatchSize = 100;
+               options.AutoMapOutputDirection = false;
+           });
         }
 
         public async Task BulkUpdateAsync(IEnumerable<TEntity> entities)
         {
-            await _dbContext.BulkUpdateAsync(entities , options =>
-            {
-                options.BatchSize = 100;
-                options.AutoMapOutputDirection = false;
-            });
+            await _dbContext.BulkUpdateAsync(entities, options =>
+           {
+               options.BatchSize = 100;
+               options.AutoMapOutputDirection = false;
+           });
         }
 
-        public void BulkDelete(Expression<Func<TEntity , bool>> predicate)
+        public void BulkDelete(Expression<Func<TEntity, bool>> predicate)
         {
-            if ( predicate is null )
+            if (predicate is null)
             {
                 throw new ArgumentNullException($"{nameof(predicate)} is null");
             }
 
             var entities = GetAll(predicate);
-            _dbContext.BulkDelete(entities , options =>
-            {
-                options.BatchSize = 1000;
-                options.AutoMapOutputDirection = false;
-            });
+            _dbContext.BulkDelete(entities, options =>
+           {
+               options.BatchSize = 1000;
+               options.AutoMapOutputDirection = false;
+           });
         }
 
-        public async Task BulkDeleteAsync(Expression<Func<TEntity , bool>> predicate)
+        public async Task BulkDeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            if ( predicate is null )
+            if (predicate is null)
             {
                 throw new ArgumentNullException($"{nameof(predicate)} is null");
             }
             var entities = GetAll(predicate);
-            await _dbContext.BulkDeleteAsync(entities , options =>
-            {
-                options.BatchSize = 1000;
-                options.AutoMapOutputDirection = false;
-            });
+            await _dbContext.BulkDeleteAsync(entities, options =>
+           {
+               options.BatchSize = 1000;
+               options.AutoMapOutputDirection = false;
+           });
         }
 
 
@@ -960,52 +960,50 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
 
         #region FromSql
 
-        private static readonly Dictionary<Type , PropertyInfo[]> TempEntityPropertiesDic = new Dictionary<Type , PropertyInfo[]>();
+        private static readonly Dictionary<Type, PropertyInfo[]> TempEntityPropertiesDic = new Dictionary<Type, PropertyInfo[]>();
         /// <summary>
         /// Read entity list by reader
         /// </summary>
         /// <typeparam name="T">entity</typeparam>
         /// <param name="reader">data reader</param>
         /// <returns>entity</returns>
-        public async Task<IEnumerable<T>> QueryDataFromSql<T>(string sql , params DbParameter[] parameters) where T:class,new()
+        public async Task<IEnumerable<T>> QueryDataFromSql<T>(string sql, params DbParameter[] parameters) where T : class, new()
         {
             using DbConnection connection = _dbContext.Database.GetDbConnection();
             connection.Open();
             DbCommand cmd = connection.CreateCommand();
             cmd.CommandText = sql;
-            if( parameters!=null&&parameters.Any())
-            cmd.Parameters.AddRange(parameters);
+            if (parameters != null && parameters.Any())
+                cmd.Parameters.AddRange(parameters);
             using var reader = await cmd.ExecuteReaderAsync();
             List<T> listT = new List<T>();
-            if ( !TempEntityPropertiesDic.TryGetValue(typeof(T) , out PropertyInfo[] propertyInfos) )
+            if (!TempEntityPropertiesDic.TryGetValue(typeof(T), out PropertyInfo[] propertyInfos))
             {
-                propertyInfos = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(p=>!p.IsDefined(typeof(NotMappedAttribute),false)).ToArray();
+                propertyInfos = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(p => !p.IsDefined(typeof(NotMappedAttribute), false)).ToArray();
             }
-            while ( await reader.ReadAsync() )
+            while (await reader.ReadAsync())
             {
                 T tempEntity = Activator.CreateInstance<T>();
-                foreach ( var prop in propertyInfos )
+                foreach (var prop in propertyInfos)
                 {
                     var obj = reader[prop.Name];
-                    prop.SetValue(tempEntity , obj is DBNull ? null : obj);
+                    prop.SetValue(tempEntity, obj is DBNull ? null : obj);
                 }
                 listT.Add(tempEntity);
             }
             return listT;
         }
 
-
-
-        public async Task<T> ExecuteScalarAsync<T>(string sql , params DbParameter[] parameters) 
+        public async Task<T> ExecuteScalarAsync<T>(string sql, params DbParameter[] parameters)
         {
             using DbConnection connection = _dbContext.Database.GetDbConnection();
             connection.Open();
             DbCommand cmd = connection.CreateCommand();
             cmd.CommandText = sql;
-            if ( parameters != null && parameters.Any() )
+            if (parameters != null && parameters.Any())
                 cmd.Parameters.AddRange(parameters);
             using var reader = await cmd.ExecuteReaderAsync();
-            if ( await reader.ReadAsync() )
+            if (await reader.ReadAsync())
             {
                 return (T)reader[0];
             }
@@ -1014,13 +1012,66 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
 
         public async Task<bool> ExecuteSqlCmdAsync(string sql, params DbParameter[] parameters)
         {
-          return await _dbContext.Database.ExecuteSqlRawAsync(sql, parameters) >0;
+            return await _dbContext.Database.ExecuteSqlRawAsync(sql, parameters) > 0;
         }
 
         public bool ExecuteSqlCmd(string sql, params DbParameter[] parameters)
         {
-            return  _dbContext.Database.ExecuteSqlRaw(sql, parameters) > 0;
+            return _dbContext.Database.ExecuteSqlRaw(sql, parameters) > 0;
         }
+
+
+        public bool LogicDelete(string Id, string oprationId="")
+        {
+            var sql = BuildDeleteSql(Id, oprationId, -1);
+            return _dbContext.Database.ExecuteSqlRaw(sql) > 0;
+        }
+
+        public async Task<bool> LogicDeleteAsync(string Id, string oprationId = "")
+        {
+         
+            var sql = BuildDeleteSql(Id,oprationId,-1);
+            return await _dbContext.Database.ExecuteSqlRawAsync(sql) > 0;
+        }
+
+        public bool LogicRecovery(string Id, string oprationId = "")
+        {
+
+            var sql = BuildDeleteSql(Id, oprationId, 0);
+            return _dbContext.Database.ExecuteSqlRaw(sql) > 0;
+        }
+
+        public async Task<bool> LogicRecoveryAsync(string Id, string oprationId = "")
+        {
+            var sql = BuildDeleteSql(Id, oprationId, 0);
+            return await  _dbContext.Database.ExecuteSqlRawAsync(sql) > 0;
+        }
+
         #endregion
+
+        readonly Dictionary<string, string> EntityTableNames = new Dictionary<string, string>();
+     
+        string BuildDeleteSql(string Id, string oprationId,int Status)
+        {
+            var TableName = GetTableName();
+            if(!string.IsNullOrWhiteSpace(oprationId))
+            return $"update {TableName}  set Status={Status},  LastModifyDate =now(),  CreatorId='{oprationId}' where Id= '{Id}'";
+            else
+            return $"update {TableName}  set Status={Status},  LastModifyDate =now() where Id= '{Id}'";
+
+        }
+
+        string GetTableName()
+        {
+            var type = typeof(TEntity);
+            if (EntityTableNames.TryGetValue(type.FullName, out string TableName))
+                return TableName;
+            else
+            {
+                var tableName = type.IsDefined(typeof(TableAttribute), true) ? type.GetCustomAttribute<TableAttribute>().Name : type.Name;
+                EntityTableNames.Add(type.FullName, tableName);
+                return tableName;
+            }
+        }
     }
 }

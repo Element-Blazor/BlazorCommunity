@@ -15,7 +15,7 @@ namespace Blazui.Community.Utility.Extensions
         /// <returns></returns>
         public static bool CompareByReadOnlySpan( this Stream newStream , Stream targetStream)
         {
-            const int BYTES_TO_READ = 1024 * 10;
+            const int BYTES_TO_READ = 1024 ;
 
             //using ( FileStream fs1 = System.IO.File.Open(file1 , FileMode.Open) )
             //using ( FileStream fs2 = System.IO.File.Open(file2 , FileMode.Open) )

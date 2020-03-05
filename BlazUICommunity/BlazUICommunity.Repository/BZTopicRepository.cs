@@ -24,7 +24,7 @@ namespace Blazui.Community.Repository
         /// <param name="replyId"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<int> PageIndexOfReply(int topicId , int replyId , int pageSize = 20)
+        public async Task<int> PageIndexOfReply(string topicId , string replyId , int pageSize = 20)
         {
             string exeSql = $"select CAST(tt.rn AS CHAR   ) AS rn from (select t.topicid,t.id,row_number() over (order by id) rn  from `reply` t where t.topicid=@topicId) tt    where tt.id =@replyId";
             DbParameter sqlTopicIdParameter = new MySqlParameter("topicId" , topicId);
@@ -48,10 +48,10 @@ namespace Blazui.Community.Repository
         /// </summary>
         /// <param name="topSize"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<BZTopicDtoWithUser>> QueryTops(int topSize)
+        public async Task<IEnumerable<BZTopicDto>> QueryTops(int topSize)
         {
-            string sql =$"select t1.*,t2.UserName,t2.NickName,t2.Avator from topic t1 left join aspnetusers t2 on t1.UserId=t2.id where t1.Top=1 and t1.`Status`=0 order by t1.PublishTime desc limit {topSize}";
-           return await QueryDataFromSql<BZTopicDtoWithUser>(sql);
+            string sql =$"select t1.*,t2.UserName,t2.NickName,t2.Avator from bztopic t1 left join bzuser t2 on t1.CreatorId=t2.id where t1.Top=1 and t1.`Status`=0 order by t1.CreateDate desc limit {topSize}";
+           return await QueryDataFromSql<BZTopicDto>(sql);
             
         }
         /// <summary>
@@ -59,10 +59,13 @@ namespace Blazui.Community.Repository
         /// </summary>
         /// <param name="topicId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<BZTopicDtoWithUser>> QueryTopById(int topicId)
+        public async Task<IEnumerable<BZTopicDto>> QueryTopById(string topicId)
         {
-            string sql = $"select t1.*,t2.UserName,t2.NickName,t2.Avator from topic t1 left join aspnetusers t2 on t1.UserId=t2.id where t1.Id={topicId} and t1.`Status`=0 ";
-            return await QueryDataFromSql<BZTopicDtoWithUser>(sql);
+            string sql = $"select t1.*,t2.UserName,t2.NickName,t2.Avator from bztopic t1 left join bzuser t2 on t1.CreatorId=t2.id where t1.Id=@topicId and t1.`Status`=0 ";
+
+            MySqlParameter mySqlParameter = new MySqlParameter("topicId", topicId);
+
+            return await QueryDataFromSql<BZTopicDto>(sql, mySqlParameter);
 
         }
     }

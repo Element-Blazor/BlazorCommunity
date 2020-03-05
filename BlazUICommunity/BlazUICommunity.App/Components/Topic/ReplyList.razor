@@ -1,0 +1,28 @@
+﻿@inherits ReplyListBase
+
+
+@if (Replys.Count > 0)
+{
+    foreach (var reply in Replys)
+    {
+        Console.WriteLine(reply.Content);
+        <ReplyItem ReplyModel="reply" EnableAlwaysRender="true" OnDeleted="e=>DeleteRep(reply.Id)" OnEdit="e=>EditReply(reply)"> </ReplyItem>
+    }
+    <div class="el-table__column-resize-proxy" style="display: none;"></div>
+    @if (Math.Ceiling((float)Total / PageSize) > 1 || !NoPaginationOnSinglePage)
+    {
+        <div class="topic-pagination">
+            <BPagination Total="Total" ShowPageCount="ShowPageCount" PageSize="PageSize" CurrentPageChanged="CurrentPageChangedAsync"></BPagination>
+        </div>
+    }
+}
+else
+{
+    <div class="el-table__empty-block" style="height:60px;">
+        <span class="el-table__empty-text">
+            消灭零回复
+        </span>
+    </div>
+}
+
+<ReplyNow EnableAlwaysRender="true" TopicId="@TopicId" OnReplySuccess="OnReplySuccess"></ReplyNow>

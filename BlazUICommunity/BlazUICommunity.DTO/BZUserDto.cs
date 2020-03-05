@@ -1,52 +1,52 @@
-﻿using System;
+﻿using Blazui.Community.Enums;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blazui.Community.DTO
 {
-    public class BZUserDto
+    public  class BZUserDto 
     {
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Id { get; set; }
+        [NotMapped]
+        public string SexDisplay {
 
-        /// <summary>
-        /// 用户账号
-        /// </summary>
-        [StringLength(20)]
-        public string Account { get; set; }
+            get
+            {
+
+                return Sex == 0 ? "男" : "女";
+            }
+        }
         /// <summary>
         /// 昵称
         /// </summary>
         [StringLength(50)]
         public string NickName { get; set; }
-        /// <summary>
-        /// 手机号码-11位
-        /// </summary>
-        [StringLength(11)]
-        public string Mobile { get; set; }
+
         /// <summary>
         /// 头像
         /// </summary>
 
-        public string Avator { get; set; }
+        public string Avator { get; set; } = "";
+
         /// <summary>
         /// 性别0 男，1女，2呃...
         /// </summary>
 
-        public int? Sex { get; set; }
+        public int Sex { get; set; } = 0;
         /// <summary>
         /// 座右铭
         /// </summary>
         public string Signature { get; set; }
-        /// <summary>
-        /// 注册日期
-        /// </summary>
-        public DateTime RegisterDate { get; set; }
-        /// <summary>
-        /// 状态0正常，-1已禁用
-        /// </summary>
-        public int? Status { get; set; }
+
         /// <summary>
         /// 等级
         /// </summary>
-        public int? Level { get; set; }
+        public int Level { get; set; } = 0;
         /// <summary>
         /// 积分
         /// </summary>
@@ -62,82 +62,35 @@ namespace Blazui.Community.DTO
         /// <summary>
         /// 最后登录位置,具体位置，或Ip地址
         /// </summary>
-#nullable enable
-        public string? LastLoginAddr { get; set; }
-#nullable disable
-
-    }
+        public string LastLoginAddr { get; set; } = "";
 
 
 
-
-
-
-    public partial class BZUserUIDto
-    {
-        public string UserName { get; set; }
-        public int Id { get; set; }
-
-        public string NickName { get; set; }
         /// <summary>
-        /// 手机号码-11位
+        /// 状态0正常，-1已禁用
         /// </summary>
-        [StringLength(11)]
-        public string PhoneNumber { get; set; }
+        public int Status { get; set; } = 0;
         /// <summary>
-        /// 头像
+        /// 创建时间
         /// </summary>
-
-        public string Avator { get; set; }
+        public DateTime CreateDate { get; set; }
         /// <summary>
-        /// 邮箱
+        /// 修改时间
         /// </summary>
-#nullable enable
-        public string? Email { get; set; }
-#nullable disable
+        public DateTime? LastModifyDate { get; set; }
         /// <summary>
-        /// 性别0 男，1女，2呃...
+        /// 最后操作人
         /// </summary>
+        public string CreatorId { get; set; }
 
-        public int? Sex { get; set; }
+        public string? LastModifierId { get; set; }
 
-        public string SexDisplay
-        {
-            get
-            {
-                return Sex switch
-                {
-                    0 => "男",
-                    1 => "女",
-                    _ => "人妖"
-                };
-            }
-        }
-        /// <summary>
-        /// 座右铭
-        /// </summary>
-        public string Signature { get; set; }
-        /// <summary>
-        /// 最后登录位置,具体位置，或Ip地址
-        /// </summary>
-#nullable enable
-        public string? LastLoginAddr { get; set; }
-#nullable disable
-        public DateTime? RegisterDate { get; set; }
-
-        public DateTime? LastLoginDate { get; set; }
-
-        public int Status { get; set; }
+        [NotMapped]
         public string StatusDisplay
         {
             get
             {
-                return Status switch
-                {
-                    0 => "正常",
-                    -1 => "禁用",
-                    _ => "正常"
-                };
+                return ((DelStatus)Status).Description();
             }
         }
     }

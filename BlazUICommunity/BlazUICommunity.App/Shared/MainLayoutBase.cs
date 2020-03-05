@@ -22,29 +22,9 @@ namespace Blazui.Community.App.Shared
         protected BLayout Blayout { get; set; }
         protected AppHeader Appheader { get; set; }
         protected BCard Bcard { get; set; }
-
-        //protected override async Task OnParametersSetAsync()
-        //{
-        //    try
-        //    {
-        //        await base.OnParametersSetAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine("OnParametersSetAsync" + ex.Message);
-        //    }
-        //}
-        //protected override async Task OnInitializedAsync()
-        //{
-        //    try
-        //    {
-        //        await base.OnInitializedAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine("OnInitializedAsync" + ex.Message);
-        //    }
-        //}
+        [Parameter]
+        public RenderFragment ChildContent { get; set; }
+    
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             try

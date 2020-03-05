@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Blazui.Community.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blazui.Community.DTO
 {
-    public partial class BZTopicDto
+    public class BZTopicDto : BaseDto
     {
 
-        public int Id { get; set; }
 
         /// <summary>
         /// 标题
@@ -19,76 +19,37 @@ namespace Blazui.Community.DTO
         /// 内容
         /// </summary>
         public string Content { get; set; }
-        /// <summary>
-        /// 发布时间
-        /// </summary>
-        public DateTime PublishTime { get; set; }
-        /// <summary>
-        /// 修改时间
-        /// </summary>
-        public DateTime? ModifyTime { get; set; }
-        /// <summary>
-        /// 发帖人ID
-        /// </summary>
-        public int UserId { get; set; }
-        /// <summary>
-        /// 状态 0正常，-1 删除，1已结帖
-        /// </summary>
-        public int? Status { get; set; }
+
         /// <summary>
         /// 人气--浏览量
         /// </summary>
-        public int? Hot { get; set; }
+        public int Hot { get; set; }
         /// <summary>
         /// 是否置顶0否-1置顶
         /// </summary>
-        public int? Top { get; set; }
+        public int Top { get; set; }
         /// <summary>
         /// 是否精华帖0否，1-是
         /// </summary>
-        public int? Good { get; set; }
+        public int Good { get; set; }
         /// <summary>
         /// 主题帖类型 0：提问，1：分享，2：讨论，3：建议，4：公告
         /// </summary>
-        public int? TopicType { get; set; }
+        public int Category { get; set; }
         /// <summary>
         /// 回帖数量
         /// </summary>
-        public int? ReplyCount { get; set; }
+        public int ReplyCount { get; set; }
         /// <summary>
-        /// 
+        /// 版本Id
         /// </summary>
-        public int? versionId { get; set; }
-    }
+        public string VersionId { get; set; }
 
-    public class BZTopicDtoWithUser : BZTopicDto
-    {
-        /// <summary>
-        /// 用户名称
-        /// </summary>
+
         public string UserName { get; set; }
-        /// <summary>
-        /// 用户昵称
-        /// </summary>
-        public string NickName { get; set; }
-        
-        /// <summary>
-        /// 头像
-        /// </summary>
+
         public string Avator { get; set; }
-        [NotMapped]
-        public string StatusDisplay
-        {
-            get
-            {
-                return Status switch
-                {
-                    0 => "正常",
-                    -1 => "已删除",
-                    _ => "已结帖"
-                };
-            }
-        }
+        public string NickName { get; set; }
         [NotMapped]
         public string GoodDisplay
         {
@@ -98,22 +59,42 @@ namespace Blazui.Community.DTO
                 {
                     0 => "否",
                     1 => "是",
-                    _ => "否"
+                    _ => "Unkown"
                 };
             }
         }
         [NotMapped]
-        public string TopDisplay
-        {
+        public string TopDisplay {
             get
             {
                 return Top switch
                 {
                     0 => "否",
                     1 => "是",
-                    _ => "否"
+                    _ => "Unkown"
                 };
             }
         }
+        [NotMapped]
+        public string CategoryDisplay
+        {
+            get
+            {
+                return ((TopicCategory)Category).Description();
+            }
+        }
+        [NotMapped]
+        public string LastModifyTimeDisplay { get; set; }
+
+
+        [NotMapped]
+        public string VerName { get; set; }
+    }
+
+  public  class SeachTopicDto
+    {
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

@@ -16,14 +16,6 @@ namespace Blazui.Community.Model.Models
         [StringLength(1000)]
         public string Description { get; set; }
 
-        public byte Status { get; set; }
 
-        public DateTime CreateTime { get; set; }
-
-        public int CreateId { get; set; }
-
-        public DateTime? LastModifyTime { get; set; }
-
-        public int? LastModifierId { get; set; }
     }
 }

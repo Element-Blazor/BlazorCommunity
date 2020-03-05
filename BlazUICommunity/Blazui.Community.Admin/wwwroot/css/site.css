@@ -181,3 +181,11 @@ app {
         display: block;
     }
 }
+
+app > .el-dialog__wrapper  .el-form-item {
+    margin-bottom: 15px;
+}
+.admin-banner-img  .el-upload-list--picture .el-upload-list__item-thumbnail {
+    max-width:300px;
+    height:70px;
+}

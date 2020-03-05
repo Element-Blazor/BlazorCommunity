@@ -1,21 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
 using Arch.EntityFrameworkCore.UnitOfWork;
-using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
 using Blazui.Community.Utility.Filter;
-using log4net.Repository.Hierarchy;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace Blazui.Community.Api.Controllers
 {
-  //  [HiddenApi]
+    [HiddenApi]
     [Route("[controller]")]
     [ApiController]
     //[SwaggerTag(description: "测试")]
@@ -30,12 +23,20 @@ namespace Blazui.Community.Api.Controllers
             _bZTopicRepository = bZTopicRepository;
        }
 
+        [Authorize]
+        [HttpGet("Get1")]
+        [ResponseCache(VaryByHeader = "Accept-Encoding", Duration = 10)]
+        public IActionResult Get()
+        {
+            return Ok(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+        }
+
         [HttpGet]
-        public IActionResult Get(int repId,[FromServices] ILogger<TestController> logger)
+        public IActionResult Get(string repId,[FromServices] ILogger<TestController> logger)
         {
             logger.LogDebug("测试日志");
             //var repo = _unitOfWork.GetRepository<BZTopicModel>(true);
-            return Ok(_bZTopicRepository.PageIndexOfReply(1 , repId , 20).Result);
+            return Ok(_bZTopicRepository.PageIndexOfReply(Guid.NewGuid().ToString() , repId , 20).Result);
             //communityContext.Database.EnsureCreated();
             //BZUserModel bZUserModel = new BZUserModel()
             //{

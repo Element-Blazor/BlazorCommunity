@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using Blazui.Community.App.Service;
-using Blazui.Community.App.Shared;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
+using Blazui.Community.Utility.Response;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,9 @@ namespace Blazui.Community.App.Pages
 {
     public abstract class PageBase : BComponentBase
     {
-        public static string UploadHeadUrl= "api/upload/uploadavator";
 
-        public static string UploadTopicFileUrl = "api/upload/UploadFile";
+        [Inject]
+         IConfiguration Configuration { get; set; }
         [Inject]
         public ILogger<PageBase> _logger { get; set; }
         [Inject]
@@ -43,27 +44,25 @@ namespace Blazui.Community.App.Pages
         public UserManager<BZUserModel> userManager { get; set; }
         [Inject]
         public NavigationManager navigationManager { get; set; }
+        public string UploadUrl { get; protected set; }
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            UploadUrl =Configuration["ServerUrl"]+"/api/upload/";
+        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-        
-            await base.OnAfterRenderAsync(firstRender);
+            //await base.OnAfterRenderAsync(firstRender);
             if (!firstRender)
             {
                 return;
             }
             try
             {
-                LoadingService.Show(new LoadingOption()
-                {
-                    Background = "rgba(0, 0, 0, 0.1)",
-                    Text = "",
-                    IconClass = "el-icon-loading"
-                });
+             
                 await InitilizePageDataAsync();
-                LoadingService.CloseFullScreenLoading();
                 RequireRender = true;
-
                 StateHasChanged();
             }
             catch (Exception ex)
@@ -74,32 +73,11 @@ namespace Blazui.Community.App.Pages
             }
         }
 
-        //protected override async Task OnParametersSetAsync()
-        //{
-        //    try
-        //    {
-        //        await base.OnParametersSetAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine("OnParametersSetAsync" + ex.Message);
-        //    }
-        //}
-        //protected override async Task OnInitializedAsync()
-        //{
-        //    try
-        //    {
-        //        await base.OnInitializedAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine("OnInitializedAsync" + ex.Message);
-        //    }
-        //}
+      
 
 
         protected override bool ShouldRender() => true;
-       
+
         static readonly SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
         protected virtual async Task<BZUserModel> GetUser()
         {
@@ -119,17 +97,7 @@ namespace Blazui.Community.App.Pages
             }
 
         }
-        protected async Task<List<BZVersionModel>> QueryVersions()
-        {
-            return await memoryCache.GetOrCreateAsync("Version", async p =>
-            {
-                p.SetSlidingExpiration(TimeSpan.FromMinutes(10));
-                var result= await NetService.GetAllVersions();
-                if (result.IsSuccess)
-                    return result.Data;
-                else return new List<BZVersionModel>();
-            });
-        }
+
 
         private async Task<BZUserModel> QueryUser()
         {
@@ -144,11 +112,10 @@ namespace Blazui.Community.App.Pages
             }
             else return null;
         }
-        protected virtual Task InitilizePageDataAsync() {
-         
-            return Task.CompletedTask;
-        }
-     protected void ToastError(string message="操作失败")
+
+
+        protected virtual Task InitilizePageDataAsync() => Task.CompletedTask;
+        protected void ToastError(string message = "操作失败")
         {
             MessageService.Show(message, MessageType.Error);
         }
@@ -163,6 +130,59 @@ namespace Blazui.Community.App.Pages
         protected void ToastWarning(string message = "警告消息")
         {
             MessageService.Show(message, MessageType.Warning);
+        }
+
+
+        protected async Task WithFullScreenLoading(Func<Task> action)
+        {
+            LoadingService.Show(new LoadingOption()
+            {
+                Background = "rgba(0, 0, 0, 0.1)",
+                Text = "",
+                IconClass = "el-icon-loading"
+            });
+            await action();
+            LoadingService.CloseFullScreenLoading();
+        }
+
+        protected async Task WithFullScreenLoading(Func<Task> action,Action callback)
+        {
+            LoadingService.Show(new LoadingOption()
+            {
+                Background = "rgba(0, 0, 0, 0.1)",
+                Text = "",
+                IconClass = "el-icon-loading"
+            });
+            await action();
+            callback?.Invoke();
+            LoadingService.CloseFullScreenLoading();
+        }
+
+
+        public async Task WithFullScreenLoading(Func<Task<BaseResponse>> action, Action callback = null)
+        {
+            LoadingService.Show(new LoadingOption()
+            {
+                Background = "rgba(0, 0, 0, 0.1)",
+                Text = "",
+                IconClass = "el-icon-loading"
+            });
+            await action();
+            callback?.Invoke();
+            LoadingService.CloseFullScreenLoading();
+        }
+
+        public async Task WithFullScreenLoading(Func<Task<BaseResponse>> action, Action<BaseResponse> callback = null)
+        {
+            LoadingService.Show(new LoadingOption()
+            {
+                Background = "rgba(0, 0, 0, 0.1)",
+                Text = "",
+                IconClass = "el-icon-loading"
+            });
+           var result= await action();
+            callback?.Invoke(result);
+            LoadingService.CloseFullScreenLoading();
         }
     }
 }

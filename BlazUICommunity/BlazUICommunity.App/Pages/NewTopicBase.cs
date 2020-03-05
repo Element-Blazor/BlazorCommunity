@@ -1,6 +1,7 @@
 ﻿using Blazui.Community.App.Model;
 using Blazui.Community.App.Service;
 using Blazui.Community.DTO;
+using Blazui.Community.Enums;
 using Blazui.Community.Model.Models;
 using Blazui.Component;
 using Blazui.Component.EventArgs;
@@ -8,6 +9,7 @@ using Blazui.Component.Select;
 using Blazui.Markdown;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +21,11 @@ namespace Blazui.Community.App.Pages
     public partial class NewTopicBase : PageBase
     {
         internal BForm form;
-        internal ArticleModel article;
+        internal TopicFormModel article;
         protected BMarkdownEditor bMarkdownEditor;
-        protected TopicType _TopicType;
-        protected List<BZVersionModel> bZVersions;
-        protected BSelect<int> bSelect;
-        internal BSelect<int> bverNoSelect;
+        protected TopicCategory _TopicType;
+        protected List<BZVersionDto> bZVersions;
+        internal BSelect<string> bverNoSelect;
 
         protected override void OnInitialized()
         {
@@ -37,7 +38,7 @@ namespace Blazui.Community.App.Pages
             {
                 return;
             }
-            var article = form.GetValue<ArticleModel>();
+            var article = form.GetValue<TopicFormModel>();
             if (article is null)
             {
                 form.Toast("验证不通过");
@@ -51,35 +52,41 @@ namespace Blazui.Community.App.Pages
             await AddTopic(article);
         }
 
-        private async Task AddTopic(ArticleModel article)
+        private async Task AddTopic(TopicFormModel article)
         {
             var User = await GetUser();
+
             BZTopicDto bZTopicDto = new BZTopicDto()
             {
                 Content = article.Content,
+                Title = article.Title,
+                Category = (int)article.Category,
+                CreatorId= User.Id,
+                VersionId = bZVersions.FirstOrDefault(p=>p.VerNo== article.VerNo)?.Id,
+                LastModifyDate = DateTime.Now,
+                CreateDate = DateTime.Now,
                 Good = 0,
                 Hot = 0,
-                ModifyTime = DateTime.Now,
-                PublishTime = DateTime.Now,
                 ReplyCount = 0,
                 Status = 0,
-                Title = article.Title,
-                TopicType = (int)article.TopicType,
                 Top = 0,
-                UserId = User.Id,
-                versionId = (int)article.Project
+               
             };
-            var result = await NetService.AddTopic(bZTopicDto);
-            if (result.IsSuccess)
-            {
-                ToastSuccess("发布成功");
-                 await Task.Delay(1000);
-                navigationManager.NavigateTo("/", true);
-            }
-            else
-            {
-                ToastError($"发布失败{result.Message}");
-            }
+
+       await    WithFullScreenLoading(async ()=> {
+           var result = await NetService.AddTopic(bZTopicDto);
+
+           if (result.IsSuccess)
+           {
+               ToastSuccess("发布成功");
+               await Task.Delay(100);
+               navigationManager.NavigateTo($"/topic/{result.Data}");
+           }
+           else
+           {
+               ToastError($"发布失败{result.Message}");
+           }
+       });
         }
         protected async Task OnChange(ProjectType value)
         {
@@ -93,10 +100,9 @@ namespace Blazui.Community.App.Pages
 
         protected override async Task InitilizePageDataAsync()
         {
-            article = new ArticleModel() { Title = "", Content = "" };
 
+            article = new TopicFormModel() { Title = "", Content = "" };
             await LoadProjects(ProjectType.Blazui);
-            await Task.CompletedTask;
         }
 
         private async Task LoadProjects(ProjectType type)
@@ -104,7 +110,17 @@ namespace Blazui.Community.App.Pages
             var resut = await QueryVersions();
             bZVersions = resut.Where(p => p.Project == (int)type).ToList();
         }
-
+        protected async Task<List<BZVersionDto>> QueryVersions()
+        {
+            return await memoryCache.GetOrCreateAsync("Version", async p =>
+            {
+                p.SetSlidingExpiration(TimeSpan.FromMinutes(10));
+                var result = await NetService.GetAllVersions();
+                if (result.IsSuccess)
+                    return result.Data;
+                else return new List<BZVersionDto>();
+            });
+        }
         internal void GoHome()
         {
             navigationManager.NavigateTo("/");

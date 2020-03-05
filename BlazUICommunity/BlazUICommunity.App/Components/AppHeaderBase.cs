@@ -1,10 +1,6 @@
-﻿using Blazui.Community.App.Data;
-using Blazui.Community.App.Pages;
+﻿using Blazui.Community.App.Pages;
 using Blazui.Community.Model.Models;
-using Blazui.Component.NavMenu;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Shared
@@ -12,14 +8,10 @@ namespace Blazui.Community.App.Shared
     public class AppHeaderBase : PageBase
     {
 
-        protected bool IsLogin = false;
-        protected BZUserModel BzUser { get;private set; }
+        internal BZUserModel CurrentUser;
         protected override async Task InitilizePageDataAsync()
         {
-
-            BzUser = await GetUser();
-            IsLogin = BzUser != null;
-           
+            CurrentUser = await GetUser();
         }
       
         protected void NavigateToLogin()
@@ -33,16 +25,16 @@ namespace Blazui.Community.App.Shared
         }
         protected void NavigateToComponent()
         {
-            navigationManager.NavigateTo(ConstantUtil.ComponentUrl, forceLoad: true);
+            navigationManager.NavigateTo(Constant.ComponentUrl, forceLoad: true);
         }
         protected void NavigateToDemo()
         {
-            navigationManager.NavigateTo(ConstantUtil.DemoUrl, forceLoad: true);
+            navigationManager.NavigateTo(Constant.DemoUrl, forceLoad: true);
         }
         
         protected void NavigateToDoc()
         {
-            navigationManager.NavigateTo(ConstantUtil.DocsUrl, forceLoad: true);
+            navigationManager.NavigateTo(Constant.DocsUrl, forceLoad: true);
         }
         protected void GotoUCentor()
         {

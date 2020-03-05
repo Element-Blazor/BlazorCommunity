@@ -5,7 +5,7 @@ namespace Blazui.Community.Model.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("SysRoleMenuMapping")]
+    [Table("SysRoleMenu")]
     public partial class SysRoleMenuMappingModel : BaseModel
     {
 

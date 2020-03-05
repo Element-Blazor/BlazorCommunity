@@ -1,31 +1,28 @@
 ﻿@page "/"
 @inherits IndexBase
 <div class="content-container">
-    <BLayout EastWidth="350"  EnableAlwaysRender="true" @ref="blayout">
+    <BLayout EastWidth="350" EnableAlwaysRender="true" @ref="blayout">
         <Center>
             <BTab TabPosition="@TabPosition.Top" OnActiveTabChanged="ActiveTabChanged" EnableAlwaysRender="true" @ref="btab">
                 @foreach (var item in Tabs)
                 {
-                    <MainContent Title="@item.Title" TopicType="@item.TopicType" @ref="@item.main" EnableAlwaysRender="true"></MainContent>
+                    <MainContent Title="@item.Title" TopicType="@item.Category" EnableAlwaysRender="true"></MainContent>
                 }
             </BTab>
-           
         </Center>
-
         <East>
-
             <div class="margin-top-5" style="width:100%;">
-                <BLayout  NorthHeight="30">
+                <BLayout NorthHeight="30" EnableAlwaysRender="true">
                     <North>
                         <div class="newtopic">
-                            <BButton Type="@ButtonType.Success" OnClick="e=>NewTopic()" IsPlain="true" Size="@ButtonSize.Small"> 发表新帖 </BButton>
+                           <NewTopicAndSearch></NewTopicAndSearch>
                         </div>
                     </North>
                     <Center>
                         <div class="content-card" style="margin-top:14px;">
                             <BCard Shadow="@ShadowShowType.Never">
                                 <Body>
-                                    <ContentHot></ContentHot>
+                                    <RightTop></RightTop>
                                 </Body>
                             </BCard>
                         </div>
@@ -34,7 +31,14 @@
                         <div class="content-card margin-top-10">
                             <BCard Shadow="@ShadowShowType.Never">
                                 <Body>
-                                    <ContentFooter></ContentFooter>
+                                    <RightCenter></RightCenter>
+                                </Body>
+                            </BCard>
+                        </div>
+                        <div class="content-card margin-top-10">
+                            <BCard Shadow="@ShadowShowType.Never">
+                                <Body>
+                                    <RightBottom></RightBottom>
                                 </Body>
                             </BCard>
                         </div>

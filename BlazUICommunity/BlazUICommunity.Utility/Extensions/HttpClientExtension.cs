@@ -70,6 +70,7 @@ namespace Blazui.Community.Utility.Extensions
                 return default;
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(content);
             try
             {
                 return JsonConvert.DeserializeObject<T>(content);

@@ -14,10 +14,10 @@ namespace Blazui.Community.Api
 {
     public class Program
     {
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <param name="args"></param>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             new ConfigurationBuilder()
@@ -35,21 +35,8 @@ namespace Blazui.Community.Api
         /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            .ConfigureLogging((context , loggingBuilder) =>
-            {
-                //loggingBuilder.AddFilter("System" , LogLevel.Warning);
-                //loggingBuilder.AddFilter("Microsoft" , LogLevel.Warning);
-                //loggingBuilder.AddConsole();
-                //loggingBuilder.AddDebug();
-                //loggingBuilder.AddEventLog();
-                //loggingBuilder.AddLog4Net();// log4 ¼ÓÔØÅäÖÃÎÄ¼þ
-                //loggingBuilder.AddConfiguration()
-                loggingBuilder.AddNLog();
-            })
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                })
+            .ConfigureLogging((context, loggingBuilder) => loggingBuilder.AddNLog())
+            .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
              .UseServiceProviderFactory(new AutofacServiceProviderFactory());
     }
 }

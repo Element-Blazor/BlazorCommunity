@@ -30,18 +30,17 @@
     <ProjectReference Include="..\..\..\Blazui\src\Blazui.Component\Blazui.Component.csproj" />
     <ProjectReference Include="..\BlazUICommunity.Repository\Blazui.Community.Repository.csproj" />
     <ProjectReference Include="..\BlazUICommunity.Request\Blazui.Community.Request.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Components\User\" />
-    <Folder Include="wwwroot\img\header\" />
-    <Folder Include="wwwroot\img\topic\" />
+    <ProjectReference Include="..\BlazUICommunity.Utility\Blazui.Community.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="nlog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blazui.Community.Model.Models
 {
-    [Table("Topic")]
+    [Table("BZTopic")]
     public partial class BZTopicModel : BaseModel
     {
     
@@ -19,22 +19,7 @@ namespace Blazui.Community.Model.Models
         /// 内容
         /// </summary>
         public string Content { get; set; }
-        /// <summary>
-        /// 发布时间
-        /// </summary>
-        public DateTime PublishTime { get; set; }
-        /// <summary>
-        /// 修改时间
-        /// </summary>
-        public DateTime ModifyTime { get; set; }
-        /// <summary>
-        /// 发帖人ID
-        /// </summary>
-        public int UserId { get; set; }
-        /// <summary>
-        /// 状态 0正常，-1 删除，1已结帖
-        /// </summary>
-        public int Status { get; set; }
+ 
         /// <summary>
         /// 人气--浏览量
         /// </summary>
@@ -50,7 +35,7 @@ namespace Blazui.Community.Model.Models
         /// <summary>
         /// 主题帖类型 0：提问，1：分享，2：讨论，3：建议，4：公告
         /// </summary>
-        public int TopicType { get; set; }
+        public int Category { get; set; }
         /// <summary>
         /// 回帖数量
         /// </summary>
@@ -58,6 +43,11 @@ namespace Blazui.Community.Model.Models
         /// <summary>
         /// 版本Id
         /// </summary>
-        public int? versionId { get; set; }
+
+        [Column("VersionId", TypeName = "varchar(36)")]
+        public string VersionId { get; set; } = "";
+
+
+
     }
 }

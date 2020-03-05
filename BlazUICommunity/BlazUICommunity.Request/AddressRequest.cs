@@ -1,10 +1,6 @@
-﻿using Blazui.Community.Utility.Extensions;
-using Blazui.Community.Utility.Request;
-using System;
-
-namespace Blazui.Community.Request
+﻿namespace Blazui.Community.Request
 {
-    public class AddressRequest : BaseRequest
+    public class AddressRequest : BaseRequestCondition
     {
 
         /// <summary>

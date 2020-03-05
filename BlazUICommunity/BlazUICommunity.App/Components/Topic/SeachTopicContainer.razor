@@ -1,0 +1,35 @@
+﻿@inherits SeachTopicContainerBase
+
+<div class="el-center-500" style="margin-top:10px !important">
+    @foreach (var topic in Datas)
+    {
+    <div class="search-topic-item">
+        <div style="margin:10px;display:flex;">
+            <span style="color:#000">标题：</span>
+            <a href="#"  class="el-link el-link--default is-underline" @onclick="e=>ItemClick(topic.Id)">
+                <span class="el-link--inner">@topic.Title</span><!---->
+            </a>
+        </div>
+       
+        <span style="margin:10px;float:right;color:#909399">@topic.CreateDate.ToString("yyyy-MM-dd")</span>
+    </div>
+    }
+
+    @if (Datas.Count <= 0)
+    {
+        <div class="el-table__empty-block" style="height:60px;">
+            <span class="el-table__empty-text">
+                @(string.IsNullOrWhiteSpace(EmptyMessage) ? "没有查询到有用的结果" : EmptyMessage)
+            </span>
+        </div>
+    }
+    @if (Math.Ceiling((float)Total / PageSize) > 1 || !NoPaginationOnSinglePage)
+    {
+        <div style="margin-top:20px;margin-bottom:20px;text-align:right;">
+            <BPagination Total="Total" ShowPageCount="ShowPageCount" PageSize="PageSize" CurrentPageChanged="CurrentPageChangedAsync"></BPagination>
+        </div>
+    }
+</div>
+@code {
+
+}

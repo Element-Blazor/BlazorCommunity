@@ -8,7 +8,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blazui社区</title>
+    <meta name="referrer" content="no-referrer" />
+    <title>Blazui-Blazor开发者社区</title>
     <base href="~/" />
     <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/_content/Blazui.Markdown/css/editormd.min.css" rel="stylesheet" />
@@ -18,7 +19,8 @@
         <link href="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css" rel="stylesheet">*@
     <link href="~/css/codemirror.css" rel="stylesheet" />
     <link href="~/css/foldgutter.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/_content/Blazui.Component/css/index.css" />
+    @*<link rel="stylesheet" href="/_content/Blazui.Component/css/index.css" />*@
+    <link href="~/css/customize.css" rel="stylesheet" />
     <link rel="stylesheet" href="/_content/Blazui.Component/css/fix.css" />
     <link rel="stylesheet" href="~/iconfront/demo.css" />
     <link href="~/iconfront/iconfont.css" rel="stylesheet" />
@@ -28,7 +30,6 @@
         @(await Html.RenderComponentAsync<App>(RenderMode.Server))
     </app>
 
-
     <script src="_content/Blazui.Component/js/dom.js"></script>
     <script src="_framework/blazor.server.js"></script>
     <script src="/_content/Blazui.Markdown/js/dom.js"></script>
@@ -37,5 +38,20 @@
     <script src="~/_content/Blazui.Markdown/js/addons.min.js"></script>
     <script src="~/_content/Blazui.Markdown/js/continuelist.js"></script>
     <script src="~/_content/Blazui.Markdown/js/modes.min.js"></script>
+    @*<script>
+
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?ceeb047b54adbbceb5ee21e1c027d0ed";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <div class="footer-tongji">
+        <script type="text/javascript">
+            document.write(unescape("%3Cspan id='cnzz_stat_icon_1278642302'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1278642302%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    </div>*@
 </body>
 </html>

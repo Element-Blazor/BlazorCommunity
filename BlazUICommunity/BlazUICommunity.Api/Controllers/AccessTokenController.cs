@@ -15,6 +15,7 @@ using IdentityModel.Client;
 using log4net.Repository.Hierarchy;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
@@ -28,36 +29,29 @@ namespace Blazui.Community.Api.Controllers
     /// <summary>
     /// 
     /// </summary>
-    [Route("[controller]")]
+    //[Route("api/[controller]")]
     [ApiController]
     [SwaggerTag(description: "jwt鉴权")]
     public class AccessTokenController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IConfiguration _configuration;
         private readonly IMemoryCache _cache;
         private readonly JwtService _jwtService;
-        private readonly BZUserRepository _bZUserRepository;
+        private readonly UserManager<BZUserModel> _userManager;
 
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="configuration"></param>
-      /// <param name="cache"></param>
-      /// <param name="unitOfWork"></param>
-      /// <param name="jwtService"></param>
-      /// <param name="bZUserRepository"></param>
-        public AccessTokenController(IConfiguration configuration ,
-            IMemoryCache cache , 
-            IUnitOfWork unitOfWork ,
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cache"></param>
+        /// <param name="jwtService"></param>
+        /// <param name="userManager"></param>
+        public AccessTokenController(
+            IMemoryCache cache,
             JwtService jwtService,
-            BZUserRepository bZUserRepository)
+            UserManager<BZUserModel> userManager)
         {
-            _configuration = configuration;
             _cache = cache;
-            _unitOfWork = unitOfWork;
             _jwtService = jwtService;
-            _bZUserRepository = bZUserRepository;
+            _userManager = userManager;
         }
 
 
@@ -69,19 +63,22 @@ namespace Blazui.Community.Api.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [Route("token")]
         [HttpPost]
-        public ActionResult Post([FromBody]LoginModel model)
+        public async Task<IActionResult> Post([FromBody]LoginInModel model)
         {
-            var result = _bZUserRepository.Login(model.Account , model.Pw);
-            if ( !result.success)
+            var user = await _userManager.FindByNameAsync(model.Username);
+            if (user is null)
             {
-                return Unauthorized(result);
+                return Unauthorized();
             }
-
-            var user = new SessionUser
+            var checkPassword =user.PasswordHash==model.Password ;// await _userManager.CheckPasswordAsync(user, model.Password);
+            if (!checkPassword)
+                return Unauthorized();
+            var SessionUser = new SessionUser
             {
-                Id = result.user.Id,
-                Name = result.user.NickName ,
+                Id = user.Id,
+                Name = user.UserName,
                 Role = "user"
             };
 
@@ -90,13 +87,13 @@ namespace Blazui.Community.Api.Controllers
             var cacheKey = $"RefreshToken:{refreshToken}";
             var cacheValue = JsonConvert.SerializeObject(user);
 
-            _cache.Set(cacheKey , cacheValue ,TimeSpan.FromMinutes(60));
+            _cache.Set(cacheKey, cacheValue, TimeSpan.FromMinutes(60));
 
             return Ok(new
             {
-                AccessToken = _jwtService.GetAccessToken(user) ,
-                Code = 200 ,
-                RefreshTokenExpired = refreshTokenExpiredTime.ConvertDateTimeToInt() ,
+                AccessToken = _jwtService.GetAccessToken(SessionUser),
+                Code = 200,
+                RefreshTokenExpired = refreshTokenExpiredTime.ConvertDateTimeToInt(),
                 RefreshToken = refreshToken
             });
         }
@@ -110,13 +107,13 @@ namespace Blazui.Community.Api.Controllers
         [HttpPost("Refresh")]
         public IActionResult Refresh([FromQuery] string token)
         {
-        
+
             var cacheStr = _cache.Get<string>($"RefreshToken:{token}");
-            if ( string.IsNullOrWhiteSpace(cacheStr) )
+            if (string.IsNullOrWhiteSpace(cacheStr))
             {
                 return Ok(new
                 {
-                    Code = 0 ,
+                    Code = 0,
                     Message = "Token不存在或已过期"
                 });
             }
@@ -124,11 +121,11 @@ namespace Blazui.Community.Api.Controllers
             var cacheUser = JsonConvert.DeserializeObject<SessionUser>(cacheStr);
             var userId = User.Claims.First(c => c.Type == JwtClaimTypes.Id);
 
-            if ( userId == null || cacheUser.Id.ToString() != userId.Value )
+            if (userId == null || cacheUser.Id.ToString() != userId.Value)
             {
                 return Ok(new
                 {
-                    Code = 0 ,
+                    Code = 0,
                     Message = "用户不匹配"
                 });
             }
@@ -137,15 +134,21 @@ namespace Blazui.Community.Api.Controllers
             var cacheKey = $"RefreshToken:{refreshToken}";
             var refreshTokenExpiredTime = DateTime.Now.AddMinutes(60);
 
-            _cache.Set(cacheKey , cacheStr,TimeSpan.FromMinutes(60));
+            _cache.Set(cacheKey, cacheStr, TimeSpan.FromMinutes(60));
 
             return Ok(new
             {
-                AccessToken = _jwtService.GetAccessToken(cacheUser) ,
-                Code = 200 ,
-                RefreshTokenExpired = refreshTokenExpiredTime.ConvertDateTimeToInt() ,
+                AccessToken = _jwtService.GetAccessToken(cacheUser),
+                Code = 200,
+                RefreshTokenExpired = refreshTokenExpiredTime.ConvertDateTimeToInt(),
                 RefreshToken = refreshToken
             });
         }
+    }
+
+    public class LoginInModel
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }

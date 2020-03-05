@@ -1,9 +1,5 @@
 ﻿using Blazui.Community.DTO;
-using Blazui.Community.Utility.Request;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Blazui.Community.Enums;
 
 namespace Blazui.Community.App.Model.Condition
 {
@@ -17,7 +13,7 @@ namespace Blazui.Community.App.Model.Condition
         /// <summary>
         /// 类型
         /// </summary>
-        public TopicType? TopicType { get; set; }
+        public TopicCategory? Category { get; set; }
 
     }
 

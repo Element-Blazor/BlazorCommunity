@@ -1,0 +1,40 @@
+﻿@inherits BindEmailBase
+@using static Blazui.Community.App.Constant
+
+<BCard EnableAlwaysRender="true" @ref="bCard">
+    <Body>
+        @if (value != null && !string.IsNullOrWhiteSpace(value.Email))
+        {
+            <BForm @ref="bForm" Value="value" LabelAlign="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
+                <BFormItem TValue="string" Label="" Name="@nameof(BindEmailModel.Email)" IsRequired="false">
+                    <BButton Type="ButtonType.Primary" IsPlain="true" Style="border:none" IsDisabled="true">@($"您已经绑定了邮箱：{ value.Email}")</BButton>
+                </BFormItem>
+            </BForm>
+        }
+        else
+        {
+            <BForm @ref="bForm" Value="value" LabelAlign="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
+                <BFormItem TValue="string" Label="邮箱：" Name="@nameof(BindEmailModel.Email)" IsRequired="true">
+                    <BInput TValue="string" Type="InputType.Tel" Placeholder="请输入邮箱地址"></BInput>
+                </BFormItem>
+                <BFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
+                    <BButton Type="@ButtonType.Default" IsPlain="true" OnClick="e => SendEmailMsg()" EnableAlwaysRender="true" IsDisabled="IsDisabled">
+                        @((TimeOut > 0 && TimeOut < CountDownTime)?$"请等待{TimeOut}s后重试":"发送验证码")
+                    </BButton>
+                </BFormActionItem>
+                @if (showInput)
+                {
+                    <BFormItem TValue="string" Label="验证码：" Name="@nameof(BindEmailModel.VerifyCode)" IsRequired="false">
+                        <BInput TValue="string" Placeholder="请输入验证码"></BInput>
+                    </BFormItem>
+                    <BFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
+                        <BButton Type="@ButtonType.Default" IsPlain="true" OnClick="e => CheckVerifyCode()" EnableAlwaysRender="true">
+                            绑定
+                        </BButton>
+                    </BFormActionItem>
+                }
+
+            </BForm>
+        }
+    </Body>
+</BCard>

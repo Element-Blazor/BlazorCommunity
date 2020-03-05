@@ -18,21 +18,34 @@ namespace Blazui.Community.Utility.Filter
         {
             base.OnResultExecuting(context);
             var objectResult = context.Result as ObjectResult;
-            if (context.Result is ValidationFailedResponse)
+            if (objectResult?.StatusCode == 401)
             {
-                context.Result = objectResult;
-            }
-            else if (context.Result is BadRequestObjectResult || objectResult?.StatusCode == 400)
-            {
-                context.Result = new BadRequestResponse(JsonConvert.SerializeObject(objectResult?.Value));
-            }
-            else if (context.Result is NoContentResponse)
-            {
-                context.Result = new OkObjectResult(new BaseResponse(code: 200, result: objectResult?.Value, message: objectResult?.Value?.ToString()));
+                context.Result = new UnauthorizedResult();
             }
             else
             {
-                context.Result =  new OkObjectResult(new BaseResponse(code: 200, result: objectResult?.Value, message: "success"));
+                if (!context.Controller.GetType().IsDefined(typeof(BlazuiUploadApiResultAttribute), true))
+                {
+                    if (context.Result is NoContentResult)
+                    {
+                        context.Result = new OkObjectResult(new BaseResponse(code: 204, result: "", message: "no data"));
+                    }
+                    else if (context.Result is ValidationFailedResponse)
+                    {
+                        context.Result = new OkObjectResult(new BaseResponse(code: 400, result: "", message: "error request 参数错误"));
+                    }
+                    else if (context.Result is BadRequestObjectResult || objectResult?.StatusCode == 400)
+                    {
+                        var Message = "bad request";
+                        if (objectResult.Value is BadRequestResultModel bad)
+                            Message = bad.Message;
+                        context.Result = new OkObjectResult(new BaseResponse(code: 400, result: "", message: Message));
+                    }
+                    else
+                    {
+                        context.Result = new OkObjectResult(new BaseResponse(code: 200, result: objectResult?.Value, message: "success"));
+                    }
+                }
             }
         }
     }

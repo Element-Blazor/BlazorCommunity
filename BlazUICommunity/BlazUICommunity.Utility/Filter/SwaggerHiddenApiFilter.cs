@@ -33,7 +33,7 @@ namespace Blazui.Community.Utility.Filter
                         string key = "/" + apiDescription.RelativePath;
                         if (key.Contains("?"))
                         {
-                            int idx = key.IndexOf("?", System.StringComparison.Ordinal);
+                            int idx = key.IndexOf("?", StringComparison.Ordinal);
                             key = key.Substring(0, idx);
                         }
                         swaggerDoc.Paths.Remove(key);

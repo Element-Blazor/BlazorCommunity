@@ -5,16 +5,13 @@ namespace Blazui.Community.DTO
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public partial class SysMenuDto 
+    public  class SysMenuDto : BaseDto
     {
 
-        public int ParentId { get; set; }
-
-     
+        public string ParentId { get; set; }
 
         public string Text { get; set; }
 
-     
         public string Url { get; set; }
 
         public byte MenuLevel { get; set; }
@@ -29,14 +26,8 @@ namespace Blazui.Community.DTO
 
         public int Sort { get; set; }
 
-        public byte Status { get; set; }
 
-        public DateTime CreateTime { get; set; }
 
-        public int CreatorId { get; set; }
 
-        public DateTime? LastModifyTime { get; set; }
-
-        public int? LastModifierId { get; set; }
     }
 }

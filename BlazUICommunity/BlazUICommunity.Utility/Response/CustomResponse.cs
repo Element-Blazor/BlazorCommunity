@@ -18,6 +18,6 @@ namespace Blazui.Community.Utility.Response
 
         //[JsonIgnore]
         [JsonProperty("IsSuccess")]
-        public bool IsSuccess => Message == "success";
+        public bool IsSuccess => Code ==200;
     }
 }

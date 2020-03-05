@@ -1,0 +1,42 @@
+﻿@inherits PageBase
+@page "/search/{Text}"
+<SeachTopicContainer Datas="Datas" Total="@Total" currentPage="currentPage" PageSize="PageSize" OnItemClick="ItemClick" CurrentPageChanged="LoadDatas" EnableAlwaysRender="true">
+</SeachTopicContainer>
+@code {
+    [Parameter]
+    public string Text { get; set; }
+    private int currentPage = 1;
+    private int PageSize = 15;
+
+
+    internal List<SeachTopicDto> Datas { get; set; } = new List<SeachTopicDto>();
+    internal int Total = 0;
+    protected override void OnInitialized()
+    {
+        if (string.IsNullOrWhiteSpace(Text))
+        {
+            navigationManager.NavigateTo($"/");
+        }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDatas(currentPage);
+    }
+
+    async Task LoadDatas(int page)
+    {
+        currentPage = page;
+        var searchResult = await NetService.SeachTopicByTitle(Text, currentPage, PageSize);
+        if (searchResult.Data != null)
+        {
+            Datas = searchResult?.Data?.Items?.ToList();
+            Total = (int)searchResult?.Data?.TotalCount;
+            StateHasChanged();
+        }
+    }
+    void ItemClick(string Id)
+    {
+        navigationManager.NavigateTo($"/topic/{Id}");
+    }
+    protected override bool ShouldRender() => true;
+}

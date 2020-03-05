@@ -27,12 +27,8 @@ namespace Blazui.Community.Model.Models
 
         public byte LogType { get; set; }
 
-        public DateTime CreateTime { get; set; }
 
-        public int CreatorId { get; set; }
 
-        public DateTime? LastModifyTime { get; set; }
 
-        public int? LastModifierId { get; set; }
     }
 }

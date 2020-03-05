@@ -1,0 +1,36 @@
+﻿@page "/manage/ver"
+@using Blazui.Community.Admin.ViewModel
+@using Blazui.Community.Admin.QueryCondition
+@using Blazui.Community.DTO
+@inherits VersionManageBase
+
+<BForm Inline="true" @ref="searchForm">
+    <BFormItem TValue="ProjectType?" Label="项目" Name="@nameof(QueryVersionCondition.ProjectId)" IsRequired="false">
+        <BSelect TValue="ProjectType?">
+        </BSelect>
+    </BFormItem>
+    <BFormActionItem>
+        <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
+    </BFormActionItem>
+    <BButton Type="@ButtonType.Success" Icon="el-icon-plus" OnClick="New"></BButton>
+</BForm>
+
+<div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
+
+<BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="true">
+    <BTableColumns>
+
+        <BTableTemplateColumn Text="操作" Width="100">
+            @{
+                var reply = (VersionAutoGenerateColumnsDto)context;
+                var menu = reply?.Status == 0 ? "删除" : "恢复";
+                <BButton Type="@(reply?.Status==-1?ButtonType.Success:ButtonType.Danger)" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Delete(context))">
+                    @menu
+                </BButton>
+                <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Modify(context))">
+                    编辑
+                </BButton>
+            }
+        </BTableTemplateColumn>
+    </BTableColumns>
+</BTable>

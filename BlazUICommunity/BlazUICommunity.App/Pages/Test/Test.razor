@@ -1,0 +1,43 @@
+﻿@page "/test"
+@using Blazui.Community.App.Components.Topic
+@*<NewReplyList DataSource="Datas">
+
+
+    </NewReplyList>*@
+@*<BButton OnClick="Add"></BButton>*@
+@foreach (var item in Datas)
+{
+    Console.WriteLine(item.Content);
+    <div>@item.Content</div>
+    @*<NewReplyItem reply="@item"></NewReplyItem>*@
+}
+@code   {
+
+    private List<BZReplyDto> Datas = new List<BZReplyDto>();
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        await base.OnAfterRenderAsync(firstRender);
+        if (!firstRender) return;
+        Datas = new List<BZReplyDto>()
+    {
+            new BZReplyDto()
+            {
+             Content="132131", Avator="32131"
+            },
+             new BZReplyDto()
+            {
+             Content="333333", Avator="32131"
+            }
+        };
+        StateHasChanged();
+    }
+    protected void Add()
+    {
+        Datas.Add(new BZReplyDto() { Content = "555555" });
+
+    }
+}

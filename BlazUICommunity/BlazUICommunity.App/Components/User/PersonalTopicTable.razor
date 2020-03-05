@@ -1,0 +1,25 @@
+﻿@inherits PersonalTopicTableBase
+@using Blazui.Community.App.Model.Condition
+
+
+<BForm Inline="true" @ref="searchForm">
+    <BFormItem TValue="string" Label="标题" Name="@nameof(SearchPersonalTopicCondition.Title)" IsRequired="false">
+        <BInput TValue="string" Placeholder="输入帖子标题"></BInput>
+    </BFormItem>
+    <BFormItem TValue="TopicCategory?" Label="类型" IsRequired="false" Name="@nameof(SearchPersonalTopicCondition.Category)">
+        <BSelect @bind-Value="Category">
+        </BSelect>
+    </BFormItem>
+    <BFormActionItem>
+        <BButton Type="@ButtonType.Default" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
+    </BFormActionItem>
+</BForm>
+<div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
+    <BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true">
+        <BTableColumns>
+            <BTableTemplateColumn Text="操作" Width="200">
+                <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Mini" Style="border-color:transparent !important" IsPlain="true"  IsCircle="true" Icon="el-icon-remove-outline" OnClick="@(e=> Del(context))"></BButton>
+                <BButton Type="@ButtonType.Success" Size="@ButtonSize.Mini" Style="border-color:transparent !important" IsPlain="true" IsCircle="true" Icon="el-icon-link" OnClick="@(e=> LinktoTopic(context))"></BButton>
+            </BTableTemplateColumn>
+        </BTableColumns>
+    </BTable>

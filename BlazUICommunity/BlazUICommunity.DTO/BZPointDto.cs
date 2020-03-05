@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Blazui.Community.DTO
 {
 
-    public partial class BZPointDto
+    public  class BZPointDto : BaseDto
     {
         /// <summary>
         /// 积分来源，1：发帖，2：回帖，3:精华帖，4：其他--规则
@@ -23,6 +23,7 @@ namespace Blazui.Community.DTO
         /// <summary>
         /// 用户ID
         /// </summary>
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+
     }
 }

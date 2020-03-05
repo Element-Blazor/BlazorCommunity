@@ -1,5 +1,4 @@
-﻿
-using Blazui.Community.Utility.Filter;
+﻿using Blazui.Community.Utility.Filter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Redis;
@@ -8,12 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Linq;
-using System.Reflection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Blazui.Community.Utility.Formatter;
-using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blazui.Community.Utility.Configure
 {
@@ -26,7 +25,7 @@ namespace Blazui.Community.Utility.Configure
         /// </summary>
         /// <param name="services"></param>
         /// <param name="Configuration"></param>
-        public static void AddCustomRedis(this IServiceCollection services , string ConnectionStrings)
+        public static void AddCustomRedis(this IServiceCollection services, string ConnectionStrings)
         {
             var csredis = new CSRedis.CSRedisClient(ConnectionStrings);
             //初始化 RedisHelper
@@ -39,9 +38,9 @@ namespace Blazui.Community.Utility.Configure
         /// </summary>
         /// <param name="services"></param>
         /// <param name="Configuration"></param>
-        public static void AddCustomRedis(this IServiceCollection services , params string[] ConnectionStrings)
+        public static void AddCustomRedis(this IServiceCollection services, params string[] ConnectionStrings)
         {
-            var csredis = new CSRedis.CSRedisClient(null , ConnectionStrings);
+            var csredis = new CSRedis.CSRedisClient(null, ConnectionStrings);
 
             //"127.0.0.1:6372,password=123,defaultDatabase=12,poolsize=11",
             //"127.0.0.1:6373,password=123,defaultDatabase=13,poolsize=12",
@@ -59,9 +58,9 @@ namespace Blazui.Community.Utility.Configure
         /// </summary>
         /// <param name="services"></param>
         /// <param name="Configuration"></param>
-        public static void AddCustomRedis(this IServiceCollection services , IConfiguration Configuration)
+        public static void AddCustomRedis(this IServiceCollection services, IConfiguration Configuration)
         {
-            var csredis = new CSRedis.CSRedisClient(null , Configuration["Redis:ConnectionString"]);
+            var csredis = new CSRedis.CSRedisClient(null, Configuration["Redis:ConnectionString"]);
 
             //"127.0.0.1:6372,password=123,defaultDatabase=12,poolsize=11",
             //"127.0.0.1:6373,password=123,defaultDatabase=13,poolsize=12",
@@ -79,9 +78,9 @@ namespace Blazui.Community.Utility.Configure
         /// </summary>
         /// <param name="services"></param>
         /// <param name="Configuration"></param>
-        public static void AddCustomRedis(this IServiceCollection services , IConfiguration Configuration , Func<string , string> NodeRule)
+        public static void AddCustomRedis(this IServiceCollection services, IConfiguration Configuration, Func<string, string> NodeRule)
         {
-            var csredis = new CSRedis.CSRedisClient(NodeRule ,
+            var csredis = new CSRedis.CSRedisClient(NodeRule,
            Configuration["Redis:ConnectionString"]);
 
             //初始化 RedisHelper
@@ -94,7 +93,7 @@ namespace Blazui.Community.Utility.Configure
         /// </summary>
         /// <param name="services"></param>
         /// <param name="Configuration"></param>
-        public static IServiceCollection AddCustomIdentityServer(this IServiceCollection services , IConfiguration Configuration)
+        public static IServiceCollection AddCustomIdentityServer(this IServiceCollection services, IConfiguration Configuration)
         {
 
             services.AddAuthentication("Bearer")
@@ -111,9 +110,9 @@ namespace Blazui.Community.Utility.Configure
         /// Swagger
         /// </summary>
         /// <param name="services"></param>
-        public static IServiceCollection AddCustomSwagger(this IServiceCollection services , Action<SwaggerGenOptions> options = null)
+        public static IServiceCollection AddCustomSwagger(this IServiceCollection services, Action<SwaggerGenOptions> options = null)
         {
-            if ( options != null )
+            if (options != null)
                 services.AddSwaggerGen(options);
             else
                 services.AddSwaggerGen(DefaultSwaggerGenOptions());
@@ -128,15 +127,15 @@ namespace Blazui.Community.Utility.Configure
                 o.Filters.Add<CustomValidateModelAttribute>();
                 var settings = new JsonSerializerSettings
                 {
-                    DateFormatString = "yyyy-MM-dd HH:mm:ss" ,
-                    ContractResolver = new DefaultContractResolver() ,
-                    NullValueHandling = NullValueHandling.Ignore ,
-                    DateFormatHandling = DateFormatHandling.IsoDateFormat ,
-                    DateParseHandling = DateParseHandling.None ,
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore ,
+                    DateFormatString = "yyyy-MM-dd HH:mm:ss",
+                    ContractResolver = new DefaultContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore,
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                    DateParseHandling = DateParseHandling.None,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 };
                 o.ReturnHttpNotAcceptable = true;
-                o.OutputFormatters.Insert(0 , new KJsonOutputFormatter(settings));
+                o.OutputFormatters.Insert(0, new KJsonOutputFormatter(settings));
             })
                         .AddXmlSerializerFormatters().AddApiExplorer();
             return services;
@@ -150,30 +149,34 @@ namespace Blazui.Community.Utility.Configure
                 o.Filters.Add<CustomValidateModelAttribute>();
                 var settings = new JsonSerializerSettings
                 {
-                    DateFormatString = "yyyy-MM-dd HH:mm:ss" ,
-                    ContractResolver = new DefaultContractResolver() ,
+                    DateFormatString = "yyyy-MM-dd HH:mm:ss",
+                    ContractResolver = new DefaultContractResolver(),
                     //NullValueHandling = NullValueHandling.Ignore ,
-                    DateFormatHandling = DateFormatHandling.IsoDateFormat ,
-                    DateParseHandling = DateParseHandling.None ,
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore ,
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                    DateParseHandling = DateParseHandling.None,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 };
                 o.ReturnHttpNotAcceptable = true;
-                o.OutputFormatters.Insert(0 , new KJsonOutputFormatter(settings));
+                o.OutputFormatters.Insert(0, new KJsonOutputFormatter(settings));
             })
               .AddXmlSerializerFormatters();
             return services;
         }
 
-        public static IServiceCollection AddCustomCors(this IServiceCollection services)
+        public static IServiceCollection AddCustomCors(this IServiceCollection services, string name= "any", params string[] WithOrigins)
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("any" , b =>
-                {
-                    b.AllowAnyOrigin() //允许任何来源的主机访问
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials();//指定处理cookie
+                options.AddPolicy(name, policy =>
+               {
+                   policy.AllowAnyOrigin() //允许任何来源的主机访问
+                   .AllowAnyHeader()
+                   .AllowAnyMethod()
+                   .AllowCredentials();//指定处理cookie
+                   if (WithOrigins.Any())
+                       policy.WithOrigins(WithOrigins);
+                    //
+
                 });
             });
             return services;
@@ -190,7 +193,7 @@ namespace Blazui.Community.Utility.Configure
         }
         public static IServiceCollection AddCustomMemoryCache(this IServiceCollection services)
         {
-            services.AddMemoryCache(p=>p.ExpirationScanFrequency=TimeSpan.FromMinutes(5));
+            services.AddMemoryCache(p => p.ExpirationScanFrequency = TimeSpan.FromMinutes(5));
 
             return services;
         }
@@ -202,39 +205,39 @@ namespace Blazui.Community.Utility.Configure
         }
         private static Action<SwaggerGenOptions> DefaultSwaggerGenOptions()
         {
-            Action<SwaggerGenOptions> options = o=>
+            Action<SwaggerGenOptions> options = o =>
             {
-             
+
                 o.OperationFilter<SwaggerAuthorizationFilter>();
 
-                o.SwaggerDoc("v1" , new OpenApiInfo
+                o.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Version = "v1" ,
-                    Title = "WebApi Swagger Document" ,
-                    Description = "WebApi Swagger Document" ,
+                    Version = "v1",
+                    Title = "WebApi Swagger Document",
+                    Description = "WebApi Swagger Document",
 
-                    TermsOfService = new Uri("http://www.webapi.com") ,
+                    TermsOfService = new Uri("http://www.webapi.com"),
                     Contact = new OpenApiContact
                     {
-                        Name = "浮生寄墟丘" ,
-                        Email = "xxxx@qq.com" ,
-                        Url = new Uri("http://www.webapi.com") ,
-                    } ,
+                        Name = "浮生寄墟丘",
+                        Email = "xxxx@qq.com",
+                        Url = new Uri("http://www.webapi.com"),
+                    },
                     License = new OpenApiLicense
                     {
-                        Name = "许可证" ,
-                        Url = new Uri("http://www.webapi.com") ,
+                        Name = "许可证",
+                        Url = new Uri("http://www.webapi.com"),
                     }
                 });
                 o.OrderActionsBy((apiDesc) => $"{apiDesc.ActionDescriptor.RouteValues["controller"]}_{apiDesc.HttpMethod}");
-                o.AddSecurityDefinition("Bearer" , new OpenApiSecurityScheme()
+                o.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
-                    Description = "请在下方输入：Bearer {Token}" ,
-                    Name = "Authorization" ,
-                    In = ParameterLocation.Header ,
-                    Type = SecuritySchemeType.ApiKey ,
-                    BearerFormat = "JWT" ,
-                    Scheme = "Bearer" ,
+                    Description = "请在下方输入：Bearer {Token}",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer",
 
                 });
                 o.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -258,6 +261,38 @@ namespace Blazui.Community.Utility.Configure
                 o.EnableAnnotations(true);
             };
             return options;
+        }
+
+
+        public static void AddCustomAspIdenitty<TUser,TDbContext>(this  IServiceCollection services) where TUser:IdentityUser<string> where TDbContext:DbContext
+        {
+            services.AddIdentity<TUser, IdentityRole<string>>(options =>
+            {
+
+                options.Password.RequiredLength = 8;//要求必须8以上位密码
+                options.Password.RequireUppercase = false;//要求小写
+                options.Password.RequireLowercase = false;//要求大写
+                options.Password.RequireDigit = false;//要求必须有数字
+                options.Password.RequireNonAlphanumeric = false;//要求有特殊字符
+                options.SignIn.RequireConfirmedEmail = false;//要求必须要验证邮箱
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);//登录失败锁定时间
+                options.Lockout.MaxFailedAccessAttempts = 3;//重试次数
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";//用户名允许出现的字符
+                options.User.RequireUniqueEmail = false;//邮箱验证
+
+                options.SignIn = new SignInOptions
+                {
+                    RequireConfirmedEmail = false, //要求激活邮箱
+                    RequireConfirmedPhoneNumber = false //要求激活手机号
+                };
+
+            }).AddEntityFrameworkStores<TDbContext>()
+            .AddDefaultTokenProviders();
         }
 
     }
