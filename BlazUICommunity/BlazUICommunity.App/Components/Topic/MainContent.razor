@@ -2,7 +2,7 @@
 <BTabPanel Title="@Title" EnableAlwaysRender="true">
     <BLayout WestWidth="0" NorthHeight="0" EnableAlwaysRender="true">
         <Center>
-            @if (TopicType == TopicCategory.Home)
+            @if (TopicType == -1)
             {
                 <BLayout EnableAlwaysRender="true">
                     <North>
@@ -38,23 +38,23 @@
                     </Center>
                 </BLayout>
             }
-            else if (TopicType == TopicCategory.Ask)
+            else if (TopicType ==(int) TopicCategory.Ask)
             {
                 <MainContentItem TopicType="TopicType"></MainContentItem>
             }
-            else if (TopicType == TopicCategory.Share)
+            else if (TopicType ==(int) TopicCategory.Share)
             {
                 <MainContentItem TopicType="TopicType"></MainContentItem>
             }
-            else if (TopicType == TopicCategory.Discuss)
+            else if (TopicType ==(int) TopicCategory.Discuss)
             {
                 <MainContentItem TopicType="TopicType"></MainContentItem>
             }
-            else if (TopicType == TopicCategory.Suggest)
+            else if (TopicType == (int)TopicCategory.Suggest)
             {
                 <MainContentItem TopicType="TopicType"></MainContentItem>
             }
-            else if (TopicType == TopicCategory.Notice)
+            else if (TopicType ==(int) TopicCategory.Notice)
             {
                 <MainContentItem TopicType="TopicType"></MainContentItem>
             }

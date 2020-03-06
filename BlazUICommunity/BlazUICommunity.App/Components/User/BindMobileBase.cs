@@ -82,9 +82,17 @@ namespace Blazui.Community.App.Components
 
         protected async Task CheckAndBindMobileVerifyCode()
         {
+            if (string.IsNullOrWhiteSpace(VerifyCode))
+            {
+                ToastError("请先发送验证码到您的邮箱");
+                return;
+            }
+            if (!bForm.IsValid())
+                return;
+
             var model = bForm.GetValue<BindMobileModel>();
 
-            if (VerifyCode != model.VerifyCode)
+            if (!model.VerifyCode.Equals(VerifyCode))
             {
                 ToastError("验证码无效");
                 return;

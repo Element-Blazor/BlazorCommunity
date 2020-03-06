@@ -30,19 +30,19 @@ namespace Blazui.Community.App.Pages
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            Tabs.Add(new TabItem() { Title = "首页", Category =TopicCategory.Home });
-            Tabs.Add(new TabItem() { Title = "提问", Category = TopicCategory.Ask });
-            Tabs.Add(new TabItem() { Title = "分享", Category = TopicCategory.Share });
-            Tabs.Add(new TabItem() { Title = "讨论", Category = TopicCategory.Discuss });
-            Tabs.Add(new TabItem() { Title = "建议", Category = TopicCategory.Suggest });
-            Tabs.Add(new TabItem() { Title = "公告", Category = TopicCategory.Notice });
+            Tabs.Add(new TabItem() { Title = "首页", Category =-1 });
+            Tabs.Add(new TabItem() { Title = "提问", Category = (int)TopicCategory.Ask });
+            Tabs.Add(new TabItem() { Title = "分享", Category = (int)TopicCategory.Share });
+            Tabs.Add(new TabItem() { Title = "讨论", Category = (int)TopicCategory.Discuss });
+            Tabs.Add(new TabItem() { Title = "建议", Category = (int)TopicCategory.Suggest });
+            Tabs.Add(new TabItem() { Title = "公告", Category = (int)TopicCategory.Notice });
 
         }
 
         public class TabItem
         {
             public string Title { get; set; }
-            public TopicCategory Category { get; set; }
+            public int Category { get; set; }
         }
     }
 }

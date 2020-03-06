@@ -15,14 +15,14 @@ namespace Blazui.Community.App.Model
         /// <summary>
         /// 帖子标题
         /// </summary>
-        [TableColumn(Text = "帖子标题",Width =250)]
+        [TableColumn(Text = "标题",Width =500)]
         public string Title { get;set; }
      
 
         /// <summary>
         /// 发表时间
         /// </summary>
-        [TableColumn(Text = "发表时间", Format = "yyyy-MM-dd",Width =150)]
+        [TableColumn(Text = "发表时间", Format = "yyyy-MM-dd",Width =100)]
         public DateTime CreateDate{ get; set; }
         /// <summary>
         ///  状态 0正常，-1 删除，1已结帖
@@ -44,7 +44,7 @@ namespace Blazui.Community.App.Model
         /// <summary>
         /// 主题帖类型 0：提问，1：分享，2：讨论，3：建议，4：公告
         /// </summary>
-        [TableColumn(Text = "主题帖类型",Ignore =false)]
+        [TableColumn(Text = "类型",Ignore =false,Width =50)]
         public string CategoryDisplay
         {
             get
@@ -53,7 +53,7 @@ namespace Blazui.Community.App.Model
             }
         }
 
-        [TableColumn(Text = "主题帖类型", Ignore = true)]
+        [TableColumn(Text = "类型", Ignore = true)]
         public TopicCategory Category { get; set; }
 
      

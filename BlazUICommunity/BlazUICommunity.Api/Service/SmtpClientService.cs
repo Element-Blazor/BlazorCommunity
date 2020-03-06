@@ -43,20 +43,11 @@ namespace Blazui.Community.Api.Service
             };
                 message.Body = multipart;
                 using var client = new MailKit.Net.Smtp.SmtpClient();
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
-                client.Timeout = 30000;
-                client.Connect(emailConfig.StmpHost, emailConfig.StmpPort, true);
-                stopwatch.Stop();
-                _logger.LogDebug("SendEmail-Connect：" + stopwatch.ElapsedMilliseconds);
-            
+                await client.ConnectAsync(emailConfig.StmpHost, emailConfig.StmpPort, true);
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
-                client.Authenticate(emailConfig.Account, emailConfig.Auth);
-                stopwatch.Reset();
+                await client.AuthenticateAsync(emailConfig.Account, emailConfig.Auth);
                 await client.SendAsync(message);
-                stopwatch.Stop();
-                _logger.LogDebug("SendEmail-SendAsync：" + stopwatch.ElapsedMilliseconds);
-                client.Disconnect(true);
+                await client.DisconnectAsync(true);
             }
             catch (Exception ex)
             {

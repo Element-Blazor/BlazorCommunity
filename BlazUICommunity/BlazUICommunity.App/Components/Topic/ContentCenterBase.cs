@@ -16,7 +16,7 @@ namespace Blazui.Community.App.Components
         protected BTabPanel tabPanel_End;
         
         [Parameter]
-        public TopicCategory TopicType { get; set; }
+        public int TopicType { get; set; }
       
 
         protected void ActiveTabChanged(BChangeEventArgs<BTabPanelBase> e)

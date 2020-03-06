@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Blazui.Community.Enums
 {
+    public class MyClass
+    {
+
+    }
     /// <summary>
     /// 主题帖类型
     /// </summary>
@@ -13,8 +17,8 @@ namespace Blazui.Community.Enums
         /// <summary>
         /// -1：首页
         /// </summary>
-        [Description("首页")]
-        Home=-1,
+        //[Description("首页")]
+        //Home=-1,
         /// <summary>
         /// 0：提问
         /// </summary>

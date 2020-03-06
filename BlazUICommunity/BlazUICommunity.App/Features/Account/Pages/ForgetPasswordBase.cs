@@ -24,8 +24,15 @@ namespace Blazui.Community.App.Features.Account.Pages
         protected string PreviousRoute = "/account/signin";
         internal async Task CheckAndNavigatToReset()
         {
+            if(string.IsNullOrWhiteSpace(verifyCode))
+            {
+                ToastError("请先发送验证码到您的邮箱");
+                return;
+            }
+            if (!form.IsValid())
+                return;
             var model = form.GetValue<ForgetPasswordModel>();
-            if (model.VerCode != verifyCode)
+            if (!model.VerCode .Equals( verifyCode))
             {
                 ToastError("验证码无效");
                 return;

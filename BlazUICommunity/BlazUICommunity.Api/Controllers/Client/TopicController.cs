@@ -325,7 +325,7 @@ namespace Blazui.Community.Api.Controllers.Client
             Expression<Func<BZTopicModel, bool>> expression = p => p.Status == 0;
             if (string.IsNullOrWhiteSpace(Title))
                 return NoContent();
-            expression = expression.And(p => p.Title.Contains(Title));
+            expression = expression.And(p => p.Title.ToLower().Contains(Title.ToLower()));
             pagedList = await _bZTopicRepository.GetPagedListAsync(expression, o => o.OrderBy(p => p.Id), null, PageIndex - 1, PageSize);
             if (pagedList != null && pagedList.Items.Any())
             {

@@ -33,13 +33,13 @@
     <BTableColumns>
         <BTableColumn Width="100" Property="@nameof(BZTopicDto.UserName)" Text="作者" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="100" Property="@nameof(BZTopicDto.CategoryDisplay)" Text="类型" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="300" Property="@nameof(BZTopicDto.Title)" Text="标题" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(BZTopicDto.StatusDisplay)" Text="状态" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(BZTopicDto.ReplyCount)" Text="回复" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(BZTopicDto.GoodDisplay)" Text="精华" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(BZTopicDto.TopDisplay)" Text="置顶" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="150" Property="@nameof(BZTopicDto.CreateDate)" Format="yyyy-MM-dd" Text="发表时间" Style="text-align:center;"></BTableColumn>
-        <BTableTemplateColumn Text="操作" Width="200">
+        <BTableColumn Width="500" Property="@nameof(BZTopicDto.Title)" Text="标题" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="50" Property="@nameof(BZTopicDto.StatusDisplay)" Text="状态" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="50" Property="@nameof(BZTopicDto.ReplyCount)" Text="回复" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="50" Property="@nameof(BZTopicDto.GoodDisplay)" Text="精华" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="50" Property="@nameof(BZTopicDto.TopDisplay)" Text="置顶" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(BZTopicDto.CreateDate)" Format="yyyy-MM-dd" Text="发表时间" Style="text-align:center;"></BTableColumn>
+        <BTableTemplateColumn Text="操作" Width="100">
             <BButton Type="@ButtonType.Success" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Detail(context))">查看</BButton>
 
             <BDropDown Style="cursor:pointer;">

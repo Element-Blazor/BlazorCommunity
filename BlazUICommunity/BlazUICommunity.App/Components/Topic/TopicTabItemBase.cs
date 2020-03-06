@@ -26,7 +26,7 @@ namespace Blazui.Community.App.Components
         public int OrderType { get; set; } = 0;
 
         [Parameter]
-        public TopicCategory TopicType { get; set; } = TopicCategory.Home;
+        public int TopicType { get; set; } = -1;
 
         /// <summary>
         /// 当只有一页时，不显示分页
@@ -75,7 +75,7 @@ namespace Blazui.Community.App.Components
 
         private async Task LoadData()
         {
-            var datas = await NetService.GetTopicsByOrder(OrderType, (int)TopicType, currentPage, PageSize);
+            var datas = await NetService.GetTopicsByOrder(OrderType, TopicType, currentPage, PageSize);
             if (datas != null && datas.IsSuccess && datas.Data.Items != null)
             {
                 Topics = datas.Data.Items.ToList();

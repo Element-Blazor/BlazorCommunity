@@ -43,7 +43,8 @@ namespace Blazui.Community.App.Features.Account.Pages
             }
             if ( user != null && await userManager.CheckPasswordAsync(user , signInModel.Password) )
             {
-
+                memoryCache.Remove(user.UserName);    //清除token
+            
                 var token = await userManager.GenerateUserTokenAsync(user , TokenOptions.DefaultProvider , "SignIn");
 
                 var data = $"{user.Id}|{token}";

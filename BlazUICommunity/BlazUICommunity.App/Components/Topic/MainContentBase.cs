@@ -11,7 +11,7 @@ namespace Blazui.Community.App.Components
         public string Title { get; set; }
 
         [Parameter]
-        public TopicCategory TopicType { get; set; }
+        public int TopicType { get; set; }
 
       
     }

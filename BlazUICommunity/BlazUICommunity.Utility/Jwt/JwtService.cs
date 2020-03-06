@@ -38,7 +38,7 @@ namespace Blazui.Community.Utility.Jwt
                 _configuration["Authentication:JwtBearer:Issuer"] ,
                 _configuration["Authentication:JwtBearer:Audience"] ,
                 claims ,
-                expires: DateTime.Now.AddMinutes(20) ,
+                expires: DateTime.Now.AddMinutes(60) ,
                 signingCredentials: credentials
             );
 

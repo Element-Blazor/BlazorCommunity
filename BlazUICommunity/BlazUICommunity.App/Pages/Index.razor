@@ -1,17 +1,17 @@
 ﻿@page "/"
 @inherits IndexBase
 <div class="content-container">
-    <BLayout EastWidth="350" EnableAlwaysRender="true" @ref="blayout">
+    <BLayout  EnableAlwaysRender="true" @ref="blayout">
         <Center>
-            <BTab TabPosition="@TabPosition.Top" OnActiveTabChanged="ActiveTabChanged" EnableAlwaysRender="true" @ref="btab">
-                @foreach (var item in Tabs)
-                {
-                    <MainContent Title="@item.Title" TopicType="@item.Category" EnableAlwaysRender="true"></MainContent>
-                }
-            </BTab>
+                <BTab TabPosition="@TabPosition.Top" OnActiveTabChanged="ActiveTabChanged" EnableAlwaysRender="true" @ref="btab">
+                    @foreach (var item in Tabs)
+                    {
+                        <MainContent Title="@item.Title" TopicType="@item.Category" EnableAlwaysRender="true"></MainContent>
+                    }
+                </BTab>
         </Center>
         <East>
-            <div class="margin-top-5" style="width:100%;">
+            <div class="margin-top-5 content-east">
                 <BLayout NorthHeight="30" EnableAlwaysRender="true">
                     <North>
                         <div class="newtopic">

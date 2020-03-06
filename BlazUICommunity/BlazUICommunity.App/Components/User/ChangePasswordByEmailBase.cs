@@ -118,6 +118,13 @@ namespace Blazui.Community.App.Components.User
                     NewPasswordFormShow = false;
                     StateHasChanged();
                 }
+                else
+                {
+                    foreach (var item in resetResult.Errors)
+                    {
+                        ToastError(item.Description);
+                    }
+                }
             }
             else
             {
