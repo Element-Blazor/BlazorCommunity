@@ -203,9 +203,6 @@ html body > app {
                         color: #fff;
                     }
 
-    html body > app div.container {
-        margin: 0 365px;
-    }
 
 .footer-main {
     color: #303133;
@@ -773,47 +770,39 @@ el-center {
 .footer-tongji{
     display:none;
 }
-.content-east{
-    min-width:300px;
-    width:100%;
+.content-east {
+    width: 100%;
 }
-.content-container {
-    margin: 0px 15%;
-    height: 100%;
+
+
+.container {
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
 }
+
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
 @media (min-width: 1200px) {
-    .content-container {
-        margin: 0px 15%;
-        height: 100%;
-    }
-}
-@media (min-width: 992px) and (max-width: 1199px) {
-    .content-container {
-        margin: 0px 5%;
-        height: 100%;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-    .content-container {
-        margin: 0px;
-        height: 100%;
-    }
-}
-
-@media (min-width: 480px) and (max-width: 767px) {
-    .content-container {
-        margin: 0px;
-        height: 100%;
-    }
-    .content-east{
-        display:none;
-    }
-}
-
-@media (max-width: 479px) {
-    .content-container {
-        margin: 0px;
-        height: 100%;
+    .container {
+        max-width: 1140px;
     }
 }

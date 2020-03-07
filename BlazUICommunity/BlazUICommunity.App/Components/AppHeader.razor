@@ -11,35 +11,33 @@
             <BMenuItem Icon="el-icon-view" Route=""><BButton Type="@ButtonType.Text" Style="color:#fff" OnClick="NavigateToDemo">Demo</BButton></BMenuItem>
             <li role="menuitem" tabindex="0" class="el-menu-item" style="    background-color: transparent;  color: #fff;margin-left: 150px;">
             </li>
-
-            <BMenuItem Icon="" Route="" Style="margin-left:200px;">
-
-                @if (CurrentUser != null)
-                {
-                    <BDropDown EnableAlwaysRender="true">
-                        <Trigger>
-                            <BButton Style="border:none;background:transparent;padding:0px;margin-right: -15px;">
-                                <img src="@CurrentUser?.Avator" class="app-nav-avatar-img" />
-                                <span class="el-dropdown-link" style="vertical-align:auto;color:#fff;">
-                                    @CurrentUser?.NickName  <i class="el-icon-arrow-down el-icon--right" style="color:#fff;"></i>
-                                </span>
-                            </BButton>
-                        </Trigger>
-                        <Items>
-                            <BDropDownItem OnClick="e=>GotoUCentor()">用户中心</BDropDownItem>
-                            <BDropDownItem OnClick="e=>LoginOut()">退出</BDropDownItem>
-                        </Items>
-                    </BDropDown>
-                }
-                else
-                {
-                    <div style="margin-left: 100px;">
-                        <BButton Type="@ButtonType.Text" OnClick="e=>NavigateToLogin()" Style="color:#fff;">登录</BButton>
-                    </div>
-                }
-            </BMenuItem>
-
         </BMenu>
+
+        <div style="flex:1">
+            @if (CurrentUser != null)
+            {
+                <BDropDown EnableAlwaysRender="true">
+                    <Trigger>
+                        <BButton Style="border:none;background:transparent;padding:0px;margin-right: -15px;">
+                            <img src="@CurrentUser?.Avator" class="app-nav-avatar-img" />
+                            <span class="el-dropdown-link" style="vertical-align:auto;color:#fff;">
+                                @CurrentUser?.NickName  <i class="el-icon-arrow-down el-icon--right" style="color:#fff;"></i>
+                            </span>
+                        </BButton>
+                    </Trigger>
+                    <Items>
+                        <BDropDownItem OnClick="e=>GotoUCentor()">用户中心</BDropDownItem>
+                        <BDropDownItem OnClick="e=>LoginOut()">退出</BDropDownItem>
+                    </Items>
+                </BDropDown>
+            }
+            else
+            {
+                <div style="margin-left: 100px;">
+                    <BButton Type="@ButtonType.Text" OnClick="e=>NavigateToLogin()" Style="color:#fff;">登录</BButton>
+                </div>
+            }
+        </div>
 
     </div>
 </div>
