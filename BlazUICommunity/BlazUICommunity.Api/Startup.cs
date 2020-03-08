@@ -14,17 +14,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using Blazui.Community.Api.Service;
 using System.IO;
-using Blazui.Community.DTO;
 using Blazui.Community.Api.Configuration;
-using System.Collections.Generic;
-using System.Linq;
 using Blazui.Community.Utility.Jwt;
 using Blazui.Community.Enums;
 using NLog.LayoutRenderers;
-using static Blazui.Community.Api.Configuration.ConstConfig;
+using static Blazui.Community.Api.Configuration.ConstantConfiguration;
 namespace Blazui.Community.Api
 {
     public class Startup
@@ -43,11 +39,7 @@ namespace Blazui.Community.Api
 
             services.AddCustomAddControllers();
             services.AddMvc();
-
-            var AppAllowOrigin = new List<AppAllowOriginsConfig>();
-            Configuration.GetSection("AllowOrigins").Bind( AppAllowOrigin);
-            services.AddCustomCors("any", AppAllowOrigin.Select(p => p.Host).ToArray());
-
+            services.AddCustomCors(Configuration.GetSection("AllowOrigins"));
             services.AddCustomSwagger();
 
             services.AddAutoMapper(typeof(AutoMapConfiguration));
@@ -65,7 +57,7 @@ namespace Blazui.Community.Api
             services.AddScoped<JwtService>();
             services.AddJwtConfiguration(Configuration);
 
-            services.Configure<EmailConfig>(Configuration.GetSection("EmailSetting"));
+            services.Configure<EmailConfiguration>(Configuration.GetSection("EmailSetting"));
 
         }
 
@@ -113,7 +105,7 @@ namespace Blazui.Community.Api
 
             foreach (UploadPath path in Enum.GetValues(typeof(UploadPath)))
             {
-                var physicsPath = Path.Combine(env.WebRootPath , UploadRootPath, path.Description());
+                var physicsPath = Path.Combine(env.WebRootPath, UploadRootPath, path.Description());
                 if (!Directory.Exists(physicsPath))
                     Directory.CreateDirectory(physicsPath);
             }

@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Configuration
 {
-    public class AppAllowOriginsConfig
+    public class ConstantConfiguration
     {
         /// <summary>
-        /// 域名或主机
+        /// 上传文件根目录
         /// </summary>
-        public string Host { get; set; }
+        public const string UploadRootPath = "upload";
     }
 }

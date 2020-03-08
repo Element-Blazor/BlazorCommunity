@@ -1,7 +1,7 @@
 ﻿@page "/"
 @inherits IndexBase
 <div class="container">
-    <BLayout  EnableAlwaysRender="true" @ref="blayout" EastWidth="280">
+    <BLayout  EnableAlwaysRender="true" @ref="blayout" EastWidth="350">
         <Center>   
             <BTab TabPosition="@TabPosition.Top" OnActiveTabChanged="ActiveTabChanged" EnableAlwaysRender="true" @ref="btab">
                     @foreach (var item in Tabs)

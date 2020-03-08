@@ -5,7 +5,7 @@ using Blazui.Component.Container;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
-using static Blazui.Community.App.Constant;
+using static Blazui.Community.App.ConstantConfiguration;
 
 namespace Blazui.Community.App.Components
 {

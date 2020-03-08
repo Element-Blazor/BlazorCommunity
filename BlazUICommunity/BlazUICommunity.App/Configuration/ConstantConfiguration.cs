@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.App
 {
-    public static class Constant
+    public static class ConstantConfiguration
     {
         /// <summary>
         /// 发送验证码，按钮禁用倒计时

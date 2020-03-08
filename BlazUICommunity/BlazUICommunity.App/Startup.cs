@@ -25,6 +25,9 @@ using System.IO;
 using Blazui.Community.Enums;
 using Blazui.Community.Utility.Configure;
 using NLog.LayoutRenderers;
+using System.Collections.Generic;
+using Blazui.Community.App.Model;
+using System.Text;
 
 namespace Blazui.Community.App
 {
@@ -41,6 +44,7 @@ namespace Blazui.Community.App
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             services.AddDbContext<BlazUICommunityContext>(options => options.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>();
             services.AddHttpClient("BlazuiCommunitiyApp", client => client.BaseAddress = new Uri(Configuration["ServerUrl"] ?? throw new ArgumentNullException("ServerUrl is null")));
             services.AddCustomAspIdenitty<BZUserModel, BlazUICommunityContext>();
@@ -63,6 +67,7 @@ namespace Blazui.Community.App
             services.AddAutoMapper(typeof(AutoMapConfiguration));
             services.AddScoped<NetworkService>();
             services.AddScoped<TokenService>();
+            services.AddOptions<List<HeaderMenu>>().Configure(options => Configuration.GetSection("HeaderMenus").Bind(options));
         }
 
 

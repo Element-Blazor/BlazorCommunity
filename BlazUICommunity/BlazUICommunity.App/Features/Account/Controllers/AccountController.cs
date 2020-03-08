@@ -76,5 +76,8 @@ namespace Blazui.Community.App.Features.Accounts.Controllers
                 return Redirect(HttpContext.Request.Query["returnUrl"]);
             return Redirect("/account/signin");
         }
+
+
+     
     }
 }

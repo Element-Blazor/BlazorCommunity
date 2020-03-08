@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using static Blazui.Community.App.Constant;
+using static Blazui.Community.App.ConstantConfiguration;
 
 namespace Blazui.Community.App.Components.User
 {

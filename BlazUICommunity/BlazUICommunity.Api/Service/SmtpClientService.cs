@@ -13,11 +13,16 @@ namespace Blazui.Community.Api.Service
 {
     public class SmtpClientService : ISmtpClientService
     {
-        private static EmailConfig emailConfig;
+        private static EmailConfiguration emailConfig;
         private ILogger<SmtpClientService> _logger;
-        public SmtpClientService(IOptions<EmailConfig> options, ILogger<SmtpClientService> logger)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="logger"></param>
+        public SmtpClientService(IOptionsMonitor<EmailConfiguration> options, ILogger<SmtpClientService> logger)
         {
-            emailConfig = options.Value;
+            emailConfig = options.CurrentValue;
             _logger = logger;
         }
         /// <summary>

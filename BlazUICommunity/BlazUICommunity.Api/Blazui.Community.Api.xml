@@ -4,37 +4,37 @@
         <name>Blazui.Community.Api</name>
     </assembly>
     <members>
-        <member name="P:Blazui.Community.Api.Configuration.AppAllowOriginsConfig.Host">
+        <member name="P:Blazui.Community.Api.Configuration.AllowOriginsConfiguration.Host">
             <summary>
             域名或主机
             </summary>
         </member>
-        <member name="F:Blazui.Community.Api.Configuration.ConstConfig.UploadRootPath">
+        <member name="F:Blazui.Community.Api.Configuration.ConstantConfiguration.UploadRootPath">
             <summary>
             上传文件根目录
             </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailConfig.Account">
+        <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.Account">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailConfig.Auth">
+        <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.Auth">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailConfig.StmpHost">
+        <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.StmpHost">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailConfig.StmpPort">
+        <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.StmpPort">
             <summary>
             
             </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailConfig.FromName">
+        <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.FromName">
             <summary>
             
             </summary>
@@ -1394,6 +1394,13 @@
             <param name="Content"></param>
             <param name="Subject"></param>
             <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Service.SmtpClientService.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Blazui.Community.Api.Configuration.EmailConfiguration},Microsoft.Extensions.Logging.ILogger{Blazui.Community.Api.Service.SmtpClientService})">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+            <param name="logger"></param>
         </member>
         <member name="M:Blazui.Community.Api.Service.SmtpClientService.SendEmail(System.String,System.String,System.String)">
             <summary>

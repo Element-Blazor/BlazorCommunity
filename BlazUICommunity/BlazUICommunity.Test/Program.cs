@@ -14,8 +14,6 @@ namespace Blazui.Community.Test
             Console.WriteLine("Hello World! Start");
 
 
-            List<string> vs = new List<string>() { "1","2","3"};
-            var s = vs.FirstOrDefault(p => p == "34");
 
             //using (BlazUICommunityContext communityContext = new BlazUICommunityContext())
             //{

@@ -60,15 +60,14 @@ namespace Blazui.Community.App.Pages
             }
             try
             {
-             
                 await InitilizePageDataAsync();
                 RequireRender = true;
                 StateHasChanged();
             }
             catch (Exception ex)
             {
+                LoadingService.CloseFullScreenLoading();
                 ToastError(ex.Message);
-                await InitilizePageDataAsync();
                 _logger.LogError($"OnAfterRenderAsync----->>{ex.StackTrace}");
             }
         }

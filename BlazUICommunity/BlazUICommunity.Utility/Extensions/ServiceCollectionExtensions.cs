@@ -13,6 +13,7 @@ using Newtonsoft.Json.Serialization;
 using Blazui.Community.Utility.Formatter;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Blazui.Community.Utility.Configure
 {
@@ -163,19 +164,20 @@ namespace Blazui.Community.Utility.Configure
             return services;
         }
 
-        public static IServiceCollection AddCustomCors(this IServiceCollection services, string name= "any", params string[] WithOrigins)
+        public static IServiceCollection AddCustomCors(this IServiceCollection services, IConfiguration Configuration)
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(name, policy =>
+                options.AddPolicy("any", policy =>
                {
                    policy.AllowAnyOrigin() //允许任何来源的主机访问
                    .AllowAnyHeader()
                    .AllowAnyMethod()
                    .AllowCredentials();//指定处理cookie
-                   if (WithOrigins.Any())
-                       policy.WithOrigins(WithOrigins);
-                    //
+                   var AllowOrigins = new List<string>();
+                   Configuration.Bind(AllowOrigins);
+                   policy.WithOrigins(AllowOrigins.ToArray());
+                    
 
                 });
             });

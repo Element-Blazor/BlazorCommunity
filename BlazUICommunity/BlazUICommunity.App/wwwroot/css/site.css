@@ -332,11 +332,11 @@ app .blaz-layout > .blaz-layout-container > .blaz-layout-center {
     margin-left: -30px;
 }
 
-body > app > div > div.blaz-layout-north.blaz-layout-card > div > div > ul > li.el-menu-item {
+.container ul > li.el-menu-item {
     border-bottom: none;
 }
 
-    body > app > div > div.blaz-layout-north.blaz-layout-card > div > div > ul > li.el-menu-item.is-active {
+    .container ul > li.el-menu-item.is-active {
         border-bottom: none;
     }
 
@@ -353,7 +353,7 @@ app > div .is-active {
 .app-nav-avatar-img {
     width: 50px;
     height: 50px;
-    margin: 10px 10px 0px 0px;
+    margin: auto 10px auto auto;
     border: none;
     border-radius: 100%;
 }
@@ -783,26 +783,52 @@ el-center {
     margin-left: auto;
 }
 
-@media (min-width: 576px) {
-    .container {
-        max-width: 540px;
+
+@media screen and (min-width:1200px) {
+    .container{
+        max-width:1300px;
+    }
+    .fill {
+     flex:1;
     }
 }
 
-@media (min-width: 768px) {
+@media screen and (min-width: 960px) and (max-width: 1199px) {
     .container {
-        max-width: 720px;
+        max-width: 1200px;
+    }
+    .fill {
+        flex: 1;
     }
 }
 
-@media (min-width: 992px) {
+@media screen and (min-width: 768px) and (max-width: 959px) {
     .container {
-        max-width: 960px;
+        max-width: 900px;
     }
+    .fill{
+        display:none;
+    }
+  
 }
 
-@media (min-width: 1200px) {
+@media only screen and (min-width: 480px) and (max-width: 767px) {
     .container {
-        max-width: 1140px;
+        max-width: 700px;
     }
+    .fill {
+        display: none;
+    }
+   
 }
+
+@media only screen and (max-width: 479px) {
+    .container {
+        max-width: 450px;
+    }
+    .fill {
+        display: none;
+    }
+
+}
+

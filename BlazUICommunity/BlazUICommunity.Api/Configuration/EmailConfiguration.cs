@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Configuration
 {
-    public class EmailConfig: IOptions<EmailConfig>
+    public class EmailConfiguration
     {
         /// <summary>
         /// 
@@ -29,6 +29,5 @@ namespace Blazui.Community.Api.Configuration
         /// </summary>
         public string FromName { get; set; }
 
-        public EmailConfig Value => this;
     }
 }
