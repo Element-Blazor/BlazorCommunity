@@ -6,8 +6,10 @@ using Blazui.Community.Utility;
 using Blazui.Component;
 using Blazui.Component.Container;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -68,6 +70,8 @@ namespace Blazui.Community.App.Pages
                 IsMySelf = TopicModel.CreatorId == User?.Id;
                 TopicContent = TopicModel.Content;
                 TopicTitle = TopicModel.Title;
+                var versions = await QueryVersions();
+                TopicModel.VerName = versions?.FirstOrDefault(p=>p.Id==TopicModel.VersionId)?.VerName;
             }
             else
             {
@@ -76,6 +80,20 @@ namespace Blazui.Community.App.Pages
                 return;
             }
         }
+        [Inject]
+         IMemoryCache memoryCache { get; set; }
+        protected async Task<List<BZVersionDto>> QueryVersions()
+        {
+            return await memoryCache.GetOrCreateAsync("Version", async p =>
+            {
+                p.SetSlidingExpiration(TimeSpan.FromMinutes(10));
+                var result = await NetService.GetAllVersions();
+                if (result.IsSuccess)
+                    return result.Data;
+                else return new List<BZVersionDto>();
+            });
+        }
+
         /// <summary>
         /// 判断当前用户是否收藏了该帖子
         /// </summary>

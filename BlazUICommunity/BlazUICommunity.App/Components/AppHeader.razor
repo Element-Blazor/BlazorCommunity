@@ -5,7 +5,7 @@
         <div class="fill"></div>
         @if (headerMenus.Any())
         {
-            <BMenu BackgroundColor="transparent" Mode="MenuMode.Horizontal" HoverColor="#9933FF" TextColor="#fff" DefaultActive="0" ActiveTextColor="#fff" EnableAlwaysRender="true">
+            <BMenu BackgroundColor="transparent" Mode="MenuMode.Horizontal" HoverColor="#409EFF" TextColor="#fff" DefaultActive="0" ActiveTextColor="#fff" EnableAlwaysRender="true">
                 @foreach (var menu in headerMenus)
                 {
                     <BMenuItem Icon="@menu.Icon" Route="@(string.IsNullOrWhiteSpace(menu.Route)?"/":$"/navigate{menu.Route}")" Style="@($"width:{90/headerMenus.Count}%")">@menu.Title</BMenuItem>
@@ -13,7 +13,7 @@
             </BMenu>
         }
         <div class="fill"></div>
-        <div  style="flex:1">
+        <div  style="flex:1;margin-left:20px;" >
             @if (CurrentUser != null)
             {
                 <BDropDown EnableAlwaysRender="true">

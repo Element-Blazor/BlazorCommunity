@@ -172,7 +172,7 @@ html body > app {
             }
 
     html body > app div.nav {
-        background-color: #9900FF;
+        background-color: #409EFF;
     }
 
         html body > app div.nav > div.container {
@@ -237,7 +237,7 @@ html body > app {
 }
 
     .content-topic-tab .el-tabs__active-bar {
-        background-color: #9900FF;
+        background-color: #409EFF;
     }
 
 .content-card {
@@ -718,11 +718,11 @@ app .el-dialog__wrapper .el-dialog .is-fullscreen .el-dialog__body {
 
 .account-header {
     height: 120px;
-    background: #9900FF;
+    background: #409EFF;
 }
 
 .account-body {
-    background: #9900FF;
+    background: #409EFF;
 }
 
 .go-back {
@@ -743,12 +743,12 @@ el-center {
 
 .custome-button-hover .el-button.is-plain:active {
     border-color: transparent !important;
-    color: #9900FF !important;
+    color: #409EFF !important;
 }
 
 .custome-button-hover .el-button.is-plain:hover {
     border-color: transparent !important;
-    color: #9900FF !important;
+    color: #409EFF !important;
 }
 
 .custome-button-hover .el-button.is-plain:focus {
@@ -791,6 +791,11 @@ el-center {
     .fill {
      flex:1;
     }
+    .blaz-layout > .blaz-layout-container > .blaz-layout-east {
+        display: flex !important;
+        min-width:350px !important;
+    }
+  
 }
 
 @media screen and (min-width: 960px) and (max-width: 1199px) {
@@ -800,6 +805,12 @@ el-center {
     .fill {
         flex: 1;
     }
+
+    .blaz-layout > .blaz-layout-container > .blaz-layout-east {
+        display: flex !important;
+        min-width: 350px !important;
+    }
+   
 }
 
 @media screen and (min-width: 768px) and (max-width: 959px) {
@@ -809,7 +820,15 @@ el-center {
     .fill{
         display:none;
     }
-  
+
+    .blaz-layout > .blaz-layout-container > .blaz-layout-east {
+        display: none !important;
+    }
+ 
+    .nav .el-menu-item {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
 }
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
@@ -819,16 +838,32 @@ el-center {
     .fill {
         display: none;
     }
+
+    .blaz-layout > .blaz-layout-container > .blaz-layout-east {
+        display: none !important;
+    }
    
+    .nav .el-menu-item {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
 }
 
 @media only screen and (max-width: 479px) {
     .container {
-        max-width: 450px;
+        min-width: 450px;
     }
     .fill {
         display: none;
     }
 
+    .blaz-layout > .blaz-layout-container > .blaz-layout-east {
+        display: none !important;
+    }
+  
+    .nav .el-menu-item {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
 }
 
