@@ -227,6 +227,6 @@ namespace Arch.EntityFrameworkCore.UnitOfWork.Collections
         /// <param name="source">The source.</param>
         /// <param name="converter">The converter.</param>
         /// <returns>An instance of <see cref="IPagedList{TResult}"/>.</returns>
-        public static IPagedList<TResult> From<TResult, TSource>(IPagedList<TSource> source, Func<IEnumerable<TSource>, IEnumerable<TResult>> converter) => new PagedList<TSource, TResult>(source, converter);
+        public static IPagedList<TResult> From<TResult, TSource>(this IPagedList<TSource> source, Func<IEnumerable<TSource>, IEnumerable<TResult>> converter) => new PagedList<TSource, TResult>(source, converter);
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Blazui.Community.Enums;
+using Blazui.Community.Utility.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -26,7 +28,6 @@ namespace Blazui.Community.DTO
         /// 点赞数量
         /// </summary>
         public int? Favor { get; set; }
-        public string Avator { get; set; }
 
         /// <summary>
         /// 是否置顶0否-1置顶
@@ -37,51 +38,37 @@ namespace Blazui.Community.DTO
         /// </summary>
         public int Good { get; set; }
 
+        [AutoNotMap]
         public string UserName { get; set; }
+        [AutoNotMap]
         public string NickName { get; set; }
+        [AutoNotMap]
         public string UserId { get; set; }
-        [NotMapped]
-        public string GoodDisplay
-        {
-            get
-            {
-                return Good switch
-                {
-                    0 => "否",
-                    1 => "是",
-                    _ => "Unkown"
-                };
-            }
-        }
-        [NotMapped]
-        public string TopDisplay
-        {
-            get
-            {
-                return Top switch
-                {
-                    0 => "否",
-                    1 => "是",
-                    _ => "Unkown"
-                };
-            }
-        }
-        [NotMapped]
-        public string LastModifyTimeDisplay { get; set; }
+        [AutoNotMap]
+        public string Avator { get; set; }
 
+        [NotMapped]
+        [AutoNotMap]
+        public string GoodDisplay => ((SwitchStatus)Good).Description();
+        [NotMapped]
+        [AutoNotMap]
+        public string TopDisplay => ((SwitchStatus)Top).Description();
+
+        /// <summary>
+        /// 是否当前用户的回帖
+        /// </summary>
         [NotMapped]
         public bool IsMySelf { get; set; }
-
+        /// <summary>
+        /// 是否可以修改
+        /// </summary>
         [NotMapped]
         public bool ShoudEdit { get; set; }
+        /// <summary>
+        /// 修改之前的内容
+        /// </summary>
         [NotMapped]
         public string OriginalContent { get; set; }
     }
 
-
-    public class MyReplyDto
-    {
-        public List<BZReplyDto> Replys { get; set; }
-        public int Total { get; set; }
-    }
 }

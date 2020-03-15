@@ -26,9 +26,13 @@ namespace Blazui.Community.Utility.Filter
             {
                 if (!context.Controller.GetType().IsDefined(typeof(BlazuiUploadApiResultAttribute), true))
                 {
+                    if(context.Result is NoContentResponse)
+                    {
+                        context.Result = new OkObjectResult(new BaseResponse(code: 205, result: "", message: "no data"));
+                    }
                     if (context.Result is NoContentResult)
                     {
-                        context.Result = new OkObjectResult(new BaseResponse(code: 204, result: "", message: "no data"));
+                        context.Result = new OkObjectResult(new BaseResponse(code: 204, result: "", message: "Not Modified"));
                     }
                     else if (context.Result is ValidationFailedResponse)
                     {

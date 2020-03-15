@@ -98,10 +98,6 @@ namespace Blazui.Community.App.Components
 
             foreach (var item in result.Data.Items)
             {
-                if (item.LastModifyDate.HasValue)
-                {
-                    item.LastModifyTimeDisplay = Convert.ToDateTime(item.LastModifyDate).ConvertToDateDiffStr();
-                }
                 item.OriginalContent = item.Content;
                 item.IsMySelf = item.CreatorId == User?.Id;
                 item.ShoudEdit = false;

@@ -36,6 +36,8 @@ namespace Blazui.Community.Api.Controllers.Client
         /// 
         /// </summary>
         /// <param name="bZBannerRepository"></param>
+        /// <param name="mapper"></param>
+        /// <param name="cacheService"></param>
         public BannerController(BZBannerRepository bZBannerRepository, IMapper mapper, ICacheService cacheService)
         {
             _BZBannerRepository = bZBannerRepository;
@@ -68,17 +70,15 @@ namespace Blazui.Community.Api.Controllers.Client
         [HttpDelete("Delete/{Id}")]
         public IActionResult Delete([FromRoute] string Id)
         {
-            //_BZBannerRepository.LogicDelete(Id, oprationId);
-            //return Ok();
-
             var version = _BZBannerRepository.Find(Id);
-            if (version != null && !string.IsNullOrWhiteSpace(version.Id))
-            {
-                version.Status = version.Status == -1 ? 0 : -1;
-            }
+            if (version == null)
+                return NoContent();
+            version.Status = version.Status == -1 ? 0 : -1;
             _BZBannerRepository.Update(version);
             _cacheService.Remove(nameof(BzBannerModel));
             return Ok();
+
+
         }
 
         /// <summary>
@@ -131,10 +131,9 @@ namespace Blazui.Community.Api.Controllers.Client
         [HttpGet("GetPageList/{pageSize}/{pageIndex}")]
         public async Task<IActionResult> Query(int pageSize, int pageIndex)
         {
-
             var pagedList = await _BZBannerRepository.GetPagedListAsync(p =>true, o => o.OrderBy(p => p.Id), null, pageIndex - 1, pageSize);
-            var pagedatas = pagedList.ConvertToPageData<BzBannerModel, BzBannerDto>();
-            pagedatas.Items = _mapper.Map<IList<BzBannerDto>>(pagedList.Items);
+            var pagedatas = pagedList.From(s => _mapper.Map<List<BzBannerDto>>(s));// pagedList.ConvertToPageData<BzBannerModel, BzBannerDto>();
+            //pagedatas.Items = _mapper.Map<IList<BzBannerDto>>(pagedList.Items);
             return Ok(pagedatas);
         }
         /// <summary>
@@ -144,8 +143,7 @@ namespace Blazui.Community.Api.Controllers.Client
         [HttpGet("QueryAll")]
         public async Task<IActionResult> QueryAll()
         {
-            var banners = await _cacheService.Banners(p => p.Show && p.Status == 0);
-            return Ok(banners);
+            return Ok(await _cacheService.Banners(p => p.Show && p.Status == 0));
         }
     }
 }

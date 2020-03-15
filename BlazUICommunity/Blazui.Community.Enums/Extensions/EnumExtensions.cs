@@ -9,6 +9,8 @@ namespace Blazui.Community.Enums
     public static class EnumExtensions
     {
 
+        private static Dictionary<Enum, string> dictionaryDescriptions = new Dictionary<Enum, string>();
+
         /// <summary>
         /// 获取枚举标记的第一个Description或继承Description的特性描述
         /// </summary>
@@ -16,9 +18,13 @@ namespace Blazui.Community.Enums
         /// <returns></returns>
         public static string Description(this Enum e)
         {
+            if (dictionaryDescriptions.TryGetValue(e, out string desc))
+                return desc;
             var attribute = e?.GetType().GetField(e?.ToString()).GetCustomAttribute<DescriptionAttribute>(true);
 
-            return (attribute == null || attribute.Description == null) ? e.ToString() : attribute.Description;
+            var newdesc= (attribute == null || attribute.Description == null) ? e.ToString() : attribute.Description;
+            dictionaryDescriptions.Add(e, newdesc);
+            return newdesc;
         }
 
         public static Dictionary<int, string> KeyDescriptions(this Type t)

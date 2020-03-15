@@ -1,6 +1,6 @@
 ﻿@page "/manage/user"
 @using Blazui.Community.Admin.QueryCondition
-@using Blazui.Community.DTO;
+@using Blazui.Community.DTO.Admin;
 @inherits UserManageBase
 
 <BForm Inline="true" @ref="searchForm">
@@ -28,14 +28,14 @@
 
 <BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
     <BTableColumns>
-        <BTableColumn Width="100" Property="@nameof(BZUserDto.UserName)" Text="账号" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(BZUserDto.Email)" Text="邮箱" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(BZUserDto.PhoneNumber)" Text="手机" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(BZUserDto.NickName)" Text="昵称" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="50" Property="@nameof(BZUserDto.SexDisplay)" Text="性别" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="50" Property="@nameof(BZUserDto.StatusDisplay)" Text="状态" Style="text-align:center;color:red;"></BTableColumn>
-        <BTableColumn Width="200" Property="@nameof(BZUserDto.Signature)"  Text="签名" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(BZUserDto.CreateDate)" Format="yyyy-MM-dd" Text="注册日期" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(UserDisplayDto.UserName)" Text="账号" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(UserDisplayDto.Email)" Text="邮箱" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(UserDisplayDto.PhoneNumber)" Text="手机" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(UserDisplayDto.NickName)" Text="昵称" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="50"  Property="@nameof(UserDisplayDto.SexDisplay)" Text="性别" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="50"  Property="@nameof(UserDisplayDto.StatusDisplay)" Text="状态" Style="text-align:center;color:red;"></BTableColumn>
+        <BTableColumn Width="200" Property="@nameof(UserDisplayDto.Signature)"  Text="签名" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(UserDisplayDto.CreateDate)" Format="yyyy-MM-dd" Text="注册日期" Style="text-align:center;"></BTableColumn>
         <BTableTemplateColumn Text="操作" Width="100">
             <BButton Type="@ButtonType.Success" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Detail(context))">查看</BButton>
 
@@ -44,17 +44,17 @@
                     <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" IsPlain="true">操作</BButton>
                 </Trigger>
                 <Items>
-                    @if (context is BZUserDto dto)
+                    @if (context is UserDisplayDto dto)
                     {
-                        if (dto.Status == 0)
-                        {
+                        //if (dto.Status == 0)
+                        //{
                             <BDropDownItem OnClick="@(e=> Frozen(context))">封禁账号</BDropDownItem>
-                        }
-                        else
-                        {
+                        //}
+                        //else
+                        //{
                             <BDropDownItem OnClick="@(e=> UnFrozen(context))">激活账号</BDropDownItem>
+                            //}
                         }
-                    }
                     <BDropDownItem OnClick="@(e=> ResetPassword(context))">重置密码</BDropDownItem>
                 </Items>
             </BDropDown>

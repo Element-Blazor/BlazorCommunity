@@ -1,13 +1,18 @@
 ﻿using Blazui.Community.Admin.QueryCondition;
 using Blazui.Community.Admin.ViewModel;
 using Blazui.Community.DTO;
+using Blazui.Community.DTO.Admin;
 using Blazui.Community.Request;
 using Blazui.Community.Utility.Extensions;
 using Blazui.Community.Utility.Response;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
 using HttpMethod = Blazui.Community.Utility.Extensions.HttpMethod;
 
@@ -17,13 +22,21 @@ namespace Blazui.Community.Admin.Service
     {
         private readonly HttpClient httpClient;
         private readonly AdminUserService _adminUserService;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly AuthenticationStateProvider _AuthenticationStateProvider;
         private readonly BaseResponse Unauthorized;
+
+        private static Dictionary<string, PropertyInfo[]> QuaryParams = new Dictionary<string, PropertyInfo[]>();
         private bool IsSupperRole = false;
         public NetworkService(IHttpClientFactory httpClientFactory, AdminUserService adminUserService)
         {
             this.httpClient = httpClientFactory.CreateClient("BlazuiCommunitiyAdmin");
+            httpClient.DefaultRequestHeaders.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue()
+            {
+                NoCache = false,
+                NoStore = false,
+                MaxAge = TimeSpan.FromSeconds(100),
+                MustRevalidate = true,
+                Public = true,
+            };
             _adminUserService = adminUserService;
             Unauthorized = new BaseResponse(403, "Unauthorized ，对不起您没有权限进行该操作 ", null);
         }
@@ -42,24 +55,45 @@ namespace Blazui.Community.Admin.Service
             return httpContent;
         }
 
-
+        /// <summary>
+        /// 构建QueryParam
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        private static string BuildHttpQueryParam<T>(T t)
+        {
+            if (t is null)
+                return string.Empty;
+            var queryparam = string.Empty;
+            var queryKey = t.GetType().FullName;
+            if (!QuaryParams.TryGetValue(queryKey, out PropertyInfo[] props))
+            {
+                props = t.GetType().GetProperties();
+                QuaryParams.Add(queryKey, props);
+            }
+            props = props.Where(p => p.GetValue(t) != null).ToArray();
+            if (props.Any())
+                queryparam = "?";
+            foreach (PropertyInfo prop in props)
+            {
+                queryparam += $"{prop.Name}={prop.GetValue(t)}&";
+            }
+            queryparam = queryparam.TrimEnd('&');
+            return queryparam;
+        }
 
         /// <summary>
         /// 查询用户
         /// </summary>
         /// <returns></returns>
-        internal async Task<BaseResponse<PageDatas<BZUserDto>>> QueryUsers(QueryUserCondition querycondition)
+        internal async Task<BaseResponse<PageDatas<UserDisplayDto>>> QueryUsers(QueryUserCondition querycondition)
         {
-            return await httpClient.PostJsonAsync<PageDatas<BZUserDto>>("api/user/Query", BuildHttpContent(querycondition));
+
+            return await httpClient.GetJsonAsync<PageDatas<UserDisplayDto>>($"api/user/Query{BuildHttpQueryParam(querycondition)}");
+            //return await httpClient.PostJsonAsync<PageDatas<UserDisplayDto>>("api/user/Query", BuildHttpContent(querycondition));
         }
-        /// <summary>
-        /// 查询用户
-        /// </summary>
-        /// <returns></returns>
-        internal async Task<BaseResponse<BZUserDto>> QueryUserByUserName(string UserName)
-        {
-            return await httpClient.GetJsonAsync<BZUserDto>($"api/user/QueryByName/{UserName}");
-        }
+      
         /// <summary>
         /// 封禁账号
         /// </summary>

@@ -980,7 +980,9 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
             if (!TempEntityPropertiesDic.TryGetValue(typeof(T), out PropertyInfo[] propertyInfos))
             {
                 propertyInfos = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(p => !p.IsDefined(typeof(NotMappedAttribute), false)).ToArray();
+                TempEntityPropertiesDic.Add(typeof(T), propertyInfos);
             }
+           
             while (await reader.ReadAsync())
             {
                 T tempEntity = Activator.CreateInstance<T>();

@@ -1,28 +1,31 @@
 ﻿using AutoMapper;
 using Blazui.Community.Admin.ViewModel;
 using Blazui.Community.DTO;
+using Blazui.Community.Enums;
 using Blazui.Community.Model.Models;
+using System;
+
 namespace Blazui.Community.Admin.AutoConfiguration
 {
     public class AutoMapConfiguration : Profile
     {
         public AutoMapConfiguration()
         {
-            CreateMap<BZUserModel, BZUserDto>().ForMember(dest => dest.StatusDisplay, option => option.Ignore());
+            CreateMap<BZUserModel, BZUserDto>().ForMember(dest => dest.StatusDisplay, option => option.MapFrom(src => ((DelStatus)src.Status).Description()))
+                .ForMember(dest => dest.SexDisplay, option => option.MapFrom(src => src.Sex == 0 ? "男" : "女"));
             CreateMap<BZUserDto, BZUserModel>();
 
             CreateMap<BZTopicModel, BZTopicDto>()
-                  .ForMember(dest => dest.StatusDisplay, option => option.Ignore())
             .ForMember(dest => dest.UserName, option => option.Ignore())
             .ForMember(dest => dest.Avator, option => option.Ignore())
             .ForMember(dest => dest.NickName, option => option.Ignore())
-             .ForMember(dest => dest.GoodDisplay, option => option.Ignore())
-              .ForMember(dest => dest.TopDisplay, option => option.Ignore())
-             .ForMember(dest => dest.StatusDisplay, option => option.Ignore());
+            .ForMember(dest => dest.GoodDisplay, option => option.Ignore())
+            .ForMember(dest => dest.TopDisplay, option => option.Ignore())
+            .ForMember(dest => dest.StatusDisplay, option => option.MapFrom(src => ((DelStatus)src.Status).Description()));
 
             CreateMap<BZTopicDto, BZTopicModel>();
 
-            
+
 
             CreateMap<BZFollowModel, BZFollowDto>().ForMember(dest => dest.StatusDisplay, option => option.Ignore());
             CreateMap<BZFollowDto, BZFollowModel>();
@@ -40,15 +43,14 @@ namespace Blazui.Community.Admin.AutoConfiguration
             CreateMap<BZOauthDto, BZAutho2Model>();
 
             CreateMap<BZReplyModel, BZReplyDto>()
-                .ForMember(dest => dest.StatusDisplay, option => option.Ignore())
               .ForMember(dest => dest.UserName, option => option.Ignore())
             .ForMember(dest => dest.Avator, option => option.Ignore())
             .ForMember(dest => dest.NickName, option => option.Ignore())
              .ForMember(dest => dest.UserId, option => option.Ignore())
              .ForMember(dest => dest.GoodDisplay, option => option.Ignore())
               .ForMember(dest => dest.TopDisplay, option => option.Ignore())
-             .ForMember(dest => dest.StatusDisplay, option => option.Ignore())
-               .ForMember(dest => dest.LastModifyTimeDisplay, option => option.Ignore());
+             .ForMember(dest => dest.StatusDisplay, option => option.MapFrom(src => ((DelStatus)src.Status).Description()))
+               .ForMember(dest => dest.LastModifyDateDisplay, option => option.Ignore());
             CreateMap<BZReplyDto, BZReplyModel>();
 
             CreateMap<BzVerifyCodeModel, BzVerifyCodeDto>().ForMember(dest => dest.StatusDisplay, option => option.Ignore());
@@ -74,6 +76,11 @@ namespace Blazui.Community.Admin.AutoConfiguration
 
             CreateMap<BZIDCardModel, BZIDCardDto>().ForMember(dest => dest.StatusDisplay, option => option.Ignore());
             CreateMap<BZIDCardDto, BZIDCardModel>();
+        }
+
+        string test(string s)
+        {
+            return s;
         }
     }
 }

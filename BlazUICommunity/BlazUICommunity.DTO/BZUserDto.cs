@@ -1,4 +1,5 @@
 ﻿using Blazui.Community.Enums;
+using Blazui.Community.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,21 +7,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blazui.Community.DTO
 {
-    public  class BZUserDto 
+    public  class BZUserDto :BaseDto
     {
         public string UserName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public string Id { get; set; }
-        [NotMapped]
-        public string SexDisplay {
-
-            get
-            {
-
-                return Sex == 0 ? "男" : "女";
-            }
-        }
         /// <summary>
         /// 昵称
         /// </summary>
@@ -65,33 +56,9 @@ namespace Blazui.Community.DTO
         public string LastLoginAddr { get; set; } = "";
 
 
-
-        /// <summary>
-        /// 状态0正常，-1已禁用
-        /// </summary>
-        public int Status { get; set; } = 0;
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTime CreateDate { get; set; }
-        /// <summary>
-        /// 修改时间
-        /// </summary>
-        public DateTime? LastModifyDate { get; set; }
-        /// <summary>
-        /// 最后操作人
-        /// </summary>
-        public string CreatorId { get; set; }
-
-        public string? LastModifierId { get; set; }
-
         [NotMapped]
-        public string StatusDisplay
-        {
-            get
-            {
-                return ((DelStatus)Status).Description();
-            }
-        }
+        [AutoNotMap]
+        public string SexDisplay => ((Sex)this.Sex).Description();
+
     }
 }

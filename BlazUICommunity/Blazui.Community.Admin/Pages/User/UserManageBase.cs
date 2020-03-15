@@ -1,6 +1,8 @@
 ﻿using Blazui.Community.Admin.QueryCondition;
 using Blazui.Community.DTO;
+using Blazui.Community.DTO.Admin;
 using Blazui.Component;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +14,7 @@ namespace Blazui.Community.Admin.Pages.User
         protected int pageSize = 10;
         protected int currentPage = 1;
         internal bool requireRender = false;
-        protected List<BZUserDto> Datas = new List<BZUserDto>();
+        protected IList<UserDisplayDto> Datas = new List<UserDisplayDto>();
         protected int DataCount = 5;
         protected BTable table;
         protected BForm searchForm;
@@ -35,7 +37,6 @@ namespace Blazui.Community.Admin.Pages.User
             await table.WithLoadingAsync(async () =>
             {
                 await LoadDatas();
-                UpdateUI();
             });
         }
 
@@ -49,18 +50,24 @@ namespace Blazui.Community.Admin.Pages.User
             var condition = searchForm.GetValue<QueryUserCondition>();
 
             condition ??= new QueryUserCondition();
-            condition.PageInfo.PageIndex = currentPage;
-            condition.PageInfo.PageSize = pageSize;
+            condition.PageIndex = currentPage;
+            condition.PageSize = pageSize;
             var datas = await NetService.QueryUsers(condition);
+            //是否可以做一个判断 如果返回的相同数据，就重新渲染了??
             if (datas.IsSuccess)
             {
-                Datas = datas.Data.Items.ToList();
+                Datas = datas.Data.Items;
                 DataCount = datas.Data.TotalCount;
+                UpdateUI();
             }
             else
             {
-                Datas = new List<BZUserDto>();
-                DataCount = 0;
+                if (datas.Code != 304)
+                {
+                    Datas = new List<UserDisplayDto>();
+                    DataCount = 0;
+                    UpdateUI();
+                }
             }
         }
 
@@ -76,7 +83,7 @@ namespace Blazui.Community.Admin.Pages.User
 
         protected async Task Frozen(object obj)
         {
-            if (obj is BZUserDto dto)
+            if (obj is UserDisplayDto dto)
             {
                 await ConfirmAsync(
                     async () => await NetService.FrozenUser(dto.Id),
@@ -87,11 +94,11 @@ namespace Blazui.Community.Admin.Pages.User
         }
         protected async Task Detail(object obj)
         {
-
+            MessageService.Show(((UserDisplayDto)obj).UserName);
         }
         protected async Task UnFrozen(object obj)
         {
-            if (obj is BZUserDto dto)
+            if (obj is UserDisplayDto dto)
             {
                 await ConfirmAsync(
                     async () => await NetService.UnFrozen(dto.Id),
@@ -102,7 +109,7 @@ namespace Blazui.Community.Admin.Pages.User
 
         protected async Task ResetPassword(object obj)
         {
-            if (obj is BZUserDto dto)
+            if (obj is UserDisplayDto dto)
             {
                 await ConfirmAsync(
                     async () => await NetService.ResetPassword(dto.Id),

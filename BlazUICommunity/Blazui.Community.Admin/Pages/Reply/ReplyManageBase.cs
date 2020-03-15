@@ -71,8 +71,8 @@ namespace Blazui.Community.Admin.Pages.Reply
             topicTitle = condition.TopicId ?? "";
             condition.UserId = null;
             condition.TopicId = null;
-            condition.PageInfo.PageIndex = currentPage;
-            condition.PageInfo.PageSize = pageSize;
+            condition.PageIndex = currentPage;
+            condition.PageSize = pageSize;
         }
 
         private void UpdateUI()

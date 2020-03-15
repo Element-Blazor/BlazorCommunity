@@ -526,21 +526,9 @@
             <param name="userManager"></param>
             <param name="cacheService"></param>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.Add(Blazui.Community.DTO.BZUserDto)">
-            <summary>
-            新增用户
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.Delete(System.String,System.String)">
-            <summary>
-            根据ID删除用户
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:Blazui.Community.Api.Controllers.UserController.Frozen(System.String)">
             <summary>
-            冻结
+            删除
             </summary>
             <returns></returns>
         </member>
@@ -553,24 +541,6 @@
         <member name="M:Blazui.Community.Api.Controllers.UserController.ResetPassword(System.String)">
             <summary>
             重置密码
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.Update(Blazui.Community.DTO.BZUserDto)">
-            <summary>
-            更新用户
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.Query(System.String)">
-            <summary>
-            根据Id查询用户
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.QueryByName(System.String)">
-            <summary>
-            根据Id查询用户
             </summary>
             <returns></returns>
         </member>
@@ -646,6 +616,8 @@
             
             </summary>
             <param name="bZBannerRepository"></param>
+            <param name="mapper"></param>
+            <param name="cacheService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.BannerController.Add(Blazui.Community.DTO.BzBannerDto)">
             <summary>

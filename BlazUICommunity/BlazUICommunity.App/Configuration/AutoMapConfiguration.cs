@@ -54,7 +54,7 @@ namespace Blazui.Community.App
              .ForMember(dest => dest.GoodDisplay, option => option.Ignore())
               .ForMember(dest => dest.TopDisplay, option => option.Ignore())
              .ForMember(dest => dest.StatusDisplay, option => option.Ignore())
-               .ForMember(dest => dest.LastModifyTimeDisplay, option => option.Ignore());
+               .ForMember(dest => dest.LastModifyDateDisplay, option => option.Ignore());
             CreateMap<BZReplyDto, BZReplyModel>();
 
             CreateMap<BzVerifyCodeModel, BzVerifyCodeDto>().ForMember(dest => dest.StatusDisplay, option => option.Ignore());

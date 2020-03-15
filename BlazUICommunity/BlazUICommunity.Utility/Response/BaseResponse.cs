@@ -16,7 +16,7 @@ namespace Blazui.Community.Utility.Response
 
         }
        
-        public BaseResponse(int? code = null, string message = null, object result = null)
+        public BaseResponse(int code = -1, string message = null, object result = null)
         {
             this.Code = code;
             this.Data = result;

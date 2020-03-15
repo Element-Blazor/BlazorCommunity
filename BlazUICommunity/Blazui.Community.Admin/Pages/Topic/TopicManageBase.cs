@@ -70,8 +70,8 @@ namespace Blazui.Community.Admin.Pages.Topic
             if (condition.UserId != null)
                 username = condition.UserId.ToString();
             condition.UserId = null;
-            condition.PageInfo.PageIndex = currentPage;
-            condition.PageInfo.PageSize = pageSize;
+            condition.PageIndex = currentPage;
+            condition.PageSize = pageSize;
         }
 
         private void UpdateUI()

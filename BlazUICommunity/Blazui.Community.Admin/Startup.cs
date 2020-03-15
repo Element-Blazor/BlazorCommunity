@@ -30,7 +30,19 @@ namespace Blazui.Community.Admin
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddDbContext<BlazUICommunityAdminDbContext>(options => options.UseMySql(Configuration.GetConnectionString("DbConnectionString")));
-            services.AddHttpClient("BlazuiCommunitiyAdmin", client => client.BaseAddress = new Uri(Configuration["ServerUrl"] ?? throw new ArgumentNullException("ServerUrl is null")));
+            services.AddHttpClient("BlazuiCommunitiyAdmin", client =>
+           {
+               client.BaseAddress = new Uri(Configuration["ServerUrl"] ?? throw new ArgumentNullException("ServerUrl is null"));
+               client.DefaultRequestHeaders.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue()
+               {
+                   NoCache = false,
+                   NoStore = false,
+                   MaxAge = TimeSpan.FromSeconds(100),
+                   MustRevalidate = true,
+                   Public = true,
+               };
+
+           });
             services.AddBlazAdmin<IdentityUser, AdminUserService, BlazUICommunityAdminDbContext>(null);
             services.AddScoped<AdminUserService>();
             services.ConfigureApplicationCookie(options =>

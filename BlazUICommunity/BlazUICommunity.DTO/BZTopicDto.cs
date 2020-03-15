@@ -1,4 +1,5 @@
 ﻿using Blazui.Community.Enums;
+using Blazui.Community.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,7 +14,6 @@ namespace Blazui.Community.DTO
         /// <summary>
         /// 标题
         /// </summary>
-        [StringLength(100)]
         public string Title { get; set; }
         /// <summary>
         /// 内容
@@ -45,48 +45,34 @@ namespace Blazui.Community.DTO
         /// </summary>
         public string VersionId { get; set; }
 
-
+        [AutoNotMap]
         public string UserName { get; set; }
-
+        [AutoNotMap]
         public string Avator { get; set; }
+        [AutoNotMap]
         public string NickName { get; set; }
         [NotMapped]
-        public string GoodDisplay
+        [AutoNotMap]
+        public string GoodDisplay => Good switch
         {
-            get
-            {
-                return Good switch
-                {
-                    0 => "否",
-                    1 => "是",
-                    _ => "Unkown"
-                };
-            }
-        }
+            0 => "否",
+            1 => "是",
+            _ => "Unkown"
+        };
         [NotMapped]
-        public string TopDisplay {
-            get
-            {
-                return Top switch
-                {
-                    0 => "否",
-                    1 => "是",
-                    _ => "Unkown"
-                };
-            }
-        }
-        [NotMapped]
-        public string CategoryDisplay
+        [AutoNotMap]
+        public string TopDisplay => Top switch
         {
-            get
-            {
-                return ((TopicCategory)Category).Description();
-            }
-        }
+            0 => "否",
+            1 => "是",
+            _ => "Unkown"
+        };
         [NotMapped]
-        public string LastModifyTimeDisplay { get; set; }
+        [AutoNotMap]
+        public string CategoryDisplay=> ((TopicCategory)Category).Description();
+     
 
-
+        [AutoNotMap]
         [NotMapped]
         public string VerName { get; set; }
     }

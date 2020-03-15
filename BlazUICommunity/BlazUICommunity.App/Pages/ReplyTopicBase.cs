@@ -66,7 +66,6 @@ namespace Blazui.Community.App.Pages
            
                 TopicModel = result.Data;
                 TopicModel.Avator ??= "/img/defaultAct.png";
-                TopicModel.LastModifyTimeDisplay = TopicModel.LastModifyDate.HasValue ? Convert.ToDateTime(TopicModel.LastModifyDate).ConvertToDateDiffStr() : TopicModel.CreateDate.ConvertToDateDiffStr();
                 IsMySelf = TopicModel.CreatorId == User?.Id;
                 TopicContent = TopicModel.Content;
                 TopicTitle = TopicModel.Title;

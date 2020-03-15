@@ -21,6 +21,8 @@ using Blazui.Community.Utility.Jwt;
 using Blazui.Community.Enums;
 using NLog.LayoutRenderers;
 using static Blazui.Community.Api.Configuration.ConstantConfiguration;
+using Marvin.Cache.Headers;
+
 namespace Blazui.Community.Api
 {
     public class Startup
@@ -34,11 +36,21 @@ namespace Blazui.Community.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+            //services.AddResponseCaching();
+            services.AddHttpCacheHeaders(
+                expires =>
+                {
+                    expires.MaxAge = 60;
+                    expires.CacheLocation = CacheLocation.Private;
+                },
+                validation => { validation.MustRevalidate = true; }
+                );
+
             services.AddTransient<LoggerMiddleware>();
             services.AddDbContext<BlazUICommunityContext>(opt => opt.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>();
 
             services.AddCustomAddControllers();
-            services.AddMvc();
             services.AddCustomCors(Configuration.GetSection("AllowOrigins"));
             services.AddCustomSwagger();
 
@@ -46,7 +58,6 @@ namespace Blazui.Community.Api
 
             services.AddCustomAspIdenitty<BZUserModel, BlazUICommunityContext>();
 
-            services.AddResponseCaching();
             services.AddCustomMemoryCache();
 
             services.AddScoped<ICacheService, CacheService>();
@@ -80,19 +91,20 @@ namespace Blazui.Community.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseResponseCaching();
 
-            //Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            app.UseLogMiddleware();//必须放在UseResponseCaching，UseHttpCacheHeaders 前面，否则Etag不生成，原因未知
+
             //app.UseHsts();
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             LayoutRenderer.Register("basedir", p => env.ContentRootPath);
             app.UseCustomSwaggerUI(p => p.Title = "Blazui 社区 WebApi Docs");
 
-            app.UseRouting();
+            //缓存
+            app.UseResponseCaching();
+            app.UseHttpCacheHeaders();
 
-            app.UseLogMiddleware();
+            app.UseRouting();
             //认证
             app.UseAuthentication();
             //授权
