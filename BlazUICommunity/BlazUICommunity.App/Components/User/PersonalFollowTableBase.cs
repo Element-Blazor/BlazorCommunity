@@ -23,16 +23,11 @@ namespace Blazui.Community.App.Components
         protected BZUserModel User;
 
         protected BForm searchForm;
-        private SearchPersonalFollowCondition Condition
+        private SearchPersonalFollowCondition Condition=> new SearchPersonalFollowCondition
         {
-            get
-            {
-                var condition = new SearchPersonalFollowCondition();
-                condition.PageInfo.PageIndex = currentPage;
-                condition.PageInfo.PageSize = pageSize;
-                return condition;
-            }
-        }
+            PageIndex = currentPage,
+            PageSize = pageSize
+        };
         internal int CurrentPage
         {
             get
@@ -105,7 +100,8 @@ namespace Blazui.Community.App.Components
             condition = searchForm.GetValue<SearchPersonalFollowCondition>();
             condition ??= new SearchPersonalFollowCondition();
             condition.CreatorId = User.Id;
-            condition.PageInfo = new PageInfo() { PageIndex = currentPage, PageSize = pageSize };
+            condition.PageSize = pageSize;
+            condition.PageIndex = currentPage; 
             return condition;
         }
 

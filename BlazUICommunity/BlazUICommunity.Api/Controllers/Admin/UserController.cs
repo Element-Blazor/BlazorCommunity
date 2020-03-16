@@ -124,7 +124,7 @@ namespace Blazui.Community.Api.Controllers
         public async Task<IActionResult> Query([FromQuery] UsersRequestCondition Request = null)
         {
             var query = Request.CreateQueryExpression<BZUserModel, UsersRequestCondition>();
-            var pagedList = await _bZUserRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageInfo.PageIndex - 1, Request.PageInfo.PageSize);
+            var pagedList = await _bZUserRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
             if (pagedList.Items.Any())
                 return Ok(pagedList.From(result => _mapper.Map<List<UserDisplayDto>>(result)));
             return NoContent();

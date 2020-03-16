@@ -252,7 +252,7 @@ namespace Blazui.Community.Api.Controllers.Client
                     query = query.And(p => Users.Select(x => x.Id).Contains(p.CreatorId));
                 }
             }
-            pagedList = await _bZTopicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageInfo.PageIndex - 1, Request.PageInfo.PageSize);
+            pagedList = await _bZTopicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
             if (pagedList != null && pagedList.Items.Any())
             {
                 var pagedatas = pagedList.ConvertToPageData<BZTopicModel, BZTopicDto>();
@@ -286,7 +286,7 @@ namespace Blazui.Community.Api.Controllers.Client
             IPagedList<BZTopicModel> pagedList = null;
             var query = Request.CreateQueryExpression<BZTopicModel, TopicRequestCondition>();
             query = query.And(p => p.Status == 0);
-            pagedList = await _bZTopicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageInfo.PageIndex - 1, Request.PageInfo.PageSize);
+            pagedList = await _bZTopicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
             if (pagedList != null && pagedList.Items.Any())
             {
                 var pagedatas = pagedList.ConvertToPageData<BZTopicModel, BZTopicDto>();

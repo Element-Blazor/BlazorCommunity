@@ -18,8 +18,6 @@ namespace Blazui.Community.Admin.QueryCondition
         /// </summary>
         public string Email { get; set; }
 
-        public DateTime? CreateDateStart { get; set; }
-        public DateTime? CreateDateEnd { get; set; }
 
     }
 }

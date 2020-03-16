@@ -189,7 +189,7 @@ namespace Blazui.Community.Api.Controllers.Client
             if (query == null)
                 query = p => true;
             //query = query.And(p => p.Status == 0);
-            pagedList = await _userRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageInfo.PageIndex - 1, Request.PageInfo.PageSize);
+            pagedList = await _userRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
             var pagedatas = new PageDatas<BZUserDto>();
             if (pagedList != null && pagedList.Items.Any())
             {

@@ -11,69 +11,19 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.Pages.Version
 {
-    public class VersionManageBase : ManagePageBase
+    public class VersionManageBase : ManagePageBase<VersionAutoGenerateColumnsDto>
     {
-        protected int pageSize = 10;
-        protected int currentPage = 1;
-        internal bool requireRender = false;
-        protected List<VersionAutoGenerateColumnsDto> Datas = new List<VersionAutoGenerateColumnsDto>();
-        protected int DataCount = 5;
-        protected BTable table;
-        protected BForm searchForm;
-        internal int CurrentPage
-        {
-            get
-            {
-                return currentPage;
-            }
-            set
-            {
-                currentPage = value;
-                requireRender = true;
-                SearchData();
-            }
-        }
 
-        protected async Task SearchData()
-        {
-            await table.WithLoadingAsync(async () =>
-            {
-                await LoadDatas();
-            });
-            UpdateUI();
-        }
 
-        protected override async Task InitilizePageDataAsync()
+        protected override async Task LoadDatas(bool MustRefresh = false)
         {
-            await SearchData();
-        }
 
-        private async Task LoadDatas()
-        {
-            var condition = searchForm.GetValue<QueryVersionCondition>();
-            var projectId = condition.ProjectId.HasValue ? (int)condition.ProjectId : -1;
-            var datas = await NetService.GetVersions(new PageInfo() { PageIndex = currentPage, PageSize = pageSize }, projectId);
+            var datas = await NetService.GetVersions(BuildCondition<QueryVersionCondition>(), MustRefresh);
             if (datas.IsSuccess)
-            {
-                var data = datas.Data.Items.ToList();
-                Datas = Mapper.Map<List<VersionAutoGenerateColumnsDto>>(data);
-                DataCount = datas.Data.TotalCount;
-            }
-            else
-            {
-                Datas = new List<VersionAutoGenerateColumnsDto>();
-                DataCount = 0;
-            }
-        }
-
-
-        private void UpdateUI()
-        {
-            requireRender = true;
-            searchForm?.MarkAsRequireRender();
-            table?.MarkAsRequireRender();
-            table?.Refresh();
-            StateHasChanged();
+                SetData(Mapper.Map<IList<VersionAutoGenerateColumnsDto>>(datas.Data.Items), datas.Data.TotalCount);
+            else if (datas.Code == 204)
+                SetData();
+         
         }
 
 
@@ -109,13 +59,13 @@ namespace Blazui.Community.Admin.Pages.Version
         {
             if (obj is VersionAutoGenerateColumnsDto dto)
             {
-                await ConfirmAsync(
+                await ConfirmService.ConfirmAsync(
                     async () => await NetService.DeleteVersion(dto.Id),
                     async ()=>await SearchData(),
               "确定要删除？");
             }
         }
 
-  
+      
     }
 }

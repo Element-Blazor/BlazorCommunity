@@ -103,8 +103,8 @@ namespace Blazui.Community.Api.Controllers.Client
         {
             IPagedList<BZPointModel> pagedList = null;
             var query = Request.CreateQueryExpression<BZPointModel , PointRequestCondition>();
-            pagedList = query == null ? await _pointRepository.GetPagedListAsync(Request.PageInfo.PageIndex - 1 , Request.PageInfo.PageSize) :
-                       await _pointRepository.GetPagedListAsync(query , o => o.OrderBy(p => p.Id) , null , Request.PageInfo.PageIndex - 1 , Request.PageInfo.PageSize);
+            pagedList = query == null ? await _pointRepository.GetPagedListAsync(Request.PageIndex - 1 , Request.PageSize) :
+                       await _pointRepository.GetPagedListAsync(query , o => o.OrderBy(p => p.Id) , null , Request.PageIndex - 1 , Request.PageSize);
             return Ok(pagedList);
         }
     }

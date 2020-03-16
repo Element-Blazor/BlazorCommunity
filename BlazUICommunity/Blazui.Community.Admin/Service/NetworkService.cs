@@ -77,13 +77,18 @@ namespace Blazui.Community.Admin.Service
                 queryparam = "?";
             foreach (PropertyInfo prop in props)
             {
-                var value = prop.PropertyType.IsEnum ? (int)prop.GetValue(t) : prop.GetValue(t);//可空的枚举 如何判断他是枚举??????
+                var value = IsNullableEnum(prop.PropertyType)? (int)prop.GetValue(t) : prop.GetValue(t);//可空的枚举 如何判断他是枚举??????
+
                 queryparam += $"{prop.Name}={value}&";
             }
             queryparam = queryparam.TrimEnd('&');
             return MustRefresh ? $"{queryparam}&MustRefresh={DateTime.Now.Ticks}" : queryparam;
         }
-
+         static bool IsNullableEnum( Type t)
+        {
+            Type u = Nullable.GetUnderlyingType(t);
+            return (u != null) && u.IsEnum;
+        }
         /// <summary>
         /// 查询用户
         /// </summary>
@@ -142,12 +147,13 @@ namespace Blazui.Community.Admin.Service
         /// <summary>
         /// 查询版本
         /// </summary>
-        /// <param name="pageInfo"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="PageIndex"></param>
         /// <param name="projectId"></param>
         /// <returns></returns>
-        internal async Task<BaseResponse<PageDatas<BZVersionDto>>> GetVersions(PageInfo pageInfo, int projectId = -1)
+        internal async Task<BaseResponse<PageDatas<BZVersionDto>>> GetVersions(QueryVersionCondition querycondition, bool MustRefresh = false)
         {
-            return await httpClient.GetJsonResultAsync<PageDatas<BZVersionDto>>($"api/version/GetPageList/{projectId}/{pageInfo.PageSize}/{pageInfo.PageIndex}");
+            return await httpClient.GetWithJsonResultAsync<PageDatas<BZVersionDto>>($"api/version/GetPageList{BuildHttpQueryParam(querycondition, MustRefresh)}");
         }
 
 
@@ -195,26 +201,26 @@ namespace Blazui.Community.Admin.Service
         /// </summary>
         /// <param name="querycondition"></param>
         /// <returns></returns>
-        internal async Task<BaseResponse<PageDatas<BZReplyDto>>> QueryReplys(QueryReplyCondition querycondition, string username, string title)
+        internal async Task<BaseResponse<PageDatas<BZReplyDto>>> QueryReplys(QueryReplyCondition querycondition,bool MustRefresh=false)
         {
-            var url = "api/Reply/QueryReplys";
-            if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(title))
-            {
-                url += $"?username={username}";
-                url += $"&topicTitle={title}";
-            }
-            else
-            {
-                if (!string.IsNullOrWhiteSpace(username))
-                {
-                    url += $"?username={username}";
-                }
-                if (!string.IsNullOrWhiteSpace(title))
-                {
-                    url += $"?topicTitle={title}";
-                }
-            }
-            return await httpClient.GetJsonResultAsync<PageDatas<BZReplyDto>>(url, HttpMethod.Post, BuildHttpContent(querycondition));
+            //var url = "api/Reply/QueryReplys";
+            //if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(title))
+            //{
+            //    url += $"?username={username}";
+            //    url += $"&topicTitle={title}";
+            //}
+            //else
+            //{
+            //    if (!string.IsNullOrWhiteSpace(username))
+            //    {
+            //        url += $"?username={username}";
+            //    }
+            //    if (!string.IsNullOrWhiteSpace(title))
+            //    {
+            //        url += $"?topicTitle={title}";
+            //    }
+            //}
+            return await httpClient.GetWithJsonResultAsync<PageDatas<BZReplyDto>>($"api/Reply/Query{BuildHttpQueryParam(querycondition,MustRefresh)}");
         }
 
 
@@ -313,9 +319,9 @@ namespace Blazui.Community.Admin.Service
         /// </summary>
         /// <param name="pageInfo"></param>
         /// <returns></returns>
-        internal async Task<BaseResponse<PageDatas<BzBannerDto>>> GetBanners(PageInfo pageInfo)
+        internal async Task<BaseResponse<PageDatas<BzBannerDto>>> GetBanners(int PageSize,int PageIndex)
         {
-            return await httpClient.GetJsonResultAsync<PageDatas<BzBannerDto>>($"api/banner/GetPageList/{pageInfo.PageSize}/{pageInfo.PageIndex}");
+            return await httpClient.GetJsonResultAsync<PageDatas<BzBannerDto>>($"api/banner/GetPageList/{PageSize}/{PageIndex}");
         }
 
 

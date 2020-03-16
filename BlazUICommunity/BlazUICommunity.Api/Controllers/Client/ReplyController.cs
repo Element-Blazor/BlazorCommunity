@@ -244,7 +244,7 @@ namespace Blazui.Community.Api.Controllers.Client
             var query = Request.CreateQueryExpression<BZReplyModel, ReplyRequestCondition>();
             query ??= p => true;
             query = query.And(p => p.Status == 0);
-            pagedList = await _replyRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageInfo.PageIndex - 1, Request.PageInfo.PageSize);
+            pagedList = await _replyRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
             if (pagedList.TotalCount > 0)
             {
                 var pagedatas = pagedList.ConvertToPageData<BZReplyModel, BZReplyDto>();
@@ -306,7 +306,7 @@ namespace Blazui.Community.Api.Controllers.Client
                 else
                     return NoContent();
             }
-            pagedList = await _replyRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageInfo.PageIndex - 1, Request.PageInfo.PageSize);
+            pagedList = await _replyRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
             if (pagedList.TotalCount > 0)
             {
                 var pagedatas = pagedList.ConvertToPageData<BZReplyModel, BZReplyDto>();

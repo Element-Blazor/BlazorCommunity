@@ -327,18 +327,6 @@
             <param name="mapper"></param>
             <param name="cacheService"></param>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.ReplyController.Add(Blazui.Community.DTO.BZReplyDto)">
-            <summary>
-            新增回帖
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.ReplyController.GetByUserId(System.String,System.Int32,System.Int32)">
-            <summary>
-            根据用户查询回复帖子
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:Blazui.Community.Api.Controllers.ReplyController.Delete(System.String)">
             <summary>
             根据ID删除帖子
@@ -351,31 +339,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.ReplyController.Update(Blazui.Community.DTO.BZReplyDto,System.String)">
-            <summary>
-            更新回帖
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.ReplyController.UpdateContent(Blazui.Community.DTO.BZTopicDto)">
-            <summary>
-            更新回帖
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.ReplyController.Query(System.String)">
-            <summary>
-            根据Id查询回帖
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.ReplyController.Query(Blazui.Community.Request.ReplyRequestCondition)">
-            <summary>
-            根据条件分页查询回帖
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.ReplyController.QueryReplys(Blazui.Community.Request.ReplyRequestCondition,System.String,System.String)">
+        <member name="M:Blazui.Community.Api.Controllers.ReplyController.QueryReplys(Blazui.Community.Request.ReplyRequestCondition)">
             <summary>
             根据条件分页查询回帖
             </summary>

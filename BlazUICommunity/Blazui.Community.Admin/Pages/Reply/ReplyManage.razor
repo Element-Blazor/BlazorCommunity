@@ -4,10 +4,10 @@
 @inherits ReplyManageBase
 
     <BForm Inline="true" @ref="searchForm">
-        <BFormItem TValue="string" Label="主贴标题" Name="@nameof(QueryReplyCondition.TopicId)" IsRequired="false">
+        <BFormItem TValue="string" Label="主贴标题" Name="@nameof(QueryReplyCondition.Title)" IsRequired="false">
             <BInput TValue="string"></BInput>
         </BFormItem>
-        <BFormItem TValue="string" Label="回帖用户" Name="@nameof(QueryReplyCondition.UserId)" IsRequired="false">
+        <BFormItem TValue="string" Label="回帖用户" Name="@nameof(QueryReplyCondition.UserName)" IsRequired="false">
             <BInput TValue="string"></BInput>
         </BFormItem>
         <BFormItem TValue="DelStatus?" Label="状态" Name="@nameof(QueryReplyCondition.Status)" IsRequired="false">
@@ -28,9 +28,9 @@
 
 <BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
     <BTableColumns>
-        <BTableColumn Width="500" Property="@nameof(BZReplyDto.Title)" Text="主贴标题" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="300" Property="@nameof(BZReplyDto.Title)" Text="主贴标题" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="100" Property="@nameof(BZReplyDto.NickName)" Text="回帖人" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="200" Property="@nameof(BZReplyDto.Content)" Text="回帖内容" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="400" Property="@nameof(BZReplyDto.Content)" Text="回帖内容" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="50" Property="@nameof(BZReplyDto.StatusDisplay)" Text="状态" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="100" Property="@nameof(BZReplyDto.CreateDate)" Format="yyyy-MM-dd" Text="发表时间" Style="text-align:center;"></BTableColumn>
         <BTableTemplateColumn Text="操作" Width="100">

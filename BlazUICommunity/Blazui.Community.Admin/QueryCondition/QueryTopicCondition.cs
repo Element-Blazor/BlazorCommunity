@@ -16,20 +16,6 @@ namespace Blazui.Community.Admin.QueryCondition
         public string Title { get; set; }
 
         /// <summary>
-        /// 发布时间开始
-        /// </summary>
-        public DateTime? CreateDateStart { get; set; }
-        /// <summary>
-        /// 发布时间结束
-        /// </summary>
-        public DateTime? CreateDateEnd { get; set; }
-
-        /// <summary>
-        /// 状态 0正常，-1 删除，1已结帖
-        /// </summary>
-        public DelStatus? Status { get; set; } 
-
-        /// <summary>
         /// 是否置顶0否-1置顶
         /// </summary>
         public int? Top { get; set; } = null;

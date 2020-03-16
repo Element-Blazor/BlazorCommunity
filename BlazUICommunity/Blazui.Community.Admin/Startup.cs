@@ -53,6 +53,7 @@ namespace Blazui.Community.Admin
                 options.SlidingExpiration = true;
             });
             services.AddScoped<NetworkService>();
+            services.AddTransient<ConfirmService>();
             services.AddAutoMapper(typeof(AutoMapConfiguration));
         }
 

@@ -124,7 +124,7 @@ namespace Blazui.Community.Api.Controllers.Client
                 else
                     return NoContent();
             }
-            pagedList = await _followRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageInfo.PageIndex - 1, Request.PageInfo.PageSize);
+            pagedList = await _followRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
             if (pagedList.TotalCount > 0)
             {
                 var pagedatas = pagedList.ConvertToPageData<BZFollowModel, BZTopicDto>();

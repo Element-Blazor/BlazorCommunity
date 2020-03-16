@@ -16,54 +16,17 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.Pages.Banner
 {
-    public class BannerManageBase : ManagePageBase
+    public class BannerManageBase : ManagePageBase<BannerAutoGenerateColumnsDto>
     {
-        protected int pageSize = 10;
-        protected int currentPage = 1;
-        internal bool requireRender = false;
-        protected List<BannerAutoGenerateColumnsDto> Datas = new List<BannerAutoGenerateColumnsDto>();
-        protected int DataCount = 5;
-        protected BTable table;
-        protected BForm searchForm;
-        [Inject]
-        IConfiguration Configuration { get; set; }
-        internal int CurrentPage
-        {
-            get
-            {
-                return currentPage;
-            }
-            set
-            {
-                currentPage = value;
-                requireRender = true;
-                SearchData();
-            }
-        }
 
-        protected async Task SearchData()
+        protected override async Task LoadDatas(bool MustRefresh = false)
         {
-            await table.WithLoadingAsync(async () =>
-            {
-                await LoadDatas();
-            });
-            UpdateUI();
-        }
-
-        protected override async Task InitilizePageDataAsync()
-        {
-            await SearchData();
-        }
-
-        private async Task LoadDatas()
-        {
-            var datas = await NetService.GetBanners(new PageInfo() { PageIndex = currentPage, PageSize = pageSize });
+            var datas = await NetService.GetBanners(pageSize, currentPage);
             if (datas.IsSuccess)
             {
                 var Items = datas.Data.Items.ToList();
                 Datas = Mapper.Map<List<BannerAutoGenerateColumnsDto>>(Items);
                 DataCount = datas.Data.TotalCount;
-                //Datas.ForEach(p => p.BannerImg = Configuration["ServerUrl"] + "/"+ p.BannerImg);
             }
             else
             {
@@ -71,17 +34,6 @@ namespace Blazui.Community.Admin.Pages.Banner
                 DataCount = 0;
             }
         }
-
-
-        private void UpdateUI()
-        {
-            requireRender = true;
-            searchForm?.MarkAsRequireRender();
-            table?.MarkAsRequireRender();
-            table?.Refresh();
-            StateHasChanged();
-        }
-
 
         protected async Task Modify(object obj)
         {
@@ -114,7 +66,7 @@ namespace Blazui.Community.Admin.Pages.Banner
         {
             if (obj is BannerAutoGenerateColumnsDto dto)
             {
-                await ConfirmAsync(
+                await ConfirmService.ConfirmAsync(
                     async () => await NetService.DeleteBanner(dto.Id),
                     async () => await SearchData(),
                 "确定要删除？");

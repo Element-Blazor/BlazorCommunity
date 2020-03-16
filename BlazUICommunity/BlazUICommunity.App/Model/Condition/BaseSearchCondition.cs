@@ -8,6 +8,7 @@ namespace Blazui.Community.App.Model.Condition
         /// 用户ID
         /// </summary>
         public string CreatorId { get; set; }
-        public PageInfo PageInfo { get; set; } = new PageInfo() { PageSize = 5, PageIndex = 1 };
+        public int PageIndex { get; set; } = 1;
+        public int PageSize { get; set; } = 15;
     }
 }

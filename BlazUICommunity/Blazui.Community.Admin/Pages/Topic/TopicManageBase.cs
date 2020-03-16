@@ -9,85 +9,28 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.Pages.Topic
 {
-    public class TopicManageBase : ManagePageBase
+    public class TopicManageBase : ManagePageBase<BZTopicDto>
     {
-        protected int pageSize = 10;
-        protected int currentPage = 1;
-        internal bool requireRender = false;
-        protected List<BZTopicDto> Datas = new List<BZTopicDto>();
-        protected int DataCount = 5;
-        protected BTable table;
-        protected BForm searchForm;
-        internal int CurrentPage
-        {
-            get
-            {
-                return currentPage;
-            }
-            set
-            {
-                currentPage = value;
-                requireRender = true;
-                SearchData();
-            }
-        }
 
-        protected async Task SearchData()
+        protected override async Task LoadDatas(bool MustRefresh = false)
         {
-            await table.WithLoadingAsync(async () =>
-            {
-                await LoadDatas();
-            });
-            UpdateUI();
-        }
+            var datas = await NetService.QueryTopics(BuildCondition<QueryTopicCondition>(), MustRefresh);
 
-        protected override async Task InitilizePageDataAsync()
-        {
-            await SearchData();
-        }
-
-        private async Task LoadDatas()
-        {
-            BuildCondition(out QueryTopicCondition condition);
-            var datas = await NetService.QueryTopics(condition);
             if (datas.IsSuccess)
-            {
-                Datas = datas.Data.Items.ToList();
-                DataCount = datas.Data.TotalCount;
-            }
-            else
-            {
-                Datas = new List<BZTopicDto>();
-                DataCount = 0;
-            }
-        }
+                SetData(datas.Data.Items, datas.Data.TotalCount);
+            else if (datas.Code == 204)
+                SetData();
 
-        private void BuildCondition(out QueryTopicCondition condition)
-        {
-            condition = searchForm.GetValue<QueryTopicCondition>();
-            condition ??= new QueryTopicCondition();
-            condition.PageIndex = currentPage;
-            condition.PageSize = pageSize;
         }
-
-        private void UpdateUI()
-        {
-            requireRender = true;
-            searchForm?.MarkAsRequireRender();
-            table?.MarkAsRequireRender();
-            table?.Refresh();
-            StateHasChanged();
-        }
-
 
         protected async Task Top(object obj)
         {
 
             if (obj is BZTopicDto dto)
             {
-                await ConfirmAsync(
+                await ConfirmService.ConfirmAsync(
                     async () => await NetService.TopTopic(dto.Id),
-                    async () => await SearchData()
+                    async () => await SearchData(true)
                     );
             }
         }
@@ -106,9 +49,9 @@ namespace Blazui.Community.Admin.Pages.Topic
         {
             if (obj is BZTopicDto dto)
             {
-                await ConfirmAsync(
+                await ConfirmService.ConfirmAsync(
                      async () => await NetService.BestTopic(dto.Id),
-                     async () => await SearchData()
+                     async () => await SearchData(true)
                      );
             }
         }
@@ -116,9 +59,9 @@ namespace Blazui.Community.Admin.Pages.Topic
         {
             if (obj is BZTopicDto dto)
             {
-                await ConfirmAsync(
+                await ConfirmService.ConfirmAsync(
                     async () => await NetService.EndTopic(dto.Id),
-                    async () => await SearchData()
+                    async () => await SearchData(true)
                     );
             }
         }
@@ -127,9 +70,9 @@ namespace Blazui.Community.Admin.Pages.Topic
         {
             if (obj is BZTopicDto dto)
             {
-                await ConfirmAsync(
+                await ConfirmService.ConfirmAsync(
                     async () => await NetService.DelTopic(dto.Id, dto.Status),
-                    async () => await SearchData()
+                    async () => await SearchData(true)
                     );
             }
         }

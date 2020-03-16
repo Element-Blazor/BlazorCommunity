@@ -7,7 +7,6 @@ namespace Blazui.Community.Request
 {
    public  class BaseRequestCondition
     {
-        public PageInfo PageInfo { get; set; } = new PageInfo();
 
         /// <summary>
         /// 创建时间开始
@@ -37,12 +36,11 @@ namespace Blazui.Community.Request
         [ExpressionQuery(OperationType.Equal)]
         public int? Status { get; set; } = null;
 
-    }
-
-
-    public class PageInfo
-    {
         public int PageIndex { get; set; } = 1;
         public int PageSize { get; set; } = 15;
+
     }
+
+
+ 
 }

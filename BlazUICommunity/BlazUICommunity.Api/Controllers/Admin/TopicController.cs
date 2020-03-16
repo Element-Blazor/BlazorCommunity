@@ -167,7 +167,7 @@ namespace Blazui.Community.Api.Controllers
                     query = query.And(p => Users.Select(x => x.Id).Contains(p.CreatorId));
                 else return NoContent();
             }
-            pagedList = await _bZTopicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageInfo.PageIndex - 1, Request.PageInfo.PageSize);
+            pagedList = await _bZTopicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
             if (pagedList.Items.Any())
             {
                 var pagedatas = pagedList.From(result => _mapper.Map<List<BZTopicDto>>(result));

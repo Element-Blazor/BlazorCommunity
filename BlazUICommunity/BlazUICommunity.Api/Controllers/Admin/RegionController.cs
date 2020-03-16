@@ -102,8 +102,8 @@ namespace Blazui.Community.Api.Controllers
         {
             IPagedList<BZAddressModel> pagedList = null;
             var query = Request.CreateQueryExpression<BZAddressModel , AddressRequest>();
-            pagedList = query == null ? await _addressRepository.GetPagedListAsync(Request.PageInfo.PageIndex - 1 , Request.PageInfo.PageSize) :
-                       await _addressRepository.GetPagedListAsync(query , o => o.OrderBy(p => p.Id) , null , Request.PageInfo.PageIndex - 1 , Request.PageInfo.PageSize);
+            pagedList = query == null ? await _addressRepository.GetPagedListAsync(Request.PageIndex - 1 , Request.PageSize) :
+                       await _addressRepository.GetPagedListAsync(query , o => o.OrderBy(p => p.Id) , null , Request.PageIndex - 1 , Request.PageSize);
             return Ok(pagedList);
         }
     }

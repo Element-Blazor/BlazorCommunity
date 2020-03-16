@@ -107,7 +107,7 @@ namespace Blazui.Community.Api.Controllers
             IPagedList<BZFollowModel> pagedList = null;
             var query = Request.CreateQueryExpression<BZFollowModel, FollowRequestCondition>();
             query = query.And(p => p.Status == 0);
-            pagedList = await _followRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageInfo.PageIndex - 1, Request.PageInfo.PageSize);
+            pagedList = await _followRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
             if (pagedList.TotalCount > 0)
             {
                 var pagedatas = pagedList.ConvertToPageData<BZFollowModel, BZTopicDto>();

@@ -33,8 +33,8 @@ namespace Blazui.Community.App.Components
             get
             {
                 var condition = searchForm.GetValue<SearchPersonalTopicCondition>();
-                condition.PageInfo.PageIndex = currentPage;
-                condition.PageInfo.PageSize = pageSize;
+                condition.PageIndex = currentPage;
+                condition.PageSize = pageSize;
                 return condition;
             }
         }
@@ -116,7 +116,8 @@ namespace Blazui.Community.App.Components
         {
             condition ??= new SearchPersonalTopicCondition();
             condition.CreatorId = User.Id;
-            condition.PageInfo = new PageInfo() { PageIndex = currentPage, PageSize = pageSize };
+            condition.PageIndex = currentPage;
+            condition.PageSize = pageSize;
             return condition;
         }
 

@@ -115,7 +115,7 @@ namespace Blazui.Community.Api.Controllers
         {
             IPagedList<BzBannerModel> pagedList = null;
             var query = Request.CreateQueryExpression<BzBannerModel, BannerRequestCondition>();
-            pagedList = await _BZBannerRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageInfo.PageIndex - 1, Request.PageInfo.PageSize);
+            pagedList = await _BZBannerRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
             var pagedatas = pagedList.ConvertToPageData<BzBannerModel, BzBannerDto>();
             pagedatas.Items = _mapper.Map<IList<BzBannerDto>>(pagedList.Items);
             return Ok(pagedatas);
