@@ -15,11 +15,11 @@ namespace Blazui.Community.Test
 
 
 
-            //using (BlazUICommunityContext communityContext = new BlazUICommunityContext())
-            //{
-            //    communityContext.Database.EnsureDeleted();
-            //    communityContext.Database.EnsureCreated();
-            //}
+            using (BlazUICommunityAdminDbContext communityContext = new BlazUICommunityAdminDbContext())
+            {
+                communityContext.Database.EnsureDeleted();
+                communityContext.Database.EnsureCreated();
+            }
             //////string id = Guid.NewGuid().ToString();
             //using (BlazUICommunityContext communityContext = new BlazUICommunityContext())
             //{

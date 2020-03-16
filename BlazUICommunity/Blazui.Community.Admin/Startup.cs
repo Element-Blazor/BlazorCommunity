@@ -32,14 +32,14 @@ namespace Blazui.Community.Admin
             services.AddDbContext<BlazUICommunityAdminDbContext>(options => options.UseMySql(Configuration.GetConnectionString("DbConnectionString")));
             services.AddHttpClient("BlazuiCommunitiyAdmin", client =>
            {
-               client.BaseAddress = new Uri(Configuration["ServerUrl"] ?? throw new ArgumentNullException("ServerUrl is null"));
+               client.BaseAddress = new Uri(Configuration["ServerUrl"] ?? throw new ArgumentNullException("ServerUrl"));
                client.DefaultRequestHeaders.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue()
                {
                    NoCache = false,
                    NoStore = false,
-                   MaxAge = TimeSpan.FromSeconds(100),
-                   MustRevalidate = true,
-                   Public = true,
+                   MaxAge = TimeSpan.FromSeconds(0),
+                   MustRevalidate = false,
+                   Public = false,
                };
 
            });

@@ -1,20 +1,5 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:55877",
-      "sslPort": 44308
-    }
-  },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
     "Blazui.Community.Admin": {
       "commandName": "Project",
       "launchBrowser": true,
@@ -23,12 +8,6 @@
       },
       "applicationUrl": "https://localhost:7001;http://localhost:7000"
     },
-    "Docker": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
-      "publishAllPorts": true,
-      "useSSL": true
-    }
+  
   }
 }

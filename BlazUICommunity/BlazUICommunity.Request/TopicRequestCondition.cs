@@ -33,6 +33,8 @@ namespace Blazui.Community.Request
         [ExpressionQuery(OperationType.Equal)]
         public int? Category { get; set; } = null;
 
+        public string? UserName { get; set; }
+
 
     }
 }

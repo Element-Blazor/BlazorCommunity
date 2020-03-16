@@ -48,7 +48,7 @@ namespace Blazui.Community.App.Service
 
                 p.SetSlidingExpiration(TimeSpan.FromMinutes(30));
                 HttpContent httpContent = BuildHttpContent(loginmodel);
-                return await httpClient.PostJsonAsync<Token>("token", httpContent);
+                return await httpClient.GetJsonResultAsync<Token>("token",Utility.Extensions.HttpMethod.Post, httpContent);
 
             });
 

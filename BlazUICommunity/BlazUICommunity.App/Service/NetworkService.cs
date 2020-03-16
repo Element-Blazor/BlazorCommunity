@@ -70,7 +70,7 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public async Task<BaseResponse> SendVerifyCode(string UserId, VerifyCodeType CodeType, string target)
         {
-            return await httpClient.GetJsonAsync($"api/client/code/SendVerifyCode/{(int)CodeType}/{UserId}/{target}");
+            return await httpClient.GetJsonResultAsync($"api/client/code/SendVerifyCode/{(int)CodeType}/{UserId}/{target}");
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public async Task<BaseResponse> VerifyVerifyCode(string UserId, VerifyCodeType CodeType, string Code)
         {
-            return await httpClient.GetJsonAsync($"api/client/code/VerifyCode/{UserId}/{(int)CodeType}/{Code}");
+            return await httpClient.GetJsonResultAsync($"api/client/code/VerifyCode/{UserId}/{(int)CodeType}/{Code}");
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Blazui.Community.App.Service
         public async Task<BaseResponse<PageDatas<BZTopicDto>>> GetTopics(SearchPersonalTopicCondition condition)
         {
             HttpContent httpContent = BuildHttpContent(condition);
-            return await httpClient.PostJsonAsync<PageDatas<BZTopicDto>>("api/client/Topic/AppQuery", httpContent);
+            return await httpClient.GetJsonResultAsync<PageDatas<BZTopicDto>>("api/client/Topic/AppQuery",HttpMethod.Post, httpContent);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Blazui.Community.App.Service
         public async Task<BaseResponse<PageDatas<BZTopicDto>>> GetFollows(SearchPersonalFollowCondition condition)
         {
             HttpContent httpContent = BuildHttpContent(condition);
-            return await httpClient.PostJsonAsync<PageDatas<BZTopicDto>>("api/client/follow/Query", httpContent);
+            return await httpClient.GetJsonResultAsync<PageDatas<BZTopicDto>>("api/client/follow/Query",HttpMethod.Post, httpContent);
         }
 
         /// <summary>
@@ -137,8 +137,8 @@ namespace Blazui.Community.App.Service
         public async Task<BaseResponse<List<BZReplyDto>>> GetMyReplys(string UserId, int pageIndex, int pageSize, string Title)
         {
             if (string.IsNullOrWhiteSpace(Title))
-                return await httpClient.GetJsonAsync<List<BZReplyDto>>($"api/client/reply/GetByUserId/{UserId}/{pageSize}/{pageIndex}");
-            return await httpClient.GetJsonAsync<List<BZReplyDto>>($"api/client/reply/GetByUserId/{UserId}/{pageSize}/{pageIndex}/{Title}");
+                return await httpClient.GetJsonResultAsync<List<BZReplyDto>>($"api/client/reply/GetByUserId/{UserId}/{pageSize}/{pageIndex}");
+            return await httpClient.GetJsonResultAsync<List<BZReplyDto>>($"api/client/reply/GetByUserId/{UserId}/{pageSize}/{pageIndex}/{Title}");
         }
         /// <summary>
         /// 获取我的回帖
@@ -150,8 +150,8 @@ namespace Blazui.Community.App.Service
         public async Task<BaseResponse<int>> GetMyReplysCount(string UserId, string Title)
         {
             if (string.IsNullOrWhiteSpace(Title))
-                return await httpClient.GetJsonAsync<int>($"api/client/reply/GetRepyCount/{UserId}");
-            return await httpClient.GetJsonAsync<int>($"api/client/reply/GetRepyCount/{UserId}/{Title}");
+                return await httpClient.GetJsonResultAsync<int>($"api/client/reply/GetRepyCount/{UserId}");
+            return await httpClient.GetJsonResultAsync<int>($"api/client/reply/GetRepyCount/{UserId}/{Title}");
         }
         /// <summary>
         /// 删除回帖
@@ -170,7 +170,7 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public async Task<BaseResponse<List<BZTopicDto>>> GetTopdTopics()
         {
-            return await httpClient.GetJsonAsync<List<BZTopicDto>>($"api/client/topic/top/{3}");
+            return await httpClient.GetJsonResultAsync<List<BZTopicDto>>($"api/client/topic/top/{3}");
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public async Task<BaseResponse<PageDatas<BZTopicDto>>> GetTopicsByOrder(int orderBy, int topicType, int pageIndex, int pageSize)
         {
-            return await httpClient.GetJsonAsync<PageDatas<BZTopicDto>>($"api/client/topic/QueryTopicsByOrder/{orderBy}/{topicType}/{pageSize}/{pageIndex}");
+            return await httpClient.GetJsonResultAsync<PageDatas<BZTopicDto>>($"api/client/topic/QueryTopicsByOrder/{orderBy}/{topicType}/{pageSize}/{pageIndex}");
         }
         /// <summary>
         /// 
@@ -193,7 +193,7 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public async Task<BaseResponse<PageDatas<SeachTopicDto>>> SeachTopicByTitle(string title, int pageIndex, int pageSize)
         {
-            return await httpClient.GetJsonAsync<PageDatas<SeachTopicDto>>($"api/client/topic/SeachTopicByTitle/{title}/{pageIndex}/{pageSize}");
+            return await httpClient.GetJsonResultAsync<PageDatas<SeachTopicDto>>($"api/client/topic/SeachTopicByTitle/{title}/{pageIndex}/{pageSize}");
         }
 
         
@@ -204,7 +204,7 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public async Task<BaseResponse<BZTopicDto>> GetTopicById(string topicId)
         {
-            return await httpClient.GetJsonAsync<BZTopicDto>($"api/client/topic/Query/{topicId}");
+            return await httpClient.GetJsonResultAsync<BZTopicDto>($"api/client/topic/Query/{topicId}");
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public async Task<BaseResponse<PageDatas<BZReplyDto>>> GetReplys(string topicId, int pageindex, int pagesize)
         {
-            return await httpClient.GetJsonAsync<PageDatas<BZReplyDto>>($"api/client/topic/Reply/{topicId}/{pagesize}/{pageindex}");
+            return await httpClient.GetJsonResultAsync<PageDatas<BZReplyDto>>($"api/client/topic/Reply/{topicId}/{pagesize}/{pageindex}");
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public async Task<BaseResponse<List<BZVersionDto>>> GetVersions(int Project)
         {
-            return await httpClient.GetJsonAsync<List<BZVersionDto>>($"api/client/Version/Query/{Project}");
+            return await httpClient.GetJsonResultAsync<List<BZVersionDto>>($"api/client/Version/Query/{Project}");
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public async Task<BaseResponse<List<BZVersionDto>>> GetAllVersions()
         {
-            return await httpClient.GetJsonAsync<List<BZVersionDto>>($"api/client/Version/GetAll");
+            return await httpClient.GetJsonResultAsync<List<BZVersionDto>>($"api/client/Version/GetAll");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public async Task<BaseResponse<BZFollowDto>> IsStar(string UserId, string TopicId)
         {
-            return await httpClient.GetJsonAsync<BZFollowDto>($"api/client/Follow/IsStar/{UserId}/{TopicId}");
+            return await httpClient.GetJsonResultAsync<BZFollowDto>($"api/client/Follow/IsStar/{UserId}/{TopicId}");
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Blazui.Community.App.Service
 
         public async Task<BaseResponse<List<BzBannerDto>>> GetBanners()
         {
-            return await httpClient.GetJsonAsync<List<BzBannerDto>>($"api/client/Banner/QueryAll");
+            return await httpClient.GetJsonResultAsync<List<BzBannerDto>>($"api/client/Banner/QueryAll");
         }
 
 
@@ -303,7 +303,7 @@ namespace Blazui.Community.App.Service
             if (!ResultResponse.IsSuccess)
                 return Unauthorized;
             SetHttpClientAuthorization(ResultResponse);
-            return await httpClient.GetJsonAsync(url);
+            return await httpClient.GetJsonResultAsync(url);
         }
 
         private async Task<BaseResponse<T>> HttpPostJson<T>(string url, HttpContent httpContent = null)
@@ -312,7 +312,7 @@ namespace Blazui.Community.App.Service
             if (!ResultResponse.IsSuccess)
                 return new BaseResponse<T>(401);
             SetHttpClientAuthorization(ResultResponse);
-            return await httpClient.PostJsonAsync<T>(url, httpContent);
+            return await httpClient.GetJsonResultAsync<T>(url, HttpMethod.Post, httpContent);
         }
         private async Task<BaseResponse> HttpPostJson(string url, HttpContent httpContent = null)
         {
@@ -320,7 +320,7 @@ namespace Blazui.Community.App.Service
             if (!ResultResponse.IsSuccess)
                 return Unauthorized;
             SetHttpClientAuthorization(ResultResponse);
-            return await httpClient.PostJsonAsync(url, httpContent);
+            return await httpClient.GetJsonResultAsync(url, HttpMethod.Post, httpContent);
         }
         private async Task<BaseResponse> HttpDeleteJson(string url)
         {
@@ -328,7 +328,7 @@ namespace Blazui.Community.App.Service
             if (!ResultResponse.IsSuccess)
                 return Unauthorized;
             SetHttpClientAuthorization(ResultResponse);
-            return await httpClient.GetJsonAsync(url, HttpMethod.Delete);
+            return await httpClient.GetJsonResultAsync(url, HttpMethod.Delete);
         }
 
 

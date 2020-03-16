@@ -65,7 +65,7 @@ namespace Blazui.Community.Api.Controllers
         /// 删除
         /// </summary>
         /// <returns></returns>
-        [HttpPut("Frozen/{Id}")]
+        [HttpPatch("Frozen/{Id}")]
         public async Task<IActionResult> Frozen([FromRoute] string Id)
         {
             var user = await _bZUserRepository.FindAsync(Id);
@@ -84,7 +84,7 @@ namespace Blazui.Community.Api.Controllers
         /// 解封
         /// </summary>
         /// <returns></returns>
-        [HttpPut("UnFrozen/{Id}")]
+        [HttpPatch("UnFrozen/{Id}")]
         public async Task<IActionResult> UnFrozen([FromRoute] string Id)
         {
             var user = await _bZUserRepository.FindAsync(Id);
@@ -103,7 +103,7 @@ namespace Blazui.Community.Api.Controllers
         /// 重置密码
         /// </summary>
         /// <returns></returns>
-        [HttpPut("ResetPassword/{Id}")]
+        [HttpPatch("ResetPassword/{Id}")]
         public async Task<IActionResult> ResetPassword([FromRoute] string Id)
         {
             var user = await _userManager.FindByIdAsync(Id.ToString());
@@ -123,36 +123,11 @@ namespace Blazui.Community.Api.Controllers
         [ResponseCache(Duration = 60)]
         public async Task<IActionResult> Query([FromQuery] UsersRequestCondition Request = null)
         {
-            IPagedList<BZUserModel> pagedList = null;
             var query = Request.CreateQueryExpression<BZUserModel, UsersRequestCondition>();
-            if (query == null)
-                query = p => true;
-            pagedList = await _bZUserRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageInfo.PageIndex - 1, Request.PageInfo.PageSize);
-            if (pagedList != null && pagedList.TotalCount > 0)
+            var pagedList = await _bZUserRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageInfo.PageIndex - 1, Request.PageInfo.PageSize);
+            if (pagedList.Items.Any())
                 return Ok(pagedList.From(result => _mapper.Map<List<UserDisplayDto>>(result)));
-            return new NoContentResponse();
-        }
-
-
-
-        /// <summary>
-        /// 活跃度
-        /// </summary>
-        /// <param name="ActiveType">1：月榜，2：周榜</param>
-        /// <returns></returns>
-        [HttpGet("Active")]
-        public async Task<IActionResult> Active(int ActiveType = 1)
-        {
-            int beforeDays = ActiveType switch
-            {
-                1 => -30,
-                2 => -7,
-                _ => -7
-            };
-            var ResultDtos = await _bZUserRepository.UserActive(DateTime.Now.AddDays(beforeDays), DateTime.Now);
-            if (ResultDtos is null || !ResultDtos.Any())
-                return NoContent();
-            return Ok(ResultDtos);
+            return NoContent();
         }
 
     }

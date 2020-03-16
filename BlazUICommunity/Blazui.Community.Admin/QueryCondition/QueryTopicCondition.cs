@@ -24,16 +24,10 @@ namespace Blazui.Community.Admin.QueryCondition
         /// </summary>
         public DateTime? CreateDateEnd { get; set; }
 
-     
-
-        /// <summary>
-        /// 发帖人ID
-        /// </summary>
-        public string UserId { get; set; } 
         /// <summary>
         /// 状态 0正常，-1 删除，1已结帖
         /// </summary>
-        public DelStatus Status { get; set; } 
+        public DelStatus? Status { get; set; } 
 
         /// <summary>
         /// 是否置顶0否-1置顶
@@ -46,6 +40,8 @@ namespace Blazui.Community.Admin.QueryCondition
         /// <summary>
         /// 主题帖类型 0：提问，1：分享，2：讨论，3：建议，4：公告
         /// </summary>
-        public TopicCategory? Category { get; set; } = null;
+        public TopicCategory? Category { get; set; } 
+
+        public string UserName { get; set; }
     }
 }

@@ -85,7 +85,7 @@ namespace Blazui.Community.Api
             builder.RegisterModule<CustomAutofacModule>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime appLitetime, ILoggerFactory factory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime appLitetime)
         {
             if (env.IsDevelopment())
             {

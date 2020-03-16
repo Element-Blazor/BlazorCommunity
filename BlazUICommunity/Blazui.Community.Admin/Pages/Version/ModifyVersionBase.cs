@@ -27,6 +27,7 @@ namespace Blazui.Community.Admin.Pages.Version
             if(EntryOperation== EntryOperation.Add)
             {
                 version.CreateDate = DateTime.Now;
+                version.LastModifyDate = DateTime.Now;
                 var newResult = await NetService.NewVersion(version);
                 await CloseAsync(newResult.IsSuccess);
             }

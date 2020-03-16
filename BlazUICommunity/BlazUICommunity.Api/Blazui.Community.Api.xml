@@ -395,12 +395,6 @@
             <param name="bZTopicRepository"></param>
             <param name="cacheService"></param>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.Add(Blazui.Community.DTO.BZTopicDto)">
-            <summary>
-            新增主题帖
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:Blazui.Community.Api.Controllers.TopicController.TopTopic(System.String)">
             <summary>
             置顶或取消置顶
@@ -424,7 +418,7 @@
         </member>
         <member name="M:Blazui.Community.Api.Controllers.TopicController.Delete(System.String)">
             <summary>
-            根据ID删除帖子--假删除--前后台均调用
+            根据ID删除帖子
             </summary>
             <returns></returns>
         </member>
@@ -434,81 +428,10 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.UpdateContent(Blazui.Community.DTO.BZTopicDto)">
+        <member name="M:Blazui.Community.Api.Controllers.TopicController.Query(Blazui.Community.Request.TopicRequestCondition)">
             <summary>
-            更新主题帖
+            根据条件分页查询帖
             </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.Update(Blazui.Community.DTO.BZTopicDto)">
-            <summary>
-            更新主题帖
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.Query(System.String)">
-            <summary>
-            根据Id查询主贴
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.Query(Blazui.Community.Request.TopicRequestCondition,System.String)">
-            <summary>
-            根据条件分页查询帖子---后台
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.AppQuery(Blazui.Community.Request.TopicRequestCondition)">
-            <summary>
-            根据条件分页查询帖子---前端
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.QueryTopicReply(System.String,System.Int32,System.Int32)">
-            <summary>
-            查询主题帖的回帖
-            </summary>
-            <param name="topicId">主题帖Id</param>
-            <param name="pageIndex"></param>
-            <param name="pageSize"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.QueryReply(System.String)">
-            <summary>
-            根据回帖ID查询所属的主题帖，并定位到回帖所在主贴的页码
-            </summary>
-            <param name="replyId">回帖ID</param>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.QueryTopicsByOrder(System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            根据类型，排序查询---前端
-            </summary>
-            <param name="orderType">排序类型 0：综合，1：人气，2：精华，3：已结帖</param>
-            <param name="topicType">帖子类型 0：提问，1：分享，2：讨论，3：建议，4：公告</param>
-            <param name="pageSize"></param>
-            <param name="pageIndex"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.QueryBest(System.Int32)">
-            <summary>
-            查询精华帖子
-            </summary>
-            <param name="pageSize"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.QueryTop(System.Int32)">
-            <summary>
-            查询置顶帖子
-            </summary>
-            <param name="pageSize"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.TopHot(System.Int32)">
-            <summary>
-            帖子热度
-            </summary>
-            <param name="HotType">1：月榜，2：周榜</param>
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.Controllers.UserController">
@@ -548,13 +471,6 @@
             <summary>
             根据条件分页查询用户
             </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.Active(System.Int32)">
-            <summary>
-            活跃度
-            </summary>
-            <param name="ActiveType">1：月榜，2：周榜</param>
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.Controllers.VersionController">

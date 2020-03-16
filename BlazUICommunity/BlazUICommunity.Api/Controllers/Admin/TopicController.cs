@@ -54,21 +54,6 @@ namespace Blazui.Community.Api.Controllers
             _cacheService = cacheService;
         }
 
-
-        /// <summary>
-        /// 新增主题帖
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("Add")]
-        public async Task<IActionResult> Add([FromBody] BZTopicDto dto)
-        {
-            var topicModel = _mapper.Map<BZTopicModel>(dto);
-            var model = await _bZTopicRepository.InsertAsync(topicModel);
-            _cacheService.Remove(nameof(BZTopicModel));
-            return Ok(model.Entity.Id);
-        }
-
-
         /// <summary>
         /// 置顶或取消置顶
         /// </summary>
@@ -86,6 +71,7 @@ namespace Blazui.Community.Api.Controllers
             }
             return Ok();
         }
+
         /// <summary>
         /// 加精或取消加精
         /// </summary>
@@ -103,6 +89,7 @@ namespace Blazui.Community.Api.Controllers
             }
             return Ok();
         }
+
         /// <summary>
         /// 结贴
         /// </summary>
@@ -120,24 +107,25 @@ namespace Blazui.Community.Api.Controllers
             }
             return Ok();
         }
+
         /// <summary>
-        /// 根据ID删除帖子--假删除--前后台均调用
+        /// 根据ID删除帖子
         /// </summary>
         /// <returns></returns>
         [HttpDelete("Delete/{Id}")]
         public IActionResult Delete([FromRoute] string Id)
         {
-            DeleteOrActiveTopic(Id, -1);
-            return Ok();
-        }   /// <summary>
-            /// 恢复帖子
-            /// </summary>
-            /// <returns></returns>
+            return Ok(DeleteOrActiveTopic(Id, -1));
+        }
+
+        /// <summary>
+        /// 恢复帖子
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete("Active/{Id}")]
         public IActionResult Active([FromRoute] string Id)
         {
-            DeleteOrActiveTopic(Id, 0);
-            return Ok();
+            return Ok(DeleteOrActiveTopic(Id, 0));
         }
 
         private bool DeleteOrActiveTopic(string Id, int status)
@@ -160,364 +148,41 @@ namespace Blazui.Community.Api.Controllers
                 }
                 );
         }
-        /// <summary>
-        /// 更新主题帖
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("UpdateContent")]
-        public IActionResult UpdateContent([FromBody] BZTopicDto Dto)
-        {
-            if (string.IsNullOrWhiteSpace(Dto.Id))
-                return new BadRequestResponse("id is error");
-            var topic = _bZTopicRepository.Find(Dto.Id);
-            if (topic == null)
-                return new BadRequestResponse("no this topic");
-            topic.Content = Dto.Content;
-            topic.LastModifyDate = DateTime.Now;
-            _bZTopicRepository.Update(topic);
-            _cacheService.Remove(nameof(BZTopicModel));
-            return Ok();
-        }
 
         /// <summary>
-        /// 更新主题帖
+        /// 根据条件分页查询帖
         /// </summary>
         /// <returns></returns>
-        [HttpPut("Update")]
-        public IActionResult Update([FromBody] BZTopicDto Dto)
+        [HttpGet("Query")]
+        public async Task<IActionResult> Query([FromQuery]TopicRequestCondition Request = null)
         {
-            if (string.IsNullOrWhiteSpace(Dto.Id))
-                return new BadRequestResponse("id is error");
-            var topic = _mapper.Map<BZTopicModel>(Dto);
-            _bZTopicRepository.Update(topic);
-            _cacheService.Remove(nameof(BZTopicModel));
-            return Ok();
-        }
-
-        /// <summary>
-        /// 根据Id查询主贴
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("Query/{Id}")]
-        public async Task<IActionResult> Query([FromRoute] string Id)
-        {
-            var topics = await _cacheService.Topics(p => p.Id == Id);
-            if (topics.Any())
-            {
-                var topic = topics.FirstOrDefault();
-                var topicDto = _mapper.Map<BZTopicDto>(topic);
-                var users = await _cacheService.Users(p => p.Id == topic.CreatorId);
-                var version = (await _cacheService.Versions(p => p.Id == topic.Id)).FirstOrDefault();
-                if (users.Any())
-                {
-                    topicDto.UserName = users?.FirstOrDefault()?.UserName;
-                    topicDto.NickName = users?.FirstOrDefault()?.NickName;
-                    topicDto.Avator = users?.FirstOrDefault()?.Avator;
-                    topicDto.VerName = version?.VerName;
-                }
-                return Ok(topicDto);
-            }
-            else
-            {
-                var res = await _bZTopicRepository.QueryTopById(Id);
-                if (res is null)
-                    return NoContent();
-
-                return Ok(res.FirstOrDefault());
-            }
-
-        }
-        /// <summary>
-        /// 根据条件分页查询帖子---后台
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("Query")]
-        public async Task<IActionResult> Query([FromBody] TopicRequestCondition Request = null, [SwaggerParameter(Required = false)] string userName = "")
-        {
-
             IPagedList<BZTopicModel> pagedList = null;
             var query = Request.CreateQueryExpression<BZTopicModel, TopicRequestCondition>();
-            if (!string.IsNullOrWhiteSpace(userName))
+            if (!string.IsNullOrWhiteSpace(Request.UserName))
             {
-                var Users = await _cacheService.Users(p => p.UserName.Contains(userName) || p.NickName.Contains(userName));
+                var Users = await _cacheService.Users(p => 
+                p.UserName.ToLower().Contains(Request.UserName.ToLower()) ||
+                p.NickName.ToLower().Contains(Request.UserName.ToLower()));
                 if (Users != null)
-                {
                     query = query.And(p => Users.Select(x => x.Id).Contains(p.CreatorId));
-                }
+                else return NoContent();
             }
             pagedList = await _bZTopicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageInfo.PageIndex - 1, Request.PageInfo.PageSize);
-            if (pagedList != null && pagedList.Items.Any())
+            if (pagedList.Items.Any())
             {
-                var pagedatas = pagedList.ConvertToPageData<BZTopicModel, BZTopicDto>();
-
+                var pagedatas = pagedList.From(result => _mapper.Map<List<BZTopicDto>>(result));
                 var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
-                foreach (BZTopicModel topic in pagedList.Items)
+                foreach (BZTopicDto topic in pagedatas.Items)
                 {
-                    var topicwithuser = _mapper.Map<BZTopicDto>(topic);
                     var user = users.FirstOrDefault(p => p.Id == topic.CreatorId);
-                    topicwithuser.UserName = user.UserName;
-                    topicwithuser.Avator = user.Avator;
-                    topicwithuser.NickName = user.NickName;
-                    pagedatas.Items.Add(topicwithuser);
+                    topic.UserName = user.UserName;
+                    topic.Avator = user.Avator;
+                    topic.NickName = user.NickName;
                 }
-                if (pagedatas is null || pagedatas.TotalCount == 0)
-                    return NoContent();
                 return Ok(pagedatas);
             }
-
             return NoContent();
         }
 
-        /// <summary>
-        /// 根据条件分页查询帖子---前端
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("AppQuery")]
-        public async Task<IActionResult> AppQuery([FromBody] TopicRequestCondition Request = null)
-        {
-
-            IPagedList<BZTopicModel> pagedList = null;
-            var query = Request.CreateQueryExpression<BZTopicModel, TopicRequestCondition>();
-            query = query.And(p => p.Status == 0);
-            pagedList = await _bZTopicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageInfo.PageIndex - 1, Request.PageInfo.PageSize);
-            if (pagedList != null && pagedList.Items.Any())
-            {
-                var pagedatas = pagedList.ConvertToPageData<BZTopicModel, BZTopicDto>();
-
-                var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
-                foreach (BZTopicModel topic in pagedList.Items)
-                {
-                    var topicwithuser = _mapper.Map<BZTopicDto>(topic);
-                    var user = users.FirstOrDefault(p => p.Id == topic.CreatorId);
-                    topicwithuser.UserName = user.UserName;
-                    topicwithuser.Avator = user.Avator;
-                    topicwithuser.NickName = user.NickName;
-                    pagedatas.Items.Add(topicwithuser);
-                }
-                if (pagedatas is null || pagedatas.TotalCount == 0)
-                    return NoContent();
-                return Ok(pagedatas);
-            }
-
-            return NoContent();
-        }
-
-        /// <summary>
-        /// 查询主题帖的回帖
-        /// </summary>
-        /// <param name="topicId">主题帖Id</param>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
-        [HttpGet("Reply/{topicId}/{pageSize}/{pageIndex}")]
-        public async Task<IActionResult> QueryTopicReply(string topicId,
-            [SwaggerParameter(Required = false)] int pageSize = 20,
-            [SwaggerParameter(Required = false)]int pageIndex = 1)
-        {
-            if (string.IsNullOrWhiteSpace(topicId))
-                return new BadRequestResponse(" topicId id  error");
-
-            var repo = _unitOfWork.GetRepository<BZReplyModel>(true);
-
-            var pagedList = await repo.GetPagedListAsync(p => p.TopicId == topicId && p.Status == 0, o => o.OrderBy(p => p.CreateDate), null, pageIndex - 1, pageSize);
-            if (pagedList.TotalCount > 0)
-            {
-                var topic = await _bZTopicRepository.GetFirstOrDefaultAsync(p => p.Id == topicId);
-                var pagedatas = pagedList.ConvertToPageData<BZReplyModel, BZReplyDto>();
-                var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
-                foreach (var replyDto in pagedList.Items)
-                {
-                    var user = users.FirstOrDefault(p => p.Id == replyDto.CreatorId);
-                    var replywithuser = _mapper.Map<BZReplyDto>(replyDto);
-                    pagedatas.Items.Add(replywithuser);
-                    if (user != null)
-                    {
-                        replywithuser.NickName = user?.NickName;
-                        replywithuser.Avator = user?.Avator;
-                        replywithuser.UserName = user?.UserName;
-                        replywithuser.UserId = user.Id;
-                        replywithuser.Title = topic?.Title;
-                    }
-                }
-                pagedatas.Items = pagedatas.Items.OrderByDescending(p => p.CreateDate).ToList();
-                return Ok(pagedatas);
-            }
-            else
-            {
-                return NoContent();
-            }
-        }
-
-
-        /// <summary>
-        /// 根据回帖ID查询所属的主题帖，并定位到回帖所在主贴的页码
-        /// </summary>
-        /// <param name="replyId">回帖ID</param>
-        /// <returns></returns>
-        [HttpGet("Reply/{replyId}")]
-        public async Task<IActionResult> QueryReply(string replyId)
-        {
-            if (string.IsNullOrWhiteSpace(replyId))
-                return new BadRequestResponse(" replyId id  error");
-
-            var topicRepo = _unitOfWork.GetRepository<BZTopicModel>(true);
-            var replyRepo = _unitOfWork.GetRepository<BZReplyModel>(true);
-            var reply = await replyRepo.FindAsync(replyId);
-            if (reply is null)
-                return NoContent();
-            var topic = await topicRepo.FindAsync(reply.TopicId);
-            if (topic is null)
-            {
-                return NoContent();
-            }
-            else
-            {
-                var resultData = _mapper.Map<BZTopicDto>(topic);
-                var replyPosition = await _bZTopicRepository.PageIndexOfReply(topic.Id, replyId);
-                //var replys =await QueryTopicReply(topic.Id , 10 , 1);
-                return Ok(new { topic = resultData, position = replyPosition });
-            }
-        }
-
-
-        ///// <summary>
-        ///// 根据类型查询帖子---前端
-        ///// </summary>
-        ///// <param name="topicType">帖子类型 0：提问，1：分享，2：讨论，3：建议，4：公告</param>
-        ///// <param name="pageSize"></param>
-        ///// <param name="pageIndex"></param>
-        ///// <returns></returns>
-        //[HttpGet("QueryTopicsByType{topicType}/{pageSize}/{pageIndex}")]
-        //public async Task<IActionResult> QueryTopic([SwaggerParameter(Required = false)] int topicType = 0,
-        //    [SwaggerParameter(Required = false)] int pageSize = 10,
-        //    [SwaggerParameter(Required = false)] int pageIndex = 1)
-        //{
-        //    if (topicType < 0)
-        //        return new BadRequestResponse(" topicType id  error");
-        //    var topicRepo = _unitOfWork.GetRepository<BZTopicModel>(true);
-        //    var Topics = await _bZTopicRepository.GetPagedListAsync(p => p.Category == topicType, o => o.OrderBy(o => o.Top == 1).ThenByDescending(o => o.LastModifyDate), null, pageIndex - 1, pageSize);
-        //    if (Topics is null || Topics.TotalCount == 0)
-        //        return NoContent();
-        //    var ResultDtos = _mapper.Map<List<BZTopicDto>>(Topics.Items);
-        //    return Ok(ResultDtos);
-        //}
-
-        /// <summary>
-        /// 根据类型，排序查询---前端
-        /// </summary>
-        /// <param name="orderType">排序类型 0：综合，1：人气，2：精华，3：已结帖</param>
-        /// <param name="topicType">帖子类型 0：提问，1：分享，2：讨论，3：建议，4：公告</param>
-        /// <param name="pageSize"></param>
-        /// <param name="pageIndex"></param>
-        /// <returns></returns>
-        [HttpGet("QueryTopicsByOrder/{orderType}/{topicType}/{pageSize}/{pageIndex}")]
-        public async Task<IActionResult> QueryTopicsByOrder([SwaggerParameter(Required = false)] int orderType = 0,
-            [SwaggerParameter(Required = false)] int topicType = -1,
-            [SwaggerParameter(Required = false)] int pageSize = 10,
-            [SwaggerParameter(Required = false)] int pageIndex = 1)
-        {
-            if (orderType < 0)
-                return new BadRequestResponse(" topicType id  error");
-            var topicRepo = _unitOfWork.GetRepository<BZTopicModel>(true);
-            IPagedList<BZTopicModel> pagedList = null;
-            Expression<Func<BZTopicModel, bool>> predicate = p => p.Status != -1;//-1 已删除
-            if (topicType != -1)
-            {
-                predicate = predicate.And(p => p.Category == topicType);
-            }
-            switch (orderType)
-            {
-                case 0:
-                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderBy(o => (o.ReplyCount * 1.5 + o.Hot)).ThenByDescending(o => o.LastModifyDate), null, pageIndex - 1, pageSize);
-                    break;
-                case 1:
-                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderBy(o => (o.Hot)).ThenByDescending(o => o.LastModifyDate), null, pageIndex - 1, pageSize);
-                    break;
-                case 2:
-                    predicate = predicate.And(p => p.Good == 1);//精华帖
-                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => (o.Good)).ThenByDescending(o => o.LastModifyDate), null, pageIndex - 1, pageSize);
-                    break;
-                case 3:
-                    Expression<Func<BZTopicModel, bool>> predicateEnd = p => p.Status == 1;//1 已结帖
-                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicateEnd, o => o.OrderByDescending(p => p.LastModifyDate), null, pageIndex - 1, pageSize);
-                    break;
-                default:
-                    break;
-            }
-            if (pagedList is null || pagedList.TotalCount == 0)
-                return NoContent();
-            var pagedatas = pagedList.ConvertToPageData<BZTopicModel, BZTopicDto>();
-            var userRepository = _unitOfWork.GetRepository<BZUserModel>();
-            var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
-            foreach (BZTopicModel topic in pagedList.Items)
-            {
-                var topicwithuser = _mapper.Map<BZTopicDto>(topic);
-                var user = users.FirstOrDefault(p => p.Id == topic.CreatorId);
-                if (user != null)
-                {
-                    topicwithuser.UserName = user.UserName;
-                    topicwithuser.Avator = user.Avator;
-                    topicwithuser.NickName = user.NickName;
-                }
-                pagedatas.Items.Add(topicwithuser);
-            }
-            if (pagedatas is null || pagedatas.TotalCount == 0)
-                return NoContent();
-            return Ok(pagedatas);
-        }
-
-        /// <summary>
-        /// 查询精华帖子
-        /// </summary>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
-        [HttpGet("Best/{pageSize}")]
-        public async Task<IActionResult> QueryBest([SwaggerParameter(Required = false)] int pageSize = 5)
-        {
-            var topicRepo = _unitOfWork.GetRepository<BZTopicModel>(true);
-            var Topics = await _bZTopicRepository.GetPagedListAsync(p => p.Good == 1, o => o.OrderByDescending(o => o.CreateDate), null, 0, pageSize);
-            if (Topics is null || Topics.TotalCount == 0)
-                return NoContent();
-            var ResultDtos = _mapper.Map<List<BZTopicDto>>(Topics.Items);
-            return Ok(ResultDtos);
-        }
-
-        /// <summary>
-        /// 查询置顶帖子
-        /// </summary>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
-        [HttpGet("Top/{pageSize}")]
-        public async Task<IActionResult> QueryTop([SwaggerParameter(Required = false)] int pageSize = 3)
-        {
-            var Topics = await _bZTopicRepository.QueryTops(pageSize);
-            if (Topics is null || Topics.Count() == 0)
-                return NoContent();
-            return Ok(Topics);
-        }
-
-
-        /// <summary>
-        /// 帖子热度
-        /// </summary>
-        /// <param name="HotType">1：月榜，2：周榜</param>
-        /// <returns></returns>
-        [HttpGet("Hot/{HotType}")]
-        public async Task<IActionResult> TopHot(int HotType = 1)
-        {
-            int beforeDays = HotType switch
-            {
-                1 => -30,
-                2 => -7,
-                _ => -7
-            };
-            var topicRepo = _unitOfWork.GetRepository<BZTopicModel>(true);
-            Expression<Func<BZTopicModel, bool>> predicate = p => p.CreateDate >= DateTime.Now.AddDays(beforeDays) && p.CreateDate <= DateTime.Now;
-            var Topics = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => o.Hot).ThenByDescending(o => o.ReplyCount), null, 1, 10);
-            if (Topics is null || Topics.TotalCount == 0)
-                return NoContent();
-            var ResultDtos = _mapper.Map<List<BZTopicDto>>(Topics.Items);
-            return Ok(ResultDtos);
-        }
     }
 }

@@ -48,8 +48,8 @@ namespace Blazui.Community.Admin.Pages.Topic
 
         private async Task LoadDatas()
         {
-            BuildCondition(out QueryTopicCondition condition, out string username);
-            var datas = await NetService.QueryTopics(condition, username);
+            BuildCondition(out QueryTopicCondition condition);
+            var datas = await NetService.QueryTopics(condition);
             if (datas.IsSuccess)
             {
                 Datas = datas.Data.Items.ToList();
@@ -62,14 +62,10 @@ namespace Blazui.Community.Admin.Pages.Topic
             }
         }
 
-        private void BuildCondition(out QueryTopicCondition condition, out string username)
+        private void BuildCondition(out QueryTopicCondition condition)
         {
             condition = searchForm.GetValue<QueryTopicCondition>();
             condition ??= new QueryTopicCondition();
-            username = "";
-            if (condition.UserId != null)
-                username = condition.UserId.ToString();
-            condition.UserId = null;
             condition.PageIndex = currentPage;
             condition.PageSize = pageSize;
         }

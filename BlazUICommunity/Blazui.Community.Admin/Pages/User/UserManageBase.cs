@@ -1,6 +1,7 @@
 ﻿using Blazui.Community.Admin.QueryCondition;
 using Blazui.Community.DTO;
 using Blazui.Community.DTO.Admin;
+using Blazui.Community.Utility.Response;
 using Blazui.Component;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -32,11 +33,11 @@ namespace Blazui.Community.Admin.Pages.User
             }
         }
 
-        protected async Task SearchData()
+        protected async Task SearchData(bool MustRefresh=false)
         {
             await table.WithLoadingAsync(async () =>
             {
-                await LoadDatas();
+                await LoadDatas(MustRefresh);
             });
         }
 
@@ -45,30 +46,29 @@ namespace Blazui.Community.Admin.Pages.User
             await SearchData();
         }
 
-        private async Task LoadDatas()
+        private async Task LoadDatas(bool MustRefresh = false)
         {
             var condition = searchForm.GetValue<QueryUserCondition>();
 
             condition ??= new QueryUserCondition();
             condition.PageIndex = currentPage;
             condition.PageSize = pageSize;
-            var datas = await NetService.QueryUsers(condition);
+            var datas = await NetService.QueryUsers(condition, MustRefresh);
+
             //是否可以做一个判断 如果返回的相同数据，就重新渲染了??
             if (datas.IsSuccess)
-            {
-                Datas = datas.Data.Items;
-                DataCount = datas.Data.TotalCount;
-                UpdateUI();
-            }
-            else
-            {
-                if (datas.Code != 304)
-                {
-                    Datas = new List<UserDisplayDto>();
-                    DataCount = 0;
-                    UpdateUI();
-                }
-            }
+                SetData(datas.Data.Items, datas.Data.TotalCount);
+            else if (datas.Code == 204)
+                SetData();
+
+        }
+
+        private void SetData(IList<UserDisplayDto> datas = null, int count = 0)
+        {
+            datas ??= new List<UserDisplayDto>();
+            Datas = datas;
+            DataCount = count;
+            UpdateUI();
         }
 
         private void UpdateUI()
@@ -87,7 +87,7 @@ namespace Blazui.Community.Admin.Pages.User
             {
                 await ConfirmAsync(
                     async () => await NetService.FrozenUser(dto.Id),
-                     async () => await SearchData(),
+                     async () => await SearchData(true),
                 "确定要冻结该账号吗？");
 
             }
@@ -102,7 +102,7 @@ namespace Blazui.Community.Admin.Pages.User
             {
                 await ConfirmAsync(
                     async () => await NetService.UnFrozen(dto.Id),
-                    async () => await SearchData(),
+                    async () => await SearchData(true),
                 "确定要激活该账号吗？");
             }
         }
@@ -117,7 +117,7 @@ namespace Blazui.Community.Admin.Pages.User
                     {
                         await MessageBox.AlertAsync($"重置密码成功，新密码为{result.Data?.ToString()}，请牢记");
                         //todo--发送短信至用户
-                        await SearchData();
+                        await SearchData(true);
                     },
 
                 "确定要重置密码吗？");

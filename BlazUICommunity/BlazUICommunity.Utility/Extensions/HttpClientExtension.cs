@@ -10,156 +10,201 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.Utility.Extensions
 {
-  public static class HttpClientExtension
+    public static class HttpClientExtension
     {
-        private static async Task<BaseResponse<T>> GetResult<T>(this HttpClient httpClient , string url,HttpMethod httpMethod=HttpMethod.Get)
-        {
-            if ( httpClient is null )
-            {
-                throw new ArgumentNullException(nameof(httpClient));
-            }
+        private static readonly Dictionary<string, string> EtagCaches = new Dictionary<string, string>();
+        private static readonly string IfNoMatch = "If-None-Match";
 
-            if ( string.IsNullOrEmpty(url) )
-            {
-                throw new ArgumentException("url is null" , nameof(url));
-            }
+        public static async Task<BaseResponse<T>> GetWithJsonResultAsync<T>
+        (this HttpClient httpClient, string url)
+     => await httpClient.GetJsonResultAsync<T>(url, HttpMethod.Get);
+        public static async Task<BaseResponse<T>> DeleteWithJsonResultAsync<T>
+         (this HttpClient httpClient, string url)
+         => await httpClient.GetJsonResultAsync<T>(url, HttpMethod.Delete);
+        public static async Task<BaseResponse<T>> PatchWithJsonResultAsync<T>
+          (this HttpClient httpClient, string url, HttpContent httpContent = null)
+          => await httpClient.GetJsonResultAsync<T>(url, HttpMethod.Patch, httpContent);
+        public static async Task<BaseResponse<T>> PutWithJsonResultAsync<T>
+            (this HttpClient httpClient, string url, HttpContent httpContent = null)
+            => await httpClient.GetJsonResultAsync<T>(url, HttpMethod.Put, httpContent);
+        public static async Task<BaseResponse<T>> PostWithJsonResultAsync<T>
+        (this HttpClient httpClient, string url, HttpContent httpContent = null)
+        => await httpClient.GetJsonResultAsync<T>(url, HttpMethod.Post, httpContent);
+
+
+        public static async Task<BaseResponse> GetWithJsonResultAsync
+      (this HttpClient httpClient, string url)
+   => await httpClient.GetJsonResultAsync(url, HttpMethod.Get);
+        public static async Task<BaseResponse> DeleteWithJsonResultAsync
+         (this HttpClient httpClient, string url)
+         => await httpClient.GetJsonResultAsync(url, HttpMethod.Delete);
+        public static async Task<BaseResponse> PatchWithJsonResultAsync
+          (this HttpClient httpClient, string url, HttpContent httpContent = null)
+          => await httpClient.GetJsonResultAsync(url, HttpMethod.Patch, httpContent);
+        public static async Task<BaseResponse> PutWithJsonResultAsync
+            (this HttpClient httpClient, string url, HttpContent httpContent = null)
+            => await httpClient.GetJsonResultAsync(url, HttpMethod.Put, httpContent);
+        public static async Task<BaseResponse> PostWithJsonResultAsync
+        (this HttpClient httpClient, string url, HttpContent httpContent = null)
+        => await httpClient.GetJsonResultAsync(url, HttpMethod.Post, httpContent);
+
+        /// <summary>
+        /// 发送请求返回BaseResponse<T>结果
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="httpClient"></param>
+        /// <param name="url"></param>
+        /// <param name="httpMethod"></param>
+        /// <param name="httpContent"></param>
+        /// <returns></returns>
+        public static async Task<BaseResponse<T>> GetJsonResultAsync<T>(this HttpClient httpClient, string url, HttpMethod httpMethod = HttpMethod.Get, HttpContent httpContent = null)
+        {
             HttpResponseMessage response = null;
-            switch (httpMethod)
-            {
-                case HttpMethod.Get:
-                    response = await httpClient.GetAsync(url);
-                    break;
-                case HttpMethod.Post:
-                    break;
-                case HttpMethod.Delete:
-                    response = await httpClient.DeleteAsync(url);
-                    break;
-                case HttpMethod.Put:
-                    //response = await httpClient.PutAsync(url);
-                    break;
-                default:
-                    break;
-            }
-            var header = response.Headers.GetValues("ETag");
-            if (header != null && header.Any())
-            {
-                httpClient.DefaultRequestHeaders.Remove("If-None-Match");
-                httpClient.DefaultRequestHeaders.Add("If-None-Match", header.First());
-            }
-            if (response.StatusCode == System.Net.HttpStatusCode.NotModified)
-                return new BaseResponse<T>((int)response.StatusCode);
-        
-            return await DeserializeHttpResponseMessage<BaseResponse<T>>(response);
-        }
-        private static async Task<T> GetResult1<T>(this HttpClient httpClient, string url, HttpMethod httpMethod = HttpMethod.Get)
-        {
-            if (httpClient is null)
-            {
-                throw new ArgumentNullException(nameof(httpClient));
-            }
-
-            if (string.IsNullOrEmpty(url))
-            {
-                throw new ArgumentException("url is null", nameof(url));
-            }
-            HttpResponseMessage response = null;
-            switch (httpMethod)
-            {
-                case HttpMethod.Get:
-                    response = await httpClient.GetAsync(url);
-                    break;
-                case HttpMethod.Post:
-                    break;
-                case HttpMethod.Delete:
-                    response = await httpClient.DeleteAsync(url);
-                    break;
-                case HttpMethod.Put:
-                    //response = await httpClient.PutAsync(url);
-                    break;
-                default:
-                    break;
-            }
-            //if (response.StatusCode == System.Net.HttpStatusCode.NotModified)
-
-            var header = response.Headers.GetValues("ETag");
-            if (header != null && header.Any())
-                httpClient.DefaultRequestHeaders.Add("If-None-Match", header.First());
-            return await DeserializeHttpResponseMessage<T>(response);
-        }
-
-        private static async Task<T> PostResult<T>(this HttpClient httpClient , string url, HttpContent httpContent)
-        {
-            if (httpClient is null)
-            {
-                throw new ArgumentNullException(nameof(httpClient));
-            }
-
-            if (string.IsNullOrEmpty(url))
-            {
-                throw new ArgumentException("url is null", nameof(url));
-            }
-
-            if (httpContent is null)
-            {
-                throw new ArgumentNullException(nameof(httpContent));
-            }
-
-            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            HttpResponseMessage response = await httpClient.PostAsync(url, httpContent);
-            var header = response.Headers.GetValues("ETag");
-            if (header != null && header.Any())
-                httpClient.DefaultRequestHeaders.Add("If-None-Match", header.First());
-            return await DeserializeHttpResponseMessage<T>(response);
-        }
-
-        private static async Task<T> DeserializeHttpResponseMessage<T>(HttpResponseMessage response)
-        {
-            if (response is null ||response.StatusCode== System.Net.HttpStatusCode.NotModified)
-                return default;
-            //response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(content);
             try
             {
-                return JsonConvert.DeserializeObject<T>(content);
+                response = await httpClient.GetHttpResponseMessage(url, httpMethod, httpContent);
+                return response.StatusCode == System.Net.HttpStatusCode.NotModified || response.StatusCode == System.Net.HttpStatusCode.NoContent ?
+                    new BaseResponse<T>((int)response.StatusCode) :
+                 JsonConvert.DeserializeObject<BaseResponse<T>>(await response.Content.ReadAsStringAsync());
             }
             catch (Exception ex)
             {
-                return default;
+                return response == null ? new BaseResponse<T>(400, ex.Message) : new BaseResponse<T>((int)response.StatusCode, ex.Message);
             }
         }
 
-
-
-        private static BaseResponse Result(BaseResponse response)
+        /// <summary>
+        /// 发送请求返回BaseResponse结果
+        /// </summary>
+        /// <param name="httpClient"></param>
+        /// <param name="url"></param>
+        /// <param name="httpMethod"></param>
+        /// <param name="httpContent"></param>
+        /// <returns></returns>
+        public static async Task<BaseResponse> GetJsonResultAsync(this HttpClient httpClient, string url, HttpMethod httpMethod = HttpMethod.Get, HttpContent httpContent = null)
         {
-            if (response == null)
-                return new BaseResponse();
+            HttpResponseMessage response = null;
+            try
+            {
+                response = await httpClient.GetHttpResponseMessage(url, httpMethod, httpContent);
+                return response.StatusCode == System.Net.HttpStatusCode.NotModified ?
+                     new BaseResponse((int)response.StatusCode) :
+                  JsonConvert.DeserializeObject<BaseResponse>(await response.Content.ReadAsStringAsync());
+            }
+            catch (Exception ex)
+            {
+                return response == null ? new BaseResponse(400, ex.Message) : new BaseResponse((int)response.StatusCode, ex.Message);
+            }
+
+        }
+
+
+        static async Task<HttpResponseMessage> GetHttpResponseMessage(this HttpClient httpClient, string url, HttpMethod httpMethod, HttpContent httpContent)
+        {
+            if (httpClient is null)
+                throw new ArgumentNullException(nameof(httpClient));
+
+            if (string.IsNullOrEmpty(url))
+                throw new ArgumentException(nameof(url));
+
+            httpContent ??= new StringContent("");
+
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            //if ((httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Put) && httpContent is null)
+            //    throw new ArgumentException(nameof(httpContent));
+
+            HttpResponseMessage response;
+            switch (httpMethod)
+            {
+                case HttpMethod.Get:
+                    var ETagCacheKey = url.Contains("?")? url.Substring(0, url.IndexOf('?')):url;
+                    if (EtagCaches.TryGetValue(ETagCacheKey, out string OldEtag))
+                        httpClient.AddEtagToHttpHeader(OldEtag);
+
+                    response = await httpClient.GetAsync(url);
+                    var CurrentETag = response.Headers.GetValues("ETag")?.First();
+                    OldEtag ??= string.Empty;
+                    if (!string.IsNullOrWhiteSpace(CurrentETag) && !OldEtag.Equals(CurrentETag))
+                        CreateOrResetEtagCache(CurrentETag, ETagCacheKey);
+                    break;
+                case HttpMethod.Post:
+                    response = await httpClient.PostAsync(url, httpContent);
+                    break;
+                case HttpMethod.Delete:
+                    response = await httpClient.DeleteAsync(url);
+                    break;
+                case HttpMethod.Put:
+                    response = await httpClient.PutAsync(url, httpContent);
+                    break;
+                case HttpMethod.Patch:
+                    response = await httpClient.PatchAsync(url, httpContent);
+                    break;
+                case HttpMethod.Head:
+                    response = await httpClient.HeadAsync(url, httpContent);
+                    break;
+                case HttpMethod.Trace:
+                    response = await httpClient.Tracesync(url, httpContent);
+                    break;
+                case HttpMethod.Options:
+                    response = await httpClient.OptionsAsync(url, httpContent);
+                    break;
+                default:
+                    throw new NotSupportedException(nameof(httpMethod));
+            }
+
             return response;
         }
-        private static BaseResponse<T> Result<T>(BaseResponse<T> response)
+
+
+        /// <summary>
+        /// 缓存etag
+        /// </summary>
+        /// <param name="ETag"></param>
+        /// <param name="ETagCacheKey"></param>
+        private static void CreateOrResetEtagCache(string ETag, string ETagCacheKey)
         {
-            if (response == null)
-                return new BaseResponse<T>();
-            return response;
+            if (EtagCaches.ContainsKey(ETagCacheKey))
+                EtagCaches.Remove(ETagCacheKey);
+            EtagCaches.Add(ETagCacheKey, ETag);
+
         }
-        public static async Task<BaseResponse<T>> PostJsonAsync<T>(this HttpClient httpClient,string url, HttpContent httpContent = null)
+        /// <summary>
+        /// 添加etag验证到httpheader
+        /// </summary>
+        /// <param name="httpClient"></param>
+        /// <param name="etag"></param>
+        private static void AddEtagToHttpHeader(this HttpClient httpClient, string etag)
         {
-            return Result(await httpClient.PostResult<BaseResponse<T>>(url, httpContent));
-        }
-        public static async Task<BaseResponse> PostJsonAsync(this HttpClient httpClient,string url, HttpContent httpContent = null)
-        {
-            return Result(await httpClient.PostResult<BaseResponse>(url, httpContent));
+            if (httpClient.DefaultRequestHeaders.Contains(IfNoMatch))
+                httpClient.DefaultRequestHeaders.Remove(IfNoMatch);
+            httpClient.DefaultRequestHeaders.Add(IfNoMatch, etag);
         }
 
-        public static async Task<BaseResponse<T>> GetJsonAsync<T>(this HttpClient httpClient,string url, HttpMethod method = HttpMethod.Get)
+
+        private static async Task<HttpResponseMessage> HeadAsync(this HttpClient httpClient, string url, HttpContent httpContent)
         {
-            return Result(await httpClient.GetResult<T>(url, method));
+            return await httpClient.OtherHttpMethodRequest(url, httpContent, System.Net.Http.HttpMethod.Head);
         }
-        public static async Task<BaseResponse> GetJsonAsync(this HttpClient httpClient,string url, HttpMethod method = HttpMethod.Get)
+        private static async Task<HttpResponseMessage> OptionsAsync(this HttpClient httpClient, string url, HttpContent httpContent)
         {
-            return Result(await httpClient.GetResult1<BaseResponse>(url, method));
+            return await httpClient.OtherHttpMethodRequest(url, httpContent, System.Net.Http.HttpMethod.Options);
         }
+        private static async Task<HttpResponseMessage> Tracesync(this HttpClient httpClient, string url, HttpContent httpContent)
+        {
+            return await httpClient.OtherHttpMethodRequest(url, httpContent, System.Net.Http.HttpMethod.Trace);
+        }
+        private static async Task<HttpResponseMessage> OtherHttpMethodRequest(this HttpClient httpClient, string url, HttpContent httpContent, System.Net.Http.HttpMethod httpMethod)
+        {
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage
+            {
+                Content = httpContent,
+                RequestUri = new Uri(url),
+                Method = httpMethod
+            };
+            return await httpClient.SendAsync(httpRequestMessage);
+        }
+
+
     }
 
 
@@ -168,6 +213,11 @@ namespace Blazui.Community.Utility.Extensions
         Get,
         Post,
         Delete,
-         Put,
+        Put,
+        Patch,
+        Head,
+        Trace,
+        Options
+
     }
 }

@@ -59,6 +59,10 @@
     <ProjectReference Include="..\BlazUICommunity.Utility\Blazui.Community.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="http://json.schemastore.org/mta" appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 

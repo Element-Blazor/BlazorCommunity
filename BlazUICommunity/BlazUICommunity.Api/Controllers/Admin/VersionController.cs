@@ -7,6 +7,7 @@ using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Utility.Extensions;
 using Blazui.Community.Utility.Filter;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -23,6 +24,8 @@ namespace Blazui.Community.Api.Controllers
     [Route("api/[Controller]")]
     [ApiController]
     [SwaggerTag(description: "版本信息")]
+    [HttpCacheExpiration(CacheLocation = CacheLocation.Public)]
+    [HttpCacheValidation(MustRevalidate = true)]
     public class VersionController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

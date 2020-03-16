@@ -45,15 +45,13 @@
                 </Trigger>
                 <Items>
                     @if (context is UserDisplayDto dto)
-                    {
-                        //if (dto.Status == 0)
-                        //{
-                            <BDropDownItem OnClick="@(e=> Frozen(context))">封禁账号</BDropDownItem>
-                        //}
-                        //else
-                        //{
-                            <BDropDownItem OnClick="@(e=> UnFrozen(context))">激活账号</BDropDownItem>
-                            //}
+                        if (dto.Status == 0)
+                        {
+                            <BDropDownItem OnClick="@(e => Frozen(context))">封禁账号</BDropDownItem>
+                        }
+                        else
+                        {
+                            <BDropDownItem OnClick="@(e => UnFrozen(context))">激活账号</BDropDownItem>
                         }
                     <BDropDownItem OnClick="@(e=> ResetPassword(context))">重置密码</BDropDownItem>
                 </Items>

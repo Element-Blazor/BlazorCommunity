@@ -26,17 +26,19 @@ namespace Blazui.Community.Utility.Filter
             {
                 if (!context.Controller.GetType().IsDefined(typeof(BlazuiUploadApiResultAttribute), true))
                 {
-                    if(context.Result is NoContentResponse)
+                    if (context.Result is NoContentResponse || context.Result is NoContentResult)
                     {
-                        context.Result = new OkObjectResult(new BaseResponse(code: 205, result: "", message: "no data"));
+                        context.Result = new OkObjectResult(new BaseResponse(code: 204, result: "", message: ""));
                     }
-                    if (context.Result is NoContentResult)
+
+                    else if (context.Result is ValidationFailedResponse response)
                     {
-                        context.Result = new OkObjectResult(new BaseResponse(code: 204, result: "", message: "Not Modified"));
-                    }
-                    else if (context.Result is ValidationFailedResponse)
-                    {
-                        context.Result = new OkObjectResult(new BaseResponse(code: 400, result: "", message: "error request 参数错误"));
+                        var result = string.Empty;
+                        if (response.Value is ValidationFailedResultModel validation)
+                            result = JsonConvert.SerializeObject(validation.Data);
+                        context.Result = new OkObjectResult(new BaseResponse(code: 400, result: result
+                        , message: ""));
+
                     }
                     else if (context.Result is BadRequestObjectResult || objectResult?.StatusCode == 400)
                     {

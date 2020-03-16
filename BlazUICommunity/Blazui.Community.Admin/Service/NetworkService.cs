@@ -33,9 +33,9 @@ namespace Blazui.Community.Admin.Service
             {
                 NoCache = false,
                 NoStore = false,
-                MaxAge = TimeSpan.FromSeconds(100),
-                MustRevalidate = true,
-                Public = true,
+                MaxAge = TimeSpan.FromSeconds(0),
+                MustRevalidate = false,
+                Public = false,
             };
             _adminUserService = adminUserService;
             Unauthorized = new BaseResponse(403, "Unauthorized ，对不起您没有权限进行该操作 ", null);
@@ -61,10 +61,10 @@ namespace Blazui.Community.Admin.Service
         /// <typeparam name="T"></typeparam>
         /// <param name="t"></param>
         /// <returns></returns>
-        private static string BuildHttpQueryParam<T>(T t)
+        private static string BuildHttpQueryParam<T>(T t, bool MustRefresh = false)
         {
             if (t is null)
-                return string.Empty;
+                return MustRefresh ? $"MustRefresh={DateTime.Now.Ticks}" : string.Empty;
             var queryparam = string.Empty;
             var queryKey = t.GetType().FullName;
             if (!QuaryParams.TryGetValue(queryKey, out PropertyInfo[] props))
@@ -77,23 +77,23 @@ namespace Blazui.Community.Admin.Service
                 queryparam = "?";
             foreach (PropertyInfo prop in props)
             {
-                queryparam += $"{prop.Name}={prop.GetValue(t)}&";
+                var value = prop.PropertyType.IsEnum ? (int)prop.GetValue(t) : prop.GetValue(t);//可空的枚举 如何判断他是枚举??????
+                queryparam += $"{prop.Name}={value}&";
             }
             queryparam = queryparam.TrimEnd('&');
-            return queryparam;
+            return MustRefresh ? $"{queryparam}&MustRefresh={DateTime.Now.Ticks}" : queryparam;
         }
 
         /// <summary>
         /// 查询用户
         /// </summary>
         /// <returns></returns>
-        internal async Task<BaseResponse<PageDatas<UserDisplayDto>>> QueryUsers(QueryUserCondition querycondition)
+        internal async Task<BaseResponse<PageDatas<UserDisplayDto>>> QueryUsers(QueryUserCondition querycondition, bool MustRefresh = false)
         {
-
-            return await httpClient.GetJsonAsync<PageDatas<UserDisplayDto>>($"api/user/Query{BuildHttpQueryParam(querycondition)}");
-            //return await httpClient.PostJsonAsync<PageDatas<UserDisplayDto>>("api/user/Query", BuildHttpContent(querycondition));
+            return await httpClient.GetWithJsonResultAsync<PageDatas<UserDisplayDto>>
+                ($"api/user/Query{BuildHttpQueryParam(querycondition, MustRefresh)}");
         }
-      
+
         /// <summary>
         /// 封禁账号
         /// </summary>
@@ -102,7 +102,7 @@ namespace Blazui.Community.Admin.Service
         {
             if (!(await _adminUserService.IsSupperAdminLogin()))
                 return Unauthorized;
-            return await httpClient.GetJsonAsync($"api/user/Frozen/{UserId}");
+            return await httpClient.PatchWithJsonResultAsync($"api/user/Frozen/{UserId}");
         }
         /// <summary>
         /// 解封
@@ -113,7 +113,7 @@ namespace Blazui.Community.Admin.Service
         {
             if (!(await _adminUserService.IsSupperAdminLogin()))
                 return Unauthorized;
-            return await httpClient.GetJsonAsync($"api/user/UnFrozen/{UserId}");
+            return await httpClient.PatchWithJsonResultAsync($"api/user/UnFrozen/{UserId}");
         }
 
 
@@ -127,19 +127,16 @@ namespace Blazui.Community.Admin.Service
         {
             if (!(await _adminUserService.IsSupperAdminLogin()))
                 return Unauthorized;
-            return await httpClient.GetJsonAsync($"api/user/ResetPassword/{UserId}");
+            return await httpClient.PatchWithJsonResultAsync($"api/user/ResetPassword/{UserId}");
         }
         /// <summary>
         /// 查询帖子
         /// </summary>
         /// <param name="querycondition"></param>
         /// <returns></returns>
-        internal async Task<BaseResponse<PageDatas<BZTopicDto>>> QueryTopics(QueryTopicCondition querycondition, string username = "")
+        internal async Task<BaseResponse<PageDatas<BZTopicDto>>> QueryTopics(QueryTopicCondition querycondition,bool MustRefresh = false)
         {
-            var url = "api/Topic/Query";
-            if (!string.IsNullOrWhiteSpace(username))
-                url += $"?username={username}";
-            return await httpClient.PostJsonAsync<PageDatas<BZTopicDto>>(url, BuildHttpContent(querycondition));
+            return await httpClient.GetWithJsonResultAsync<PageDatas<BZTopicDto>>($"api/Topic/Query{BuildHttpQueryParam(querycondition, MustRefresh)}");
         }
 
         /// <summary>
@@ -150,7 +147,7 @@ namespace Blazui.Community.Admin.Service
         /// <returns></returns>
         internal async Task<BaseResponse<PageDatas<BZVersionDto>>> GetVersions(PageInfo pageInfo, int projectId = -1)
         {
-            return await httpClient.GetJsonAsync<PageDatas<BZVersionDto>>($"api/version/GetPageList/{projectId}/{pageInfo.PageSize}/{pageInfo.PageIndex}");
+            return await httpClient.GetJsonResultAsync<PageDatas<BZVersionDto>>($"api/version/GetPageList/{projectId}/{pageInfo.PageSize}/{pageInfo.PageIndex}");
         }
 
 
@@ -163,7 +160,7 @@ namespace Blazui.Community.Admin.Service
         {
             if (!(await _adminUserService.IsSupperAdminLogin()))
                 return Unauthorized;
-            return await httpClient.GetJsonAsync($"api/version/Delete/{Id}", HttpMethod.Delete);
+            return await httpClient.GetJsonResultAsync($"api/version/Delete/{Id}", HttpMethod.Delete);
         }
 
         /// <summary>
@@ -176,7 +173,7 @@ namespace Blazui.Community.Admin.Service
             if (!(await _adminUserService.IsSupperAdminLogin()))
                 return Unauthorized;
             HttpContent httpContent = BuildHttpContent(dto);
-            return await httpClient.PostJsonAsync($"api/version/Add", httpContent);
+            return await httpClient.GetJsonResultAsync($"api/version/Add", HttpMethod.Post, httpContent);
         }
 
 
@@ -190,7 +187,7 @@ namespace Blazui.Community.Admin.Service
             if (!(await _adminUserService.IsSupperAdminLogin()))
                 return Unauthorized;
             HttpContent httpContent = BuildHttpContent(dto);
-            return await httpClient.PostJsonAsync($"api/version/Update", httpContent);
+            return await httpClient.GetJsonResultAsync($"api/version/Update", HttpMethod.Post, httpContent);
         }
 
         /// <summary>
@@ -217,7 +214,7 @@ namespace Blazui.Community.Admin.Service
                     url += $"?topicTitle={title}";
                 }
             }
-            return await httpClient.PostJsonAsync<PageDatas<BZReplyDto>>(url, BuildHttpContent(querycondition));
+            return await httpClient.GetJsonResultAsync<PageDatas<BZReplyDto>>(url, HttpMethod.Post, BuildHttpContent(querycondition));
         }
 
 
@@ -232,7 +229,7 @@ namespace Blazui.Community.Admin.Service
                 return Unauthorized;
             HttpContent httpContent = BuildHttpContent(bZTopicDto);
 
-            return await httpClient.PostJsonAsync("api/Topic/Add", httpContent);
+            return await httpClient.GetJsonResultAsync("api/Topic/Add", HttpMethod.Post, httpContent);
         }
 
 
@@ -247,8 +244,8 @@ namespace Blazui.Community.Admin.Service
             if (!(await _adminUserService.IsSupperAdminLogin()))
                 return Unauthorized;
             if (status == -1)
-                return await httpClient.GetJsonAsync($"api/Topic/Active/{Id}", HttpMethod.Delete);
-            return await httpClient.GetJsonAsync($"api/Topic/Delete/{Id}", HttpMethod.Delete);
+                return await httpClient.GetJsonResultAsync($"api/Topic/Active/{Id}", HttpMethod.Delete);
+            return await httpClient.GetJsonResultAsync($"api/Topic/Delete/{Id}", HttpMethod.Delete);
         }
 
         /// <summary>
@@ -260,7 +257,7 @@ namespace Blazui.Community.Admin.Service
         {
             if (!(await _adminUserService.IsSupperAdminLogin()))
                 return Unauthorized;
-            return await httpClient.GetJsonAsync($"api/Topic/BestTopic/{Id}");
+            return await httpClient.GetJsonResultAsync($"api/Topic/BestTopic/{Id}");
         }
         /// <summary>
         /// 置顶
@@ -271,7 +268,7 @@ namespace Blazui.Community.Admin.Service
         {
             if (!(await _adminUserService.IsSupperAdminLogin()))
                 return Unauthorized;
-            return await httpClient.GetJsonAsync($"api/Topic/TopTopic/{Id}");
+            return await httpClient.GetJsonResultAsync($"api/Topic/TopTopic/{Id}");
         }
 
         /// <summary>
@@ -283,7 +280,7 @@ namespace Blazui.Community.Admin.Service
         {
             if (!(await _adminUserService.IsSupperAdminLogin()))
                 return Unauthorized;
-            return await httpClient.GetJsonAsync($"api/Topic/EndTopic/{Id}");
+            return await httpClient.GetJsonResultAsync($"api/Topic/EndTopic/{Id}");
         }
 
         /// <summary>
@@ -295,7 +292,7 @@ namespace Blazui.Community.Admin.Service
         {
             if (!(await _adminUserService.IsSupperAdminLogin()))
                 return Unauthorized;
-            return await httpClient.GetJsonAsync($"api/Reply/DeleteOrActive/{Id}", HttpMethod.Delete);
+            return await httpClient.GetJsonResultAsync($"api/Reply/DeleteOrActive/{Id}", HttpMethod.Delete);
         }
 
 
@@ -308,7 +305,7 @@ namespace Blazui.Community.Admin.Service
         {
             if (!(await _adminUserService.IsSupperAdminLogin()))
                 return Unauthorized;
-            return await httpClient.GetJsonAsync($"api/banner/Delete/{Id}", HttpMethod.Delete);
+            return await httpClient.GetJsonResultAsync($"api/banner/Delete/{Id}", HttpMethod.Delete);
         }
 
         /// <summary>
@@ -318,7 +315,7 @@ namespace Blazui.Community.Admin.Service
         /// <returns></returns>
         internal async Task<BaseResponse<PageDatas<BzBannerDto>>> GetBanners(PageInfo pageInfo)
         {
-            return await httpClient.GetJsonAsync<PageDatas<BzBannerDto>>($"api/banner/GetPageList/{pageInfo.PageSize}/{pageInfo.PageIndex}");
+            return await httpClient.GetJsonResultAsync<PageDatas<BzBannerDto>>($"api/banner/GetPageList/{pageInfo.PageSize}/{pageInfo.PageIndex}");
         }
 
 
@@ -332,7 +329,7 @@ namespace Blazui.Community.Admin.Service
             if (!(await _adminUserService.IsSupperAdminLogin()))
                 return Unauthorized;
             HttpContent httpContent = BuildHttpContent(bzBannerDto);
-            return await httpClient.PostJsonAsync("api/Banner/Add", httpContent);
+            return await httpClient.GetJsonResultAsync("api/Banner/Add", HttpMethod.Post, httpContent);
         }
 
         /// <summary>
@@ -345,7 +342,7 @@ namespace Blazui.Community.Admin.Service
             if (!(await _adminUserService.IsSupperAdminLogin()))
                 return Unauthorized;
             HttpContent httpContent = BuildHttpContent(bzBannerDto);
-            return await httpClient.PostJsonAsync("api/Banner/Update", httpContent);
+            return await httpClient.GetJsonResultAsync("api/Banner/Update", HttpMethod.Post, httpContent);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Blazui.Community.Utility.Response
        : base(new ValidationFailedResultModel(modelState))
         {
             StatusCode = (int)HttpStatusCode.UnprocessableEntity;
+           
         }
     }
 }
