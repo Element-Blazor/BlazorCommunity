@@ -1,11 +1,7 @@
-﻿using Blazui.Community.App.Model;
-using Blazui.Community.App.Pages;
+﻿using Blazui.Community.App.Pages;
 using Blazui.Community.DTO;
-using Blazui.Community.Enums;
 using Blazui.Component;
-using Blazui.Component.Container;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +15,7 @@ namespace Blazui.Community.App.Components
         protected int PageSize { get; set; } = 5;
         protected int currentPage = 1;
         internal bool requireRender = false;
+
         /// <summary>
         /// 排序类型 0-综合，1-人气，2-精华
         /// </summary>
@@ -54,6 +51,7 @@ namespace Blazui.Community.App.Components
         /// </summary>
 
         public string EmptyMessage { get; set; }
+
         /// <summary>
         /// 总数据条数
         /// </summary>
@@ -87,8 +85,8 @@ namespace Blazui.Community.App.Components
                 Total = 0;
             }
             StateHasChanged();
-          
         }
+
         internal async Task CurrentPageChangedAsync(int page)
         {
             CurrentPage = page;
@@ -100,14 +98,13 @@ namespace Blazui.Community.App.Components
                 LoadingService.CloseFullScreenLoading();
             }
         }
+
         protected override async Task InitilizePageDataAsync()
         {
-
             await WithFullScreenLoading(async () =>
             {
                 await LoadData();
             });
         }
-
     }
 }

@@ -1,16 +1,13 @@
-﻿using Blazui.Community.Enums;
-using Blazui.Community.Utility;
-using Blazui.Community.Utility.Extensions;
+﻿using Blazui.Community.AutoMapperExtensions;
+using Blazui.Community.DateTimeExtensions;
+using Blazui.Community.Enums;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Blazui.Community.DTO.Admin
 {
     public class TopicDisplayDto
     {
-
         public string Id { get; set; }
         public string UserName { get; set; }
 
@@ -27,14 +24,16 @@ namespace Blazui.Community.DTO.Admin
         [NotMapped]
         [AutoNotMap]
         public string StatusDisplay => ((DelStatus)Status).Description();
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [NotMapped]
         [AutoNotMap]
         public string LastModifyDateDisplay => CreateDate.ConvertToDateDiffStr();
 
         public int Good { get; set; }
+
         [NotMapped]
         [AutoNotMap]
         public string GoodDisplay => Good switch
@@ -45,6 +44,7 @@ namespace Blazui.Community.DTO.Admin
         };
 
         public int Top { get; set; }
+
         [NotMapped]
         [AutoNotMap]
         public string TopDisplay => Top switch
@@ -57,6 +57,5 @@ namespace Blazui.Community.DTO.Admin
         public int ReplyCount { get; set; }
 
         public string CreatorId { get; set; }
-
     }
 }

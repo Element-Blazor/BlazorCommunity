@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace Blazui.Community.XUnitTest
@@ -8,7 +7,6 @@ namespace Blazui.Community.XUnitTest
         [Fact]
         public void Test1()
         {
-
         }
     }
 }

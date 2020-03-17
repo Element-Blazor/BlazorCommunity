@@ -1,7 +1,6 @@
 ﻿@inherits PersonalTopicTableBase
 @using Blazui.Community.App.Model.Condition
 
-
 <BForm Inline="true" @ref="searchForm">
     <BFormItem TValue="string" Label="标题" Name="@nameof(SearchPersonalTopicCondition.Title)" IsRequired="false">
         <BInput TValue="string" Placeholder="输入帖子标题"></BInput>

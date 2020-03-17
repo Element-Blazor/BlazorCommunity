@@ -3,9 +3,7 @@ using Blazui.Component.Container;
 using Blazui.Component.NavMenu;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Pages
@@ -14,25 +12,31 @@ namespace Blazui.Community.App.Pages
     public class PersonalCenterLayoutBase : LayoutComponentBase
     {
         protected List<PersonalCenterMenuModel> personalCenterMenuModels;
+
         protected BLayout bLayout
         {
             get; set;
         }
+
         protected BTab bTab
         {
             get; set;
         }
+
         protected BMenu bmenu
         {
             get; set;
         }
+
         protected BTabPanel bTabPanel { get; set; }
         protected BCard bCard { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
             InitTabs();
         }
+
         private void InitTabs()
         {
             personalCenterMenuModels ??= new List<PersonalCenterMenuModel>()
@@ -74,6 +78,5 @@ namespace Blazui.Community.App.Pages
                 }
             };
         }
-
     }
 }

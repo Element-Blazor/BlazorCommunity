@@ -1,5 +1,4 @@
-﻿
-html body {
+﻿html body {
     margin: 0;
     padding: 0;
     display: flex;
@@ -60,7 +59,6 @@ register-container {
     color: #303133;
     -webkit-transition: .3s;
     transition: .3s;
-   
 }
 
     .login-container form .el-form-item {
@@ -203,7 +201,6 @@ html body > app {
                         color: #fff;
                     }
 
-
 .footer-main {
     color: #303133;
     text-align: center;
@@ -225,8 +222,6 @@ html body > app {
     position: fixed;
     bottom: 0px;
 }
-
-
 
 .content-header {
     margin: 0 50px 0px 205px;
@@ -306,8 +301,6 @@ app .blaz-layout > .blaz-layout-container > .blaz-layout-center {
     color: #C0C4CC;
 }
 
-
-
 .main-layout-center .content-top {
     overflow-y: hidden;
 }
@@ -363,8 +356,6 @@ app > div .is-active {
     min-height: 615px;
 }
 
-
-
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -372,8 +363,6 @@ app > div .is-active {
     position: relative;
     overflow: hidden;
 }
-
-
 
 .avatar-uploader-icon {
     font-size: 28px;
@@ -416,7 +405,6 @@ app > div .is-active {
         color: #E6A23C;
         cursor: pointer;
     }
-
 
 .content-center .blaz-layout > .blaz-layout-container > .blaz-layout-card {
     min-height: 90px;
@@ -507,8 +495,6 @@ app > .blaz-layout > .blaz-layout-container {
     line-height: 30px;
 }
 
-
-
 /*滚动条*/
 app .blaz-layout > .blaz-layout-container > .blaz-layout-center::-webkit-scrollbar, *::-webkit-scrollbar-thumb {
     width: 1px;
@@ -537,7 +523,6 @@ app .blaz-layout > .blaz-layout-container > .blaz-layout-center::-webkit-scrollb
     display: flex;
     color: #303133;
 }
-
 
 .content-info {
     padding: 5px;
@@ -667,7 +652,6 @@ app .blaz-layout > .blaz-layout-container > .blaz-layout-center::-webkit-scrollb
     cursor: pointer;
 }
 
-
     .content-star i:hover {
         color: #606266 !important;
     }
@@ -678,7 +662,6 @@ app .blaz-layout > .blaz-layout-container > .blaz-layout-center::-webkit-scrollb
     background-color: #F56C6C;
     border-color: #F56C6C;
 }
-
 
 .content-banner-img {
     width: 100%;
@@ -692,15 +675,13 @@ app .blaz-layout > .blaz-layout-container > .blaz-layout-center::-webkit-scrollb
     height: 100%;
 }
 
-
-
-.markdown-fullscreen .editormd {
-    height: 100% !important;
-}
-
-    .markdown-fullscreen .editormd .CodeMirror {
-        height: 80vh !important;
+    .markdown-fullscreen .editormd {
+        height: 100% !important;
     }
+
+        .markdown-fullscreen .editormd .CodeMirror {
+            height: 80vh !important;
+        }
 
 app > div .el-dialog.is-fullscreen {
     top: 0px !important;
@@ -735,10 +716,11 @@ el-center {
     text-align: center;
     margin: 0 auto;
 }
+
 .el-center-500 {
     text-align: center;
     margin: 0 500px;
-    margin-top:10% !important;
+    margin-top: 10% !important;
 }
 
 .custome-button-hover .el-button.is-plain:active {
@@ -767,13 +749,13 @@ el-center {
     justify-content: space-between;
 }
 
-.footer-tongji{
-    display:none;
+.footer-tongji {
+    display: none;
 }
+
 .content-east {
     width: 100%;
 }
-
 
 .container {
     width: 100%;
@@ -783,25 +765,11 @@ el-center {
     margin-left: auto;
 }
 
-
 @media screen and (min-width:1200px) {
-    .container{
-        max-width:1300px;
-    }
-    .fill {
-     flex:1;
-    }
-    .blaz-layout > .blaz-layout-container > .blaz-layout-east {
-        display: flex !important;
-        min-width:350px !important;
-    }
-  
-}
-
-@media screen and (min-width: 960px) and (max-width: 1199px) {
     .container {
-        max-width: 1200px;
+        max-width: 1300px;
     }
+
     .fill {
         flex: 1;
     }
@@ -810,21 +778,36 @@ el-center {
         display: flex !important;
         min-width: 350px !important;
     }
-   
+}
+
+@media screen and (min-width: 960px) and (max-width: 1199px) {
+    .container {
+        max-width: 1200px;
+    }
+
+    .fill {
+        flex: 1;
+    }
+
+    .blaz-layout > .blaz-layout-container > .blaz-layout-east {
+        display: flex !important;
+        min-width: 350px !important;
+    }
 }
 
 @media screen and (min-width: 768px) and (max-width: 959px) {
     .container {
         max-width: 900px;
     }
-    .fill{
-        display:none;
+
+    .fill {
+        display: none;
     }
 
     .blaz-layout > .blaz-layout-container > .blaz-layout-east {
         display: none !important;
     }
- 
+
     .nav .el-menu-item {
         margin: 0 !important;
         padding: 0 !important;
@@ -835,6 +818,7 @@ el-center {
     .container {
         max-width: 700px;
     }
+
     .fill {
         display: none;
     }
@@ -842,7 +826,7 @@ el-center {
     .blaz-layout > .blaz-layout-container > .blaz-layout-east {
         display: none !important;
     }
-   
+
     .nav .el-menu-item {
         margin: 0 !important;
         padding: 0 !important;
@@ -853,6 +837,7 @@ el-center {
     .container {
         min-width: 450px;
     }
+
     .fill {
         display: none;
     }
@@ -860,10 +845,9 @@ el-center {
     .blaz-layout > .blaz-layout-container > .blaz-layout-east {
         display: none !important;
     }
-  
+
     .nav .el-menu-item {
         margin: 0 !important;
         padding: 0 !important;
     }
 }
-

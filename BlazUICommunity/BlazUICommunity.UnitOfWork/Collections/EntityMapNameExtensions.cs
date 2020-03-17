@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
-using System.Text;
 
 namespace Blazui.Community.UnitOfWork.Collections
 {
     public static class EntityMapNameExtensions
     {
-        static readonly Dictionary<string, string> EntityTableNames = new Dictionary<string, string>();
+        private static readonly Dictionary<string, string> EntityTableNames = new Dictionary<string, string>();
 
         public static string GetTableName<Entity>(this Type entity) where Entity : class
         {

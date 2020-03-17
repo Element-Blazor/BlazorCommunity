@@ -1,14 +1,11 @@
 namespace Blazui.Community.Model.Models
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("SysMenu")]
     public partial class SysMenuModel : BaseModel
     {
-
         public int ParentId { get; set; }
 
         [Required]
@@ -32,9 +29,5 @@ namespace Blazui.Community.Model.Models
         public string SourcePath { get; set; }
 
         public int Sort { get; set; }
-
-
-
-
     }
 }

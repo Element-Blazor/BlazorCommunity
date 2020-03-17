@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Blazui.Community.App.Model
+﻿namespace Blazui.Community.App.Model
 {
     public class PersonalCenterMenuModel
     {

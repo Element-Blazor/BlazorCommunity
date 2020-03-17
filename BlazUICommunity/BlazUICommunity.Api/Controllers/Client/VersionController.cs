@@ -1,11 +1,10 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
-using Blazui.Community.Api.Extensions;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
+using Blazui.Community.LinqExtensions;
 using Blazui.Community.Model.Models;
-using Blazui.Community.Utility.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -17,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Controllers.Client
 {   /// <summary>
-    /// 
+    ///
     /// </summary>
     [Route("api/client/[controller]")]
     [ApiController]
@@ -29,7 +28,7 @@ namespace Blazui.Community.Api.Controllers.Client
         private readonly ICacheService _cacheService;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="mapper"></param>
@@ -40,6 +39,7 @@ namespace Blazui.Community.Api.Controllers.Client
             _mapper = mapper;
             _cacheService = cacheService;
         }
+
         /// <summary>
         /// 删除
         /// </summary>
@@ -57,7 +57,6 @@ namespace Blazui.Community.Api.Controllers.Client
             verRepository.Update(version);
             _cacheService.Remove(nameof(BZVersionModel));
             return Ok();
-
         }
 
         /// <summary>
@@ -73,9 +72,7 @@ namespace Blazui.Community.Api.Controllers.Client
             await verRepository.InsertAsync(model);
             _cacheService.Remove(nameof(BZVersionModel));
             return Ok();
-
         }
-
 
         /// <summary>
         /// 更新
@@ -90,8 +87,8 @@ namespace Blazui.Community.Api.Controllers.Client
             verRepository.Update(model);
             _cacheService.Remove(nameof(BZVersionModel));
             return Ok();
-
         }
+
         /// <summary>
         /// 获取版本数据
         /// </summary>
@@ -133,16 +130,14 @@ namespace Blazui.Community.Api.Controllers.Client
             if (projectId < 0)
             {
                 versions = await verRepository.GetPagedListAsync(pageIndex - 1, pageSize);
-
             }
             else
             {
                 versions = await verRepository.GetPagedListAsync(p => p.Project == projectId, orderBy: o => o.OrderByDescending(p => p.CreateDate), null, pageIndex - 1, pageSize);
-
             }
-            var pagedatas = versions.ConvertToPageData<BZVersionModel, BZVersionDto>();
-            pagedatas.Items = _mapper.Map<IList<BZVersionDto>>(versions.Items);
-            return Ok(pagedatas);
+            if (versions.Items.Any())
+                return Ok(versions.From(result => _mapper.Map<List<BZVersionDto>>(result)));
+            return NoContent();
         }
     }
 }

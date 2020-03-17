@@ -1,7 +1,6 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using Blazui.Community.Model.Models;
 using MySql.Data.MySqlClient;
-using System;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.Repository
@@ -10,8 +9,6 @@ namespace Blazui.Community.Repository
     {
         public BZFollowRepository(BlazUICommunityContext dbContext) : base(dbContext)
         {
-
-
         }
 
         /// <summary>
@@ -30,13 +27,14 @@ namespace Blazui.Community.Repository
 
             return await ExecuteSqlCmdAsync(sql, paras);
         }
+
         /// <summary>
         /// 主贴界面切换收藏
         /// </summary>
         /// <param name="followId"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public async Task<bool> ToggleFollow(string followId,int status)
+        public async Task<bool> ToggleFollow(string followId, int status)
         {
             string sql = $"update bzfollow set `Status`=@Status where Id=@followId";
             MySqlParameter[] paras = new MySqlParameter[]
@@ -45,6 +43,5 @@ namespace Blazui.Community.Repository
                  };
             return await ExecuteSqlCmdAsync(sql, paras);
         }
-        
     }
 }

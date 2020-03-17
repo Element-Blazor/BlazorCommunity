@@ -1,11 +1,9 @@
-﻿using Blazui.Community.DTO;
-using Blazui.Community.Enums;
+﻿using Blazui.Community.Enums;
 
 namespace Blazui.Community.App.Model
 {
     public class TopicFormModel
     {
-
         /// <summary>
         /// 帖子标题
         /// </summary>
@@ -23,19 +21,18 @@ namespace Blazui.Community.App.Model
             }
         }
 
-
         public TopicCategory Category { get; set; }
- 
+
         /// <summary>
         /// 内容
         /// </summary>
         public string Content { get; set; }
 
-        public string ReleaseTime { get;  set; }
+        public string ReleaseTime { get; set; }
 
         public string VerNo { get; set; }
         public string Id { get; internal set; }
 
-        public ProjectType  projectType { get; set; }
+        public ProjectType projectType { get; set; }
     }
 }

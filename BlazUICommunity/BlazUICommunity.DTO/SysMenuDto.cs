@@ -1,13 +1,7 @@
 namespace Blazui.Community.DTO
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    public  class SysMenuDto : BaseDto
+    public class SysMenuDto : BaseDto
     {
-
         public string ParentId { get; set; }
 
         public string Text { get; set; }
@@ -25,9 +19,5 @@ namespace Blazui.Community.DTO
         public string SourcePath { get; set; }
 
         public int Sort { get; set; }
-
-
-
-
     }
 }

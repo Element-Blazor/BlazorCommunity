@@ -1,12 +1,6 @@
-﻿using Blazui.Community.App.Model;
-using Blazui.Community.DTO;
-using Blazui.Community.Utility;
+﻿using Blazui.Community.DTO;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Components
@@ -14,7 +8,7 @@ namespace Blazui.Community.App.Components
     public class TopicItemBase : BComponentBase
     {
         [Parameter]
-        public  BZTopicDto Topic { get; set; }
+        public BZTopicDto Topic { get; set; }
 
         [Inject]
         public NavigationManager navigationManager { get; set; }
@@ -36,5 +30,4 @@ namespace Blazui.Community.App.Components
             navigationManager.NavigateTo($"/topic/{topicId}");
         }
     }
-
 }

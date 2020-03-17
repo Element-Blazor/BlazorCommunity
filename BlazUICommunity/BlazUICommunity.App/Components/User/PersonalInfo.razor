@@ -2,12 +2,12 @@
 @page "/user/base"
 @using Blazui.Community.Model.Models;
 @inherits PersonalInfoBase
-<BTab Type="@TabType.Card"  EnableAlwaysRender="true">
-    <BTabPanel Title="@tabTitle"  EnableAlwaysRender="true">
+<BTab Type="@TabType.Card" EnableAlwaysRender="true">
+    <BTabPanel Title="@tabTitle" EnableAlwaysRender="true">
         @if (User != null)
         {
             <div class="app-user-info">
-                <BForm LabelAlign="@LabelAlign.Right" @ref="userInfoForm" Value="User" EnableAlwaysRender="true" >
+                <BForm LabelAlign="@LabelAlign.Right" @ref="userInfoForm" Value="User" EnableAlwaysRender="true">
 
                     <BFormItem TValue="string" Label="账号" Name="@nameof(BZUserModel.UserName)">
                         @User?.UserName
@@ -23,12 +23,11 @@
                         }
                     </BFormItem>
 
-                    <BFormItem TValue="string" Label="邮箱" Name="@nameof(BZUserModel.Email)" >
+                    <BFormItem TValue="string" Label="邮箱" Name="@nameof(BZUserModel.Email)">
 
                         @(string.IsNullOrWhiteSpace(User?.Email) ? "暂未绑定邮箱" : User.Email)
-
                     </BFormItem>
-                    <BFormItem TValue="string" Label="手机" Name="@nameof(BZUserModel.PhoneNumber)" >
+                    <BFormItem TValue="string" Label="手机" Name="@nameof(BZUserModel.PhoneNumber)">
                         @(string.IsNullOrWhiteSpace(User?.PhoneNumber) ? "暂未绑定手机" : User.PhoneNumber)
                     </BFormItem>
                     <BFormItem TValue="int?" Label="性别" Name="@nameof(BZUserModel.Sex)" EnableAlwaysRender="true">
@@ -43,7 +42,6 @@
                             <BRadio @bind-SelectedValue="User.Sex" Value="0">男</BRadio>
                             <BRadio @bind-SelectedValue="User.Sex" Value="1">女</BRadio>
                         }
-
                     </BFormItem>
                     @*<BFormItem TValue="string" Label="地区" Name="@nameof(BZUserModel.LastLoginAddr)" EnableAlwaysRender="true">
                             @if (Disabled)
@@ -55,7 +53,7 @@
                                 <BInput TValue="string" ></BInput>
                             }
                         </BFormItem>*@
-                    <BFormItem TValue="string" Label="签名" Name="@nameof(BZUserModel.Signature)" EnableAlwaysRender="true" >
+                    <BFormItem TValue="string" Label="签名" Name="@nameof(BZUserModel.Signature)" EnableAlwaysRender="true">
                         @if (Disabled)
                         {
                             @(User?.Signature ?? "您还没有设置一个座右铭")
@@ -88,4 +86,3 @@
         }
     </BTabPanel>
 </BTab>
-

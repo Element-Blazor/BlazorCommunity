@@ -1,33 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using Arch.EntityFrameworkCore.UnitOfWork;
-using Blazui.Community.DTO;
+﻿using Blazui.Community.Api.Jwt;
+using Blazui.Community.DateTimeExtensions;
 using Blazui.Community.Model.Models;
-using Blazui.Community.Repository;
-using Blazui.Community.Utility;
-using Blazui.Community.Utility.Filter;
-using Blazui.Community.Utility.Jwt;
 using IdentityModel;
-using IdentityModel.Client;
-using log4net.Repository.Hierarchy;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Controllers
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     //[Route("api/[controller]")]
     [ApiController]
@@ -39,7 +29,7 @@ namespace Blazui.Community.Api.Controllers
         private readonly UserManager<BZUserModel> _userManager;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="cache"></param>
         /// <param name="jwtService"></param>
@@ -53,8 +43,6 @@ namespace Blazui.Community.Api.Controllers
             _jwtService = jwtService;
             _userManager = userManager;
         }
-
-
 
         /// <summary>
         /// 登录，获取后原来RefreshToken将失效。
@@ -72,7 +60,7 @@ namespace Blazui.Community.Api.Controllers
             {
                 return Unauthorized();
             }
-            var checkPassword =user.PasswordHash==model.Password ;// await _userManager.CheckPasswordAsync(user, model.Password);
+            var checkPassword = user.PasswordHash == model.Password;// await _userManager.CheckPasswordAsync(user, model.Password);
             if (!checkPassword)
                 return Unauthorized();
             var SessionUser = new SessionUser
@@ -107,7 +95,6 @@ namespace Blazui.Community.Api.Controllers
         [HttpPost("Refresh")]
         public IActionResult Refresh([FromQuery] string token)
         {
-
             var cacheStr = _cache.Get<string>($"RefreshToken:{token}");
             if (string.IsNullOrWhiteSpace(cacheStr))
             {

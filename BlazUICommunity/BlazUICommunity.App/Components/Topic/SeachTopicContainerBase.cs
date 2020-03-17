@@ -1,33 +1,36 @@
 ﻿using Blazui.Community.DTO;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Components.Topic
 {
-    public class SeachTopicContainerBase:BComponentBase, IContainerComponent
+    public class SeachTopicContainerBase : BComponentBase, IContainerComponent
     {
         [Parameter]
         public List<SeachTopicDto> Datas { get; set; }
+
         [Parameter]
         public int PageSize { get; set; } = 5;
+
         [Parameter]
         public int currentPage { get; set; } = 1;
 
         private string TopicId { get; set; }
+
         /// <summary>
         /// 当只有一页时，不显示分页
         /// </summary>
         [Parameter]
         public bool NoPaginationOnSinglePage { get; set; } = true;
+
         /// <summary>
         /// 最大显示的页码数
         /// </summary>
         [Parameter]
         public int ShowPageCount { get; set; } = 7;
+
         /// <summary>
         /// 当前最大显示的页码数变化时触发
         /// </summary>
@@ -39,16 +42,19 @@ namespace Blazui.Community.App.Components.Topic
         /// </summary>
         [Parameter]
         public EventCallback<int> CurrentPageChanged { get; set; }
+
         /// <summary>
         /// 当页码变化时触发
         /// </summary>
         [Parameter]
         public EventCallback<string> OnItemClick { get; set; }
+
         /// <summary>
         /// 当表格无数据时显示的消息
         /// </summary>
 
         public string EmptyMessage { get; set; }
+
         /// <summary>
         /// 总数据条数
         /// </summary>
@@ -72,7 +78,7 @@ namespace Blazui.Community.App.Components.Topic
         internal async Task ItemClick(string Id)
         {
             if (OnItemClick.HasDelegate)
-              await  OnItemClick.InvokeAsync(Id);
+                await OnItemClick.InvokeAsync(Id);
         }
 
         internal async Task CurrentPageChangedAsync(int page)
@@ -86,7 +92,7 @@ namespace Blazui.Community.App.Components.Topic
                 LoadingService.CloseFullScreenLoading();
             }
         }
+
         protected override bool ShouldRender() => true;
-   
     }
 }

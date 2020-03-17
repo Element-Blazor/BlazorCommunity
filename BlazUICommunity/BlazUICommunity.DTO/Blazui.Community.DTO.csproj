@@ -1,13 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Blazui\src\Blazui.Component\Blazui.Component.csproj" />
+    <ProjectReference Include="..\Blazui.Community.AutoMapperExtensions\Blazui.Community.AutoMapperExtensions.csproj" />
+    <ProjectReference Include="..\Blazui.Community.DateTimeExtensions\Blazui.Community.DateTimeExtensions.csproj" />
     <ProjectReference Include="..\Blazui.Community.Enums\Blazui.Community.Enums.csproj" />
-    <ProjectReference Include="..\BlazUICommunity.Utility\Blazui.Community.Utility.csproj" />
   </ItemGroup>
-
 </Project>

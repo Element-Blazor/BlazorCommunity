@@ -32,7 +32,7 @@
                         var buttonsave = "color:#909399;font-size:20px;";
                         <div style="position: absolute; right: 17px;">
                             <BButtonGroup>
-                                <BButton  Type="ButtonType.Text"  Style=@(ReplyModel.ShoudEdit?buttonedit:buttonsave)  IsPlain="true" Size="ButtonSize.Default" Icon=@(ReplyModel.ShoudEdit?"el-icon-finished":"el-icon-edit") OnClick="OnEdit"> </BButton>
+                                <BButton Type="ButtonType.Text" Style=@(ReplyModel.ShoudEdit?buttonedit:buttonsave) IsPlain="true" Size="ButtonSize.Default" Icon=@(ReplyModel.ShoudEdit?"el-icon-finished":"el-icon-edit") OnClick="OnEdit"> </BButton>
                                 <BButton Type="ButtonType.Text" Style="color:#909399;font-size:20px; margin-left: 10px;" IsPlain="true" Size="ButtonSize.Default" Icon="el-icon-circle-close" OnClick="OnDeleted"></BButton>
                             </BButtonGroup>
                         </div>
@@ -52,5 +52,3 @@
         </BCard>
     </div>
 }
-
-

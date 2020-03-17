@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace Blazui.Community.Enums
 {
@@ -12,16 +9,19 @@ namespace Blazui.Community.Enums
         /// </summary>
         [Description("Avator")]
         Avator,
+
         /// <summary>
         /// 帖子正文上传图片
         /// </summary>
         [Description("Topic")]
         Topic,
+
         /// <summary>
         /// 后台上传Banner
         /// </summary>
         [Description("Banner")]
         Banner,
+
         /// <summary>
         /// 其他
         /// </summary>

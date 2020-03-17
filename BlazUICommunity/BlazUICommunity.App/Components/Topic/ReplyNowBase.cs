@@ -8,26 +8,21 @@ using Blazui.Markdown;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Blazui.Community.App.Components
 {
     public class ReplyNowBase : PageBase
     {
-
         [Parameter]
         public string TopicId { get; set; }
+
         internal BForm form;
         internal BFormItem<string> formItem;
         protected BMarkdownEditor bMarkdownEditor;
         internal ReplyModel Model;
 
         [Parameter] public EventCallback OnReplySuccess { get; set; }
-
-
 
         /// <summary>
         /// 遗留问题 回复成功后 form.reset没有清空markdown的数据
@@ -52,10 +47,8 @@ namespace Blazui.Community.App.Components
             await NewReply(article, user);
         }
 
-
         private async Task NewReply(ReplyModel model, BZUserModel userModel)
         {
-
             if (string.IsNullOrWhiteSpace(model.Content))
             {
                 form.Toast("还是写点什么吧");
@@ -113,9 +106,6 @@ namespace Blazui.Community.App.Components
 
         protected override bool ShouldRender() => true;
 
-
-
-
         internal async Task FullScreen()
         {
             //ToastWarning("全屏markdon编辑器，尚未实现");
@@ -139,7 +129,6 @@ namespace Blazui.Community.App.Components
                 Model = new ReplyModel();
                 this.MarkAsRequireRender();
                 StateHasChanged();
-
             }
         }
     }

@@ -1,27 +1,26 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Arch.EntityFrameworkCore.UnitOfWork;
+﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
-using Blazui.Community.Api.Extensions;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
 using Blazui.Community.Request;
-using Blazui.Community.Utility.Extensions;
-using Blazui.Community.Utility.Response;
+using Blazui.Community.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Controllers.Client
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Route("api/client/[controller]")]
     [ApiController]
@@ -36,7 +35,7 @@ namespace Blazui.Community.Api.Controllers.Client
         private readonly ICacheService _cacheService;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="mapper"></param>
@@ -55,7 +54,6 @@ namespace Blazui.Community.Api.Controllers.Client
             _cacheService = cacheService;
         }
 
-
         /// <summary>
         /// 新增用户
         /// </summary>
@@ -69,18 +67,6 @@ namespace Blazui.Community.Api.Controllers.Client
             return Ok();
         }
 
-
-        ///// <summary>
-        ///// 根据ID删除用户
-        ///// </summary>
-        ///// <returns></returns>
-        //[Authorize]
-        //[HttpDelete("Delete/{Id}/{oprationId}")]
-        //public IActionResult Delete([FromRoute] string Id, string oprationId)
-        //{
-        //    _userRepository.LogicDelete(Id, oprationId);
-        //    return Ok();
-        //}
         /// <summary>
         /// 冻结
         /// </summary>
@@ -98,7 +84,6 @@ namespace Blazui.Community.Api.Controllers.Client
             });
             return Ok();
         }
-
 
         /// <summary>
         /// 解封
@@ -118,7 +103,6 @@ namespace Blazui.Community.Api.Controllers.Client
             return Ok();
         }
 
-
         /// <summary>
         /// 重置密码
         /// </summary>
@@ -129,12 +113,13 @@ namespace Blazui.Community.Api.Controllers.Client
         {
             var user = await _userManager.FindByIdAsync(Id.ToString());
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var newPassword = new Random(DateTime.Now.Millisecond).Next(10000000, 99999999);//"88888888";// 
+            var newPassword = new Random(DateTime.Now.Millisecond).Next(10000000, 99999999);//"88888888";//
             var result = await _userManager.ResetPasswordAsync(user, token, newPassword.ToString());
             if (result.Succeeded)
                 return Ok(newPassword);
             return new BadRequestResponse(JsonConvert.SerializeObject(result.Errors));
         }
+
         /// <summary>
         /// 更新用户
         /// </summary>
@@ -164,6 +149,7 @@ namespace Blazui.Community.Api.Controllers.Client
                 return NoContent();
             return Ok(_mapper.Map<BZUserDto>(res));
         }
+
         /// <summary>
         /// 根据Id查询用户
         /// </summary>
@@ -190,23 +176,21 @@ namespace Blazui.Community.Api.Controllers.Client
                 query = p => true;
             //query = query.And(p => p.Status == 0);
             pagedList = await _userRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
-            var pagedatas = new PageDatas<BZUserDto>();
-            if (pagedList != null && pagedList.Items.Any())
+            if (pagedList.Items.Any())
             {
-                pagedatas = pagedList.ConvertToPageData<BZUserModel, BZUserDto>();
+                var pagedatas = pagedList.From(result => _mapper.Map<IList<BZUserDto>>(result));
                 pagedList.Items.ToList().ForEach(p =>
                 {
                     var dto = _mapper.Map<BZUserDto>(p);
                     pagedatas.Items.Add(dto);
                 });
+                if (pagedatas.TotalCount > 0)
+                    return Ok(pagedatas);
+                else
+                    return NoContent();
             }
-            if (pagedatas.TotalCount > 0)
-                return Ok(pagedatas);
-            else
-                return NoContent();
+            return NoContent();
         }
-
-
 
         /// <summary>
         /// 活跃度
@@ -227,6 +211,5 @@ namespace Blazui.Community.Api.Controllers.Client
                 return NoContent();
             return Ok(ResultDtos);
         }
-
     }
 }

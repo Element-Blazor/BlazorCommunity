@@ -3,8 +3,8 @@
 {
     @foreach (var topic in Topics)
     {
-       
-        <TopicItem Topic="@topic" EnableAlwaysRender="true" ></TopicItem>
+
+        <TopicItem Topic="@topic" EnableAlwaysRender="true"></TopicItem>
     }
     <div class="el-table__column-resize-proxy" style="display: none;"></div>
     @if (Math.Ceiling((float)Total / PageSize) > 1 || !NoPaginationOnSinglePage)

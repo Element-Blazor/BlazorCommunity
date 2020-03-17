@@ -3,9 +3,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,8 +12,9 @@ namespace Blazui.Community.Api.Service
     {
         private static EmailConfiguration emailConfig;
         private ILogger<SmtpClientService> _logger;
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="options"></param>
         /// <param name="logger"></param>
@@ -25,8 +23,9 @@ namespace Blazui.Community.Api.Service
             emailConfig = options.CurrentValue;
             _logger = logger;
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="ToEmail"></param>
         /// <param name="Content"></param>
@@ -60,8 +59,5 @@ namespace Blazui.Community.Api.Service
                 _logger.LogDebug(ex.StackTrace);
             }
         }
-
-
-
     }
 }

@@ -1,36 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Arch.EntityFrameworkCore.UnitOfWork;
+﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
-using Blazui.Community.Api.Extensions;
 using Blazui.Community.Api.Service;
-using Blazui.Community.DTO;
 using Blazui.Community.DTO.Admin;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
 using Blazui.Community.Request;
-using Blazui.Community.Utility.Extensions;
-using Blazui.Community.Utility.Filter;
-using Blazui.Community.Utility.Response;
+using Blazui.Community.Response;
 using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Controllers
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     //[HiddenApi]
     [Route("api/[Controller]")]
     [ApiController]
     [SwaggerTag(description: "用户相关")]
-    [HttpCacheExpiration(MaxAge =100)]
+    [HttpCacheExpiration(MaxAge = 100)]
     public class UserController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -40,7 +36,7 @@ namespace Blazui.Community.Api.Controllers
         private readonly ICacheService _cacheService;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="mapper"></param>
@@ -58,8 +54,6 @@ namespace Blazui.Community.Api.Controllers
             _cacheService = cacheService;
         }
 
-
-
         /// <summary>
         /// 删除
         /// </summary>
@@ -70,7 +64,6 @@ namespace Blazui.Community.Api.Controllers
             return await DeleteOrResume(Id, -1);
         }
 
-
         /// <summary>
         /// 恢复
         /// </summary>
@@ -78,10 +71,10 @@ namespace Blazui.Community.Api.Controllers
         [HttpPatch("Resume/{Id}")]
         public async Task<IActionResult> Resume([FromRoute] string Id)
         {
-            return await DeleteOrResume(Id,0);
+            return await DeleteOrResume(Id, 0);
         }
 
-        private async Task<IActionResult> DeleteOrResume(string Id,int Status)
+        private async Task<IActionResult> DeleteOrResume(string Id, int Status)
         {
             var user = await _bZUserRepository.FindAsync(Id);
             if (user is null)
@@ -94,7 +87,6 @@ namespace Blazui.Community.Api.Controllers
             return Ok();
         }
 
-
         /// <summary>
         /// 重置密码
         /// </summary>
@@ -104,7 +96,7 @@ namespace Blazui.Community.Api.Controllers
         {
             var user = await _userManager.FindByIdAsync(Id.ToString());
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var newPassword = new Random(DateTime.Now.Millisecond).Next(10000000, 99999999);//"88888888";// 
+            var newPassword = new Random(DateTime.Now.Millisecond).Next(10000000, 99999999);//"88888888";//
             var result = await _userManager.ResetPasswordAsync(user, token, newPassword.ToString());
             if (result.Succeeded)
                 return Ok(newPassword);
@@ -124,6 +116,5 @@ namespace Blazui.Community.Api.Controllers
                 return Ok(pagedList.From(result => _mapper.Map<List<UserDisplayDto>>(result)));
             return NoContent();
         }
-
     }
 }

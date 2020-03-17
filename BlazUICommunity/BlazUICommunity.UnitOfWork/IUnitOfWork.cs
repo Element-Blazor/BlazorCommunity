@@ -6,10 +6,10 @@
 
 namespace Arch.EntityFrameworkCore.UnitOfWork
 {
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
 
     /// <summary>
     /// Defines the interface(s) for unit of work.
@@ -17,7 +17,9 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
     public interface IUnitOfWork : IDisposable
     {
         bool CommitWithTransaction(Action action);
+
         Task<bool> CommitWithTransactionAsync(Action action);
+
         /// <summary>
         /// Changes the database name. This require the databases in the same machine. NOTE: This only work for MySQL right now.
         /// </summary>

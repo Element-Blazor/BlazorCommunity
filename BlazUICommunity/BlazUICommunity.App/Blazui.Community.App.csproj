@@ -28,9 +28,13 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Blazui.Markdown\src\Blazui.Markdown\Blazui.Markdown.csproj" />
     <ProjectReference Include="..\..\..\Blazui\src\Blazui.Component\Blazui.Component.csproj" />
+    <ProjectReference Include="..\Blazui.Community.AutofacModules\Blazui.Community.AutofacModules.csproj" />
+    <ProjectReference Include="..\Blazui.Community.FileExtensions\Blazui.Community.FileExtensions.csproj" />
+    <ProjectReference Include="..\Blazui.Community.HttpClientExtensions\Blazui.Community.HttpClientExtensions.csproj" />
+    <ProjectReference Include="..\Blazui.Community.IdentityExtensions\Blazui.Community.IdentityExtensions.csproj" />
+    <ProjectReference Include="..\Blazui.Community.Response\Blazui.Community.Response.csproj" />
     <ProjectReference Include="..\BlazUICommunity.Repository\Blazui.Community.Repository.csproj" />
     <ProjectReference Include="..\BlazUICommunity.Request\Blazui.Community.Request.csproj" />
-    <ProjectReference Include="..\BlazUICommunity.Utility\Blazui.Community.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +43,9 @@
     </None>
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
-
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties properties_4launchsettings_1json__JsonSchema="" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

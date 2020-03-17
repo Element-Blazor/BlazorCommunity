@@ -13,19 +13,21 @@ namespace Blazui.Community.App.Components
 
         [Parameter]
         public EventCallback OnDeleted { get; set; }
+
         [Parameter]
         public EventCallback OnEdit { get; set; }
 
         [Inject]
         internal IConfiguration Configuration { get; set; }
+
         internal string UploadUrl { get; private set; }
+
         protected override bool ShouldRender() => true;
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            UploadUrl = Configuration["ServerUrl"] + "/api/upload/"  + UploadPath.Topic.Description();
+            UploadUrl = Configuration["ServerUrl"] + "/api/upload/" + UploadPath.Topic.Description();
         }
-
     }
 }

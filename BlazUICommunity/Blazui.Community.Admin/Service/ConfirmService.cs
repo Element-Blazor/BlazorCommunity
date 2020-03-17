@@ -1,9 +1,6 @@
-﻿using Blazui.Community.Utility.Response;
+﻿using Blazui.Community.Response;
 using Blazui.Component;
-using Microsoft.AspNetCore.Components;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.Service
@@ -32,6 +29,7 @@ namespace Blazui.Community.Admin.Service
             else
                 MessageService.Show("您选择了取消", MessageType.Info);
         }
+
         public async Task ConfirmAsync(Func<Task<BaseResponse>> action, Action callback = null, string ConfirmMessage = "确定要执行该操作吗?")
         {
             MessageBoxResult Confirm = await MessageBox.ConfirmAsync(ConfirmMessage);

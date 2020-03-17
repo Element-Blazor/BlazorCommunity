@@ -1,8 +1,6 @@
 ﻿@page "/test"
 @using Blazui.Community.App.Components.Topic
 @*<NewReplyList DataSource="Datas">
-
-
     </NewReplyList>*@
 @*<BButton OnClick="Add"></BButton>*@
 @foreach (var item in Datas)
@@ -15,15 +13,13 @@
 
     private List<BZReplyDto> Datas = new List<BZReplyDto>();
 
-
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
 
         await base.OnAfterRenderAsync(firstRender);
         if (!firstRender) return;
         Datas = new List<BZReplyDto>()
-    {
+{
             new BZReplyDto()
             {
              Content="132131", Avator="32131"

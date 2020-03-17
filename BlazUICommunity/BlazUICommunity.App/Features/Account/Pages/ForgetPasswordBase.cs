@@ -1,30 +1,25 @@
 ﻿using Blazui.Community.App.Model.ViewModel;
 using Blazui.Community.App.Pages;
 using Blazui.Community.Enums;
-using Blazui.Community.Utility.Response;
 using Blazui.Component;
-using Blazui.Component.Button;
-using Microsoft.AspNetCore.Components.Web;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static Blazui.Community.App.ConstantConfiguration;
+
 namespace Blazui.Community.App.Features.Account.Pages
 {
     public class ForgetPasswordBase : PageBase
     {
-
         protected BForm form;
         protected bool btnSendIsDisabled = false;
- 
+
         internal int TimeOut { get; set; } = CountDownTime;
         internal string BtnText = "发送验证码";
         protected string PreviousRoute = "/account/signin";
+
         internal async Task CheckAndNavigatToReset()
         {
-            if(string.IsNullOrWhiteSpace(verifyCode))
+            if (string.IsNullOrWhiteSpace(verifyCode))
             {
                 ToastError("请先发送验证码到您的邮箱");
                 return;
@@ -32,7 +27,7 @@ namespace Blazui.Community.App.Features.Account.Pages
             if (!form.IsValid())
                 return;
             var model = form.GetValue<ForgetPasswordModel>();
-            if (!model.VerCode .Equals( verifyCode))
+            if (!model.VerCode.Equals(verifyCode))
             {
                 ToastError("验证码无效");
                 return;
@@ -45,19 +40,17 @@ namespace Blazui.Community.App.Features.Account.Pages
                 else
                     ToastError(response.Message);
             }
-
         }
-
-
 
         private string verifyCode = string.Empty;
         private string UserId = string.Empty;
+
         internal async Task SendEmail()
         {
             if (!form.IsValid())
                 return;
-       
-                var model = form.GetValue<ForgetPasswordModel>();
+
+            var model = form.GetValue<ForgetPasswordModel>();
             if (!Regex.Match(model.Email, "^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$").Success)
             {
                 ToastError("邮箱号码错误");
@@ -77,7 +70,7 @@ namespace Blazui.Community.App.Features.Account.Pages
                     {
                         if (response.IsSuccess)
                         {
-                            verifyCode = response.Data.ToString(); 
+                            verifyCode = response.Data.ToString();
                             ToastSuccess("发送成功，请到邮箱查收,如果未收到，可以查看一下垃圾邮箱");
                             btnSendIsDisabled = true;
                             StateHasChanged();
@@ -99,7 +92,5 @@ namespace Blazui.Community.App.Features.Account.Pages
                 StateHasChanged();
             }
         }
-
-
     }
 }

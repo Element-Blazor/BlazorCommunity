@@ -1,15 +1,13 @@
 ﻿using Blazui.Community.Model.Models;
-using Blazui.Community.Utility.Extensions;
-using Blazui.Community.Utility.Response;
+using Blazui.Community.Response;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Blazui.Community.HttpClientExtensions;
 
 namespace Blazui.Community.App.Service
 {
@@ -19,6 +17,7 @@ namespace Blazui.Community.App.Service
         private readonly UserManager<BZUserModel> _userManager;
         private readonly HttpClient httpClient;
         private readonly IMemoryCache _memoryCache;
+
         public TokenService(IHttpClientFactory httpClientFactory, AuthenticationStateProvider authenticationStateProvider, UserManager<BZUserModel> userManager, IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
@@ -41,24 +40,22 @@ namespace Blazui.Community.App.Service
             HttpContent httpContent = new StringContent(requestJson);
             return httpContent;
         }
+
         private async Task<BaseResponse<Token>> CreateToken(LoginInModel loginmodel)
         {
             return await _memoryCache.GetOrCreateAsync(loginmodel.Username, async p =>
             {
-
                 p.SetSlidingExpiration(TimeSpan.FromMinutes(30));
                 HttpContent httpContent = BuildHttpContent(loginmodel);
-                return await httpClient.GetJsonResultAsync<Token>("token",Utility.Extensions.HttpMethod.Post, httpContent);
-
+                return await httpClient.PostWithJsonResultAsync<Token>("token", httpContent);
             });
-
         }
+
         public async Task<BaseResponse<Token>> RquestToken()
         {
             if ((await Logged()) is LoginInModel loginInModel)
                 return await CreateToken(loginInModel);
             return new BaseResponse<Token>(401, "Unauthorized");
-
         }
 
         private async Task<LoginInModel> Logged()
@@ -76,19 +73,22 @@ namespace Blazui.Community.App.Service
     public class Token
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string AccessToken { get; set; }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int Code { get; set; }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public long RefreshTokenExpired { get; set; }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string RefreshToken { get; set; }
     }

@@ -1,23 +1,23 @@
+using Arch.EntityFrameworkCore.UnitOfWork;
+using Autofac;
+using AutoMapper;
+using Blazui.Community.App.Model;
+using Blazui.Community.App.Service;
+using Blazui.Community.AutofacModules;
+using Blazui.Community.IdentityExtensions;
+using Blazui.Community.Model.Models;
+using Blazui.Community.Repository;
 using Blazui.Component;
+using Blazui.Markdown;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Blazui.Community.Model.Models;
-using Arch.EntityFrameworkCore.UnitOfWork;
-using Blazui.Community.Repository;
-using Autofac;
-using Blazui.Community.Utility;
-using Blazui.Markdown;
-using System;
-using Blazui.Community.App.Service;
-using AutoMapper;
-using Blazui.Community.Utility.Configure;
 using NLog.LayoutRenderers;
+using System;
 using System.Collections.Generic;
-using Blazui.Community.App.Model;
 using System.Text;
 
 namespace Blazui.Community.App
@@ -61,12 +61,11 @@ namespace Blazui.Community.App
             services.AddOptions<List<HeaderMenu>>().Configure(options => Configuration.GetSection("HeaderMenus").Bind(options));
         }
 
-
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public IContainer AutofacContainer;
+
         /// <summary>
         /// 系统调用
         /// </summary>
@@ -75,10 +74,10 @@ namespace Blazui.Community.App
         {
             builder.RegisterModule<CustomAutofacModule>();
         }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

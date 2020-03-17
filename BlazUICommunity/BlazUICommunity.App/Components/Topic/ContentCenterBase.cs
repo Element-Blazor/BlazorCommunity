@@ -1,6 +1,4 @@
-﻿using Blazui.Community.DTO;
-using Blazui.Community.Enums;
-using Blazui.Component;
+﻿using Blazui.Component;
 using Blazui.Component.Container;
 using Blazui.Component.EventArgs;
 using Microsoft.AspNetCore.Components;
@@ -14,10 +12,9 @@ namespace Blazui.Community.App.Components
         protected BTabPanel tabPanel_Hot;
         protected BTabPanel tabPanel_Best;
         protected BTabPanel tabPanel_End;
-        
+
         [Parameter]
         public int TopicType { get; set; }
-      
 
         protected void ActiveTabChanged(BChangeEventArgs<BTabPanelBase> e)
         {
@@ -27,12 +24,15 @@ namespace Blazui.Community.App.Components
                 case "综合":
                     tabPanel_Comprehensive?.Refresh();
                     break;
+
                 case "人气":
                     tabPanel_Hot?.Refresh();
                     break;
+
                 case "精华":
                     tabPanel_Best?.Refresh();
                     break;
+
                 case "已结":
                     tabPanel_End?.Refresh();
                     break;
@@ -46,7 +46,5 @@ namespace Blazui.Community.App.Components
             tab?.Refresh();
             StateHasChanged();
         }
-
-   
     }
 }

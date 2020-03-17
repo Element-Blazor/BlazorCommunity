@@ -14,8 +14,6 @@ namespace Blazui.Community.App.Components
         protected BZUserModel User { get; set; }
         protected bool Disabled { get; set; } = true;
 
-      
-
         protected void OnStatusChanging(BChangeEventArgs<RadioStatus> e)
         {
             e.DisallowChange = Disabled;
@@ -23,9 +21,8 @@ namespace Blazui.Community.App.Components
 
         protected override async Task InitilizePageDataAsync()
         {
-            User ??=await GetUser();
+            User ??= await GetUser();
         }
-
 
         protected override void InitTabTitle()
         {
@@ -37,22 +34,26 @@ namespace Blazui.Community.App.Components
           * / 切换表单为可输入状态
           * / </summary>
           */
+
         protected async Task EditUser()
         {
             Disabled = false;
             RefreshUI();
-              await Task.CompletedTask;
+            await Task.CompletedTask;
         }
-       private void RefreshUI()
+
+        private void RefreshUI()
         {
             this.MarkAsRequireRender();
             StateHasChanged();
         }
+
         /*
 		 * / <summary>
 		 * / 更新用户
 		 * / </summary>
 		 */
+
         protected async Task SaveUser()
         {
             if (!userInfoForm.IsValid())
@@ -60,13 +61,13 @@ namespace Blazui.Community.App.Components
             await UpdateUser();
         }
 
-
         /*
 		 * / <summary>
 		 * / 更新用户提交DB
 		 * / </summary>
 		 * / <returns></returns>
 		 */
+
         private async Task UpdateUser()
         {
             var model = userInfoForm.GetValue<BZUserModel>();
@@ -83,10 +84,9 @@ namespace Blazui.Community.App.Components
 
             if (result.Succeeded)
             {
-               
                 //CurrentUser= await userManager.GetUserAsync((await authenticationStateTask).User);
                 //navigationManager.NavigateTo("/user/base",true);
-         
+
                 await navigationToUpdateUserUI("/user/base");
             }
             else
@@ -96,8 +96,5 @@ namespace Blazui.Community.App.Components
         }
 
         protected override bool ShouldRender() => true;
-
     }
-
-
 }

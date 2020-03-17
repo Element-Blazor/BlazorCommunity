@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace Blazui.Community.Enums
 {
@@ -9,8 +6,10 @@ namespace Blazui.Community.Enums
     {
         [Description("Blazui")]
         Blazui,
+
         [Description("BAdmin")]
         BAdmin,
+
         [Description("BMarkdown")]
         BMarkdown
     }

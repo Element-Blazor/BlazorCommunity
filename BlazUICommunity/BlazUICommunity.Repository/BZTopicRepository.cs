@@ -5,8 +5,6 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using System.Data.SqlClient;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.Repository
@@ -24,20 +22,20 @@ namespace Blazui.Community.Repository
         /// <param name="replyId"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<int> PageIndexOfReply(string topicId , string replyId , int pageSize = 20)
+        public async Task<int> PageIndexOfReply(string topicId, string replyId, int pageSize = 20)
         {
             string exeSql = $"select CAST(tt.rn AS CHAR   ) AS rn from (select t.topicid,t.id,row_number() over (order by id) rn  from `reply` t where t.topicid=@topicId) tt    where tt.id =@replyId";
-            DbParameter sqlTopicIdParameter = new MySqlParameter("topicId" , topicId);
-            DbParameter sqlReplyIdParameter = new MySqlParameter("replyId" , replyId);
-            var result = await ExecuteScalarAsync<string>(exeSql , sqlTopicIdParameter , sqlReplyIdParameter);
-            if( result  is null )
+            DbParameter sqlTopicIdParameter = new MySqlParameter("topicId", topicId);
+            DbParameter sqlReplyIdParameter = new MySqlParameter("replyId", replyId);
+            var result = await ExecuteScalarAsync<string>(exeSql, sqlTopicIdParameter, sqlReplyIdParameter);
+            if (result is null)
             {
                 throw new InvalidCastException($"result is null");
             }
-            if ( int.TryParse(result , out int rowNumber) )
+            if (int.TryParse(result, out int rowNumber))
             {
                 var Remainder = rowNumber % pageSize;
-                var row= Remainder == 0? +rowNumber / pageSize: (rowNumber- Remainder + pageSize ) / pageSize;
+                var row = Remainder == 0 ? +rowNumber / pageSize : (rowNumber - Remainder + pageSize) / pageSize;
                 return row;
             }
             else throw new InvalidCastException($"{result} 转换成int 失败");
@@ -50,10 +48,10 @@ namespace Blazui.Community.Repository
         /// <returns></returns>
         public async Task<IEnumerable<BZTopicDto>> QueryTops(int topSize)
         {
-            string sql =$"select t1.*,t2.UserName,t2.NickName,t2.Avator from bztopic t1 left join bzuser t2 on t1.CreatorId=t2.id where t1.Top=1 and t1.`Status`=0 order by t1.CreateDate desc limit {topSize}";
-           return await QueryDataFromSql<BZTopicDto>(sql);
-            
+            string sql = $"select t1.*,t2.UserName,t2.NickName,t2.Avator from bztopic t1 left join bzuser t2 on t1.CreatorId=t2.id where t1.Top=1 and t1.`Status`=0 order by t1.CreateDate desc limit {topSize}";
+            return await QueryDataFromSql<BZTopicDto>(sql);
         }
+
         /// <summary>
         /// 根据ID查询帖子
         /// </summary>
@@ -66,7 +64,6 @@ namespace Blazui.Community.Repository
             MySqlParameter mySqlParameter = new MySqlParameter("topicId", topicId);
 
             return await QueryDataFromSql<BZTopicDto>(sql, mySqlParameter);
-
         }
     }
 }

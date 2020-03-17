@@ -1,11 +1,7 @@
-﻿using System;
-using Arch.EntityFrameworkCore.UnitOfWork;
-using Blazui.Community.Repository;
-using Blazui.Community.Utility.Filter;
+﻿using Blazui.Community.SwaggerExtensions;
 using Marvin.Cache.Headers;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using System;
 
 namespace Blazui.Community.Api.Controllers
 {
@@ -17,13 +13,11 @@ namespace Blazui.Community.Api.Controllers
     [HttpCacheValidation(MustRevalidate = true)]
     public class TestController : ControllerBase
     {
-       
         [HttpGet("Time")]
         public IActionResult Time(string a)
         {
             return Ok(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
         }
-
 
         [HttpPatch("Time")]
         public IActionResult Time2(string a)

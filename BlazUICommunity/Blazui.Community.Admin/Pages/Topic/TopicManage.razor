@@ -40,11 +40,11 @@
         <BTableColumn Width="50" Property="@nameof(TopicDisplayDto.TopDisplay)" Text="置顶" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="100" Property="@nameof(TopicDisplayDto.CreateDate)" Format="yyyy-MM-dd" Text="发帖时间" Style="text-align:center;"></BTableColumn>
         <BTableTemplateColumn Text="操作" Width="150">
-            <BButton Type="@ButtonType.Success" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Detail(context))">查看</BButton>
+            <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Detail(context))">查看</BButton>
 
             <BDropDown Style="cursor:pointer;">
                 <Trigger>
-                    <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" IsPlain="true">操作</BButton>
+                    <BButton Type="@ButtonType.Default" Size="@ButtonSize.Small" IsPlain="true">操作</BButton>
                 </Trigger>
                 <Items>
                     @{

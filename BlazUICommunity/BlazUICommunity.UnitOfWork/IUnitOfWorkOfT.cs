@@ -1,14 +1,15 @@
 ﻿// Copyright (c) Arch team. All rights reserved.
 
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Arch.EntityFrameworkCore.UnitOfWork
 {
     /// <summary>
     /// Defines the interface(s) for generic unit of work.
     /// </summary>
-    public interface IUnitOfWork<TContext> : IUnitOfWork where TContext : DbContext {
+    public interface IUnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
+    {
         /// <summary>
         /// Gets the db context.
         /// </summary>

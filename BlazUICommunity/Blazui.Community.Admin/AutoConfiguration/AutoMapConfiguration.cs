@@ -25,8 +25,6 @@
 
 //            CreateMap<BZTopicDto, BZTopicModel>();
 
-
-
 //            CreateMap<BZFollowModel, BZFollowDto>().ForMember(dest => dest.StatusDisplay, option => option.Ignore());
 //            CreateMap<BZFollowDto, BZFollowModel>();
 

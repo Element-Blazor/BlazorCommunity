@@ -13,7 +13,7 @@
             </BMenu>
         }
         <div class="fill"></div>
-        <div  style="flex:1;margin-left:20px;" >
+        <div style="flex:1;margin-left:20px;">
             @if (CurrentUser != null)
             {
                 <BDropDown EnableAlwaysRender="true">
@@ -25,7 +25,6 @@
                                     @CurrentUser?.NickName  <i class="el-icon-arrow-down el-icon--right" style="color:#fff;"></i>
                                 </span>
                             </div>
-
                         </BButton>
                     </Trigger>
                     <Items>
@@ -36,11 +35,10 @@
             }
             else
             {
-                <div >
+                <div>
                     <BButton Type="@ButtonType.Text" OnClick="e=>NavigateToLogin()" Style="color:#fff;">登录/注册</BButton>
                 </div>
             }
         </div>
-
     </div>
 </div>

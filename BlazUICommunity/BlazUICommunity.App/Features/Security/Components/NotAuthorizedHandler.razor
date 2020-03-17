@@ -19,7 +19,6 @@
     {
         var state = await authenticationStateProvider.GetAuthenticationStateAsync();
 
-
         if (!state.User.Identity.IsAuthenticated)
         {
             // If the user is not authenticated redirect them to the sign in page

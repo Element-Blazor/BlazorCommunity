@@ -1,18 +1,17 @@
 ﻿using Blazui.Community.App.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using static Blazui.Community.App.ConstantConfiguration;
+
 namespace Blazui.Community.App.Configuration
 {
     public class HeaderMenuConfiguration
     {
-        public HeaderMenuConfiguration( )
+        public HeaderMenuConfiguration()
         {
-
         }
+
         private static List<HeaderMenu> headerMenus = new List<HeaderMenu>();
+
         public static List<HeaderMenu> Headers()
         {
             headerMenus.Add(new HeaderMenu() { Title = "交流", Route = "/", URL = "" });

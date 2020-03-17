@@ -1,12 +1,8 @@
 ﻿using Blazui.Community.Admin.QueryCondition;
-using Blazui.Community.Admin.ViewModel;
 using Blazui.Community.DTO;
 using Blazui.Community.DTO.Admin;
-using Blazui.Community.Request;
-using Blazui.Community.Utility.Extensions;
-using Blazui.Community.Utility.Response;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Identity;
+using Blazui.Community.Response;
+using Blazui.Community.HttpClientExtensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,6 +20,7 @@ namespace Blazui.Community.Admin.Service
         private readonly BaseResponse Unauthorized;
 
         private static Dictionary<string, PropertyInfo[]> QuaryParams = new Dictionary<string, PropertyInfo[]>();
+
         public NetworkService(IHttpClientFactory httpClientFactory, AdminUserService adminUserService)
         {
             this.httpClient = httpClientFactory.CreateClient("BlazuiCommunitiyAdmin");
@@ -38,6 +35,7 @@ namespace Blazui.Community.Admin.Service
             _adminUserService = adminUserService;
             Unauthorized = new BaseResponse(403, "Unauthorized ，对不起您没有权限进行该操作 ", null);
         }
+
         /// <summary>
         /// 构建HttpContent
         /// </summary>
@@ -83,16 +81,14 @@ namespace Blazui.Community.Admin.Service
             return MustRefresh ? $"{queryparam}&MustRefresh={DateTime.Now.Ticks}" : queryparam;
         }
 
-
-        static bool IsNullableEnum(Type t)
+        private static bool IsNullableEnum(Type t)
         {
             Type u = Nullable.GetUnderlyingType(t);
             return (u != null) && u.IsEnum;
         }
 
-
-
         #region User
+
         /// <summary>
         /// 查询用户
         /// </summary>
@@ -113,6 +109,7 @@ namespace Blazui.Community.Admin.Service
                 return Unauthorized;
             return await httpClient.PatchWithJsonResultAsync($"api/user/Delete/{UserId}");
         }
+
         /// <summary>
         /// 解封
         /// </summary>
@@ -125,8 +122,6 @@ namespace Blazui.Community.Admin.Service
             return await httpClient.PatchWithJsonResultAsync($"api/user/Resume/{UserId}");
         }
 
-
-
         /// <summary>
         /// 重置密码
         /// </summary>
@@ -138,8 +133,8 @@ namespace Blazui.Community.Admin.Service
                 return Unauthorized;
             return await httpClient.PatchWithJsonResultAsync($"api/user/ResetPassword/{UserId}");
         }
-        #endregion
 
+        #endregion User
 
         #region Reply
 
@@ -154,6 +149,7 @@ namespace Blazui.Community.Admin.Service
                 return Unauthorized;
             return await httpClient.PatchWithJsonResultAsync($"api/Reply/Delete/{Id}");
         }
+
         /// <summary>
         /// 恢复
         /// </summary>
@@ -165,6 +161,7 @@ namespace Blazui.Community.Admin.Service
                 return Unauthorized;
             return await httpClient.PatchWithJsonResultAsync($"api/Reply/Resume/{Id}");
         }
+
         /// <summary>
         /// 查询回复贴
         /// </summary>
@@ -174,10 +171,11 @@ namespace Blazui.Community.Admin.Service
         {
             return await httpClient.GetWithJsonResultAsync<PageDatas<BZReplyDto>>($"api/Reply/Query{BuildHttpQueryParam(querycondition, MustRefresh)}");
         }
-        #endregion
 
+        #endregion Reply
 
-        #region Topic 
+        #region Topic
+
         /// <summary>
         /// 查询帖子
         /// </summary>
@@ -187,6 +185,7 @@ namespace Blazui.Community.Admin.Service
         {
             return await httpClient.GetWithJsonResultAsync<PageDatas<TopicDisplayDto>>($"api/Topic/Query{BuildHttpQueryParam(querycondition, MustRefresh)}");
         }
+
         /// <summary>
         /// 发表帖子
         /// </summary>
@@ -199,8 +198,6 @@ namespace Blazui.Community.Admin.Service
 
             return await httpClient.PostWithJsonResultAsync("api/Topic/Add", BuildHttpContent(bZTopicDto));
         }
-
-
 
         /// <summary>
         /// 删除帖子
@@ -223,6 +220,7 @@ namespace Blazui.Community.Admin.Service
         {
             return await httpClient.PatchWithJsonResultAsync($"api/Topic/Resume/{Id}");
         }
+
         /// <summary>
         /// 加精
         /// </summary>
@@ -234,6 +232,7 @@ namespace Blazui.Community.Admin.Service
                 return Unauthorized;
             return await httpClient.PatchWithJsonResultAsync($"api/Topic/Best/{Id}");
         }
+
         /// <summary>
         /// 置顶
         /// </summary>
@@ -257,10 +256,11 @@ namespace Blazui.Community.Admin.Service
                 return Unauthorized;
             return await httpClient.PatchWithJsonResultAsync($"api/Topic/End/{Id}");
         }
-        #endregion
 
+        #endregion Topic
 
         #region Version
+
         /// <summary>
         /// 查询版本
         /// </summary>
@@ -273,7 +273,6 @@ namespace Blazui.Community.Admin.Service
             return await httpClient.GetWithJsonResultAsync<PageDatas<VersionDisplayDto>>($"api/version/Query{BuildHttpQueryParam(querycondition, MustRefresh)}");
         }
 
-
         /// <summary>
         /// 删除版本
         /// </summary>
@@ -285,6 +284,7 @@ namespace Blazui.Community.Admin.Service
                 return Unauthorized;
             return await httpClient.PatchWithJsonResultAsync($"api/version/Delete/{Id}");
         }
+
         /// <summary>
         /// 恢复
         /// </summary>
@@ -296,6 +296,7 @@ namespace Blazui.Community.Admin.Service
                 return Unauthorized;
             return await httpClient.PatchWithJsonResultAsync($"api/version/Resume/{Id}");
         }
+
         /// <summary>
         /// 新增版本
         /// </summary>
@@ -308,7 +309,6 @@ namespace Blazui.Community.Admin.Service
             return await httpClient.PostWithJsonResultAsync($"api/version/Add", BuildHttpContent(dto));
         }
 
-
         /// <summary>
         /// 更新版本
         /// </summary>
@@ -320,12 +320,10 @@ namespace Blazui.Community.Admin.Service
                 return Unauthorized;
             return await httpClient.PutWithJsonResultAsync($"api/version/Update", BuildHttpContent(dto));
         }
-        #endregion
 
+        #endregion Version
 
         #region Banner
-
-      
 
         /// <summary>
         /// 查询Banner
@@ -360,6 +358,7 @@ namespace Blazui.Community.Admin.Service
                 return Unauthorized;
             return await httpClient.PatchWithJsonResultAsync($"api/banner/Resume/{Id}");
         }
+
         /// <summary>
         /// 发布Banner
         /// </summary>
@@ -385,7 +384,6 @@ namespace Blazui.Community.Admin.Service
             return await httpClient.PostWithJsonResultAsync("api/Banner/Update", httpContent);
         }
 
-      
-        #endregion
+        #endregion Banner
     }
 }

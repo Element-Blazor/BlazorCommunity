@@ -4,9 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Configuration
 {
@@ -16,7 +13,6 @@ namespace Blazui.Community.App.Configuration
         {
             services.AddIdentity<TUser, IdentityRole<string>>(options =>
             {
-
                 options.Password.RequiredLength = 8;//要求必须8以上位密码
                 options.Password.RequireUppercase = false;//要求小写
                 options.Password.RequireLowercase = false;//要求大写
@@ -38,7 +34,6 @@ namespace Blazui.Community.App.Configuration
                     RequireConfirmedEmail = false, //要求激活邮箱
                     RequireConfirmedPhoneNumber = false //要求激活手机号
                 };
-
             }).AddEntityFrameworkStores<TDbContext>()
             .AddDefaultTokenProviders();
 
@@ -59,7 +54,6 @@ namespace Blazui.Community.App.Configuration
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireAdmin", c => c.RequireRole("Admin"));
-
             });
         }
     }

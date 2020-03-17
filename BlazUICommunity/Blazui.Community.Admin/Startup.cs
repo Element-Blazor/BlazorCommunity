@@ -1,15 +1,14 @@
+using BlazAdmin.ServerRender;
+using Blazui.Community.Admin.Service;
+using Blazui.Community.Model.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Blazui.Community.Model.Models;
-using BlazAdmin.ServerRender;
-using Microsoft.EntityFrameworkCore;
-using Blazui.Community.Admin.Service;
-using AutoMapper;
 using System;
-using Microsoft.AspNetCore.Identity;
 
 namespace Blazui.Community.Admin
 {
@@ -40,7 +39,6 @@ namespace Blazui.Community.Admin
                    MustRevalidate = false,
                    Public = false,
                };
-
            });
             services.AddBlazAdmin<IdentityUser, AdminUserService, BlazUICommunityAdminDbContext>(null);
             services.AddScoped<AdminUserService>();
@@ -48,7 +46,7 @@ namespace Blazui.Community.Admin
             {
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 options.SlidingExpiration = true;
             });
             services.AddScoped<NetworkService>();

@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Blazui.Community.Api.Service;
+﻿using Blazui.Community.Api.Service;
 using Blazui.Community.Enums;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
-using Blazui.Community.Utility;
-using Blazui.Community.Utility.Response;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+using Blazui.Community.Response;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Controllers.Client
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Route("api/client/[controller]")]
     [ApiController]
@@ -24,15 +19,15 @@ namespace Blazui.Community.Api.Controllers.Client
     public class CodeController : ControllerBase
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private BZVerifyCodeRepository _bZVerifyCodeRepository;
+
         private readonly ICodeService _codeService;
         private readonly IMessageService _messageService;
 
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="bZVerifyCodeRepository"></param>
         /// <param name="codeService"></param>
@@ -43,6 +38,7 @@ namespace Blazui.Community.Api.Controllers.Client
             _messageService = messageService;
             _bZVerifyCodeRepository = bZVerifyCodeRepository;
         }
+
         /// <summary>
         /// 发送验证码
         /// </summary>
@@ -53,17 +49,18 @@ namespace Blazui.Community.Api.Controllers.Client
             await _messageService.SendEmail("279225040@qq.com", "3333", VerifyCodeType.EmailBind);
             return Ok();
         }
+
         /// <summary>
         /// 发送验证码
         /// </summary>
         /// <returns></returns>
         [HttpGet("SendVerifyCode/{VerifyCodeType}/{userId}/{target}")]
-        public async Task<IActionResult> SendVerifyCode( int VerifyCodeType, string userId, string target)
+        public async Task<IActionResult> SendVerifyCode(int VerifyCodeType, string userId, string target)
         {
             return await SendVerifyCode((VerifyCodeType)VerifyCodeType, userId, target);
         }
 
-         async Task<IActionResult> SendVerifyCode(VerifyCodeType verifyCodeType,   string userId, string Target)
+        private async Task<IActionResult> SendVerifyCode(VerifyCodeType verifyCodeType, string userId, string Target)
         {
             var code = _codeService.GenerateNumberCode(4);
 
@@ -76,7 +73,7 @@ namespace Blazui.Community.Api.Controllers.Client
                     return Ok(bzVerifyCodeModel.VerifyCode);
                 else
                 {
-                    await _bZVerifyCodeRepository.ChangeStateByIdAsync(result.Entity.Id,-1,"");
+                    await _bZVerifyCodeRepository.ChangeStateByIdAsync(result.Entity.Id, -1, "");
                     return new BadRequestResponse("发送验证码失败");
                 }
             }
@@ -95,12 +92,14 @@ namespace Blazui.Community.Api.Controllers.Client
                 case VerifyCodeType.EmailBind:
                     sendResult = await _messageService.SendEmail(Target, code, verifyCodeType);
                     break;
+
                 case VerifyCodeType.MobileLogin:
                 case VerifyCodeType.MobileBind:
                 case VerifyCodeType.MobileRetrievePassword:
                 case VerifyCodeType.MobileChangePassword:
                     sendResult = await _messageService.SendEmail(Target, code, verifyCodeType);
                     break;
+
                 default:
                     throw new NotSupportedException();
             }
@@ -123,7 +122,6 @@ namespace Blazui.Community.Api.Controllers.Client
             };
         }
 
-
         /// <summary>
         /// 验证短信验证码
         /// </summary>
@@ -131,7 +129,6 @@ namespace Blazui.Community.Api.Controllers.Client
         [HttpGet("VerifyCode/{userId}/{CodeType}/{Code}")]
         public async Task<IActionResult> VerifyCode(string userId, int CodeType, string Code)
         {
-
             var result = await _bZVerifyCodeRepository.GetFirstOrDefaultAsync(p => p.VerifyCode == Code && p.UserId == userId && p.VerifyType == CodeType);
             if (result != null && !result.IsExpired)
                 return Ok(result);

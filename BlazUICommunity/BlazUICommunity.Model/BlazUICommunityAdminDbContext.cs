@@ -9,11 +9,10 @@ namespace Blazui.Community.Model.Models
     {
         public BlazUICommunityAdminDbContext()
         {
-
         }
+
         public BlazUICommunityAdminDbContext(DbContextOptions<BlazUICommunityAdminDbContext> options) : base(options)
         {
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -30,7 +29,7 @@ namespace Blazui.Community.Model.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // 配置实体类型映射到的表名        
+            // 配置实体类型映射到的表名
             modelBuilder.Entity<IdentityUser>().ToTable("User");
             modelBuilder.Entity<IdentityRole>().ToTable("Role");
             modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRole");
@@ -38,8 +37,6 @@ namespace Blazui.Community.Model.Models
             modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaim");
             modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogin");
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserToken");
-
         }
-
     }
 }

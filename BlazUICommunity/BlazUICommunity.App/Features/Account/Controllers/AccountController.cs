@@ -72,12 +72,9 @@ namespace Blazui.Community.App.Features.Accounts.Controllers
         {
             await _signInManager.SignOutAsync();
 
-            if(!string.IsNullOrWhiteSpace(HttpContext.Request.Query["returnUrl"]))
+            if (!string.IsNullOrWhiteSpace(HttpContext.Request.Query["returnUrl"]))
                 return Redirect(HttpContext.Request.Query["returnUrl"]);
             return Redirect("/account/signin");
         }
-
-
-     
     }
 }

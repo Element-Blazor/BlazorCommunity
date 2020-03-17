@@ -1,34 +1,32 @@
-﻿using Blazui.Community.DTO;
-using Blazui.Community.Enums;
+﻿using Blazui.Community.Enums;
 using Blazui.Component;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Model
 {
     public class PersonalTopicModel
     {
-        [TableColumn(Ignore =true)]
+        [TableColumn(Ignore = true)]
         public string Id { get; set; }
+
         /// <summary>
         /// 帖子标题
         /// </summary>
-        [TableColumn(Text = "标题",Width =500)]
-        public string Title { get;set; }
-     
+        [TableColumn(Text = "标题", Width = 500)]
+        public string Title { get; set; }
 
         /// <summary>
         /// 发表时间
         /// </summary>
-        [TableColumn(Text = "发表时间", Format = "yyyy-MM-dd",Width =100)]
-        public DateTime CreateDate{ get; set; }
+        [TableColumn(Text = "发表时间", Format = "yyyy-MM-dd", Width = 100)]
+        public DateTime CreateDate { get; set; }
+
         /// <summary>
         ///  状态 0正常，-1 删除，1已结帖
         /// </summary>
-        [TableColumn(Text = "状态",Ignore =true)]
+        [TableColumn(Text = "状态", Ignore = true)]
         public int Status { get; set; }
+
         /// <summary>
         ///  状态 0正常，-1 删除，1已结帖
         /// </summary>
@@ -44,7 +42,7 @@ namespace Blazui.Community.App.Model
         /// <summary>
         /// 主题帖类型 0：提问，1：分享，2：讨论，3：建议，4：公告
         /// </summary>
-        [TableColumn(Text = "类型",Ignore =false,Width =50)]
+        [TableColumn(Text = "类型", Ignore = false, Width = 50)]
         public string CategoryDisplay
         {
             get
@@ -56,7 +54,6 @@ namespace Blazui.Community.App.Model
         [TableColumn(Text = "类型", Ignore = true)]
         public TopicCategory Category { get; set; }
 
-     
         /// <summary>
         /// 是否精华
         /// </summary>
@@ -66,7 +63,7 @@ namespace Blazui.Community.App.Model
         /// <summary>
         /// 是否精华
         /// </summary>
-        [TableColumn(Text = "精华",Width =50)]
+        [TableColumn(Text = "精华", Width = 50)]
         public string GoodDisplay
         {
             get
@@ -79,6 +76,7 @@ namespace Blazui.Community.App.Model
                 };
             }
         }
+
         /// <summary>
         /// 回帖数量
         /// </summary>
@@ -88,8 +86,9 @@ namespace Blazui.Community.App.Model
         [TableColumn(Text = "时间", Ignore = true)]
         public string CreateTimeDisplay { get; set; }
 
-        [TableColumn( Ignore = true)]
+        [TableColumn(Ignore = true)]
         public string UserName { get; set; }
+
         [TableColumn(Ignore = true)]
         public string NickName { get; set; }
     }

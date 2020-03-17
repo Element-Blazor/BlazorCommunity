@@ -3,8 +3,7 @@ using Blazui.Community.App.Model.Condition;
 using Blazui.Community.App.Pages;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
-using Blazui.Community.Request;
-using Blazui.Community.Utility.Response;
+using Blazui.Community.Response;
 using Blazui.Component;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ namespace Blazui.Community.App.Components
 {
     public class PersonalFollowTableBase : PageBase
     {
-
         protected int pageSize = 6;
         protected int currentPage = 1;
         internal bool requireRender = false;
@@ -23,11 +21,13 @@ namespace Blazui.Community.App.Components
         protected BZUserModel User;
 
         protected BForm searchForm;
-        private SearchPersonalFollowCondition Condition=> new SearchPersonalFollowCondition
+
+        private SearchPersonalFollowCondition Condition => new SearchPersonalFollowCondition
         {
             PageIndex = currentPage,
             PageSize = pageSize
         };
+
         internal int CurrentPage
         {
             get
@@ -57,6 +57,7 @@ namespace Blazui.Community.App.Components
                 await QueryFollows(condition);
             });
         }
+
         /// <summary>
         /// 删除纪录
         /// </summary>
@@ -67,7 +68,7 @@ namespace Blazui.Community.App.Components
             if (Confirm == MessageBoxResult.Ok)
                 if (topic is PersonalTopicModel followModel)
                 {
-                    var result = await NetService.DelFollows(followModel.Id,User.Id);
+                    var result = await NetService.DelFollows(followModel.Id, User.Id);
                     if (result.IsSuccess)
                     {
                         await LoadDatas();
@@ -78,7 +79,6 @@ namespace Blazui.Community.App.Components
 
         protected override bool ShouldRender() => requireRender;
 
-       
         /// <summary>
         /// 调用webapi接口获取数据，转换数据，加载界面
         /// </summary>
@@ -101,13 +101,13 @@ namespace Blazui.Community.App.Components
             condition ??= new SearchPersonalFollowCondition();
             condition.CreatorId = User.Id;
             condition.PageSize = pageSize;
-            condition.PageIndex = currentPage; 
+            condition.PageIndex = currentPage;
             return condition;
         }
 
         private void ConvertDataToDto(BaseResponse<PageDatas<BZTopicDto>> result)
         {
-            if (result.IsSuccess && result.Data!=null&& result.Data.TotalCount > 0)
+            if (result.IsSuccess && result.Data != null && result.Data.TotalCount > 0)
             {
                 Datas = mapper.Map<List<PersonalTopicModel>>(result.Data.Items);
                 DataCount = result.Data.TotalCount;
@@ -132,6 +132,7 @@ namespace Blazui.Community.App.Components
             table?.Refresh();
             StateHasChanged();
         }
+
         protected void LinktoTopic(object topic)
         {
             if (topic is PersonalTopicModel topicModel)

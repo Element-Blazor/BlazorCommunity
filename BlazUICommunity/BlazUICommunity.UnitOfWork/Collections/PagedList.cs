@@ -17,21 +17,25 @@ namespace Arch.EntityFrameworkCore.UnitOfWork.Collections
         /// </summary>
         /// <value>The index of the page.</value>
         public int PageIndex { get; set; }
+
         /// <summary>
         /// Gets or sets the size of the page.
         /// </summary>
         /// <value>The size of the page.</value>
         public int PageSize { get; set; }
+
         /// <summary>
         /// Gets or sets the total count.
         /// </summary>
         /// <value>The total count.</value>
         public int TotalCount { get; set; }
+
         /// <summary>
         /// Gets or sets the total pages.
         /// </summary>
         /// <value>The total pages.</value>
         public int TotalPages { get; set; }
+
         /// <summary>
         /// Gets or sets the index from.
         /// </summary>
@@ -98,7 +102,6 @@ namespace Arch.EntityFrameworkCore.UnitOfWork.Collections
         internal PagedList() => Items = new T[0];
     }
 
-
     /// <summary>
     /// Provides the implementation of the <see cref="IPagedList{T}"/> and converter.
     /// </summary>
@@ -111,21 +114,25 @@ namespace Arch.EntityFrameworkCore.UnitOfWork.Collections
         /// </summary>
         /// <value>The index of the page.</value>
         public int PageIndex { get; }
+
         /// <summary>
         /// Gets the size of the page.
         /// </summary>
         /// <value>The size of the page.</value>
         public int PageSize { get; }
+
         /// <summary>
         /// Gets the total count.
         /// </summary>
         /// <value>The total count.</value>
         public int TotalCount { get; }
+
         /// <summary>
         /// Gets the total pages.
         /// </summary>
         /// <value>The total pages.</value>
         public int TotalPages { get; }
+
         /// <summary>
         /// Gets the index from.
         /// </summary>
@@ -219,6 +226,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork.Collections
         /// <typeparam name="T">The type for paging </typeparam>
         /// <returns>An empty instance of <see cref="IPagedList{T}"/>.</returns>
         public static IPagedList<T> Empty<T>() => new PagedList<T>();
+
         /// <summary>
         /// Creates a new instance of <see cref="IPagedList{TResult}"/> from source of <see cref="IPagedList{TSource}"/> instance.
         /// </summary>

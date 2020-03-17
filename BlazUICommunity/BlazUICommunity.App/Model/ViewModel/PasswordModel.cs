@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Blazui.Community.App.Model
+﻿namespace Blazui.Community.App.Model
 {
     public class PasswordModel
     {
@@ -11,16 +6,19 @@ namespace Blazui.Community.App.Model
         /// 验证码
         /// </summary>
         public string VerifyCode { get; set; }
+
         /// <summary>
         /// 手机号
         /// </summary>
         public string Mobile { get; set; }
 
         public string OldPassword { get; set; }
+
         /// <summary>
         /// 密码
         /// </summary>
         public string Password { get; set; }
+
         /// <summary>
         /// 确认密码
         /// </summary>
@@ -30,8 +28,9 @@ namespace Blazui.Community.App.Model
         /// 0：绑定手机，1：修改密码
         /// </summary>
         public int VerifyType { get; set; }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string Email { get; set; }
     }

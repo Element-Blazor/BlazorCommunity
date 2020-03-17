@@ -1,9 +1,5 @@
-﻿using Blazui.Community.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Service
 {
@@ -21,7 +17,6 @@ namespace Blazui.Community.Api.Service
                 Code.Append(r.Next(0, 10));
             }
             return Code.ToString();
-
         }
 
         public string GenerateNumberLetterCode(int length = 4)

@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Components
 {
-    public class ContentBannerBase:BComponentBase
+    public class ContentBannerBase : BComponentBase
     {
         internal List<BzBannerDto> Banners { get; set; } = new List<BzBannerDto>();
+
         [Inject]
         public NetworkService NetService { get; set; }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
@@ -25,7 +27,5 @@ namespace Blazui.Community.App.Components
                 StateHasChanged();
             }
         }
-   
     }
-
 }

@@ -1,17 +1,7 @@
-﻿using Blazui.Community.DTO;
-using Blazui.Community.Enums;
-using Blazui.Community.Request;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Blazui.Community.Admin.QueryCondition
+﻿namespace Blazui.Community.Admin.QueryCondition
 {
     public class QueryReplyCondition : BaseQueryCondition
     {
-
-
         /// <summary>
         /// 发帖人ID
         /// </summary>

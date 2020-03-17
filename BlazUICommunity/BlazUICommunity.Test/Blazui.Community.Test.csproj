@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BlazUICommunity.Model\Blazui.Community.Model.csproj" />
-    <ProjectReference Include="..\BlazUICommunity.Utility\Blazui.Community.Utility.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,6 +9,7 @@ namespace Blazui.Community.App.Components
     public class ContentTopBase : PageBase
     {
         protected List<BZTopicDto> Topics = new List<BZTopicDto>();
+
         protected override async Task InitilizePageDataAsync()
         {
             var result = await NetService.GetTopdTopics();
@@ -20,6 +21,5 @@ namespace Blazui.Community.App.Components
                 }
             }
         }
-
     }
 }

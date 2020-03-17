@@ -1,25 +1,23 @@
-﻿using Blazui.Community.Model.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using System.Threading;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Blazui.Community.Test
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WriteLine("Hello World! Start");
 
-
-
-            using (BlazUICommunityAdminDbContext communityContext = new BlazUICommunityAdminDbContext())
-            {
-                communityContext.Database.EnsureDeleted();
-                communityContext.Database.EnsureCreated();
-            }
+            //string s = "12421 231312";
+            //var s1 = s.Trim();
+            string myString = "  this\n is\r a \ttest   ";
+            Console.WriteLine(Regex.Replace(myString, @"\s", ""));
+            //using (BlazUICommunityAdminDbContext communityContext = new BlazUICommunityAdminDbContext())
+            //{
+            //    communityContext.Database.EnsureDeleted();
+            //    communityContext.Database.EnsureCreated();
+            //}
             //////string id = Guid.NewGuid().ToString();
             //using (BlazUICommunityContext communityContext = new BlazUICommunityContext())
             //{
@@ -29,7 +27,6 @@ namespace Blazui.Community.Test
 
             //    var set = communityContext.Set<BZTopicModel>();
             //    set.AddAsync(new BZTopicModel() { Good = 0, CreateDate = DateTime.Now, Title = "", Content = "1312321", CreatorId = Guid.NewGuid().ToString(), LastModifyDate = DateTime.Now, Status = 0, }, default);
-
 
             //    communityContext.SaveChanges();
             //}

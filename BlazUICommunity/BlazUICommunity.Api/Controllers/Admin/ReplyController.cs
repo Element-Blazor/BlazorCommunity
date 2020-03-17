@@ -1,23 +1,22 @@
-﻿using System;
+﻿using Arch.EntityFrameworkCore.UnitOfWork;
+using Arch.EntityFrameworkCore.UnitOfWork.Collections;
+using AutoMapper;
+using Blazui.Community.Api.Service;
+using Blazui.Community.DTO;
+using Blazui.Community.LinqExtensions;
+using Blazui.Community.Model.Models;
+using Blazui.Community.Repository;
+using Blazui.Community.Request;
+using Blazui.Community.StringExtensions;
+using Blazui.Community.SwaggerExtensions;
+using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Arch.EntityFrameworkCore.UnitOfWork;
-using Arch.EntityFrameworkCore.UnitOfWork.Collections;
-using AutoMapper;
-using Blazui.Community.Api.Extensions;
-using Blazui.Community.Api.Service;
-using Blazui.Community.DTO;
-using Blazui.Community.Model.Models;
-using Blazui.Community.Repository;
-using Blazui.Community.Request;
-using Blazui.Community.Utility.Extensions;
-using Blazui.Community.Utility.Filter;
-using Blazui.Community.Utility.Response;
-using Marvin.Cache.Headers;
-using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace Blazui.Community.Api.Controllers
 {
@@ -37,7 +36,7 @@ namespace Blazui.Community.Api.Controllers
         private readonly ICacheService _cacheService;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="bZReplyRepository"></param>
@@ -52,9 +51,6 @@ namespace Blazui.Community.Api.Controllers
             _cacheService = cacheService;
         }
 
-
-
-
         /// <summary>
         /// 删除
         /// </summary>
@@ -64,7 +60,6 @@ namespace Blazui.Community.Api.Controllers
         {
             return await DeleteOrResume(Id, -1);
         }
-
 
         /// <summary>
         /// 恢复
@@ -88,7 +83,6 @@ namespace Blazui.Community.Api.Controllers
             _cacheService.Remove(nameof(BZReplyModel));
             return Ok();
         }
-
 
         /// <summary>
         /// 根据条件分页查询回帖

@@ -1,13 +1,7 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
-using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Caching.Memory;
-using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.Repository
@@ -16,12 +10,12 @@ namespace Blazui.Community.Repository
     {
         private UserManager<BZUserModel> _userManager;
         private IUnitOfWork _IUnitOfWork;
+
         public BZUserIdentityRepository(BlazUICommunityContext dbContext, UserManager<BZUserModel> userManager, IUnitOfWork unitOfWork) : base(dbContext)
         {
             _IUnitOfWork = unitOfWork;
             _userManager = userManager;
         }
-
 
         public async Task<IdentityResult> CreateUserAsync(string userAccount, string Password, string Mobile = null, string Email = null, string NickName = null, int Sex = 0, string CreatorId = null)
         {
@@ -50,7 +44,6 @@ namespace Blazui.Community.Repository
                        Avator = "/img/defaultAct.png",
                        PhoneNumber = Mobile ?? ""
                    }, Password);
-
         }
     }
 }

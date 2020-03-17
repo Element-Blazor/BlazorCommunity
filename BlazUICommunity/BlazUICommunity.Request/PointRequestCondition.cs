@@ -1,10 +1,7 @@
-﻿
-
-namespace Blazui.Community.Request
+﻿namespace Blazui.Community.Request
 {
     public class PointRequestCondition : BaseRequestCondition
     {
-
         /// <summary>
         /// 积分来源，1：发帖，2：回帖，3:精华帖，4：其他--规则
         /// </summary>

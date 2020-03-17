@@ -1,20 +1,13 @@
-﻿using Blazui.Community.App.Model;
-using Blazui.Community.App.Model.Condition;
-using Blazui.Community.App.Model.ViewModel;
+﻿using Blazui.Community.App.Model.Condition;
 using Blazui.Community.DTO;
 using Blazui.Community.Enums;
-using Blazui.Community.Model.Models;
-using Blazui.Community.Utility.Extensions;
-using Blazui.Community.Utility.Response;
-using Microsoft.AspNetCore.Mvc;
+using Blazui.Community.HttpClientExtensions;
+using Blazui.Community.Response;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using HttpMethod = Blazui.Community.Utility.Extensions.HttpMethod;
 
 namespace Blazui.Community.App.Service
 {
@@ -23,17 +16,13 @@ namespace Blazui.Community.App.Service
         private readonly HttpClient httpClient;
         private readonly TokenService _tokenService;
         private readonly BaseResponse Unauthorized;
+
         public NetworkService(IHttpClientFactory httpClientFactory, TokenService tokenService)
         {
             this.httpClient = httpClientFactory.CreateClient("BlazuiCommunitiyApp");
             _tokenService = tokenService;
             Unauthorized = new BaseResponse(403, "Unauthorized ，对不起您没有权限进行该操作 ", null);
         }
-
-
-
-
-
 
         /// <summary>
         /// 构建HttpContent
@@ -93,7 +82,7 @@ namespace Blazui.Community.App.Service
         public async Task<BaseResponse<PageDatas<BZTopicDto>>> GetTopics(SearchPersonalTopicCondition condition)
         {
             HttpContent httpContent = BuildHttpContent(condition);
-            return await httpClient.GetJsonResultAsync<PageDatas<BZTopicDto>>("api/client/Topic/AppQuery",HttpMethod.Post, httpContent);
+            return await httpClient.PostWithJsonResultAsync<PageDatas<BZTopicDto>>("api/client/Topic/AppQuery", httpContent);
         }
 
         /// <summary>
@@ -114,7 +103,7 @@ namespace Blazui.Community.App.Service
         public async Task<BaseResponse<PageDatas<BZTopicDto>>> GetFollows(SearchPersonalFollowCondition condition)
         {
             HttpContent httpContent = BuildHttpContent(condition);
-            return await httpClient.GetJsonResultAsync<PageDatas<BZTopicDto>>("api/client/follow/Query",HttpMethod.Post, httpContent);
+            return await httpClient.GetJsonResultAsync<PageDatas<BZTopicDto>>("api/client/follow/Query", HttpClientExtensions.HttpMethod.Post, httpContent);
         }
 
         /// <summary>
@@ -140,6 +129,7 @@ namespace Blazui.Community.App.Service
                 return await httpClient.GetJsonResultAsync<List<BZReplyDto>>($"api/client/reply/GetByUserId/{UserId}/{pageSize}/{pageIndex}");
             return await httpClient.GetJsonResultAsync<List<BZReplyDto>>($"api/client/reply/GetByUserId/{UserId}/{pageSize}/{pageIndex}/{Title}");
         }
+
         /// <summary>
         /// 获取我的回帖
         /// </summary>
@@ -153,6 +143,7 @@ namespace Blazui.Community.App.Service
                 return await httpClient.GetJsonResultAsync<int>($"api/client/reply/GetRepyCount/{UserId}");
             return await httpClient.GetJsonResultAsync<int>($"api/client/reply/GetRepyCount/{UserId}/{Title}");
         }
+
         /// <summary>
         /// 删除回帖
         /// </summary>
@@ -184,8 +175,9 @@ namespace Blazui.Community.App.Service
         {
             return await httpClient.GetJsonResultAsync<PageDatas<BZTopicDto>>($"api/client/topic/QueryTopicsByOrder/{orderBy}/{topicType}/{pageSize}/{pageIndex}");
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="title"></param>
         /// <param name="pageIndex"></param>
@@ -196,7 +188,6 @@ namespace Blazui.Community.App.Service
             return await httpClient.GetJsonResultAsync<PageDatas<SeachTopicDto>>($"api/client/topic/SeachTopicByTitle/{title}/{pageIndex}/{pageSize}");
         }
 
-        
         /// <summary>
         /// 根据帖子Id查询帖子
         /// </summary>
@@ -246,7 +237,6 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public async Task<BaseResponse> AddReply(BZReplyDto bZReplyDto)
         {
-
             HttpContent httpContent = BuildHttpContent(bZReplyDto);
             return await HttpPostJson($"api/client/Reply/Add", httpContent);
         }
@@ -288,15 +278,13 @@ namespace Blazui.Community.App.Service
             return await HttpPostJson($"api/client/Follow/Toggle", httpContent);
         }
 
-
         public async Task<BaseResponse<List<BzBannerDto>>> GetBanners()
         {
             return await httpClient.GetJsonResultAsync<List<BzBannerDto>>($"api/client/Banner/QueryAll");
         }
 
-
-
         #region 在包一层
+
         private async Task<BaseResponse> HttpGetJson(string url)
         {
             var ResultResponse = await _tokenService.RquestToken();
@@ -312,31 +300,32 @@ namespace Blazui.Community.App.Service
             if (!ResultResponse.IsSuccess)
                 return new BaseResponse<T>(401);
             SetHttpClientAuthorization(ResultResponse);
-            return await httpClient.GetJsonResultAsync<T>(url, HttpMethod.Post, httpContent);
+            return await httpClient.PostWithJsonResultAsync<T>(url, httpContent);
         }
+
         private async Task<BaseResponse> HttpPostJson(string url, HttpContent httpContent = null)
         {
             var ResultResponse = await _tokenService.RquestToken();
             if (!ResultResponse.IsSuccess)
                 return Unauthorized;
             SetHttpClientAuthorization(ResultResponse);
-            return await httpClient.GetJsonResultAsync(url, HttpMethod.Post, httpContent);
+            return await httpClient.PostWithJsonResultAsync(url, httpContent);
         }
+
         private async Task<BaseResponse> HttpDeleteJson(string url)
         {
             var ResultResponse = await _tokenService.RquestToken();
             if (!ResultResponse.IsSuccess)
                 return Unauthorized;
             SetHttpClientAuthorization(ResultResponse);
-            return await httpClient.GetJsonResultAsync(url, HttpMethod.Delete);
+            return await httpClient.DeleteWithJsonResultAsync(url);
         }
-
 
         private void SetHttpClientAuthorization(BaseResponse<Token> ResultResponse)
         {
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ResultResponse.Data.AccessToken);
         }
-        #endregion
 
+        #endregion 在包一层
     }
 }

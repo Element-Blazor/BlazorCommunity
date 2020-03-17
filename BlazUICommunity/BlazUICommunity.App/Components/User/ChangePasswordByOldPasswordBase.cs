@@ -12,6 +12,7 @@ namespace Blazui.Community.App.Components.User
         protected BForm bformOldpwd;
         protected BZUserModel User;
         protected string VerifyCode = "";
+
         protected async Task ChangePwdByOld()
         {
             if (!bformOldpwd.IsValid())
@@ -24,7 +25,6 @@ namespace Blazui.Community.App.Components.User
             await ResetPassword(bformOldpwd);
         }
 
-
         private async Task<bool> CheckOldPassword()
         {
             var model = bformOldpwd.GetValue<PasswordModel>();
@@ -36,6 +36,7 @@ namespace Blazui.Community.App.Components.User
             }
             return true;
         }
+
         private bool CheckConfirmPassword()
         {
             var PasswordModel = bformOldpwd.GetValue<PasswordModel>();
@@ -46,8 +47,6 @@ namespace Blazui.Community.App.Components.User
             }
             return true;
         }
-
-
 
         private async Task ResetPassword(BForm bForm)
         {

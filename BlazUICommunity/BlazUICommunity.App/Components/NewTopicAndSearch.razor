@@ -15,7 +15,7 @@
     internal void Search()
     {
         SearchText = RemoveSpecialCharacter(SearchText);
-          if (string.IsNullOrWhiteSpace(SearchText))
+        if (string.IsNullOrWhiteSpace(SearchText))
             return;
         navigationManager.NavigateTo($"search/{SearchText}");
     }
@@ -24,6 +24,7 @@
     /// 去掉特殊字符
     /// </summary>
     /// <param name="hexData"></param>
+    /// <returns></returns>
     string RemoveSpecialCharacter(string hexData)
     {
         return Regex.Replace(hexData, "[ \\[ \\] \\^ \\-_*×――(^)|'$%~!@#$…&%￥—+=<>《》!！??？:：•`·、。，；,.;\"‘’“”-]", "");

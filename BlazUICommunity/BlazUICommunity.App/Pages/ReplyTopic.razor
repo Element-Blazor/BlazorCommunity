@@ -5,7 +5,7 @@
 <div class="container">
     @if (!string.IsNullOrWhiteSpace(TopicId))
     {
-        <BLayout EastWidth="350" EnableAlwaysRender="true"  >
+        <BLayout EastWidth="350" EnableAlwaysRender="true">
             <North>
                 <div class="content-flex-row" style="width:100%;border-bottom: 1px solid #EBEEF5;">
                     <div class="go-home custome-button-hover">
@@ -19,12 +19,11 @@
             </North>
             <Center>
                 <div class="margin-top-5"></div>
-                <TopicContent  EnableAlwaysRender="true"  TopicModel="@TopicModel" IsFollow="@IsFollow" IsMySelf="@IsMySelf" IsEditing="@IsEditing"
+                <TopicContent EnableAlwaysRender="true" TopicModel="@TopicModel" IsFollow="@IsFollow" IsMySelf="@IsMySelf" IsEditing="@IsEditing"
                               OnFollowStatusChanging="@ToggleFollow" OnEditStatusChanging="ToggleEditing">
-
                 </TopicContent>
                 <div class="margin-top-5"></div>
-                <BCard  EnableAlwaysRender="true" >
+                <BCard EnableAlwaysRender="true">
                     <Header>
                         <div class="el-divider el-divider--horizontal">
                             <div class="el-divider__text is-center">
@@ -35,9 +34,7 @@
                     <Body>
                         <ReplyList TopicId="@TopicId" OnItemDeleted="OnReplyDelete" OnNewReply="OnReplySuccess"></ReplyList> @*  OnNewReply="OnReplySuccess"*@
                     </Body>
-
                 </BCard>
-
             </Center>
 
             <East>

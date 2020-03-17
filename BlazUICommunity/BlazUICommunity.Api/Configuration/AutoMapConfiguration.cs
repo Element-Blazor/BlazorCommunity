@@ -1,21 +1,17 @@
 ﻿using AutoMapper;
+using Blazui.Community.AutoMapperExtensions;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
-using Blazui.Community.Utility.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blazui.Community.Api
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class AutoMapConfiguration : Profile
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public AutoMapConfiguration()
         {
@@ -64,8 +60,6 @@ namespace Blazui.Community.Api
 
             CreateMap<BZIDCardModel, BZIDCardDto>().IngoreNotMapped();
             CreateMap<BZIDCardDto, BZIDCardModel>();
-
-
         }
     }
 }

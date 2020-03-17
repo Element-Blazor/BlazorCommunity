@@ -1,39 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Arch.EntityFrameworkCore.UnitOfWork.Collections;
+﻿using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
-using Blazui.Community.Api.Extensions;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
 using Blazui.Community.Request;
-using Blazui.Community.Utility;
-using Blazui.Community.Utility.Response;
+using Blazui.Community.Response;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Controllers.Client
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
- 
+
     [Route("api/client/[controller]")]
     [ApiController]
     [SwaggerTag(description: "banner")]
     public class BannerController : ControllerBase
     {
-
         private readonly IMapper _mapper;
         private readonly BZBannerRepository _BZBannerRepository;
         private readonly ICacheService _cacheService;
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="bZBannerRepository"></param>
         /// <param name="mapper"></param>
@@ -44,7 +41,6 @@ namespace Blazui.Community.Api.Controllers.Client
             _mapper = mapper;
             _cacheService = cacheService;
         }
-
 
         /// <summary>
         /// 新增
@@ -59,8 +55,6 @@ namespace Blazui.Community.Api.Controllers.Client
             _cacheService.Remove(nameof(BzBannerModel));
             return Ok();
         }
-
-
 
         /// <summary>
         /// 逻辑删除
@@ -77,8 +71,6 @@ namespace Blazui.Community.Api.Controllers.Client
             _BZBannerRepository.Update(version);
             _cacheService.Remove(nameof(BzBannerModel));
             return Ok();
-
-
         }
 
         /// <summary>
@@ -109,6 +101,7 @@ namespace Blazui.Community.Api.Controllers.Client
                 return NoContent();
             return Ok(res);
         }
+
         /// <summary>
         /// 根据条件分页查询
         /// </summary>
@@ -119,9 +112,9 @@ namespace Blazui.Community.Api.Controllers.Client
             IPagedList<BzBannerModel> pagedList = null;
             var query = Request.CreateQueryExpression<BzBannerModel, BannerRequestCondition>();
             pagedList = await _BZBannerRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
-            var pagedatas = pagedList.ConvertToPageData<BzBannerModel, BzBannerDto>();
-            pagedatas.Items = _mapper.Map<IList<BzBannerDto>>(pagedList.Items);
-            return Ok(pagedatas);
+            if (pagedList.Items.Any())
+                return Ok(pagedList.From(result => _mapper.Map<IList<BzBannerDto>>(result)));
+            return NoContent();
         }
 
         /// <summary>
@@ -131,11 +124,12 @@ namespace Blazui.Community.Api.Controllers.Client
         [HttpGet("GetPageList/{pageSize}/{pageIndex}")]
         public async Task<IActionResult> Query(int pageSize, int pageIndex)
         {
-            var pagedList = await _BZBannerRepository.GetPagedListAsync(p =>true, o => o.OrderBy(p => p.Id), null, pageIndex - 1, pageSize);
+            var pagedList = await _BZBannerRepository.GetPagedListAsync(p => true, o => o.OrderBy(p => p.Id), null, pageIndex - 1, pageSize);
             var pagedatas = pagedList.From(s => _mapper.Map<List<BzBannerDto>>(s));// pagedList.ConvertToPageData<BzBannerModel, BzBannerDto>();
             //pagedatas.Items = _mapper.Map<IList<BzBannerDto>>(pagedList.Items);
             return Ok(pagedatas);
         }
+
         /// <summary>
         /// 根据条件分页查询
         /// </summary>

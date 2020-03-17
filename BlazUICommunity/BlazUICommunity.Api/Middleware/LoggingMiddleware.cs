@@ -1,34 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+﻿using Blazui.Community.Response;
+using Blazui.Community.StringExtensions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Net;
 using System.Text;
-using Microsoft.AspNetCore.Builder;
-using Blazui.Community.Utility.Response;
-using Blazui.Community.Api.Extensions;
+using System.Threading.Tasks;
 
 namespace Blazui.Community.Api
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class LoggerMiddleware
     {
-        private static   ILogger<LoggerMiddleware> _logger;
-   
+        private static ILogger<LoggerMiddleware> _logger;
+
         private readonly RequestDelegate _next;
+
         /// <summary>
         /// 计时器
         /// </summary>
         private Stopwatch _stopwatch;
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="next"></param>
         public LoggerMiddleware(RequestDelegate next, ILogger<LoggerMiddleware> logger)
@@ -37,6 +39,7 @@ namespace Blazui.Community.Api
             _next = next;
             _stopwatch = new Stopwatch();
         }
+
         /// <summary>
         /// 拦截请求参数打印日志
         /// </summary>
@@ -46,7 +49,7 @@ namespace Blazui.Community.Api
         {
             _stopwatch.Restart();
             HttpRequest request = context.Request;
-            if(request.Path.ToString().IfContains("upload"))
+            if (request.Path.ToString().IfContains("upload"))
             {
                 await _next(context);
             }
@@ -77,7 +80,6 @@ namespace Blazui.Community.Api
                         model.Request.Param = request.QueryString.Value;
                     }
 
-
                     //// 获取Response.Body内容
                     var originalBodyStream = context.Response.Body;
                     using var responseBody = new MemoryStream();
@@ -107,18 +109,17 @@ namespace Blazui.Community.Api
                     return Task.CompletedTask;
                 });
             }
-           
         }
 
         private static void WriteLog(HttpMiddlewareModel model)
         {
-            if ( !model.Request.Url.IfContains("swagger") &&! model.Request.Url.IfContains("html") )
+            if (!model.Request.Url.IfContains("swagger") && !model.Request.Url.IfContains("html"))
             {
                 _logger.LogDebug("============================================================================");
                 _logger.LogDebug($"Start：{model.ExecuteStart}");
                 _logger.LogDebug($"Url：{model.Request.Url}");
                 _logger.LogDebug($"Header：");
-                _logger.LogDebug($"{string.Join("\r\n                          " , model.Request.Header.ToArray())}");
+                _logger.LogDebug($"{string.Join("\r\n                          ", model.Request.Header.ToArray())}");
                 _logger.LogDebug($"Request：{model.Request.Param}");
                 _logger.LogDebug($"Response：");
                 _logger.LogDebug($"{JsonConvert.SerializeObject(model.Response)}");
@@ -141,7 +142,6 @@ namespace Blazui.Community.Api
             return text;
         }
 
-
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             if (exception == null) return;
@@ -163,20 +163,16 @@ namespace Blazui.Community.Api
             response.ContentType = "application/json";
             await response.WriteAsync(JsonConvert.SerializeObject(new BadRequestResponse(exception.Message)))
                 .ConfigureAwait(false);
-
         }
-
-
     }
 
-
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static class MiddlewareExtensions
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
@@ -190,7 +186,6 @@ namespace Blazui.Community.Api
         }
     }
 
-
     public class HttpMiddlewareModel
     {
         public string ExecuteStart { get; set; }
@@ -199,13 +194,12 @@ namespace Blazui.Community.Api
         public RequestBody Request { get; set; } = new RequestBody() { Param = "", Method = "", Url = "" };
         public string Response { get; set; }
     }
+
     public class RequestBody
     {
-
         public string Url { get; set; }
         public Dictionary<string, string> Header { get; set; }
         public string Method { get; set; }
         public string Param { get; set; }
-
     }
 }

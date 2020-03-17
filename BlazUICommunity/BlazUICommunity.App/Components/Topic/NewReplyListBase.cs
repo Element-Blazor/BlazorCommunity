@@ -1,29 +1,25 @@
 ﻿using Blazui.Community.DTO;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Components.Topic
 {
     public class NewReplyListBase : BComponentBase, IContainerComponent
     {
-
         /// <summary>
         /// 数据源
         /// </summary>
         [Parameter]
         public List<BZReplyDto> DataSource { get; set; } = new List<BZReplyDto>();
 
-
-
         /// <summary>
         /// 当表格无数据时显示的消息
         /// </summary>
         [Parameter]
         public string EmptyMessage { get; set; }
+
         /// <summary>
         /// 总数据条数
         /// </summary>
@@ -72,14 +68,11 @@ namespace Blazui.Community.App.Components.Topic
         [Parameter]
         public EventCallback<int> CurrentPageChanged { get; set; }
 
-
         /// <summary>
         /// 当只有一页时，不显示分页
         /// </summary>
         [Parameter]
         public bool NoPaginationOnSinglePage { get; set; } = true;
-
-  
 
         [Parameter]
         public RenderFragment ChildContent { get; set; }
@@ -89,10 +82,6 @@ namespace Blazui.Community.App.Components.Topic
         /// </summary>
         [Parameter]
         public bool EnablePagination { get; set; } = true;
-
-       
-
-  
 
         /// <summary>
         /// 加载中状态背景颜色
@@ -111,15 +100,12 @@ namespace Blazui.Community.App.Components.Topic
         /// </summary>
         public string LoadingText { get; set; }
 
-     
         public ElementReference Container { get; set; }
-
-    
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
-         
+
             if (DataSource == null)
             {
                 return;

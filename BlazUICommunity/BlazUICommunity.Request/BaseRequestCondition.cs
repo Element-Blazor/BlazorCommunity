@@ -1,18 +1,15 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace Blazui.Community.Request
 {
-   public  class BaseRequestCondition
+    public class BaseRequestCondition
     {
-
         /// <summary>
         /// 创建时间开始
         /// </summary>
         [ExpressionQuery(OperationType.GreaterThanOrEqual, "CreateDate")]
         public DateTime? CreateDateStart { get; set; }
+
         /// <summary>
         /// 创建时间截止
         /// </summary>
@@ -24,6 +21,7 @@ namespace Blazui.Community.Request
         /// </summary>
         [ExpressionQuery(OperationType.GreaterThanOrEqual, "LastModifyDate")]
         public DateTime? LastModifyDateStart { get; set; }
+
         /// <summary>
         /// 更新时间截止
         /// </summary>
@@ -38,9 +36,5 @@ namespace Blazui.Community.Request
 
         public int PageIndex { get; set; } = 1;
         public int PageSize { get; set; } = 15;
-
     }
-
-
- 
 }

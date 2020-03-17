@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +9,7 @@ namespace Blazui.Community.Admin.Service
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AuthenticationStateProvider _AuthenticationStateProvider;
+
         public AdminUserService(
             SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager,

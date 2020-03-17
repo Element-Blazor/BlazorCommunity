@@ -23,10 +23,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\BlazAdmin.ServerRender\src\BlazAdmin.ServerRender\BlazAdmin.ServerRender.csproj" />
     <ProjectReference Include="..\..\..\Blazui.Markdown\src\Blazui.Markdown\Blazui.Markdown.csproj" />
+    <ProjectReference Include="..\Blazui.Community.DictionaryExtensions\Blazui.Community.DictionaryExtensions.csproj" />
+    <ProjectReference Include="..\Blazui.Community.HttpClientExtensions\Blazui.Community.HttpClientExtensions.csproj" />
     <ProjectReference Include="..\BlazUICommunity.DTO\Blazui.Community.DTO.csproj" />
     <ProjectReference Include="..\BlazUICommunity.Model\Blazui.Community.Model.csproj" />
-    <ProjectReference Include="..\BlazUICommunity.Request\Blazui.Community.Request.csproj" />
-    <ProjectReference Include="..\BlazUICommunity.Utility\Blazui.Community.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>

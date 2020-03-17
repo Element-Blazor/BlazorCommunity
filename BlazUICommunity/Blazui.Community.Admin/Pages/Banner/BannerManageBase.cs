@@ -1,18 +1,10 @@
 ﻿using Blazui.Community.Admin.Enum;
-using Blazui.Community.Admin.Pages;
-using Blazui.Community.Admin.Pages.Banner;
 using Blazui.Community.Admin.QueryCondition;
-using Blazui.Community.Admin.ViewModel;
-using Blazui.Community.DTO;
+using Blazui.Community.DictionaryExtensions;
 using Blazui.Community.DTO.Admin;
-using Blazui.Community.Request;
-using Blazui.Community.Utility.Extensions;
 using Blazui.Component;
-using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.Pages.Banner
@@ -24,6 +16,7 @@ namespace Blazui.Community.Admin.Pages.Banner
             pageSize = 5;
             await base.OnInitializedAsync();
         }
+
         protected override async Task LoadDatas(bool MustRefresh = false)
         {
             var datas = await NetService.QueryBanners(new QueryBannerCondition() { PageSize = pageSize, PageIndex = currentPage }, MustRefresh);
@@ -42,12 +35,11 @@ namespace Blazui.Community.Admin.Pages.Banner
                 DialogResult result = await DialogService.ShowDialogAsync<ModifyBanner>("编辑Banner", 700, model);
                 if (Convert.ToBoolean(result.Result))
                     await SearchData(true);
-
             }
         }
+
         protected async Task New()
         {
-
             var model = new Dictionary<string, object>
             {
                 { "EntryOperation", EntryOperation.Add }
@@ -57,7 +49,6 @@ namespace Blazui.Community.Admin.Pages.Banner
             {
                 await SearchData(true);
             }
-
         }
 
         protected async Task Delete(object obj)

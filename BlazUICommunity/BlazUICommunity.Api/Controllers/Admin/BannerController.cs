@@ -1,28 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Arch.EntityFrameworkCore.UnitOfWork.Collections;
+﻿using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
-using Blazui.Community.Api.Extensions;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
 using Blazui.Community.DTO.Admin;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
 using Blazui.Community.Request;
-using Blazui.Community.Utility;
-using Blazui.Community.Utility.Filter;
-using Blazui.Community.Utility.Response;
+using Blazui.Community.Response;
+using Blazui.Community.SwaggerExtensions;
 using Marvin.Cache.Headers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Controllers
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Route("api/[controller]")]
     [HiddenApi]
@@ -31,12 +28,12 @@ namespace Blazui.Community.Api.Controllers
     [HttpCacheExpiration(MaxAge = 100)]
     public class BannerController : ControllerBase
     {
-
         private readonly IMapper _mapper;
         private readonly BZBannerRepository _BZBannerRepository;
         private readonly ICacheService _cacheService;
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="bZBannerRepository"></param>
         public BannerController(BZBannerRepository bZBannerRepository, IMapper mapper, ICacheService cacheService)
@@ -45,7 +42,6 @@ namespace Blazui.Community.Api.Controllers
             _mapper = mapper;
             _cacheService = cacheService;
         }
-
 
         /// <summary>
         /// 新增
@@ -60,7 +56,6 @@ namespace Blazui.Community.Api.Controllers
             return Ok();
         }
 
-
         private async Task<IActionResult> DeleteOrResume(string Id, int Status)
         {
             var banner = await _BZBannerRepository.FindAsync(Id);
@@ -73,6 +68,7 @@ namespace Blazui.Community.Api.Controllers
             _cacheService.Remove(nameof(BzBannerModel));
             return Ok();
         }
+
         /// <summary>
         /// 删除
         /// </summary>
@@ -82,6 +78,7 @@ namespace Blazui.Community.Api.Controllers
         {
             return await DeleteOrResume(Id, -1);
         }
+
         /// <summary>
         /// 恢复
         /// </summary>
@@ -91,6 +88,7 @@ namespace Blazui.Community.Api.Controllers
         {
             return await DeleteOrResume(Id, 0);
         }
+
         /// <summary>
         /// 更新
         /// </summary>
@@ -105,7 +103,6 @@ namespace Blazui.Community.Api.Controllers
             _cacheService.Remove(nameof(BzBannerModel));
             return Ok();
         }
-     
 
         /// <summary>
         /// 根据条件分页查询
@@ -118,6 +115,5 @@ namespace Blazui.Community.Api.Controllers
             var pagedatas = pagedList.From(result => _mapper.Map<IList<BannerDisplayDto>>(result));
             return Ok(pagedatas);
         }
-
     }
 }

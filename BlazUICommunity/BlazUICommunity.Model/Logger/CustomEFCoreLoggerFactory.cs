@@ -1,7 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Blazui.Community.Model.Logger
 {
@@ -9,7 +6,6 @@ namespace Blazui.Community.Model.Logger
     {
         public void AddProvider(ILoggerProvider provider)
         {
-            
         }
 
         public ILogger CreateLogger(string categoryName)
@@ -18,13 +14,14 @@ namespace Blazui.Community.Model.Logger
         }
 
         #region IDisposable Support
+
         private bool disposedValue = false; // 要检测冗余调用
 
         protected virtual void Dispose(bool disposing)
         {
-            if ( !disposedValue )
+            if (!disposedValue)
             {
-                if ( disposing )
+                if (disposing)
                 {
                     // TODO: 释放托管状态(托管对象)。
                 }
@@ -51,6 +48,7 @@ namespace Blazui.Community.Model.Logger
             // TODO: 如果在以上内容中替代了终结器，则取消注释以下行。
             // GC.SuppressFinalize(this);
         }
-        #endregion
+
+        #endregion IDisposable Support
     }
 }

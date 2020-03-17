@@ -1,7 +1,7 @@
 ﻿@inherits UploadAvatarBase
 @{
     var listType = "text";
-    if ( UploadType == UploadType.Image )
+    if (UploadType == UploadType.Image)
     {
         listType = "picture";
     }
@@ -9,7 +9,7 @@
 <input type="hidden" @ref="hdnField" />
 
 <div class="el-upload__tip">
-    @if ( Tip != null )
+    @if (Tip != null)
     {
         @Tip
     }
@@ -22,8 +22,8 @@
     </div>
 </div>
 <div class="el-upload el-upload--text" onclick="window.upload(this)">
-    <BButton  Size="@ButtonSize.Small" IsPlain="true" Icon="el-icon-upload" Style="width:178px;" Type="ButtonType.Default">
+    <BButton Size="@ButtonSize.Small" IsPlain="true" Icon="el-icon-upload" Style="width:178px;" Type="ButtonType.Default">
         选择文件
     </BButton>
-    <input type="file" name="file" @ref="Input"  @onchange="ScanFileAsync" class="el-upload__input" />
+    <input type="file" name="file" @ref="Input" @onchange="ScanFileAsync" class="el-upload__input" />
 </div>

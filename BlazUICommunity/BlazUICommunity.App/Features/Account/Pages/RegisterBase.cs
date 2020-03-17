@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -17,19 +16,26 @@ namespace Blazui.Community.App.Features.Account.Pages
     public class RegisterBase : PageBase
     {
         [Inject]
-        BZUserIdentityRepository BZUserRepository { get; set; }
+        private BZUserIdentityRepository BZUserRepository { get; set; }
+
         [Inject]
-        IHttpContextAccessor httpContextAccessor { get; set; }
+        private IHttpContextAccessor httpContextAccessor { get; set; }
+
         [Inject]
-        IDataProtectionProvider dataProtectionProvider { get; set; }
+        private IDataProtectionProvider dataProtectionProvider { get; set; }
+
         protected BForm registerForm;
         internal RegisterAccountDto Value;
-        readonly string CheckChinaPattern = @"[\u4e00-\u9fa5]";//检查汉字的正则表达式
+        private readonly string CheckChinaPattern = @"[\u4e00-\u9fa5]";//检查汉字的正则表达式
 
         protected InputType passwordType { get; set; } = InputType.Password;
+
         internal void TogglePassword() => passwordType = passwordType == InputType.Text ? InputType.Password : InputType.Text;
+
         protected InputType ConfirmPasswordType { get; set; } = InputType.Password;
+
         internal void ToggleConfirmPassword() => ConfirmPasswordType = ConfirmPasswordType == InputType.Text ? InputType.Password : InputType.Text;
+
         protected async Task RegisterUser()
         {
             if (!registerForm.IsValid())
@@ -73,14 +79,13 @@ namespace Blazui.Community.App.Features.Account.Pages
                     await AutoLogin(registerAccountModel.UserAccount);
                 });
             }
-
         }
 
         private bool ContainsChineseCharacters(string input)
         {
             return Regex.Matches(input, CheckChinaPattern)?.Count > 0;
-
         }
+
         private async Task AutoLogin(string UserAccount)
         {
             var user = await userManager.FindByNameAsync(UserAccount);
@@ -104,13 +109,12 @@ namespace Blazui.Community.App.Features.Account.Pages
             navigationManager.NavigateTo("/account/signinactual?t=" + pdata, forceLoad: true);
         }
 
-
         protected override void OnParametersSet()
         {
             Value = new RegisterAccountDto();
             base.OnParametersSet();
-
         }
+
         protected override Task InitilizePageDataAsync()
         {
             return Task.CompletedTask;

@@ -15,50 +15,50 @@
             </summary>
         </member>
         <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.Account">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.Auth">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.StmpHost">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.StmpPort">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.FromName">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="T:Blazui.Community.Api.AutoMapConfiguration">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:Blazui.Community.Api.AutoMapConfiguration.#ctor">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="T:Blazui.Community.Api.Controllers.BannerController">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.BannerController.#ctor(Blazui.Community.Repository.BZBannerRepository,AutoMapper.IMapper,Blazui.Community.Api.Service.ICacheService)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="bZBannerRepository"></param>
+             </summary>
+             <param name="bZBannerRepository"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.BannerController.Add(Blazui.Community.DTO.BzBannerDto)">
             <summary>
@@ -96,13 +96,13 @@
             </summary>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.ReplyController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,Blazui.Community.Repository.BZReplyRepository,AutoMapper.IMapper,Blazui.Community.Api.Service.ICacheService)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="bZReplyRepository"></param>
-            <param name="mapper"></param>
-            <param name="cacheService"></param>
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="bZReplyRepository"></param>
+             <param name="mapper"></param>
+             <param name="cacheService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.ReplyController.Delete(System.String)">
             <summary>
@@ -128,13 +128,13 @@
             </summary>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.TopicController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZTopicRepository,Blazui.Community.Api.Service.ICacheService)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="mapper"></param>
-            <param name="bZTopicRepository"></param>
-            <param name="cacheService"></param>
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="mapper"></param>
+             <param name="bZTopicRepository"></param>
+             <param name="cacheService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.TopicController.TopTopic(System.String)">
             <summary>
@@ -176,19 +176,19 @@
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.Controllers.UserController">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.UserController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZUserRepository,Microsoft.AspNetCore.Identity.UserManager{Blazui.Community.Model.Models.BZUserModel},Blazui.Community.Api.Service.ICacheService)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="mapper"></param>
-            <param name="bZUserRepository"></param>
-            <param name="userManager"></param>
-            <param name="cacheService"></param>
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="mapper"></param>
+             <param name="bZUserRepository"></param>
+             <param name="userManager"></param>
+             <param name="cacheService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.UserController.Delete(System.String)">
             <summary>
@@ -215,17 +215,17 @@
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.Controllers.VersionController">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.VersionController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Api.Service.ICacheService)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="mapper"></param>
-            <param name="cacheService"></param>
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="mapper"></param>
+             <param name="cacheService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.VersionController.Delete(System.String)">
             <summary>
@@ -258,17 +258,17 @@
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.Controllers.Client.BannerController">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.BannerController.#ctor(Blazui.Community.Repository.BZBannerRepository,AutoMapper.IMapper,Blazui.Community.Api.Service.ICacheService)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="bZBannerRepository"></param>
-            <param name="mapper"></param>
-            <param name="cacheService"></param>
+             </summary>
+             <param name="bZBannerRepository"></param>
+             <param name="mapper"></param>
+             <param name="cacheService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.BannerController.Add(Blazui.Community.DTO.BzBannerDto)">
             <summary>
@@ -313,22 +313,22 @@
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.Controllers.Client.CodeController">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="F:Blazui.Community.Api.Controllers.Client.CodeController._bZVerifyCodeRepository">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.CodeController.#ctor(Blazui.Community.Repository.BZVerifyCodeRepository,Blazui.Community.Api.Service.ICodeService,Blazui.Community.Api.Service.IMessageService)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="bZVerifyCodeRepository"></param>
-            <param name="codeService"></param>
-            <param name="messageService"></param>
+             </summary>
+             <param name="bZVerifyCodeRepository"></param>
+             <param name="codeService"></param>
+             <param name="messageService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.CodeController.Send">
             <summary>
@@ -354,13 +354,13 @@
             </summary>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.FollowController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZFollowRepository,Blazui.Community.Api.Service.ICacheService)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="mapper"></param>
-            <param name="bZFollowRepository"></param>
-            <param name="cacheService"></param>
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="mapper"></param>
+             <param name="bZFollowRepository"></param>
+             <param name="cacheService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.FollowController.Add(Blazui.Community.DTO.BZFollowDto)">
             <summary>
@@ -416,13 +416,13 @@
             </summary>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.ReplyController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,Blazui.Community.Repository.BZReplyRepository,AutoMapper.IMapper,Blazui.Community.Api.Service.ICacheService)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="bZReplyRepository"></param>
-            <param name="mapper"></param>
-            <param name="cacheService"></param>
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="bZReplyRepository"></param>
+             <param name="mapper"></param>
+             <param name="cacheService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.ReplyController.Add(Blazui.Community.DTO.BZReplyDto)">
             <summary>
@@ -484,13 +484,13 @@
             </summary>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZTopicRepository,Blazui.Community.Api.Service.ICacheService)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="mapper"></param>
-            <param name="bZTopicRepository"></param>
-            <param name="cacheService"></param>
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="mapper"></param>
+             <param name="bZTopicRepository"></param>
+             <param name="cacheService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.Add(Blazui.Community.DTO.BZTopicDto)">
             <summary>
@@ -525,12 +525,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.Active(System.String)">
-            <summary>
-            恢复帖子
-            </summary>
-            <returns></returns>
-        </member>
+        <!-- Badly formed XML comment ignored for member "M:Blazui.Community.Api.Controllers.Client.TopicController.Active(System.String)" -->
         <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.UpdateContent(Blazui.Community.DTO.BZTopicDto)">
             <summary>
             更新主题帖
@@ -618,19 +613,19 @@
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.Controllers.Client.UserController">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.UserController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZUserRepository,Microsoft.AspNetCore.Identity.UserManager{Blazui.Community.Model.Models.BZUserModel},Blazui.Community.Api.Service.ICacheService)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="mapper"></param>
-            <param name="bZUserRepository"></param>
-            <param name="userManager"></param>
-            <param name="cacheService"></param>
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="mapper"></param>
+             <param name="bZUserRepository"></param>
+             <param name="userManager"></param>
+             <param name="cacheService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.UserController.Add(Blazui.Community.DTO.BZUserDto)">
             <summary>
@@ -688,17 +683,17 @@
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.Controllers.Client.VersionController">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.VersionController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Api.Service.ICacheService)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="mapper"></param>
-            <param name="cacheService"></param>
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="mapper"></param>
+             <param name="cacheService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.VersionController.Delete(System.String)">
             <summary>
@@ -737,17 +732,17 @@
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.Controllers.TokenController">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.TokenController.#ctor(Microsoft.Extensions.Caching.Memory.IMemoryCache,Blazui.Community.Utility.Jwt.JwtService,Microsoft.AspNetCore.Identity.UserManager{Blazui.Community.Model.Models.BZUserModel})">
-            <summary>
+        <member name="M:Blazui.Community.Api.Controllers.TokenController.#ctor(Microsoft.Extensions.Caching.Memory.IMemoryCache,Blazui.Community.Api.Jwt.JwtService,Microsoft.AspNetCore.Identity.UserManager{Blazui.Community.Model.Models.BZUserModel})">
+             <summary>
             
-            </summary>
-            <param name="cache"></param>
-            <param name="jwtService"></param>
-            <param name="userManager"></param>
+             </summary>
+             <param name="cache"></param>
+             <param name="jwtService"></param>
+             <param name="userManager"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.TokenController.Post(Blazui.Community.Api.Controllers.LoginInModel)">
             <summary>
@@ -766,12 +761,12 @@
             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.UploadController.Success(Blazui.Community.Enums.UploadPath,System.String)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="Upload"></param>
-            <param name="FileName"></param>
-            <returns></returns>
+             </summary>
+             <param name="Upload"></param>
+             <param name="FileName"></param>
+             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.UploadController.ExistsFile(Microsoft.AspNetCore.Http.IFormFile,System.String,System.String@)">
             <summary>
@@ -781,32 +776,17 @@
             <param name="FullFileSaveFolder"></param>
             <param name="filePath"></param>
         </member>
-        <member name="T:Blazui.Community.Api.Extensions.PageExtensions">
+        <member name="M:Blazui.Community.Api.Jwt.JwtService.GetAccessToken(Blazui.Community.Api.Jwt.SessionUser)">
             <summary>
-            
+            通过SessionUser获取AccessToken
             </summary>
-        </member>
-        <member name="M:Blazui.Community.Api.Extensions.PageExtensions.ConvertToPageData``2(Arch.EntityFrameworkCore.UnitOfWork.Collections.IPagedList{``0})">
-            <summary>
-            
-            </summary>
-            <typeparam name="T"></typeparam>
-            <typeparam name="K"></typeparam>
-            <param name="pagedList"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Extensions.StringExtensions.IfContains(System.String,System.String)">
-            <summary>
-            处理空格与忽略大小写
-            </summary>
-            <param name="source"></param>
-            <param name="toCompareString"></param>
+            <param name="user"></param>
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.LoggerMiddleware">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="F:Blazui.Community.Api.LoggerMiddleware._stopwatch">
             <summary>
@@ -814,10 +794,10 @@
             </summary>
         </member>
         <member name="M:Blazui.Community.Api.LoggerMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{Blazui.Community.Api.LoggerMiddleware})">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="next"></param>
+             </summary>
+             <param name="next"></param>
         </member>
         <member name="M:Blazui.Community.Api.LoggerMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
             <summary>
@@ -834,29 +814,29 @@
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.MiddlewareExtensions">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:Blazui.Community.Api.MiddlewareExtensions.UseLogMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="app"></param>
-            <returns></returns>
+             </summary>
+             <param name="app"></param>
+             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Program.Main(System.String[])">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="args"></param>
+             </summary>
+             <param name="args"></param>
         </member>
         <member name="M:Blazui.Community.Api.Program.CreateHostBuilder(System.String[])">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="args"></param>
-            <returns></returns>
+             </summary>
+             <param name="args"></param>
+             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Service.CacheService.Remove(System.String)">
             <summary>
@@ -934,9 +914,9 @@
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.Service.IMessageService">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:Blazui.Community.Api.Service.IMessageService.SendMessage(System.String,System.String,Blazui.Community.Enums.VerifyCodeType)">
             <summary>
@@ -966,25 +946,25 @@
             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Service.SmtpClientService.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Blazui.Community.Api.Configuration.EmailConfiguration},Microsoft.Extensions.Logging.ILogger{Blazui.Community.Api.Service.SmtpClientService})">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="options"></param>
-            <param name="logger"></param>
+             </summary>
+             <param name="options"></param>
+             <param name="logger"></param>
         </member>
         <member name="M:Blazui.Community.Api.Service.SmtpClientService.SendEmail(System.String,System.String,System.String)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="ToEmail"></param>
-            <param name="Content"></param>
-            <param name="Subject"></param>
-            <returns></returns>
+             </summary>
+             <param name="ToEmail"></param>
+             <param name="Content"></param>
+             <param name="Subject"></param>
+             <returns></returns>
         </member>
         <member name="F:Blazui.Community.Api.Startup.AutofacContainer">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:Blazui.Community.Api.Startup.ConfigureContainer(Autofac.ContainerBuilder)">
             <summary>

@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using Arch.EntityFrameworkCore.UnitOfWork;
+﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
-using Blazui.Community.Api.Extensions;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
+using Blazui.Community.LinqExtensions;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
 using Blazui.Community.Request;
-using Blazui.Community.Utility.Extensions;
-using Blazui.Community.Utility.Response;
-using log4net.Repository.Hierarchy;
+using Blazui.Community.Response;
+using Blazui.Community.StringExtensions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Controllers.Client
 {
@@ -39,7 +34,7 @@ namespace Blazui.Community.Api.Controllers.Client
         private readonly ICacheService _cacheService;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="mapper"></param>
@@ -54,7 +49,6 @@ namespace Blazui.Community.Api.Controllers.Client
             _bZFollowRepository = bZFollowRepository;
             this._cacheService = cacheService;
         }
-
 
         /// <summary>
         /// 新增关注
@@ -72,8 +66,6 @@ namespace Blazui.Community.Api.Controllers.Client
             return Ok(data);
         }
 
-
-
         /// <summary>
         /// 取消关注
         /// </summary>
@@ -82,12 +74,10 @@ namespace Blazui.Community.Api.Controllers.Client
         [HttpDelete("Delete/{Id}/{oprationId?}")]
         public async Task<IActionResult> Delete(string Id, string oprationId)
         {
-            var result = await _followRepository.ChangeStateByIdAsync(Id,-1, oprationId);
+            var result = await _followRepository.ChangeStateByIdAsync(Id, -1, oprationId);
             _cacheService.Remove(nameof(BZFollowModel));
             return Ok(result);
         }
-
-
 
         /// <summary>
         /// 根据Id查询
@@ -104,6 +94,7 @@ namespace Blazui.Community.Api.Controllers.Client
                 return Ok(_mapper.Map<BZFollowDto>(res));
             return NoContent();
         }
+
         /// <summary>
         /// 根据条件分页查询
         /// </summary>
@@ -114,7 +105,7 @@ namespace Blazui.Community.Api.Controllers.Client
             IPagedList<BZFollowModel> pagedList = null;
             var query = Request.CreateQueryExpression<BZFollowModel, FollowRequestCondition>();
             query = query.And(p => p.Status == 0);
-            if(!string.IsNullOrWhiteSpace(Request.TopicTitle))
+            if (!string.IsNullOrWhiteSpace(Request.TopicTitle))
             {
                 var topicscontaintitle = await _cacheService.Topics(p => p.Title.IfContains(Request.TopicTitle));
                 if (topicscontaintitle?.Count > 0)
@@ -127,7 +118,7 @@ namespace Blazui.Community.Api.Controllers.Client
             pagedList = await _followRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
             if (pagedList.TotalCount > 0)
             {
-                var pagedatas = pagedList.ConvertToPageData<BZFollowModel, BZTopicDto>();
+                var pagedatas = pagedList.From(result => _mapper.Map<List<BZTopicDto>>(result));
                 var topics = await _cacheService.Topics(p => pagedList.Items.Select(d => d.TopicId).Contains(p.Id));
                 var Users = await _cacheService.Users(p => topics.Select(d => d.CreatorId).Contains(p.Id));
                 foreach (BZFollowModel follow in pagedList.Items)
@@ -173,12 +164,11 @@ namespace Blazui.Community.Api.Controllers.Client
         [HttpPost("Toggle")]
         public async Task<IActionResult> ToggleFollow([FromBody] BZFollowDto Dto)
         {
-
             if (string.IsNullOrWhiteSpace(Dto.Id))
                 return await Add(Dto);
             else
             {
-                await _bZFollowRepository.ChangeStateByIdAsync(Dto.Id,Dto.Status==0?-1:0,"");
+                await _bZFollowRepository.ChangeStateByIdAsync(Dto.Id, Dto.Status == 0 ? -1 : 0, "");
             }
             _cacheService.Remove(nameof(BZFollowModel));
             return Ok();
@@ -197,6 +187,7 @@ namespace Blazui.Community.Api.Controllers.Client
             _cacheService.Remove(nameof(BZFollowModel));
             return Ok();
         }
+
         /// <summary>
         /// 改变是否收藏状态
         /// </summary>

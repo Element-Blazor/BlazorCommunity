@@ -1,14 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Blazui.Community.Enums;
-using Blazui.Community.Utility.Extensions;
-using Blazui.Community.Utility.Filter;
+﻿using Blazui.Community.Enums;
+using Blazui.Community.FileExtensions;
+using Blazui.Community.MvcCore;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 using static Blazui.Community.Api.Configuration.ConstantConfiguration;
 
 namespace Blazui.Community.Api.Controllers
@@ -19,13 +19,13 @@ namespace Blazui.Community.Api.Controllers
     [BlazuiUploadApiResult]
     public class UploadController : ControllerBase
     {
-        
         private readonly IWebHostEnvironment _hostingEnvironment;
 
         public UploadController(IWebHostEnvironment webHostEnvironment)
         {
             _hostingEnvironment = webHostEnvironment;
         }
+
         [HttpPost(nameof(UploadPath.Avator))]
         public async Task<IActionResult> Avator([FromForm]IFormFile fileContent)
         {
@@ -37,24 +37,25 @@ namespace Blazui.Community.Api.Controllers
         {
             return await Upload(UploadPath.Banner, fileContent);
         }
+
         [HttpPost(nameof(UploadPath.Topic))]
         public async Task<IActionResult> Topic([FromForm]IFormFile fileContent)
         {
             return await Upload(UploadPath.Topic, fileContent);
         }
+
         [HttpPost(nameof(UploadPath.Other))]
         public async Task<IActionResult> Other([FromForm]IFormFile fileContent)
         {
             return await Upload(UploadPath.Other, fileContent);
         }
 
-        async Task<IActionResult> Upload(UploadPath Upload, IFormFile fileContent)
+        private async Task<IActionResult> Upload(UploadPath Upload, IFormFile fileContent)
         {
             try
             {
-
-                var FileSaveFolder = Path.Combine(UploadRootPath , Upload.Description());
-                var FileSaveFullFolder = Path.Combine(_hostingEnvironment.WebRootPath , FileSaveFolder);
+                var FileSaveFolder = Path.Combine(UploadRootPath, Upload.Description());
+                var FileSaveFullFolder = Path.Combine(_hostingEnvironment.WebRootPath, FileSaveFolder);
 
                 ExistsFile(fileContent, FileSaveFullFolder, out string ExistsFileName);
                 if (!string.IsNullOrWhiteSpace(ExistsFileName))
@@ -64,7 +65,7 @@ namespace Blazui.Community.Api.Controllers
                 var SavePath = Path.Combine(FileSaveFullFolder, FileName);
                 using var stream = new FileStream(SavePath, FileMode.Create);
                 await fileContent.CopyToAsync(stream);
-                return Success(Upload , FileName);
+                return Success(Upload, FileName);
             }
             catch (Exception ex)
             {
@@ -73,7 +74,7 @@ namespace Blazui.Community.Api.Controllers
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Upload"></param>
         /// <param name="FileName"></param>
@@ -99,7 +100,7 @@ namespace Blazui.Community.Api.Controllers
         /// <param name="formFile"></param>
         /// <param name="FullFileSaveFolder"></param>
         /// <param name="filePath"></param>
-        private void ExistsFile(IFormFile formFile, string FullFileSaveFolder,  out string filePath)
+        private void ExistsFile(IFormFile formFile, string FullFileSaveFolder, out string filePath)
         {
             filePath = "";
             var files = Directory.GetFiles(FullFileSaveFolder);

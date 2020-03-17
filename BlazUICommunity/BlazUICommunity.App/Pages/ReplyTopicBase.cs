@@ -1,17 +1,12 @@
-﻿using Blazui.Community.App.Components;
-using Blazui.Community.App.Components.Topic;
-using Blazui.Community.DTO;
+﻿using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
-using Blazui.Community.Utility;
 using Blazui.Component;
-using Blazui.Component.Container;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Blazui.Community.App.Pages
 {
@@ -23,9 +18,9 @@ namespace Blazui.Community.App.Pages
         protected BZTopicDto TopicModel { get; set; } = new BZTopicDto();
         protected BZFollowDto FollowModel { get; set; } = new BZFollowDto();
 
-
         private string TopicContent;
         private string TopicTitle;
+
         /// <summary>
         /// 是否已收藏该帖子
         /// </summary>
@@ -35,6 +30,7 @@ namespace Blazui.Community.App.Pages
         /// 是否是当前登录用户的帖子
         /// </summary>
         protected bool IsMySelf { get; set; } = false;
+
         /// <summary>
         /// 是否正在编辑
         /// </summary>
@@ -51,7 +47,8 @@ namespace Blazui.Community.App.Pages
                 return;
             }
 
-            await WithFullScreenLoading(async () => {
+            await WithFullScreenLoading(async () =>
+            {
                 User = await GetUser();
                 await LoadTopic();
                 await LoadFollow();
@@ -63,14 +60,13 @@ namespace Blazui.Community.App.Pages
             var result = await NetService.GetTopicById(TopicId);
             if (result.IsSuccess && result.Data != null)
             {
-           
                 TopicModel = result.Data;
                 TopicModel.Avator ??= "/img/defaultAct.png";
                 IsMySelf = TopicModel.CreatorId == User?.Id;
                 TopicContent = TopicModel.Content;
                 TopicTitle = TopicModel.Title;
                 var versions = await QueryVersions();
-                TopicModel.VerName = versions?.FirstOrDefault(p=>p.Id==TopicModel.VersionId)?.VerName;
+                TopicModel.VerName = versions?.FirstOrDefault(p => p.Id == TopicModel.VersionId)?.VerName;
             }
             else
             {
@@ -79,8 +75,10 @@ namespace Blazui.Community.App.Pages
                 return;
             }
         }
+
         [Inject]
-         IMemoryCache memoryCache { get; set; }
+        private IMemoryCache memoryCache { get; set; }
+
         protected async Task<List<BZVersionDto>> QueryVersions()
         {
             return await memoryCache.GetOrCreateAsync("Version", async p =>
@@ -99,8 +97,7 @@ namespace Blazui.Community.App.Pages
         /// <returns></returns>
         private async Task LoadFollow()
         {
-       
-            if(User is null)
+            if (User is null)
             {
                 IsFollow = false;
                 return;
@@ -112,6 +109,7 @@ namespace Blazui.Community.App.Pages
                 IsFollow = FollowModel.Status == 0;
             }
         }
+
         /// <summary>
         /// 回帖删除
         /// </summary>
@@ -119,20 +117,20 @@ namespace Blazui.Community.App.Pages
         protected void OnReplyDelete() => TopicModel.ReplyCount--;
 
         protected void OnReplySuccess() => TopicModel.ReplyCount++;
+
         /// <summary>
         /// 收藏、取消收藏
         /// </summary>
         /// <returns></returns>
         protected async Task ToggleFollow()
         {
-          
             if (User == null)
             {
                 ToastWarning("请登录");
                 return;
             }
 
-            if(string.IsNullOrWhiteSpace(FollowModel.Id))
+            if (string.IsNullOrWhiteSpace(FollowModel.Id))
             {
                 FollowModel.CreateDate = DateTime.Now;
                 FollowModel.Status = 0;
@@ -141,12 +139,12 @@ namespace Blazui.Community.App.Pages
                 FollowModel.LastModifierId = User.Id;
             }
 
-            await WithFullScreenLoading(async () => {
+            await WithFullScreenLoading(async () =>
+            {
                 var result = await NetService.ToggleFollow(FollowModel);
 
                 if (result.IsSuccess)
                 {
-
                     if (string.IsNullOrEmpty(FollowModel.Id))
                     {
                         ToastSuccess("收藏成功");
@@ -158,9 +156,7 @@ namespace Blazui.Community.App.Pages
                     await LoadFollow();
                 }
             });
-        
         }
-
 
         /// <summary>
         /// 切换编辑状态
@@ -168,15 +164,15 @@ namespace Blazui.Community.App.Pages
         /// <returns></returns>
         protected async Task ToggleEditing()
         {
-
             if (IsEditing)
             {
-                if (!TopicContent.Equals (TopicModel.Content) || !TopicTitle.Equals(TopicModel.Title))
+                if (!TopicContent.Equals(TopicModel.Content) || !TopicTitle.Equals(TopicModel.Title))
                 {
-                    await WithFullScreenLoading(async () => {
-                        var result = await NetService.UpdateTopic(new BZTopicDto() { Id = TopicModel.Id, Content = TopicModel.Content,Title=TopicModel.Title });
+                    await WithFullScreenLoading(async () =>
+                    {
+                        var result = await NetService.UpdateTopic(new BZTopicDto() { Id = TopicModel.Id, Content = TopicModel.Content, Title = TopicModel.Title });
                         MessageService.Show(result.IsSuccess ? "编辑成功" : "编辑失败", result.IsSuccess ? MessageType.Success : MessageType.Error);
-                        if(result!=null&&result.IsSuccess)
+                        if (result != null && result.IsSuccess)
                             await LoadTopic();
                     });
                 }
@@ -185,7 +181,5 @@ namespace Blazui.Community.App.Pages
         }
 
         internal void GoHome() => navigationManager.NavigateTo("/");
-
     }
-
 }

@@ -1,14 +1,12 @@
 namespace Blazui.Community.Model.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("SysUser")]
     public partial class SysUserModel : BaseModel
     {
-
         [Required]
         [StringLength(20)]
         public string Name { get; set; }
@@ -16,7 +14,6 @@ namespace Blazui.Community.Model.Models
         [Required]
         [StringLength(64)]
         public string Password { get; set; }
-
 
         [StringLength(20)]
         public string Phone { get; set; }
@@ -38,6 +35,5 @@ namespace Blazui.Community.Model.Models
         public byte? Sex { get; set; }
 
         public DateTime? LastLoginTime { get; set; }
-
     }
 }

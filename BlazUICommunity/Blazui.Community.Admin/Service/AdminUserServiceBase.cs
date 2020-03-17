@@ -1,5 +1,4 @@
 ﻿using BlazAdmin.Abstract;
-using BlazAdmin.ServerRender;
 using Blazui.Component;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -30,12 +29,12 @@ namespace Blazui.Community.Admin.Service
             }
             return string.Empty;
         }
+
         public AdminUserServiceBase(SignInManager<TUser> signInManager, RoleManager<TRole> roleManager)
         {
             SignInManager = signInManager;
             RoleManager = roleManager;
         }
-
 
         public async Task<bool> HasUserAsync()
         {
@@ -54,7 +53,7 @@ namespace Blazui.Community.Admin.Service
             {
                 return "当前用户名不存在";
             }
-            var role =await SignInManager.UserManager.GetRolesAsync(user);
+            var role = await SignInManager.UserManager.GetRolesAsync(user);
             if (!role.Contains("管理员"))
             {
                 return "当前用户不允许修改密码";
@@ -111,7 +110,6 @@ namespace Blazui.Community.Admin.Service
         {
             return (await SignInManager.UserManager.Users.ToListAsync()).Cast<object>().ToList();
         }
-
 
         public async Task<string> CreateSuperUserAsync(string username, string password)
         {
@@ -180,13 +178,13 @@ namespace Blazui.Community.Admin.Service
             return string.Empty;
         }
 
-
         public abstract Task<string> DeleteUsersAsync(params object[] users);
 
         public async ValueTask SubmitLogoutAsync(BForm form, string callbackUri)
         {
             await form.SubmitAsync("/api/logout?callback=" + callbackUri);
         }
+
         public async ValueTask SubmitLoginAsync(BForm form, string callbackUri)
         {
             await form.SubmitAsync("/api/login?callback=" + callbackUri);
@@ -194,8 +192,7 @@ namespace Blazui.Community.Admin.Service
 
         public async ValueTask<bool> IsRequireInitilizeAsync()
         {
-         
-            return (await SignInManager.UserManager.Users.CountAsync() <2);
+            return (await SignInManager.UserManager.Users.CountAsync() < 2);
         }
 
         public async ValueTask<string> ExecuteLoginAsync(Func<ValueTask<string>> action)

@@ -4,8 +4,6 @@ using Blazui.Component;
 using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Features.Account.Pages
@@ -14,9 +12,9 @@ namespace Blazui.Community.App.Features.Account.Pages
     {
         protected string PreviousRoute = "/account/forget";
         protected BForm form;
+
         [Parameter]
         public string UserId { get; set; }
-
 
         internal async Task ResetPassword()
         {
@@ -59,7 +57,6 @@ namespace Blazui.Community.App.Features.Account.Pages
                 ToastError("两次输入密码不一致");
                 return;
             }
-
         }
     }
 }

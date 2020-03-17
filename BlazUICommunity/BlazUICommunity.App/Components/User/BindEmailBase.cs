@@ -2,9 +2,8 @@
 using Blazui.Community.App.Pages;
 using Blazui.Community.Enums;
 using Blazui.Community.Model.Models;
-using Blazui.Community.Utility.Response;
+using Blazui.Community.Response;
 using Blazui.Component;
-using Blazui.Component.Button;
 using Blazui.Component.Container;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.RegularExpressions;
@@ -16,13 +15,13 @@ namespace Blazui.Community.App.Components
     [Authorize]
     public class BindEmailBase : PageBase
     {
-
         protected BForm bForm { get; set; }
         internal BindEmailModel value { get; set; }
         protected bool showInput { get; set; } = false;
         protected BCard bCard { get; set; }
         internal bool IsDisabled { get; set; } = false;
         internal int TimeOut { get; set; } = CountDownTime;
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
@@ -38,10 +37,8 @@ namespace Blazui.Community.App.Components
 
         protected override bool ShouldRender() => true;
 
-    
-
-
         protected string VerifyCode = "";
+
         protected async Task SendEmailMsg()
         {
             if (!bForm.IsValid())
@@ -81,8 +78,6 @@ namespace Blazui.Community.App.Components
                 ToastError(result.Message);
         }
 
-
-
         protected async Task CheckVerifyCode()
         {
             var model = bForm.GetValue<BindEmailModel>();
@@ -95,7 +90,6 @@ namespace Blazui.Community.App.Components
             var result = await NetService.VerifyVerifyCode(User.Id, VerifyCodeType.EmailBind, VerifyCode);
             await SetEmailAsync(model, result);
         }
-
 
         private async Task SetEmailAsync(BindEmailModel model, BaseResponse response)
         {
@@ -112,7 +106,9 @@ namespace Blazui.Community.App.Components
             else
                 ToastError(response.Message);
         }
+
         protected BZUserModel User;
+
         protected override async Task InitilizePageDataAsync() => await LoadData();
 
         private async Task LoadData()

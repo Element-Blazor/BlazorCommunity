@@ -8,29 +8,32 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Components.Topic
 {
-
     public class FullScreenMarkdownBase : BDialogBase
     {
+        [Inject]
+        private MessageBox MessageBox { get; set; }
 
         [Inject]
-        MessageBox MessageBox { get; set; }
+        private MessageService MessageService { get; set; }
+
         [Inject]
-        MessageService MessageService { get; set; }
-        [Inject]
-        IConfiguration Configuration { get; set; }
+        private IConfiguration Configuration { get; set; }
+
         internal string UploadApiUrl { get; private set; }
+
         [Parameter]
         public ReplyModel model { get; set; }
+
         internal BForm form;
+
         [CascadingParameter]
-        Task<AuthenticationState> authenticationStateTask { get; set; }
+        private Task<AuthenticationState> authenticationStateTask { get; set; }
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
             UploadApiUrl = Configuration["ServerUrl"] + "/api/upload/" + UploadPath.Topic.Description();
         }
-
-
 
         internal async Task ReplyNow()
         {
@@ -51,6 +54,5 @@ namespace Blazui.Community.App.Components.Topic
                     MessageService.Show("您选择了取消", MessageType.Info);
             }
         }
-
     }
 }

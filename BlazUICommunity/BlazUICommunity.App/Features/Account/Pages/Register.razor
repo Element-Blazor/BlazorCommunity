@@ -3,17 +3,17 @@
     <div class="register-container">
         <BForm  @ref="registerForm" Value="Value" EnableAlwaysRender="true">
             <div class="title-container" style="text-align:center;">
-                <h3 class="title" >
+                <h3 class="title">
                     Blazor社区注册
                 </h3>
             </div>
-            <BFormItem TValue="string" Label="用户账号" Name="@nameof(RegisterAccountDto.UserAccount)" IsRequired="true" >
+            <BFormItem TValue="string" Label="用户账号" Name="@nameof(RegisterAccountDto.UserAccount)" IsRequired="true">
                 <BInput TValue="string"  Placeholder="请输入账号"></BInput>
             </BFormItem>
             @*<BFormItem TValue="string" Label="手机号码" Name="@nameof(RegisterAccountModel.Mobile)" IsRequired="true">
                 <BInput TValue="string"></BInput>
                 <BButton Style="float:right;margin-top:10px;" Type="@ButtonType.Info" IsPlain="true" Icon="el-icon-message"> 发送验证码</BButton>
-            </BFormItem> 
+            </BFormItem>
             <BFormItem TValue="string" Label="验证码" Name="@nameof(RegisterAccountModel.VerifyCode)" IsRequired="true">
                 <BInput TValue="string"></BInput>
             </BFormItem>*@
@@ -23,9 +23,8 @@
         <BFormItem TValue="string" Label="确认密码" Name="@nameof(RegisterAccountDto.ConfirmPassword)" IsRequired="true" EnableAlwaysRender="true">
             <BInput PrefixIcon="el-icon-lock" SuffixIcon="el-icon-view" Type="@ConfirmPasswordType" TValue="string" Placeholder="请输入确认密码" OnSuffixIconClick="e=>ToggleConfirmPassword()"></BInput>
         </BFormItem>
-            <BFormActionItem  >
+            <BFormActionItem>
                 <BButton Type="@ButtonType.Default" OnClick="e=>RegisterUser()" IsPlain="true" Style="width:100%">立即注册</BButton>
             </BFormActionItem>
         </BForm>
     </div>
-   

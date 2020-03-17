@@ -1,21 +1,21 @@
 ﻿@page "/"
 @inherits IndexBase
 <div class="container">
-    <BLayout  EnableAlwaysRender="true" @ref="blayout" >
-        <Center>   
+    <BLayout EnableAlwaysRender="true" @ref="blayout">
+        <Center>
             <BTab TabPosition="@TabPosition.Top" OnActiveTabChanged="ActiveTabChanged" EnableAlwaysRender="true" @ref="btab">
-                    @foreach (var item in Tabs)
-                    {
-                        <MainContent Title="@item.Title" TopicType="@item.Category" EnableAlwaysRender="true"></MainContent>
-                    }
-                </BTab>
+                @foreach (var item in Tabs)
+                {
+                    <MainContent Title="@item.Title" TopicType="@item.Category" EnableAlwaysRender="true"></MainContent>
+                }
+            </BTab>
         </Center>
         <East>
             <div class="margin-top-5 content-east">
                 <BLayout NorthHeight="30" EnableAlwaysRender="true">
                     <North>
                         <div class="newtopic">
-                           <NewTopicAndSearch></NewTopicAndSearch>
+                            <NewTopicAndSearch></NewTopicAndSearch>
                         </div>
                     </North>
                     <Center>
@@ -48,6 +48,3 @@
         </East>
     </BLayout>
 </div>
-
-
-

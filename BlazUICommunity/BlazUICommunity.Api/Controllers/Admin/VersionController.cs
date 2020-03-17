@@ -1,14 +1,13 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
-using Blazui.Community.Api.Extensions;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
 using Blazui.Community.DTO.Admin;
+using Blazui.Community.LinqExtensions;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Request;
-using Blazui.Community.Utility.Extensions;
-using Blazui.Community.Utility.Filter;
+using Blazui.Community.SwaggerExtensions;
 using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -20,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Controllers
 {   /// <summary>
-    /// 
+    ///
     /// </summary>
     [HiddenApi]
     [Route("api/[Controller]")]
@@ -34,7 +33,7 @@ namespace Blazui.Community.Api.Controllers
         private readonly ICacheService _cacheService;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="mapper"></param>
@@ -45,7 +44,7 @@ namespace Blazui.Community.Api.Controllers
             _mapper = mapper;
             _cacheService = cacheService;
         }
-     
+
         /// <summary>
         /// 删除
         /// </summary>
@@ -53,7 +52,7 @@ namespace Blazui.Community.Api.Controllers
         [HttpPatch("Delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] string Id)
         {
-            return await DeleteOrResume(Id,-1);
+            return await DeleteOrResume(Id, -1);
         }
 
         /// <summary>
@@ -63,10 +62,10 @@ namespace Blazui.Community.Api.Controllers
         [HttpPatch("Resume/{Id}")]
         public async Task<IActionResult> Resume([FromRoute] string Id)
         {
-            return await DeleteOrResume(Id,0);
+            return await DeleteOrResume(Id, 0);
         }
 
-        private async Task<IActionResult> DeleteOrResume(string Id,int Status)
+        private async Task<IActionResult> DeleteOrResume(string Id, int Status)
         {
             var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
             var version = await verRepository.FindAsync(Id);
@@ -78,7 +77,6 @@ namespace Blazui.Community.Api.Controllers
             verRepository.Update(version);
             _cacheService.Remove(nameof(BZVersionModel));
             return Ok();
-
         }
 
         /// <summary>
@@ -93,9 +91,7 @@ namespace Blazui.Community.Api.Controllers
             await verRepository.InsertAsync(model);
             _cacheService.Remove(nameof(BZVersionModel));
             return Ok();
-
         }
-
 
         /// <summary>
         /// 更新
@@ -109,7 +105,6 @@ namespace Blazui.Community.Api.Controllers
             verRepository.Update(model);
             _cacheService.Remove(nameof(BZVersionModel));
             return Ok();
-
         }
 
         /// <summary>
@@ -125,8 +120,8 @@ namespace Blazui.Community.Api.Controllers
             if (requestCondition.ProjectId >= 0)
                 query = query.And(p => p.Project == requestCondition.ProjectId);
             versions = await verRepository.GetPagedListAsync(query, o => o.OrderByDescending(p => p.CreateDate), null, requestCondition.PageIndex - 1, requestCondition.PageSize);
-            if(versions.Items.Any())
-            return Ok(versions.From(result => _mapper.Map<IList<VersionDisplayDto>>(result)));
+            if (versions.Items.Any())
+                return Ok(versions.From(result => _mapper.Map<IList<VersionDisplayDto>>(result)));
             return NoContent();
         }
     }

@@ -4,8 +4,7 @@ using Blazui.Community.App.Pages;
 using Blazui.Community.DTO;
 using Blazui.Community.Enums;
 using Blazui.Community.Model.Models;
-using Blazui.Community.Request;
-using Blazui.Community.Utility.Response;
+using Blazui.Community.Response;
 using Blazui.Component;
 using Microsoft.AspNetCore.Authorization;
 using System;
@@ -17,7 +16,6 @@ namespace Blazui.Community.App.Components
     [Authorize]
     public class PersonalTopicTableBase : PageBase
     {
-
         protected int pageSize = 6;
         protected int currentPage = 1;
         protected TopicCategory? Category;
@@ -38,6 +36,7 @@ namespace Blazui.Community.App.Components
                 return condition;
             }
         }
+
         internal int CurrentPage
         {
             get
@@ -70,8 +69,8 @@ namespace Blazui.Community.App.Components
             {
                 await QueryTopics(condition);
             });
-
         }
+
         /// <summary>
         /// 删除纪录
         /// </summary>
@@ -90,10 +89,11 @@ namespace Blazui.Community.App.Components
                     }
                 }
         }
+
         protected void LinktoTopic(object topic)
         {
-            if(topic is PersonalTopicModel topicModel)
-            navigationManager.NavigateTo($"/topic/{topicModel.Id}");
+            if (topic is PersonalTopicModel topicModel)
+                navigationManager.NavigateTo($"/topic/{topicModel.Id}");
         }
 
         protected override bool ShouldRender() => true;
@@ -123,7 +123,7 @@ namespace Blazui.Community.App.Components
 
         private void ConvertDataToDto(BaseResponse<PageDatas<BZTopicDto>> result)
         {
-            if (result.IsSuccess && result.Data!=null&& result.Data.TotalCount > 0)
+            if (result.IsSuccess && result.Data != null && result.Data.TotalCount > 0)
             {
                 Datas = mapper.Map<List<PersonalTopicModel>>(result.Data.Items);
                 DataCount = result.Data.TotalCount;
@@ -152,6 +152,5 @@ namespace Blazui.Community.App.Components
             table?.Refresh();
             StateHasChanged();
         }
-
     }
 }

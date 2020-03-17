@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
-using System.Text;
 
 namespace Blazui.Community.Enums
 {
     public static class EnumExtensions
     {
-
         private static Dictionary<Enum, string> dictionaryDescriptions = new Dictionary<Enum, string>();
 
         /// <summary>
@@ -22,7 +20,7 @@ namespace Blazui.Community.Enums
                 return desc;
             var attribute = e?.GetType().GetField(e?.ToString()).GetCustomAttribute<DescriptionAttribute>(true);
 
-            var newdesc= (attribute == null || attribute.Description == null) ? e.ToString() : attribute.Description;
+            var newdesc = (attribute == null || attribute.Description == null) ? e.ToString() : attribute.Description;
             dictionaryDescriptions.Add(e, newdesc);
             return newdesc;
         }
@@ -38,6 +36,7 @@ namespace Blazui.Community.Enums
             }
             return keyValuePairs;
         }
+
         /// <summary>
         /// 获取枚举
         /// </summary>

@@ -1,24 +1,26 @@
-using System;
 using Arch.EntityFrameworkCore.UnitOfWork;
 using Autofac;
+using AutoMapper;
+using Blazui.Community.Api.Configuration;
+using Blazui.Community.Api.Jwt;
+using Blazui.Community.Api.Service;
+using Blazui.Community.AutofacModules;
+using Blazui.Community.Enums;
+using Blazui.Community.IdentityExtensions;
+using Blazui.Community.JWTServiceCollectionExtensions;
 using Blazui.Community.Model.Models;
-using Blazui.Community.Utility;
-using Blazui.Community.Utility.Configure;
-using Blazui.Community.Utility.Extensions;
+using Blazui.Community.MvcCore;
+using Blazui.Community.SwaggerExtensions;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using AutoMapper;
-using Blazui.Community.Api.Service;
-using System.IO;
-using Blazui.Community.Api.Configuration;
-using Blazui.Community.Utility.Jwt;
-using Blazui.Community.Enums;
 using NLog.LayoutRenderers;
-using Marvin.Cache.Headers;
+using System;
+using System.IO;
 using static Blazui.Community.Api.Configuration.ConstantConfiguration;
 
 namespace Blazui.Community.Api
@@ -29,6 +31,7 @@ namespace Blazui.Community.Api
         {
             Configuration = configuration;
         }
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -56,7 +59,7 @@ namespace Blazui.Community.Api
 
             services.AddCustomAspIdenitty<BZUserModel, BlazUICommunityContext>();
 
-            services.AddCustomMemoryCache();
+            services.AddMemoryCache(p => p.ExpirationScanFrequency = TimeSpan.FromSeconds(100));
 
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<IMessageService, MessageService>();
@@ -67,13 +70,13 @@ namespace Blazui.Community.Api
             services.AddJwtConfiguration(Configuration);
 
             services.Configure<EmailConfiguration>(Configuration.GetSection("EmailSetting"));
-
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public IContainer AutofacContainer;
+
         /// <summary>
         /// 系统调用
         /// </summary>
@@ -82,6 +85,7 @@ namespace Blazui.Community.Api
         {
             builder.RegisterModule<CustomAutofacModule>();
         }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime appLitetime)
         {

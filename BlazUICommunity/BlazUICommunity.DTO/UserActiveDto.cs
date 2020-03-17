@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Blazui.Community.DTO
+﻿namespace Blazui.Community.DTO
 {
     public partial class UserActiveDto
     {

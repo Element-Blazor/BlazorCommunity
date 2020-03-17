@@ -37,7 +37,6 @@
                     </BFormItem>
                 </div>
 
-               
                 <BFormItem TValue="string" IsRequired="true" Name="@nameof(TopicFormModel.Content)">
                     <div style="width:99%;">
                         <BMarkdownEditor @ref="bMarkdownEditor" UploadUrl="@(UploadUrl+ UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="480" FileMaxSize="300" ImageMaxSize="300"></BMarkdownEditor>
@@ -59,4 +58,3 @@
         </BTabPanel>
     </BTab>
 </div>
-

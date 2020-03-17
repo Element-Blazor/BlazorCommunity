@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blazui.Community.Model.Models
 {
-
     /// <summary>
     /// 回帖
     /// </summary>
@@ -22,6 +18,7 @@ namespace Blazui.Community.Model.Models
         /// </summary>
         [Column("TopicId", TypeName = "varchar(36)")]
         public string TopicId { get; set; }
+
         /// <summary>
         /// 点赞数量
         /// </summary>
@@ -31,10 +28,10 @@ namespace Blazui.Community.Model.Models
         /// 是否置顶0否-1置顶
         /// </summary>
         public int Top { get; set; }
+
         /// <summary>
         /// 是否精华帖0否，1-是
         /// </summary>
         public int Good { get; set; }
-
     }
 }

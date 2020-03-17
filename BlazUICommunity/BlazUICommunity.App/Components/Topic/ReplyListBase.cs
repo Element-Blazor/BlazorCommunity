@@ -1,32 +1,30 @@
-﻿using Blazui.Community.App.Components.Topic;
-using Blazui.Community.App.Pages;
+﻿using Blazui.Community.App.Pages;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
-using Blazui.Community.Utility;
-using Blazui.Community.Utility.Response;
+using Blazui.Community.Response;
 using Blazui.Component;
-using Blazui.Component.Pagination;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Rendering;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Blazui.Community.App.Components
 {
     public class ReplyListBase : PageBase
     {
         internal List<BZReplyDto> Replys { get; set; } = new List<BZReplyDto>();
+
         [Parameter]
         public string TopicId { get; set; }
+
         protected int PageSize { get; set; } = 10;
         protected int currentPage = 1;
 
         private BZUserModel User;
+
         [Parameter]
         public EventCallback OnItemDeleted { get; set; }
+
         /// <summary>
         /// 当只有一页时，不显示分页
         /// </summary>
@@ -50,6 +48,7 @@ namespace Blazui.Community.App.Components
 
         [Parameter]
         public EventCallback OnNewReply { get; set; }
+
         /// <summary>
         /// 总数据条数
         /// </summary>
@@ -68,12 +67,8 @@ namespace Blazui.Community.App.Components
             }
         }
 
-
-
-
         private async Task LoadData()
         {
-
             if (string.IsNullOrWhiteSpace(TopicId))
             {
                 ToastError("主贴不存在或已删除");
@@ -107,7 +102,6 @@ namespace Blazui.Community.App.Components
 
         protected async Task EditReply(BZReplyDto ReplyModel)
         {
-
             if (ReplyModel.ShoudEdit)
             {
                 if (ReplyModel.OriginalContent != ReplyModel.Content)
@@ -122,9 +116,7 @@ namespace Blazui.Community.App.Components
                 }
             }
             ReplyModel.ShoudEdit = !ReplyModel.ShoudEdit;
-
         }
-
 
         /// <summary>
         /// 遗留问题，暂时只能直接刷新url
@@ -139,7 +131,6 @@ namespace Blazui.Community.App.Components
                 var result = await NetService.DelRelpy(replyId);
                 if (result.IsSuccess)
                 {
-
                     //if (OnItemDeleted.HasDelegate)
                     //    await OnItemDeleted.InvokeAsync(replyId);
 
@@ -155,8 +146,6 @@ namespace Blazui.Community.App.Components
             }
         }
 
-
-
         internal async Task CurrentPageChangedAsync(int page)
         {
             CurrentPage = page;
@@ -168,6 +157,7 @@ namespace Blazui.Community.App.Components
                 LoadingService.CloseFullScreenLoading();
             }
         }
+
         protected override async Task InitilizePageDataAsync()
         {
             User = await GetUser();
@@ -182,6 +172,5 @@ namespace Blazui.Community.App.Components
                 await OnNewReply.InvokeAsync("");
             await LoadData();
         }
-
     }
 }

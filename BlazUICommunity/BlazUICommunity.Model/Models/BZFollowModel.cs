@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blazui.Community.Model.Models
 {
     /// <summary>
-    /// 我的关注 
+    /// 我的关注
     /// </summary>
     [Table("BZFollow")]
     public partial class BZFollowModel : BaseModel
@@ -16,7 +13,5 @@ namespace Blazui.Community.Model.Models
         /// </summary>
         [Column("TopicId", TypeName = "varchar(36)")]
         public string TopicId { get; set; }
-
-     
     }
 }

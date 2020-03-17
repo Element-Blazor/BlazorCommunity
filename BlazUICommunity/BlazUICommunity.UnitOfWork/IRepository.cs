@@ -6,17 +6,16 @@
 
 namespace Arch.EntityFrameworkCore.UnitOfWork
 {
+    using Arch.EntityFrameworkCore.UnitOfWork.Collections;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
+    using Microsoft.EntityFrameworkCore.Query;
     using System;
     using System.Collections.Generic;
+    using System.Data.Common;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore.Query;
-    using Arch.EntityFrameworkCore.UnitOfWork.Collections;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
-    using System.Data.SqlClient;
-    using System.Data.Common;
 
     /// <summary>
     /// Defines the interfaces for generic repository.
@@ -24,7 +23,6 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
     public interface IRepository<TEntity> where TEntity : class
     {
-
         /// <summary>
         /// 立即保存全部修改
         /// 把增/删的savechange给放到这里，是为了保证事务的
@@ -83,13 +81,14 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
                                                     bool disableTracking = true,
                                                     CancellationToken cancellationToken = default(CancellationToken),
                                                     bool ignoreQueryFilters = false);
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        Task<IPagedList<TEntity>> GetPagedListAsync(   int pageIndex = 0 , int pageSize = 20 , bool disableTracking = true , CancellationToken cancellationToken = default(CancellationToken));
+        Task<IPagedList<TEntity>> GetPagedListAsync(int pageIndex = 0, int pageSize = 20, bool disableTracking = true, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the <see cref="IPagedList{TResult}"/> based on a predicate, orderby delegate and page information. This method default no-tracking query.
@@ -342,11 +341,13 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// </summary>
         /// <param name="entity">The entity.</param>
         void Update(TEntity entity);
+
         /// <summary>
         /// Updates the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        void UpdateSpecifiedField(TEntity entity , params Expression<Func<TEntity , object>>[] property);
+        void UpdateSpecifiedField(TEntity entity, params Expression<Func<TEntity, object>>[] property);
+
         /// <summary>
         /// Updates the specified entities.
         /// </summary>
@@ -383,9 +384,6 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="entities">The entities.</param>
         void Delete(IEnumerable<TEntity> entities);
 
-
-
-
         #region Bulk操作 Entity Framework Extensions
 
         void BulkInsert(IEnumerable<TEntity> entities);
@@ -393,23 +391,27 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         Task BulkInsertAsync(IEnumerable<TEntity> entities);
 
         void BulkDelete(IEnumerable<TEntity> entities);
+
         Task BulkDeleteAsync(IEnumerable<TEntity> entities);
 
-        void BulkDelete(Expression<Func<TEntity , bool>> predicate );
-        Task BulkDeleteAsync(Expression<Func<TEntity , bool>> predicate );
+        void BulkDelete(Expression<Func<TEntity, bool>> predicate);
 
+        Task BulkDeleteAsync(Expression<Func<TEntity, bool>> predicate);
 
         void BulkUpdate(IEnumerable<TEntity> entities);
 
         Task BulkUpdateAsync(IEnumerable<TEntity> entities);
-        #endregion
+
+        #endregion Bulk操作 Entity Framework Extensions
 
         #region FromSql
 
-        Task<IEnumerable<T>> QueryDataFromSql<T>(string sql , params DbParameter[] parameters) where T : class, new();
-        Task<T> ExecuteScalarAsync<T>(string sql , params DbParameter[] parameters);
+        Task<IEnumerable<T>> QueryDataFromSql<T>(string sql, params DbParameter[] parameters) where T : class, new();
+
+        Task<T> ExecuteScalarAsync<T>(string sql, params DbParameter[] parameters);
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sql"></param>
         /// <param name="parameters"></param>
@@ -418,9 +420,8 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
 
         Task<bool> ExecuteSqlCmdAsync(string sql, params DbParameter[] parameters);
 
-     
-        Task<bool> ChangeStateByIdAsync(string Id,int Status, string oprationId);
+        Task<bool> ChangeStateByIdAsync(string Id, int Status, string oprationId);
 
-        #endregion
+        #endregion FromSql
     }
 }

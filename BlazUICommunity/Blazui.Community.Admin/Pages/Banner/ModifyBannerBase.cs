@@ -1,16 +1,12 @@
-﻿using AutoMapper;
-using Blazui.Community.Admin.Enum;
+﻿using Blazui.Community.Admin.Enum;
 using Blazui.Community.Admin.Service;
-using Blazui.Community.Admin.ViewModel;
-using Blazui.Community.DTO;
 using Blazui.Community.DTO.Admin;
 using Blazui.Community.Enums;
-using Blazui.Community.Utility.Response;
+using Blazui.Community.Response;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,28 +18,34 @@ namespace Blazui.Community.Admin.Pages.Banner
 
         [Parameter]
         public BannerDisplayDto model { get; set; }
+
         [Parameter]
         public EntryOperation EntryOperation { get; set; }
-        [Inject]
-        NetworkService NetService { get; set; }
-        [Inject]
-        IConfiguration Configuration { get; set; }
-        internal string ServerUrl { get; private set; }
-     
 
         [Inject]
-        MessageService MessageService { get; set; }
+        private NetworkService NetService { get; set; }
+
+        [Inject]
+        private IConfiguration Configuration { get; set; }
+
+        internal string ServerUrl { get; private set; }
+
+        [Inject]
+        private MessageService MessageService { get; set; }
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
             ServerUrl = Configuration["ServerUrl"] + "/api/upload/" + UploadPath.Banner.Description();
         }
+
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
             if (EntryOperation == EntryOperation.Update)
                 model.Previews = new UploadModel[] { new UploadModel() { FileName = model.BannerImg.Split("/").Last(), Url = model.BannerImg, Id = model.BannerImg, Status = 0 } };
         }
+
         internal async Task Save()
         {
             if (!versionForm.IsValid())
@@ -51,10 +53,10 @@ namespace Blazui.Community.Admin.Pages.Banner
             var banner = versionForm.GetValue<BannerDisplayDto>();
             if (banner.Previews.Length > 1)
             {
-                MessageService.Show("一次只能上传一张图片，请删除多余的", MessageType.Error);
+                MessageService.Show("一次只能上传一张图片", MessageType.Error);
                 return;
             }
-            banner.BannerImg = banner.Previews.FirstOrDefault().Url;
+            banner.BannerImg = ((IFileModel[])banner.Previews).FirstOrDefault().Url;
             BaseResponse response;
 
             banner.LastModifyDate = DateTime.Now;
@@ -70,9 +72,8 @@ namespace Blazui.Community.Admin.Pages.Banner
                 response = await NetService.UpdateBanner(banner);
             }
             if (!response.IsSuccess)
-                MessageService.Show(response.Message,MessageType.Error);
+                MessageService.Show(response.Message, MessageType.Error);
             await CloseAsync(response.IsSuccess);
-
         }
     }
 }

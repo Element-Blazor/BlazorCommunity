@@ -1,26 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using Arch.EntityFrameworkCore.UnitOfWork;
+﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
-using Blazui.Community.Api.Extensions;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
+using Blazui.Community.LinqExtensions;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
 using Blazui.Community.Request;
-using Blazui.Community.Utility.Extensions;
-using Blazui.Community.Utility.Response;
-using log4net.Repository.Hierarchy;
+using Blazui.Community.Response;
+using Blazui.Community.StringExtensions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Controllers.Client
 {
@@ -38,7 +34,7 @@ namespace Blazui.Community.Api.Controllers.Client
         private readonly ICacheService _cacheService;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// <param name="bZReplyRepository"></param>
@@ -52,7 +48,6 @@ namespace Blazui.Community.Api.Controllers.Client
             _replyRepository = bZReplyRepository;
             _cacheService = cacheService;
         }
-
 
         /// <summary>
         /// 新增回帖
@@ -86,27 +81,28 @@ namespace Blazui.Community.Api.Controllers.Client
             return new BadRequestResponse("帖子不存在");
         }
 
-
         /// <summary>
         /// 根据用户查询回复帖子
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetByUserId/{UserId}/{PageSize}/{PageIndex}")]
         [HttpGet("GetByUserId/{UserId}/{PageSize}/{PageIndex}/{Title}")]
-        public async Task<IActionResult> GetByUserId(string UserId, int PageSize, int PageIndex,string Title=null)
+        public async Task<IActionResult> GetByUserId(string UserId, int PageSize, int PageIndex, string Title = null)
         {
             return Ok(await _replyRepository.QueryMyReplys(UserId, PageSize, PageIndex - 1, Title));
         }
+
         /// <summary>
         /// 根据用户查询回复帖子
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetRepyCount/{UserId}")]
         [HttpGet("GetRepyCount/{UserId}/{Title}")]
-        public async Task<IActionResult> GetRepyCount(string UserId, string Title=null)
+        public async Task<IActionResult> GetRepyCount(string UserId, string Title = null)
         {
             return Ok(await _replyRepository.QueryMyReplysCount(UserId, Title));
         }
+
         /// <summary>
         /// 根据ID删除帖子
         /// </summary>
@@ -115,10 +111,9 @@ namespace Blazui.Community.Api.Controllers.Client
         [HttpDelete("Delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] string Id)
         {
-
             await _unitOfWork.CommitWithTransactionAsync(async () =>
             {
-                var delete = await _replyRepository.ChangeStateByIdAsync(Id,-1,"");
+                var delete = await _replyRepository.ChangeStateByIdAsync(Id, -1, "");
                 if (delete)
                 {
                     _cacheService.Remove(nameof(BZReplyModel));
@@ -135,8 +130,6 @@ namespace Blazui.Community.Api.Controllers.Client
             });
             return Ok();
         }
-
-      
 
         /// <summary>
         /// 更新回帖
@@ -176,6 +169,7 @@ namespace Blazui.Community.Api.Controllers.Client
             _cacheService.Remove(nameof(BZReplyModel));
             return Ok();
         }
+
         /// <summary>
         /// 根据Id查询回帖
         /// </summary>
@@ -191,6 +185,7 @@ namespace Blazui.Community.Api.Controllers.Client
                 return NoContent();
             return Ok(res);
         }
+
         /// <summary>
         /// 根据条件分页查询回帖
         /// </summary>
@@ -202,10 +197,10 @@ namespace Blazui.Community.Api.Controllers.Client
             var query = Request.CreateQueryExpression<BZReplyModel, ReplyRequestCondition>();
             query ??= p => true;
             query = query.And(p => p.Status == 0);
-            pagedList = await _replyRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
+            pagedList = await _replyRepository.GetPagedListAsync(query, o => o.OrderByDescending(p => p.CreateDate), null, Request.PageIndex - 1, Request.PageSize);
             if (pagedList.TotalCount > 0)
             {
-                var pagedatas = pagedList.ConvertToPageData<BZReplyModel, BZReplyDto>();
+                var pagedatas = pagedList.From(r => _mapper.Map<List<BZReplyDto>>(r));
                 var topics = await _cacheService.Topics(p => pagedList.Items.Select(d => d.TopicId).Contains(p.Id));
                 var Users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
                 foreach (var replyDto in pagedList.Items)
@@ -223,7 +218,6 @@ namespace Blazui.Community.Api.Controllers.Client
                         replywithuser.Title = topic?.Title;
                     }
                 }
-                pagedatas.Items = pagedatas.Items.OrderBy(p => p.CreateDate).ToList();
                 return Ok(pagedatas);
             }
             else
@@ -231,7 +225,6 @@ namespace Blazui.Community.Api.Controllers.Client
                 return NoContent();
             }
         }
-
 
         /// <summary>
         /// 根据条件分页查询回帖
@@ -264,10 +257,10 @@ namespace Blazui.Community.Api.Controllers.Client
                 else
                     return NoContent();
             }
-            pagedList = await _replyRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
+            pagedList = await _replyRepository.GetPagedListAsync(query, o => o.OrderByDescending(p => p.CreateDate), null, Request.PageIndex - 1, Request.PageSize);
             if (pagedList.TotalCount > 0)
             {
-                var pagedatas = pagedList.ConvertToPageData<BZReplyModel, BZReplyDto>();
+                var pagedatas = pagedList.From(r => _mapper.Map<List<BZReplyDto>>(r));
                 var topics = await _cacheService.Topics(p => pagedList.Items.Select(d => d.TopicId).Contains(p.Id));
                 var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
                 foreach (var replyDto in pagedList.Items)
@@ -285,7 +278,6 @@ namespace Blazui.Community.Api.Controllers.Client
                         replywithuser.Title = topic?.Title;
                     }
                 }
-                pagedatas.Items = pagedatas.Items.OrderByDescending(p => p.CreateDate).ToList();
                 return Ok(pagedatas);
             }
             else

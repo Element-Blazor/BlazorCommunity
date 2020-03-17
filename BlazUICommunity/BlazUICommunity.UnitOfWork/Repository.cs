@@ -1,24 +1,21 @@
 ﻿// Copyright (c) Arch team. All rights reserved.
 
+using Arch.EntityFrameworkCore.UnitOfWork.Collections;
+using Blazui.Community.UnitOfWork.Collections;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Query;
-using Arch.EntityFrameworkCore.UnitOfWork.Collections;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Data.Common;
-using System.Data.SqlClient;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore.Storage;
-using System.ComponentModel.DataAnnotations.Schema;
-using Blazui.Community.UnitOfWork.Collections;
 
 namespace Arch.EntityFrameworkCore.UnitOfWork
 {
@@ -112,6 +109,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
                 return query;
             }
         }
+
         /// <summary>
         /// Gets the <see cref="IPagedList{TEntity}"/> based on a predicate, orderby delegate and page information. This method default no-tracking query.
         /// </summary>
@@ -163,6 +161,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
                 return query.ToPagedList(pageIndex, pageSize);
             }
         }
+
         public virtual Task<IPagedList<TEntity>> GetPagedListAsync(int pageIndex = 0, int pageSize = 20, bool disableTracking = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             IQueryable<TEntity> query = _dbSet;
@@ -172,6 +171,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
             }
             return query.ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
         }
+
         /// <summary>
         /// Gets the <see cref="IPagedList{TEntity}"/> based on a predicate, orderby delegate and page information. This method default no-tracking query.
         /// </summary>
@@ -390,7 +390,6 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
             }
         }
 
-
         /// <inheritdoc />
         public virtual async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
@@ -582,13 +581,13 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
                 return _dbSet.Any(predicate);
             }
         }
+
         /// <summary>
         /// Inserts a new entity synchronously.
         /// </summary>
         /// <param name="entity">The entity to insert.</param>
         public virtual TEntity Insert(TEntity entity)
         {
-
             _dbSet.Add(entity);
             Commit();
             return entity;
@@ -600,7 +599,6 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="entities">The entities to insert.</param>
         public virtual void Insert(params TEntity[] entities)
         {
-
             _dbSet.AddRange(entities);
             Commit();
         }
@@ -611,10 +609,10 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         /// <param name="entities">The entities to insert.</param>
         public virtual void Insert(IEnumerable<TEntity> entities)
         {
-
             _dbSet.AddRange(entities);
             Commit();
         }
+
         /// <summary>
         /// Inserts a new entity asynchronously.
         /// </summary>
@@ -696,7 +694,6 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
                 dbEntityEntry.Property(propName).IsModified = true;
             }
             Commit();
-
         }
 
         private string GetFieldNameByLambda(Expression exprBody)
@@ -865,8 +862,6 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
             this._dbContext.SaveChanges();
         }
 
-
-
         #region Bulk操作
 
         public void BulkInsert(IEnumerable<TEntity> entities)
@@ -888,7 +883,6 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
            options.AutoMapOutputDirection = false;
        });
         }
-
 
         public void BulkDelete(IEnumerable<TEntity> entities)
         {
@@ -955,13 +949,12 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
            });
         }
 
-
-        #endregion
-
+        #endregion Bulk操作
 
         #region FromSql
 
         private static readonly Dictionary<Type, PropertyInfo[]> TempEntityPropertiesDic = new Dictionary<Type, PropertyInfo[]>();
+
         /// <summary>
         /// Read entity list by reader
         /// </summary>
@@ -983,7 +976,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
                 propertyInfos = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(p => !p.IsDefined(typeof(NotMappedAttribute), false)).ToArray();
                 TempEntityPropertiesDic.Add(typeof(T), propertyInfos);
             }
-           
+
             while (await reader.ReadAsync())
             {
                 T tempEntity = Activator.CreateInstance<T>();
@@ -1023,18 +1016,16 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
             return _dbContext.Database.ExecuteSqlRaw(sql, parameters) > 0;
         }
 
-          public async Task<bool> ChangeStateByIdAsync(string Id, int Status, string oprationId)
+        public async Task<bool> ChangeStateByIdAsync(string Id, int Status, string oprationId)
         {
-            var entity =await FindAsync(Id);
+            var entity = await FindAsync(Id);
             if (entity is null)
                 return false;
             var updateModifyId = !string.IsNullOrWhiteSpace(oprationId) ? $"  , LastModifyDate= '{oprationId}' " : "";
             var sql = $"update { typeof(TEntity).GetTableName<TEntity>()}  set Status={Status},  LastModifyDate =now() {updateModifyId}  where Id= '{Id}'";
             return await _dbContext.Database.ExecuteSqlRawAsync(sql) > 0;
         }
-        #endregion
 
-
-      
+        #endregion FromSql
     }
 }

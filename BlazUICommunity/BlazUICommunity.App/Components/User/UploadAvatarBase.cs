@@ -26,38 +26,40 @@ namespace Blazui.Community.App.Components
             ScanFiles(files);
             _ = UploadFilesAsync(input);
             RequireRender = true;
-            SetFieldValue(Files.ToArray() , true);
+            SetFieldValue(Files.ToArray(), true);
         }
+
         private async Task UploadFilesAsync(Element input)
         {
-            foreach ( var item in Files )
+            foreach (var item in Files)
             {
                 var model = item as UploadModel;
-                if ( model.Status != UploadStatus.UnStart )
+                if (model.Status != UploadStatus.UnStart)
                 {
                     continue;
                 }
-                if ( OnFileUploadStart.HasDelegate )
+                if (OnFileUploadStart.HasDelegate)
                 {
                     _ = OnFileUploadStart.InvokeAsync(item);
                 }
-                var results = await input.UploadFileAsync(item.FileName , Url);
-                FileUploaded(model , results);
+                var results = await input.UploadFileAsync(item.FileName, Url);
+                FileUploaded(model, results);
             }
             await input.ClearAsync();
             RequireRender = true;
-            if ( OnFileListUpload.HasDelegate )
+            if (OnFileListUpload.HasDelegate)
             {
                 _ = OnFileListUpload.InvokeAsync(Files.ToArray());
             }
             StateHasChanged();
         }
-        private void FileUploaded(UploadModel model , string[] results)
+
+        private void FileUploaded(UploadModel model, string[] results)
         {
-            if ( results[0] == "0" )
+            if (results[0] == "0")
             {
                 model.Status = UploadStatus.Success;
-                if ( OnFileUploadSuccess.HasDelegate )
+                if (OnFileUploadSuccess.HasDelegate)
                 {
                     _ = OnFileUploadSuccess.InvokeAsync(model);
                 }
@@ -65,7 +67,7 @@ namespace Blazui.Community.App.Components
             else
             {
                 model.Status = UploadStatus.Failure;
-                if ( OnFileUploadFailure.HasDelegate )
+                if (OnFileUploadFailure.HasDelegate)
                 {
                     _ = OnFileUploadFailure.InvokeAsync(model);
                 }
@@ -79,45 +81,48 @@ namespace Blazui.Community.App.Components
         {
             //base.OnParametersSet();
             AllowExtensions = AllowExtensions.Select(x => x?.Trim()).ToArray();
-            if ( FormItem == null )
+            if (FormItem == null)
             {
                 return;
             }
-            if ( FormItem.OriginValueHasRendered )
+            if (FormItem.OriginValueHasRendered)
             {
                 return;
             }
             FormItem.OriginValueHasRendered = true;
-            if ( FormItem.Form.Values.Any() )
+            if (FormItem.Form.Values.Any())
             {
                 InitilizeFiles(FormItem.OriginValue);
             }
         }
+
         private void InitilizeFiles(IFileModel[] fileModels)
         {
             Files = new HashSet<IFileModel>();
-            if ( fileModels == null )
+            if (fileModels == null)
             {
                 return;
             }
-            foreach ( var item in fileModels )
+            foreach (var item in fileModels)
             {
                 Files.Add(new UploadModel()
                 {
-                    Url = item.Url ,
-                    FileName = item.FileName ,
-                    Id = item.Id ,
+                    Url = item.Url,
+                    FileName = item.FileName,
+                    Id = item.Id,
                     Status = UploadStatus.Success
                 });
             }
         }
+
         [Parameter]
         public int Limit { get; set; }
+
         private void ScanFiles(string[][] files)
         {
-            if ( Files.Count >= Limit )
+            if (Files.Count >= Limit)
             {
-                if ( Limit == 1 )
+                if (Limit == 1)
                 {
                     Files = new HashSet<IFileModel>();
                     var item = files[0];
@@ -126,29 +131,27 @@ namespace Blazui.Community.App.Components
                 }
                 else
                 {
-
                     Alert($"最多允许上传{Limit}个文件");
                     return;
                 }
-
             }
-            foreach ( var item in files )
+            foreach (var item in files)
             {
                 var ext = Path.GetExtension(item[0]);
-                if ( AllowExtensions.Any() && !AllowExtensions.Contains(ext , StringComparer.CurrentCultureIgnoreCase) )
+                if (AllowExtensions.Any() && !AllowExtensions.Contains(ext, StringComparer.CurrentCultureIgnoreCase))
                 {
                     Alert("您选择的文件中包含不允许上传的文件后缀");
                     return;
                 }
                 var size = Convert.ToInt64(item[1]);
-                if ( size / 1000 > MaxSize && MaxSize > 0 )
+                if (size / 1000 > MaxSize && MaxSize > 0)
                 {
                     Alert("您选择的文件中包含大小超过允许大小的文件");
                     return;
                 }
-                if ( item.Length >= 4 )
+                if (item.Length >= 4)
                 {
-                    if ( ( Convert.ToInt32(item[2]) > Width && Width > 0 ) || ( Convert.ToInt32(item[3]) > Height && Height > 0 ) )
+                    if ((Convert.ToInt32(item[2]) > Width && Width > 0) || (Convert.ToInt32(item[3]) > Height && Height > 0))
                     {
                         Alert("您选择的文件中包含尺寸超过允许大小的文件");
                         return;
@@ -156,13 +159,12 @@ namespace Blazui.Community.App.Components
                 }
                 AddFile(item);
             }
-
-
         }
-        protected override void FormItem_OnReset(object value , bool requireRerender)
+
+        protected override void FormItem_OnReset(object value, bool requireRerender)
         {
             RequireRender = true;
-            if ( value == null )
+            if (value == null)
             {
                 Files = new HashSet<IFileModel>();
             }
@@ -172,16 +174,16 @@ namespace Blazui.Community.App.Components
             }
             StateHasChanged();
         }
+
         private void AddFile(string[] item)
         {
             var file = new UploadModel()
             {
-                FileName = Path.GetFileName(item[0]) ,
-                Status = UploadStatus.UnStart ,
+                FileName = Path.GetFileName(item[0]),
+                Status = UploadStatus.UnStart,
                 Url = item.Length == 5 ? item[4] : string.Empty
             };
             Files.Add(file);
         }
-
     }
 }

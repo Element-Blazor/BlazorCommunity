@@ -22,7 +22,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
         public static IServiceCollection AddUnitOfWork<TContext>(this IServiceCollection services) where TContext : DbContext
         {
             services.AddScoped<IRepositoryFactory, UnitOfWork<TContext>>();
-            // Following has a issue: IUnitOfWork cannot support multiple dbcontext/database, 
+            // Following has a issue: IUnitOfWork cannot support multiple dbcontext/database,
             // that means cannot call AddUnitOfWork<TContext> multiple times.
             // Solution: check IUnitOfWork whether or null
             services.AddScoped<IUnitOfWork, UnitOfWork<TContext>>();

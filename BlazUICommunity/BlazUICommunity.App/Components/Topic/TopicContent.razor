@@ -1,5 +1,5 @@
 ﻿@inherits TopicContentBase
-@if ( !string.IsNullOrWhiteSpace(TopicModel.Id))
+@if (!string.IsNullOrWhiteSpace(TopicModel.Id))
 {
     <div class="content-topic-base">
         <BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
@@ -33,7 +33,7 @@
                             }
                             <div class="content-title">
                                 <div class="el-badge item" style="margin-top: -5px;">
-                                    <div >
+                                    <div>
                                         @if (IsEditing)
                                         {
                                             <BInput TValue="string" Type="InputType.Text" @bind-Value="TopicModel.Title" Style="width: 500px;" Size="InputSize.Medium"></BInput>
@@ -43,12 +43,11 @@
                                             <span> @TopicModel.Title</span>
                                         }
                                     </div>
-                                    @if (TopicModel.Good == 1&&!IsEditing)
+                                    @if (TopicModel.Good == 1 && !IsEditing)
                                     {
                                         <sup class="el-badge__content el-badge__content--undefined is-fixed" style=" font-size:12px;">精</sup>
                                     }
                                 </div>
-
                             </div>
                         </div>
                         <div class="content-time">    @TopicModel?.LastModifyDateDisplay</div>
@@ -86,7 +85,6 @@
                             }
                         </div>
                     </div>
-
                 </div>
             </Header>
             <Body>

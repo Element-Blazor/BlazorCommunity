@@ -1,9 +1,5 @@
 ﻿using Blazui.Community.Enums;
-using Blazui.Community.Request;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.QueryCondition
 {
@@ -12,11 +8,11 @@ namespace Blazui.Community.Admin.QueryCondition
         public int PageIndex { get; set; } = 1;
         public int PageSize { get; set; } = 15;
 
-
         /// <summary>
         /// 发布时间开始
         /// </summary>
         public DateTime? CreateDateStart { get; set; }
+
         /// <summary>
         /// 发布时间结束
         /// </summary>

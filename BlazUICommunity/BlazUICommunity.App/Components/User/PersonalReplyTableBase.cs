@@ -10,7 +10,6 @@ namespace Blazui.Community.App.Components
 {
     public class PersonalReplyTableBase : PageBase
     {
-
         protected int pageSize = 6;
         protected int currentPage = 1;
         internal bool requireRender = false;
@@ -19,7 +18,6 @@ namespace Blazui.Community.App.Components
         protected BTable table;
         protected BForm searchForm;
         protected BZUserModel User { get; set; }
-
 
         internal int CurrentPage
         {
@@ -39,6 +37,7 @@ namespace Blazui.Community.App.Components
         {
             await LoadDatas();
         }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
@@ -65,8 +64,8 @@ namespace Blazui.Community.App.Components
 
                  UpdateUI();
              });
-
         }
+
         /// <summary>
         /// 删除纪录
         /// </summary>
@@ -85,18 +84,19 @@ namespace Blazui.Community.App.Components
                     }
                 }
         }
+
         protected void LinktoTopic(object topic)
         {
             if (topic is BZReplyDto topicModel)
                 navigationManager.NavigateTo($"/topic/{topicModel.TopicId}");
         }
+
         protected override bool ShouldRender() => true;
 
         protected override async Task InitilizePageDataAsync()
         {
             User = await GetUser();
         }
-
 
         private void UpdateUI()
         {
