@@ -29,45 +29,41 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazAdmin", "..\..\BlazAdmi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazAdmin.ServerRender", "..\..\BlazAdmin.ServerRender\src\BlazAdmin.ServerRender\BlazAdmin.ServerRender.csproj", "{BCB24D6E-D129-4974-AA9C-4B61272267A4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.MSTest", "Blazui.Community.MSTest\Blazui.Community.MSTest.csproj", "{35E899CC-8F56-4501-A23C-F746B5D68B52}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.XUnitTest", "Blazui.Community.XUnitTest\Blazui.Community.XUnitTest.csproj", "{60B5907C-2BF3-44A1-9271-DABEA072BA4C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02D4946E-BCDD-426C-A948-5284886B10FB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dependencies", "dependencies", "{E95F1659-1A5D-440A-8AAE-F7427826A2BF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Enums", "Blazui.Community.Enums\Blazui.Community.Enums.csproj", "{D3E60454-B8ED-461A-A31D-4888120269FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.AutoMapperExtensions", "Blazui.Community.AutoMapperExtensions\Blazui.Community.AutoMapperExtensions.csproj", "{2C9B55C4-FD77-4DCC-9AC6-EEA7330FAC43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.AutoMapperExtensions", "Blazui.Community.AutoMapperExtensions\Blazui.Community.AutoMapperExtensions.csproj", "{2C9B55C4-FD77-4DCC-9AC6-EEA7330FAC43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.DateTimeExtensions", "Blazui.Community.DateTimeExtensions\Blazui.Community.DateTimeExtensions.csproj", "{7759754D-549D-4647-BB74-6C7BBEE1E2BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.DateTimeExtensions", "Blazui.Community.DateTimeExtensions\Blazui.Community.DateTimeExtensions.csproj", "{7759754D-549D-4647-BB74-6C7BBEE1E2BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.FileExtensions", "Blazui.Community.FileExtensions\Blazui.Community.FileExtensions.csproj", "{97D5ECDC-AF93-4F5B-8753-1B4FEAE0306F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.FileExtensions", "Blazui.Community.FileExtensions\Blazui.Community.FileExtensions.csproj", "{97D5ECDC-AF93-4F5B-8753-1B4FEAE0306F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "extensions", "extensions", "{E171AC9F-FD01-47B9-8C23-3EB974EC6B3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.DictionaryExtensions", "Blazui.Community.DictionaryExtensions\Blazui.Community.DictionaryExtensions.csproj", "{82A80E8B-89DB-4D0F-888D-5BD1B51EDE5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.DictionaryExtensions", "Blazui.Community.DictionaryExtensions\Blazui.Community.DictionaryExtensions.csproj", "{82A80E8B-89DB-4D0F-888D-5BD1B51EDE5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.HttpClientExtensions", "Blazui.Community.HttpClientExtensions\Blazui.Community.HttpClientExtensions.csproj", "{D3A96CE3-F270-4942-A44A-8E1EC9D5EA98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.HttpClientExtensions", "Blazui.Community.HttpClientExtensions\Blazui.Community.HttpClientExtensions.csproj", "{D3A96CE3-F270-4942-A44A-8E1EC9D5EA98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.Response", "Blazui.Community.Response\Blazui.Community.Response.csproj", "{9CE59831-B5A0-4D3A-9C05-1F8122D5290F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Response", "Blazui.Community.Response\Blazui.Community.Response.csproj", "{9CE59831-B5A0-4D3A-9C05-1F8122D5290F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.SwaggerExtensions", "Blazui.Community.SwaggerExtensions\Blazui.Community.SwaggerExtensions.csproj", "{A96F074F-1C70-4B5D-AE30-A5BBB5525C12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.SwaggerExtensions", "Blazui.Community.SwaggerExtensions\Blazui.Community.SwaggerExtensions.csproj", "{A96F074F-1C70-4B5D-AE30-A5BBB5525C12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.AutofacModules", "Blazui.Community.AutofacModules\Blazui.Community.AutofacModules.csproj", "{17063FD0-FA6C-4D3E-9C34-372CCEACBD2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.AutofacModules", "Blazui.Community.AutofacModules\Blazui.Community.AutofacModules.csproj", "{17063FD0-FA6C-4D3E-9C34-372CCEACBD2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.StringExtensions", "Blazui.Community.StringExtensions\Blazui.Community.StringExtensions.csproj", "{6C2BE13F-919F-45EB-B7C3-0F902677C541}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.StringExtensions", "Blazui.Community.StringExtensions\Blazui.Community.StringExtensions.csproj", "{6C2BE13F-919F-45EB-B7C3-0F902677C541}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.MvcCore", "Blazui.Community.MvcCore\Blazui.Community.MvcCore.csproj", "{3E8B05C1-F703-4CDF-A11C-86A518C5801A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.MvcCore", "Blazui.Community.MvcCore\Blazui.Community.MvcCore.csproj", "{3E8B05C1-F703-4CDF-A11C-86A518C5801A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.JWTServiceCollectionExtensions", "Blazui.Community.JWTServiceCollectionExtensions\Blazui.Community.JWTServiceCollectionExtensions.csproj", "{667D0B1F-D720-4ED4-9A6B-FC21E5CBE584}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.JWTServiceCollectionExtensions", "Blazui.Community.JWTServiceCollectionExtensions\Blazui.Community.JWTServiceCollectionExtensions.csproj", "{667D0B1F-D720-4ED4-9A6B-FC21E5CBE584}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.LinqExtensions", "Blazui.Community.LinqExtensions\Blazui.Community.LinqExtensions.csproj", "{6F3404CA-4AC0-4545-A62B-B31340FA417C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.LinqExtensions", "Blazui.Community.LinqExtensions\Blazui.Community.LinqExtensions.csproj", "{6F3404CA-4AC0-4545-A62B-B31340FA417C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.IdentityExtensions", "Blazui.Community.IdentityExtensions\Blazui.Community.IdentityExtensions.csproj", "{291FDBCD-52B6-477B-B02C-DEC5FA78D2C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.IdentityExtensions", "Blazui.Community.IdentityExtensions\Blazui.Community.IdentityExtensions.csproj", "{291FDBCD-52B6-477B-B02C-DEC5FA78D2C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.Logger", "Blazui.Community.Logger\Blazui.Community.Logger.csproj", "{00BBE747-8D4F-4CC5-89CD-922660D7AB1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Logger", "Blazui.Community.Logger\Blazui.Community.Logger.csproj", "{00BBE747-8D4F-4CC5-89CD-922660D7AB1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,14 +123,6 @@ Global
 		{BCB24D6E-D129-4974-AA9C-4B61272267A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCB24D6E-D129-4974-AA9C-4B61272267A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCB24D6E-D129-4974-AA9C-4B61272267A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{35E899CC-8F56-4501-A23C-F746B5D68B52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{35E899CC-8F56-4501-A23C-F746B5D68B52}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{35E899CC-8F56-4501-A23C-F746B5D68B52}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{35E899CC-8F56-4501-A23C-F746B5D68B52}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60B5907C-2BF3-44A1-9271-DABEA072BA4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60B5907C-2BF3-44A1-9271-DABEA072BA4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60B5907C-2BF3-44A1-9271-DABEA072BA4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60B5907C-2BF3-44A1-9271-DABEA072BA4C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D3E60454-B8ED-461A-A31D-4888120269FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D3E60454-B8ED-461A-A31D-4888120269FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3E60454-B8ED-461A-A31D-4888120269FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -218,12 +206,15 @@ Global
 		{97D5ECDC-AF93-4F5B-8753-1B4FEAE0306F} = {E171AC9F-FD01-47B9-8C23-3EB974EC6B3A}
 		{82A80E8B-89DB-4D0F-888D-5BD1B51EDE5A} = {E171AC9F-FD01-47B9-8C23-3EB974EC6B3A}
 		{D3A96CE3-F270-4942-A44A-8E1EC9D5EA98} = {E171AC9F-FD01-47B9-8C23-3EB974EC6B3A}
+		{9CE59831-B5A0-4D3A-9C05-1F8122D5290F} = {E171AC9F-FD01-47B9-8C23-3EB974EC6B3A}
 		{A96F074F-1C70-4B5D-AE30-A5BBB5525C12} = {E171AC9F-FD01-47B9-8C23-3EB974EC6B3A}
 		{17063FD0-FA6C-4D3E-9C34-372CCEACBD2D} = {E171AC9F-FD01-47B9-8C23-3EB974EC6B3A}
 		{6C2BE13F-919F-45EB-B7C3-0F902677C541} = {E171AC9F-FD01-47B9-8C23-3EB974EC6B3A}
+		{3E8B05C1-F703-4CDF-A11C-86A518C5801A} = {E171AC9F-FD01-47B9-8C23-3EB974EC6B3A}
 		{667D0B1F-D720-4ED4-9A6B-FC21E5CBE584} = {E171AC9F-FD01-47B9-8C23-3EB974EC6B3A}
 		{6F3404CA-4AC0-4545-A62B-B31340FA417C} = {E171AC9F-FD01-47B9-8C23-3EB974EC6B3A}
 		{291FDBCD-52B6-477B-B02C-DEC5FA78D2C1} = {E171AC9F-FD01-47B9-8C23-3EB974EC6B3A}
+		{00BBE747-8D4F-4CC5-89CD-922660D7AB1F} = {E171AC9F-FD01-47B9-8C23-3EB974EC6B3A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {214D9E3A-FE6D-493E-86F1-59CFBDFE4EAD}
