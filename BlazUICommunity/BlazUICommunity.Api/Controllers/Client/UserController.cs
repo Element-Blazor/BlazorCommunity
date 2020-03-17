@@ -70,17 +70,17 @@ namespace Blazui.Community.Api.Controllers.Client
         }
 
 
-        /// <summary>
-        /// 根据ID删除用户
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [HttpDelete("Delete/{Id}/{oprationId}")]
-        public IActionResult Delete([FromRoute] string Id, string oprationId)
-        {
-            _userRepository.LogicDelete(Id, oprationId);
-            return Ok();
-        }
+        ///// <summary>
+        ///// 根据ID删除用户
+        ///// </summary>
+        ///// <returns></returns>
+        //[Authorize]
+        //[HttpDelete("Delete/{Id}/{oprationId}")]
+        //public IActionResult Delete([FromRoute] string Id, string oprationId)
+        //{
+        //    _userRepository.LogicDelete(Id, oprationId);
+        //    return Ok();
+        //}
         /// <summary>
         /// 冻结
         /// </summary>

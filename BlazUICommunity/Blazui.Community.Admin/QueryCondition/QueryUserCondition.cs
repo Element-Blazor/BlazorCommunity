@@ -3,7 +3,7 @@ using System;
 
 namespace Blazui.Community.Admin.QueryCondition
 {
-    public class QueryUserCondition : QueryBaseCondition
+    public class QueryUserCondition : BaseQueryCondition
     {
         /// <summary>
         /// 用户账号

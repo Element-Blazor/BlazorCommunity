@@ -418,14 +418,9 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
 
         Task<bool> ExecuteSqlCmdAsync(string sql, params DbParameter[] parameters);
 
-        bool LogicDelete(string Id,string oprationId);
+     
+        Task<bool> ChangeStateByIdAsync(string Id,int Status, string oprationId);
 
-        Task<bool> LogicDeleteAsync(string Id, string oprationId);
-
-
-        bool LogicRecovery(string Id, string oprationId);
-
-        Task<bool> LogicRecoveryAsync(string Id, string oprationId);
         #endregion
     }
 }

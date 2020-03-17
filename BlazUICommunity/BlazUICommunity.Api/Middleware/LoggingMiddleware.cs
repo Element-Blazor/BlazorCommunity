@@ -10,10 +10,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
 using Blazui.Community.Utility.Response;
+using Blazui.Community.Api.Extensions;
 
-namespace Blazui.Community.Utility.MiddleWare
+namespace Blazui.Community.Api
 {
     /// <summary>
     /// 
@@ -46,65 +46,73 @@ namespace Blazui.Community.Utility.MiddleWare
         {
             _stopwatch.Restart();
             HttpRequest request = context.Request;
-            HttpMiddlewareModel model = new HttpMiddlewareModel() { };
-            model.Request = new RequestBody();
-            model.ExecuteStart = DateTimeOffset.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-            model.Request.Url = request.Path.ToString();
-            model.Request.Header = request.Headers.ToDictionary(x => x.Key, v => string.Join(";", v.Value.ToList()));
-            model.Request.Method = request.Method;
-
-            try
+            if(request.Path.ToString().IfContains("upload"))
             {
-                // 获取请求body内容
-                if (request.Method.ToLower().Equals("post"))
-                {
-                    // 启用倒带功能，就可以让 Request.Body 可以再次读取
-                    request.EnableBuffering();
-                    Stream stream = request.Body;
-                    byte[] buffer = new byte[request.ContentLength.Value];
-                    await stream.ReadAsync(buffer, 0, buffer.Length);
-                    model.Request.Param = Encoding.Default.GetString(buffer);
-                    request.Body.Position = 0;
-                }
-                else if (request.Method.ToLower().Equals("get"))
-                {
-                    model.Request.Param = request.QueryString.Value;
-                }
+                await _next(context);
+            }
+            else
+            {
+                HttpMiddlewareModel model = new HttpMiddlewareModel() { };
+                model.Request = new RequestBody();
+                model.ExecuteStart = DateTimeOffset.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                model.Request.Url = request.Path.ToString();
+                model.Request.Header = request.Headers.ToDictionary(x => x.Key, v => string.Join(";", v.Value.ToList()));
+                model.Request.Method = request.Method;
 
-
-                //// 获取Response.Body内容
-                var originalBodyStream = context.Response.Body;
-                using var responseBody = new MemoryStream();
-                context.Response.Body = responseBody;
                 try
                 {
-                    await _next(context);
+                    // 获取请求body内容
+                    if (request.Method.ToLower().Equals("post"))
+                    {
+                        // 启用倒带功能，就可以让 Request.Body 可以再次读取
+                        request.EnableBuffering();
+                        Stream stream = request.Body;
+                        byte[] buffer = new byte[request.ContentLength.Value];
+                        await stream.ReadAsync(buffer, 0, buffer.Length);
+                        model.Request.Param = Encoding.Default.GetString(buffer);
+                        request.Body.Position = 0;
+                    }
+                    else if (request.Method.ToLower().Equals("get"))
+                    {
+                        model.Request.Param = request.QueryString.Value;
+                    }
+
+
+                    //// 获取Response.Body内容
+                    var originalBodyStream = context.Response.Body;
+                    using var responseBody = new MemoryStream();
+                    context.Response.Body = responseBody;
+                    try
+                    {
+                        await _next(context);
+                    }
+                    catch (Exception ex)
+                    {
+                        await HandleExceptionAsync(context, ex);
+                    }
+                    model.Response = await GetResponse(context.Response);
+                    model.ExecuteEnd = DateTimeOffset.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                    await responseBody.CopyToAsync(originalBodyStream);
                 }
                 catch (Exception ex)
                 {
                     await HandleExceptionAsync(context, ex);
                 }
-                model.Response = await GetResponse(context.Response);
-                model.ExecuteEnd = DateTimeOffset.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-                await responseBody.CopyToAsync(originalBodyStream);
+                // 响应完成记录时间和存入日志
+                context.Response.OnCompleted(() =>
+                {
+                    _stopwatch.Stop();
+                    model.ElapsedTime = $"{_stopwatch.ElapsedMilliseconds }ms";
+                    WriteLog(model);
+                    return Task.CompletedTask;
+                });
             }
-            catch (Exception ex)
-            {
-                await HandleExceptionAsync(context, ex);
-            }
-            // 响应完成记录时间和存入日志
-            context.Response.OnCompleted(() =>
-            {
-                _stopwatch.Stop();
-                model.ElapsedTime = $"{_stopwatch.ElapsedMilliseconds }ms";
-                WriteLog(model);
-                return Task.CompletedTask;
-            });
+           
         }
 
         private static void WriteLog(HttpMiddlewareModel model)
         {
-            if ( !model.Request.Url.ToLower().Contains("swagger") &&! model.Request.Url.ToLower().Contains("html") )
+            if ( !model.Request.Url.IfContains("swagger") &&! model.Request.Url.IfContains("html") )
             {
                 _logger.LogDebug("============================================================================");
                 _logger.LogDebug($"Start：{model.ExecuteStart}");

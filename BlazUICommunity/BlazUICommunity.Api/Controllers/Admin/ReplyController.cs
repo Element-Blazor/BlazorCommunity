@@ -15,6 +15,7 @@ using Blazui.Community.Request;
 using Blazui.Community.Utility.Extensions;
 using Blazui.Community.Utility.Filter;
 using Blazui.Community.Utility.Response;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -27,6 +28,7 @@ namespace Blazui.Community.Api.Controllers
     [Route("api/[Controller]")]
     [ApiController]
     [SwaggerTag(description: "回帖相关")]
+    [HttpCacheExpiration(MaxAge = 100)]
     public class ReplyController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -51,78 +53,42 @@ namespace Blazui.Community.Api.Controllers
         }
 
 
-       
+
+
         /// <summary>
-        /// 根据ID删除帖子
+        /// 删除
         /// </summary>
         /// <returns></returns>
-        [HttpDelete("Delete/{Id}")]
+        [HttpPatch("Delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] string Id)
         {
-
-            await _unitOfWork.CommitWithTransactionAsync(() =>
-            {
-
-                var delete = _replyRepository.LogicDelete(Id);
-                if (delete)
-                {
-                    _cacheService.Remove(nameof(BZReplyModel));
-                    var reply = _replyRepository.Find(Id);
-                    var topicRepo = _unitOfWork.GetRepository<BZTopicModel>();
-                    var topic = topicRepo.GetFirstOrDefault(p => p.Id == reply.TopicId);
-                    if (topic != null)
-                    {
-                        topic.ReplyCount--;
-                        topicRepo.Update(topic);
-                        _cacheService.Remove(nameof(BZTopicModel));
-                    }
-                }
-            });
-            return Ok();
+            return await DeleteOrResume(Id, -1);
         }
+
 
         /// <summary>
-        /// 删除或激活帖子
+        /// 恢复
         /// </summary>
         /// <returns></returns>
-        [HttpDelete("DeleteOrActive/{Id}")]
-        public async Task<IActionResult> DeleteOrActive([FromRoute] string Id)
+        [HttpPatch("Resume/{Id}")]
+        public async Task<IActionResult> Resume([FromRoute] string Id)
         {
-            var topicRepo = _unitOfWork.GetRepository<BZTopicModel>();
-            var result = await _unitOfWork.CommitWithTransactionAsync(() =>
-           {
-               var reply = _replyRepository.Find(Id);
-               var delete = false;
-               if (reply != null && reply.Status == 0)
-               {
-                   delete = _replyRepository.LogicDelete(reply.Id);
-               }
-               else
-               {
-                   delete = _replyRepository.LogicRecovery(reply.Id);
-               }
+            return await DeleteOrResume(Id, 0);
+        }
 
-               if (delete)
-               {
-                   _cacheService.Remove(nameof(BZReplyModel));
-                   var topic = topicRepo.GetFirstOrDefault(p => p.Id == reply.TopicId);
-                   if (topic != null)
-                   {
-                       if (reply.Status == 0)
-                       {
-                           topic.ReplyCount--;
-                       }
-                       else
-                       {
-                           topic.ReplyCount++;
-                       }
-                       topicRepo.Update(topic);
-                       _cacheService.Remove(nameof(BZTopicModel));
-                   }
-               }
-           });
+        private async Task<IActionResult> DeleteOrResume(string Id, int Status)
+        {
+            var reply = await _replyRepository.FindAsync(Id);
+            if (reply is null)
+                return BadRequest();
+            if (reply.Status == Status)
+                return Ok();
+            reply.Status = Status;
+            _replyRepository.Update(reply);
+            _cacheService.Remove(nameof(BZReplyModel));
             return Ok();
         }
+
 
         /// <summary>
         /// 根据条件分页查询回帖
@@ -133,13 +99,12 @@ namespace Blazui.Community.Api.Controllers
         {
             IPagedList<BZReplyModel> pagedList = null;
             var query = Request.CreateQueryExpression<BZReplyModel, ReplyRequestCondition>();
-            IList<BZUserModel> Users = new List<BZUserModel>();
-            IList<BZTopicModel> Topics = new List<BZTopicModel>();
+
             Expression<Func<BZTopicModel, bool>> where = p => true;
             if (!string.IsNullOrWhiteSpace(Request.Title))
             {
-                where = where.And(p => p.Title.Contains(Request.Title));
-                Topics = await _cacheService.Topics(where);
+                where = where.And(p => p.Title.IfContains(Request.Title));
+                var Topics = await _cacheService.Topics(where);
                 if (Topics != null && Topics.Any())
                     query = query.And(p => Topics.Select(x => x.Id).Contains(p.TopicId));
                 else
@@ -147,9 +112,9 @@ namespace Blazui.Community.Api.Controllers
             }
             if (!string.IsNullOrWhiteSpace(Request.UserName))
             {
-                Users = await _cacheService.Users(p => 
-                p.UserName.ToLower().Contains(Request.UserName.ToLower()) ||
-                p.NickName.ToLower().Contains(Request.UserName.ToLower()));
+                var Users = await _cacheService.Users(p =>
+               p.UserName.IfContains(Request.UserName) ||
+               p.NickName.IfContains(Request.UserName));
                 if (Users.Any())
                     query = query.And(p => Users.Select(x => x.Id).Contains(p.CreatorId));
                 else

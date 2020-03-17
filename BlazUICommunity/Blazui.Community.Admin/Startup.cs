@@ -7,7 +7,6 @@ using Blazui.Community.Model.Models;
 using BlazAdmin.ServerRender;
 using Microsoft.EntityFrameworkCore;
 using Blazui.Community.Admin.Service;
-using Blazui.Community.Admin.AutoConfiguration;
 using AutoMapper;
 using System;
 using Microsoft.AspNetCore.Identity;
@@ -54,7 +53,7 @@ namespace Blazui.Community.Admin
             });
             services.AddScoped<NetworkService>();
             services.AddTransient<ConfirmService>();
-            services.AddAutoMapper(typeof(AutoMapConfiguration));
+            //services.AddAutoMapper(typeof(AutoMapConfiguration));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

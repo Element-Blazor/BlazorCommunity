@@ -1,6 +1,7 @@
 ﻿using Blazui.Community.Admin.Enum;
 using Blazui.Community.Admin.Service;
 using Blazui.Community.Admin.ViewModel;
+using Blazui.Community.DTO.Admin;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -14,7 +15,7 @@ namespace Blazui.Community.Admin.Pages.Version
         internal BForm versionForm;
 
         [Parameter]
-        public VersionAutoGenerateColumnsDto model { get; set; }
+        public VersionDisplayDto model { get; set; }
         [Parameter]
         public EntryOperation EntryOperation { get; set; }
         [Inject]
@@ -23,7 +24,7 @@ namespace Blazui.Community.Admin.Pages.Version
         {
             if (!versionForm.IsValid())
                 return;
-            var version = versionForm.GetValue<VersionAutoGenerateColumnsDto>();
+            var version = versionForm.GetValue<VersionDisplayDto>();
             if(EntryOperation== EntryOperation.Add)
             {
                 version.CreateDate = DateTime.Now;

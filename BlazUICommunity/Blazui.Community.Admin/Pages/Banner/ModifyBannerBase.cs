@@ -3,6 +3,7 @@ using Blazui.Community.Admin.Enum;
 using Blazui.Community.Admin.Service;
 using Blazui.Community.Admin.ViewModel;
 using Blazui.Community.DTO;
+using Blazui.Community.DTO.Admin;
 using Blazui.Community.Enums;
 using Blazui.Community.Utility.Response;
 using Blazui.Component;
@@ -20,7 +21,7 @@ namespace Blazui.Community.Admin.Pages.Banner
         internal BForm versionForm;
 
         [Parameter]
-        public BannerAutoGenerateColumnsDto model { get; set; }
+        public BannerDisplayDto model { get; set; }
         [Parameter]
         public EntryOperation EntryOperation { get; set; }
         [Inject]
@@ -28,8 +29,7 @@ namespace Blazui.Community.Admin.Pages.Banner
         [Inject]
         IConfiguration Configuration { get; set; }
         internal string ServerUrl { get; private set; }
-        [Inject]
-        public IMapper Mapper { get; set; }
+     
 
         [Inject]
         MessageService MessageService { get; set; }
@@ -38,9 +38,9 @@ namespace Blazui.Community.Admin.Pages.Banner
             base.OnInitialized();
             ServerUrl = Configuration["ServerUrl"] + "/api/upload/" + UploadPath.Banner.Description();
         }
-        protected override void OnParametersSet()
+        protected override async Task OnParametersSetAsync()
         {
-            base.OnParametersSet();
+            await base.OnParametersSetAsync();
             if (EntryOperation == EntryOperation.Update)
                 model.Previews = new UploadModel[] { new UploadModel() { FileName = model.BannerImg.Split("/").Last(), Url = model.BannerImg, Id = model.BannerImg, Status = 0 } };
         }
@@ -48,25 +48,26 @@ namespace Blazui.Community.Admin.Pages.Banner
         {
             if (!versionForm.IsValid())
                 return;
-            var banner = versionForm.GetValue<BannerAutoGenerateColumnsDto>();
+            var banner = versionForm.GetValue<BannerDisplayDto>();
             if (banner.Previews.Length > 1)
             {
                 MessageService.Show("一次只能上传一张图片，请删除多余的", MessageType.Error);
                 return;
             }
             banner.BannerImg = banner.Previews.FirstOrDefault().Url;
-            var dto = Mapper.Map<BzBannerDto>(banner);
             BaseResponse response;
+
+            banner.LastModifyDate = DateTime.Now;
+            banner.LastModifierId = Guid.Empty.ToString();
             if (EntryOperation == EntryOperation.Add)
             {
-                dto.CreateDate = DateTime.Now;
-                dto.LastModifyDate = DateTime.Now;
-                response = await NetService.NewBanner(dto);
+                banner.CreatorId = Guid.Empty.ToString();
+                banner.CreateDate = DateTime.Now;
+                response = await NetService.NewBanner(banner);
             }
             else
             {
-                dto.LastModifyDate = DateTime.Now;
-                response = await NetService.UpdateBanner(dto);
+                response = await NetService.UpdateBanner(banner);
             }
             if (!response.IsSuccess)
                 MessageService.Show(response.Message,MessageType.Error);

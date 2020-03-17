@@ -32,7 +32,7 @@ namespace Blazui.Community.Api.Controllers
     //[Route("api/[controller]")]
     [ApiController]
     [SwaggerTag(description: "jwt鉴权")]
-    public class AccessTokenController : ControllerBase
+    public class TokenController : ControllerBase
     {
         private readonly IMemoryCache _cache;
         private readonly JwtService _jwtService;
@@ -44,7 +44,7 @@ namespace Blazui.Community.Api.Controllers
         /// <param name="cache"></param>
         /// <param name="jwtService"></param>
         /// <param name="userManager"></param>
-        public AccessTokenController(
+        public TokenController(
             IMemoryCache cache,
             JwtService jwtService,
             UserManager<BZUserModel> userManager)

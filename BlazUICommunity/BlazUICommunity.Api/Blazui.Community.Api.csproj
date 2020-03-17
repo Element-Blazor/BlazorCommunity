@@ -60,6 +60,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Configuration\Profiles\App\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

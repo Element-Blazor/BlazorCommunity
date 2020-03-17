@@ -76,7 +76,7 @@ namespace Blazui.Community.Api.Controllers.Client
                     return Ok(bzVerifyCodeModel.VerifyCode);
                 else
                 {
-                    await _bZVerifyCodeRepository.LogicDeleteAsync(result.Entity.Id);
+                    await _bZVerifyCodeRepository.ChangeStateByIdAsync(result.Entity.Id,-1,"");
                     return new BadRequestResponse("发送验证码失败");
                 }
             }

@@ -1,13 +1,13 @@
-﻿using Blazui.Community.Admin.QueryCondition;
-using Blazui.Community.DTO;
-using Blazui.Community.Enums;
+﻿using Blazui.Community.Enums;
+using Blazui.Community.Utility.Extensions;
 using Blazui.Component;
 using System;
 
-namespace Blazui.Community.Admin.ViewModel
+namespace Blazui.Community.DTO.Admin
 {
-    public class VersionAutoGenerateColumnsDto
+   public class VersionDisplayDto
     {
+
         [TableColumn(Ignore = true)]
         public string Id { get; set; }
 
@@ -40,17 +40,17 @@ namespace Blazui.Community.Admin.ViewModel
         /// <summary>
         /// 最后修改日期
         /// </summary>
-        [TableColumn(Ignore =true)]
+        [TableColumn(Ignore = true)]
         public DateTime LastModifyDate { get; set; }
         /// <summary>
         /// 版本nuget包地址
         /// </summary>
-        [TableColumn(Text = "Nuget包地址")]
+        [TableColumn(Text = "Nuget")]
         public string VerNuget { get; set; }
         /// <summary>
         /// 版本下载地址
         /// </summary>
-        [TableColumn(Text = "组件下载地址")]
+        [TableColumn(Text = "下载地址")]
         public string VerDownUrl { get; set; }
 
         /// <summary>
@@ -63,18 +63,12 @@ namespace Blazui.Community.Admin.ViewModel
         /// </summary>
         [TableColumn(Ignore = true)]
         public int Status { get; set; }
-
+        [AutoNotMap]
         [TableColumn(Text = "状态", Width = 60)]
-        public string StatusDisplay => Status switch
-        {
-            0 => "正常",
-            -1 => "已删除",
-            _ => ""
-        };
+        public string StatusDisplay => ((DelStatus)Status).Description();
 
-
+        [AutoNotMap]
         [TableColumn(Text = "项目", Width = 100)]
-        public string ProjectDisplay => Project.Description(); 
+        public string ProjectDisplay => Project.Description();
     }
-
 }

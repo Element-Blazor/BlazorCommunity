@@ -2,6 +2,7 @@
 using Blazui.Community.Admin.Pages.Topic;
 using Blazui.Community.Admin.QueryCondition;
 using Blazui.Community.DTO;
+using Blazui.Community.DTO.Admin;
 using Blazui.Component;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.Pages.Topic
 {
-    public class TopicManageBase : ManagePageBase<BZTopicDto>
+    public class TopicManageBase : ManagePageBase<TopicDisplayDto>
     {
 
         protected override async Task LoadDatas(bool MustRefresh = false)
@@ -26,7 +27,7 @@ namespace Blazui.Community.Admin.Pages.Topic
         protected async Task Top(object obj)
         {
 
-            if (obj is BZTopicDto dto)
+            if (obj is TopicDisplayDto dto)
             {
                 await ConfirmService.ConfirmAsync(
                     async () => await NetService.TopTopic(dto.Id),
@@ -36,7 +37,7 @@ namespace Blazui.Community.Admin.Pages.Topic
         }
         protected async Task Detail(object obj)
         {
-            if (obj is BZTopicDto dto)
+            if (obj is TopicDisplayDto dto)
             {
                 Dictionary<string, object> parameters = new Dictionary<string, object>
                 {
@@ -47,7 +48,7 @@ namespace Blazui.Community.Admin.Pages.Topic
         }
         protected async Task Best(object obj)
         {
-            if (obj is BZTopicDto dto)
+            if (obj is TopicDisplayDto dto)
             {
                 await ConfirmService.ConfirmAsync(
                      async () => await NetService.BestTopic(dto.Id),
@@ -57,7 +58,7 @@ namespace Blazui.Community.Admin.Pages.Topic
         }
         protected async Task End(object obj)
         {
-            if (obj is BZTopicDto dto)
+            if (obj is TopicDisplayDto dto)
             {
                 await ConfirmService.ConfirmAsync(
                     async () => await NetService.EndTopic(dto.Id),
@@ -66,12 +67,24 @@ namespace Blazui.Community.Admin.Pages.Topic
             }
         }
 
-        protected async Task Del(object obj)
+        protected async Task Delete(object obj)
         {
-            if (obj is BZTopicDto dto)
+            if (obj is TopicDisplayDto dto)
             {
                 await ConfirmService.ConfirmAsync(
-                    async () => await NetService.DelTopic(dto.Id, dto.Status),
+                    async () => await NetService.DelTopic(dto.Id),
+                    async () => await SearchData(true)
+                    );
+            }
+        }
+
+
+        protected async Task Resume(object obj)
+        {
+            if (obj is TopicDisplayDto dto)
+            {
+                await ConfirmService.ConfirmAsync(
+                    async () => await NetService.ResumeTopic(dto.Id),
                     async () => await SearchData(true)
                     );
             }

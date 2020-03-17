@@ -5,19 +5,19 @@
 
 <BForm Inline="true" @ref="searchForm">
     <BFormItem TValue="string" Label="用户名" Name="@nameof(QueryUserCondition.UserName)" IsRequired="false">
-        <BInput TValue="string"></BInput>
+        <BInput IsClearable="true" TValue="string"></BInput>
     </BFormItem>
     <BFormItem TValue="string" Label="手机" Name="@nameof(QueryUserCondition.PhoneNumber)" IsRequired="false">
-        <BInput TValue="string"></BInput>
+        <BInput IsClearable="true" TValue="string"></BInput>
     </BFormItem>
     <BFormItem TValue="string" Label="邮箱" Name="@nameof(QueryUserCondition.Email)" IsRequired="false">
-        <BInput TValue="string"></BInput>
+        <BInput IsClearable="true" TValue="string"></BInput>
     </BFormItem>
     <BFormItem TValue="DateTime?" Label="注册时间" IsRequired="false" Name="@nameof(QueryUserCondition.CreateDateStart)">
-        <BDatePicker></BDatePicker>
+        <BDatePicker IsClearable="true"></BDatePicker>
     </BFormItem>
     <BFormItem TValue="DateTime?" Label="至" IsRequired="false" Name="@nameof(QueryUserCondition.CreateDateEnd)">
-        <BDatePicker></BDatePicker>
+        <BDatePicker IsClearable="true"></BDatePicker>
     </BFormItem>
     <BFormActionItem>
         <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
@@ -32,11 +32,11 @@
         <BTableColumn Width="100" Property="@nameof(UserDisplayDto.Email)" Text="邮箱" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="100" Property="@nameof(UserDisplayDto.PhoneNumber)" Text="手机" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="100" Property="@nameof(UserDisplayDto.NickName)" Text="昵称" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="50"  Property="@nameof(UserDisplayDto.SexDisplay)" Text="性别" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="50"  Property="@nameof(UserDisplayDto.StatusDisplay)" Text="状态" Style="text-align:center;color:red;"></BTableColumn>
-        <BTableColumn Width="200" Property="@nameof(UserDisplayDto.Signature)"  Text="签名" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="50" Property="@nameof(UserDisplayDto.SexDisplay)" Text="性别" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="50" Property="@nameof(UserDisplayDto.StatusDisplay)" Text="状态" Style="text-align:center;color:red;"></BTableColumn>
+        <BTableColumn Width="200" Property="@nameof(UserDisplayDto.Signature)" Text="签名" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="100" Property="@nameof(UserDisplayDto.CreateDate)" Format="yyyy-MM-dd" Text="注册日期" Style="text-align:center;"></BTableColumn>
-        <BTableTemplateColumn Text="操作" Width="100">
+        <BTableTemplateColumn Text="操作" Width="150">
             <BButton Type="@ButtonType.Success" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Detail(context))">查看</BButton>
 
             <BDropDown Style="cursor:pointer;">
@@ -47,11 +47,11 @@
                     @if (context is UserDisplayDto dto)
                         if (dto.Status == 0)
                         {
-                            <BDropDownItem OnClick="@(e => Frozen(context))">封禁账号</BDropDownItem>
+                            <BDropDownItem OnClick="@(e => Delete(context))">删除</BDropDownItem>
                         }
                         else
                         {
-                            <BDropDownItem OnClick="@(e => UnFrozen(context))">激活账号</BDropDownItem>
+                            <BDropDownItem OnClick="@(e => Resume(context))">恢复</BDropDownItem>
                         }
                     <BDropDownItem OnClick="@(e=> ResetPassword(context))">重置密码</BDropDownItem>
                 </Items>

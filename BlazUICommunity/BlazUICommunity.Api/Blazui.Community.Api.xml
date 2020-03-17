@@ -49,35 +49,6 @@
             
             </summary>
         </member>
-        <member name="T:Blazui.Community.Api.Controllers.AccessTokenController">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.AccessTokenController.#ctor(Microsoft.Extensions.Caching.Memory.IMemoryCache,Blazui.Community.Utility.Jwt.JwtService,Microsoft.AspNetCore.Identity.UserManager{Blazui.Community.Model.Models.BZUserModel})">
-            <summary>
-            
-            </summary>
-            <param name="cache"></param>
-            <param name="jwtService"></param>
-            <param name="userManager"></param>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.AccessTokenController.Post(Blazui.Community.Api.Controllers.LoginInModel)">
-            <summary>
-            登录，获取后原来RefreshToken将失效。
-            AccessToken有效时间30分钟
-            RefreshToken有效时间60分钟
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.AccessTokenController.Refresh(System.String)">
-            <summary>
-            刷新AccessToken
-            </summary>
-            <param name="token">刷新的请求 {"token": "refresh_token"}</param>
-            <returns></returns>
-        </member>
         <member name="T:Blazui.Community.Api.Controllers.BannerController">
             <summary>
             
@@ -97,7 +68,13 @@
         </member>
         <member name="M:Blazui.Community.Api.Controllers.BannerController.Delete(System.String)">
             <summary>
-            逻辑删除
+            删除
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.BannerController.Resume(System.String)">
+            <summary>
+            恢复
             </summary>
             <returns></returns>
         </member>
@@ -107,207 +84,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.BannerController.Query(System.String)">
-            <summary>
-            根据Id查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.BannerController.Query(Blazui.Community.Request.BannerRequestCondition)">
-            <summary>
-            根据条件分页查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.BannerController.Query(System.Int32,System.Int32)">
-            <summary>
-            根据条件分页查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.BannerController.QueryAll">
-            <summary>
-            根据条件分页查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:Blazui.Community.Api.Controllers.FollowController">
-            <summary>
-            关注
-            </summary>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.FollowController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZFollowRepository,Blazui.Community.Api.Service.ICacheService)">
-            <summary>
-            
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="mapper"></param>
-            <param name="bZFollowRepository"></param>
-            <param name="cacheService"></param>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.FollowController.Add(Blazui.Community.DTO.BZFollowDto)">
-            <summary>
-            新增关注
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.FollowController.Delete(System.String,System.String)">
-            <summary>
-            取消关注
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.FollowController.Query(System.String)">
-            <summary>
-            根据Id查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.FollowController.Query(Blazui.Community.Request.FollowRequestCondition)">
-            <summary>
-            根据条件分页查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.FollowController.IsStar(System.String,System.String)">
-            <summary>
-            查询指定用户是否收藏了指定帖子
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.FollowController.ToggleFollow(Blazui.Community.DTO.BZFollowDto)">
-            <summary>
-            改变是否收藏状态
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.FollowController.Update(Blazui.Community.DTO.BZFollowDto)">
-            <summary>
-            更新关注
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.FollowController.CancelFollow(System.String,System.String)">
-            <summary>
-            改变是否收藏状态
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:Blazui.Community.Api.Controllers.Part3Controller">
-            <summary>
-            第三方账号
-            </summary>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Part3Controller.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
-            <summary>
-            
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="mapper"></param>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Part3Controller.Add(Blazui.Community.DTO.BZOauthDto)">
-            <summary>
-            新增
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Part3Controller.Delete(System.String,System.String)">
-            <summary>
-            取消
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Part3Controller.Update(Blazui.Community.DTO.BZOauthDto)">
-            <summary>
-            更新
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Part3Controller.Query(System.String)">
-            <summary>
-            根据Id查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:Blazui.Community.Api.Controllers.PointController">
-            <summary>
-            积分
-            </summary>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.PointController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
-            <summary>
-            
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="mapper"></param>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.PointController.Add(Blazui.Community.DTO.BZPointDto)">
-            <summary>
-            新增
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.PointController.Delete(System.String,System.String)">
-            <summary>
-            逻辑删除
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.PointController.Update(Blazui.Community.DTO.BZPointDto)">
-            <summary>
-            更新
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.PointController.Query(System.String)">
-            <summary>
-            根据Id查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.PointController.Query(Blazui.Community.Request.PointRequestCondition)">
-            <summary>
-            根据条件分页查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:Blazui.Community.Api.Controllers.RegionController">
-            <summary>
-            地址
-            </summary>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.RegionController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
-            <summary>
-            
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="mapper"></param>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.RegionController.Add(Blazui.Community.DTO.BZAddressDto)">
-            <summary>
-            新增
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.RegionController.Delete(System.String,System.String)">
-            <summary>
-            逻辑删除
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.RegionController.Update(Blazui.Community.DTO.BZAddressDto)">
-            <summary>
-            更新
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.RegionController.Query(System.String)">
-            <summary>
-            根据Id查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.RegionController.Query(Blazui.Community.Request.AddressRequest)">
+        <member name="M:Blazui.Community.Api.Controllers.BannerController.Query(Blazui.Community.Request.BannerReuestCondition)">
             <summary>
             根据条件分页查询
             </summary>
@@ -329,13 +106,13 @@
         </member>
         <member name="M:Blazui.Community.Api.Controllers.ReplyController.Delete(System.String)">
             <summary>
-            根据ID删除帖子
+            删除
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.ReplyController.DeleteOrActive(System.String)">
+        <member name="M:Blazui.Community.Api.Controllers.ReplyController.Resume(System.String)">
             <summary>
-            删除或激活帖子
+            恢复
             </summary>
             <returns></returns>
         </member>
@@ -413,15 +190,15 @@
             <param name="userManager"></param>
             <param name="cacheService"></param>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.Frozen(System.String)">
+        <member name="M:Blazui.Community.Api.Controllers.UserController.Delete(System.String)">
             <summary>
             删除
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.UnFrozen(System.String)">
+        <member name="M:Blazui.Community.Api.Controllers.UserController.Resume(System.String)">
             <summary>
-            解封
+            恢复
             </summary>
             <returns></returns>
         </member>
@@ -456,6 +233,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Blazui.Community.Api.Controllers.VersionController.Resume(System.String)">
+            <summary>
+            恢复
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Blazui.Community.Api.Controllers.VersionController.Add(Blazui.Community.DTO.BZVersionDto)">
             <summary>
             删除
@@ -468,19 +251,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.VersionController.Get(System.Int32)">
-            <summary>
-            获取版本数据
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.VersionController.GetAll">
-            <summary>
-            获取版本数据
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.VersionController.GetPageList(System.Int32,System.Int32,System.Int32)">
+        <member name="M:Blazui.Community.Api.Controllers.VersionController.GetPageList(Blazui.Community.Request.VersionRequestCondition)">
             <summary>
             获取版本数据
             </summary>
@@ -639,126 +410,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:Blazui.Community.Api.Controllers.Client.Part3Controller">
-            <summary>
-            第三方账号
-            </summary>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.Part3Controller.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
-            <summary>
-            
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="mapper"></param>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.Part3Controller.Add(Blazui.Community.DTO.BZOauthDto)">
-            <summary>
-            新增
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.Part3Controller.Delete(System.String,System.String)">
-            <summary>
-            取消
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.Part3Controller.Update(Blazui.Community.DTO.BZOauthDto)">
-            <summary>
-            更新
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.Part3Controller.Query(System.String)">
-            <summary>
-            根据Id查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:Blazui.Community.Api.Controllers.Client.PointController">
-            <summary>
-            积分
-            </summary>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.PointController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
-            <summary>
-            
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="mapper"></param>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.PointController.Add(Blazui.Community.DTO.BZPointDto)">
-            <summary>
-            新增
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.PointController.Delete(System.String,System.String)">
-            <summary>
-            逻辑删除
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.PointController.Update(Blazui.Community.DTO.BZPointDto)">
-            <summary>
-            更新
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.PointController.Query(System.String)">
-            <summary>
-            根据Id查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.PointController.Query(Blazui.Community.Request.PointRequestCondition)">
-            <summary>
-            根据条件分页查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:Blazui.Community.Api.Controllers.Client.RegionController">
-            <summary>
-            地址
-            </summary>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.RegionController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper)">
-            <summary>
-            
-            </summary>
-            <param name="unitOfWork"></param>
-            <param name="mapper"></param>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.RegionController.Add(Blazui.Community.DTO.BZAddressDto)">
-            <summary>
-            新增
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.RegionController.Delete(System.String,System.String)">
-            <summary>
-            逻辑删除
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.RegionController.Update(Blazui.Community.DTO.BZAddressDto)">
-            <summary>
-            更新
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.RegionController.Query(System.String)">
-            <summary>
-            根据Id查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.RegionController.Query(Blazui.Community.Request.AddressRequest)">
-            <summary>
-            根据条件分页查询
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:Blazui.Community.Api.Controllers.Client.ReplyController">
             <summary>
             回帖相关
@@ -794,12 +445,6 @@
         <member name="M:Blazui.Community.Api.Controllers.Client.ReplyController.Delete(System.String)">
             <summary>
             根据ID删除帖子
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.ReplyController.DeleteOrActive(System.String)">
-            <summary>
-            删除或激活帖子
             </summary>
             <returns></returns>
         </member>
@@ -993,12 +638,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.UserController.Delete(System.String,System.String)">
-            <summary>
-            根据ID删除用户
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.UserController.Frozen(System.String)">
             <summary>
             冻结
@@ -1097,6 +736,35 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Blazui.Community.Api.Controllers.TokenController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.TokenController.#ctor(Microsoft.Extensions.Caching.Memory.IMemoryCache,Blazui.Community.Utility.Jwt.JwtService,Microsoft.AspNetCore.Identity.UserManager{Blazui.Community.Model.Models.BZUserModel})">
+            <summary>
+            
+            </summary>
+            <param name="cache"></param>
+            <param name="jwtService"></param>
+            <param name="userManager"></param>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.TokenController.Post(Blazui.Community.Api.Controllers.LoginInModel)">
+            <summary>
+            登录，获取后原来RefreshToken将失效。
+            AccessToken有效时间30分钟
+            RefreshToken有效时间60分钟
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.TokenController.Refresh(System.String)">
+            <summary>
+            刷新AccessToken
+            </summary>
+            <param name="token">刷新的请求 {"token": "refresh_token"}</param>
+            <returns></returns>
+        </member>
         <member name="M:Blazui.Community.Api.Controllers.UploadController.Success(Blazui.Community.Enums.UploadPath,System.String)">
             <summary>
             
@@ -1125,6 +793,56 @@
             <typeparam name="T"></typeparam>
             <typeparam name="K"></typeparam>
             <param name="pagedList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Extensions.StringExtensions.IfContains(System.String,System.String)">
+            <summary>
+            处理空格与忽略大小写
+            </summary>
+            <param name="source"></param>
+            <param name="toCompareString"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Blazui.Community.Api.LoggerMiddleware">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Blazui.Community.Api.LoggerMiddleware._stopwatch">
+            <summary>
+            计时器
+            </summary>
+        </member>
+        <member name="M:Blazui.Community.Api.LoggerMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{Blazui.Community.Api.LoggerMiddleware})">
+            <summary>
+            
+            </summary>
+            <param name="next"></param>
+        </member>
+        <member name="M:Blazui.Community.Api.LoggerMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            拦截请求参数打印日志
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.LoggerMiddleware.GetResponse(Microsoft.AspNetCore.Http.HttpResponse)">
+            <summary>
+            获取响应内容
+            </summary>
+            <param name="response"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Blazui.Community.Api.MiddlewareExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Blazui.Community.Api.MiddlewareExtensions.UseLogMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Program.Main(System.String[])">

@@ -3,26 +3,26 @@
 @using Blazui.Community.DTO;
 @inherits ReplyManageBase
 
-    <BForm Inline="true" @ref="searchForm">
-        <BFormItem TValue="string" Label="主贴标题" Name="@nameof(QueryReplyCondition.Title)" IsRequired="false">
-            <BInput TValue="string"></BInput>
-        </BFormItem>
-        <BFormItem TValue="string" Label="回帖用户" Name="@nameof(QueryReplyCondition.UserName)" IsRequired="false">
-            <BInput TValue="string"></BInput>
-        </BFormItem>
-        <BFormItem TValue="DelStatus?" Label="状态" Name="@nameof(QueryReplyCondition.Status)" IsRequired="false">
-            <div style="width:100px;"><BSelect TValue="DelStatus?"></BSelect></div>
-        </BFormItem>
-        <BFormItem TValue="DateTime?" Label="回复时间" IsRequired="false" Name="@nameof(QueryReplyCondition.CreateDateStart)">
-            <BDatePicker></BDatePicker>
-        </BFormItem>
-        <BFormItem TValue="DateTime?" Label="至" IsRequired="false" Name="@nameof(QueryReplyCondition.CreateDateEnd)">
-            <BDatePicker></BDatePicker>
-        </BFormItem>
-        <BFormActionItem>
-            <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
-        </BFormActionItem>
-    </BForm>
+<BForm Inline="true" @ref="searchForm">
+    <BFormItem TValue="string" Label="主贴标题" Name="@nameof(QueryReplyCondition.Title)" IsRequired="false">
+        <BInput IsClearable="true" TValue="string"></BInput>
+    </BFormItem>
+    <BFormItem TValue="string" Label="回帖用户" Name="@nameof(QueryReplyCondition.UserName)" IsRequired="false">
+        <BInput IsClearable="true" TValue="string"></BInput>
+    </BFormItem>
+    <BFormItem TValue="DelStatus?" Label="状态" Name="@nameof(QueryReplyCondition.Status)" IsRequired="false">
+        <div style="width:100px;"><BSelect TValue="DelStatus?"></BSelect></div>
+    </BFormItem>
+    <BFormItem TValue="DateTime?" Label="回复时间" IsRequired="false" Name="@nameof(QueryReplyCondition.CreateDateStart)">
+        <BDatePicker IsClearable="true"></BDatePicker>
+    </BFormItem>
+    <BFormItem TValue="DateTime?" Label="至" IsRequired="false" Name="@nameof(QueryReplyCondition.CreateDateEnd)">
+        <BDatePicker IsClearable="true"></BDatePicker>
+    </BFormItem>
+    <BFormActionItem>
+        <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
+    </BFormActionItem>
+</BForm>
 
 <div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
 
@@ -33,23 +33,22 @@
         <BTableColumn Width="400" Property="@nameof(BZReplyDto.Content)" Text="回帖内容" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="50" Property="@nameof(BZReplyDto.StatusDisplay)" Text="状态" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="100" Property="@nameof(BZReplyDto.CreateDate)" Format="yyyy-MM-dd" Text="发表时间" Style="text-align:center;"></BTableColumn>
-        <BTableTemplateColumn Text="操作" Width="100">
+        <BTableTemplateColumn Text="操作" Width="150">
             <BButton Type="@ButtonType.Success" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Detail(context))">查看</BButton>
+            @{
 
-            <BDropDown Style="cursor:pointer;">
-                <Trigger>
-                    <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" IsPlain="true">操作</BButton>
-                </Trigger>
-                <Items>
-                    <BDropDownItem OnClick="@(e=> Delete(context))">
-                        @{
-                            var reply = (BZReplyDto)context;
-                            var menu = reply?.Status == 0 ? "删除" : "恢复";
-                        }
-                        @menu
-                    </BDropDownItem>
-                </Items>
-            </BDropDown>
+
+                var reply = (BZReplyDto)context;
+                if (reply.Status == 0)
+                {
+                    <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Delete(context))">删除</BButton>
+                }
+                else
+                {
+                    <BButton Type="@ButtonType.Success" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Resume(context))">恢复</BButton>
+                }
+            }
+
         </BTableTemplateColumn>
     </BTableColumns>
 </BTable>

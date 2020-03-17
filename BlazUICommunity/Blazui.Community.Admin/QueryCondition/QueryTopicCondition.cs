@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.QueryCondition
 {
-    public class QueryTopicCondition : QueryBaseCondition
+    public class QueryTopicCondition : BaseQueryCondition
     {
         /// <summary>
         /// 标题

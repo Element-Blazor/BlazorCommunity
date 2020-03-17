@@ -116,9 +116,9 @@ namespace Blazui.Community.Api.Controllers.Client
         public async Task<IActionResult> Delete([FromRoute] string Id)
         {
 
-            await _unitOfWork.CommitWithTransactionAsync(() =>
+            await _unitOfWork.CommitWithTransactionAsync(async () =>
             {
-                var delete = _replyRepository.LogicDelete(Id);
+                var delete = await _replyRepository.ChangeStateByIdAsync(Id,-1,"");
                 if (delete)
                 {
                     _cacheService.Remove(nameof(BZReplyModel));
@@ -136,49 +136,7 @@ namespace Blazui.Community.Api.Controllers.Client
             return Ok();
         }
 
-        /// <summary>
-        /// 删除或激活帖子
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [HttpDelete("DeleteOrActive/{Id}")]
-        public async Task<IActionResult> DeleteOrActive([FromRoute] string Id)
-        {
-            var topicRepo = _unitOfWork.GetRepository<BZTopicModel>();
-            var result = await _unitOfWork.CommitWithTransactionAsync(() =>
-           {
-               var reply = _replyRepository.Find(Id);
-               var delete = false;
-               if (reply != null && reply.Status == 0)
-               {
-                   delete = _replyRepository.LogicDelete(reply.Id);
-               }
-               else
-               {
-                   delete = _replyRepository.LogicRecovery(reply.Id);
-               }
-
-               if (delete)
-               {
-                   _cacheService.Remove(nameof(BZReplyModel));
-                   var topic = topicRepo.GetFirstOrDefault(p => p.Id == reply.TopicId);
-                   if (topic != null)
-                   {
-                       if (reply.Status == 0)
-                       {
-                           topic.ReplyCount--;
-                       }
-                       else
-                       {
-                           topic.ReplyCount++;
-                       }
-                       topicRepo.Update(topic);
-                       _cacheService.Remove(nameof(BZTopicModel));
-                   }
-               }
-           });
-            return Ok();
-        }
+      
 
         /// <summary>
         /// 更新回帖
@@ -291,7 +249,7 @@ namespace Blazui.Community.Api.Controllers.Client
             Expression<Func<BZTopicModel, bool>> where = p => true;
             if (!string.IsNullOrWhiteSpace(topicTitle))
             {
-                where = where.And(p => p.Title.Contains(topicTitle));
+                where = where.And(p => p.Title.IfContains(topicTitle));
                 Topics = await _cacheService.Topics(where);
                 if (Topics != null && Topics.Any())
                     query = query.And(p => Topics.Select(x => x.Id).Contains(p.TopicId));
@@ -300,7 +258,7 @@ namespace Blazui.Community.Api.Controllers.Client
             }
             if (!string.IsNullOrWhiteSpace(userName))
             {
-                Users = await _cacheService.Users(p => p.UserName.Contains(userName) || p.NickName.Contains(userName));
+                Users = await _cacheService.Users(p => p.UserName.IfContains(userName) || p.NickName.IfContains(userName));
                 if (Users.Any())
                     query = query.And(p => Users.Select(x => x.Id).Contains(p.CreatorId));
                 else

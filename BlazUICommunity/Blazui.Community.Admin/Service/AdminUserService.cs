@@ -9,7 +9,6 @@ namespace Blazui.Community.Admin.Service
 {
     public class AdminUserService : AdminUserServiceBase<IdentityUser, IdentityRole>
     {
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AuthenticationStateProvider _AuthenticationStateProvider;
         public AdminUserService(
@@ -51,7 +50,7 @@ namespace Blazui.Community.Admin.Service
             return string.Empty;
         }
 
-        public async Task<bool> IsSupperAdminLogin()
+        public async Task<bool> IsSupperAdmin()
         {
             return (await _userManager.GetRolesAsync(
                          await _userManager.GetUserAsync(

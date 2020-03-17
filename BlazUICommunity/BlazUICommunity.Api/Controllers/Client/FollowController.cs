@@ -80,9 +80,9 @@ namespace Blazui.Community.Api.Controllers.Client
         /// <returns></returns>
         [Authorize]
         [HttpDelete("Delete/{Id}/{oprationId?}")]
-        public IActionResult Delete(string Id, string oprationId)
+        public async Task<IActionResult> Delete(string Id, string oprationId)
         {
-            var result = _followRepository.LogicDelete(Id, oprationId);
+            var result = await _followRepository.ChangeStateByIdAsync(Id,-1, oprationId);
             _cacheService.Remove(nameof(BZFollowModel));
             return Ok(result);
         }
@@ -116,7 +116,7 @@ namespace Blazui.Community.Api.Controllers.Client
             query = query.And(p => p.Status == 0);
             if(!string.IsNullOrWhiteSpace(Request.TopicTitle))
             {
-                var topicscontaintitle = await _cacheService.Topics(p => p.Title.Contains(Request.TopicTitle));
+                var topicscontaintitle = await _cacheService.Topics(p => p.Title.IfContains(Request.TopicTitle));
                 if (topicscontaintitle?.Count > 0)
                 {
                     query = query.And(p => topicscontaintitle.Select(x => x.Id).Contains(p.TopicId));
@@ -178,14 +178,7 @@ namespace Blazui.Community.Api.Controllers.Client
                 return await Add(Dto);
             else
             {
-                if (Dto.Status == 0)
-                {
-                    await _bZFollowRepository.LogicDeleteAsync(Dto.Id);
-                }
-                else
-                {
-                    await _bZFollowRepository.LogicRecoveryAsync(Dto.Id);
-                }
+                await _bZFollowRepository.ChangeStateByIdAsync(Dto.Id,Dto.Status==0?-1:0,"");
             }
             _cacheService.Remove(nameof(BZFollowModel));
             return Ok();

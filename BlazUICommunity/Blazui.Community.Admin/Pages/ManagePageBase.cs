@@ -15,6 +15,22 @@ namespace Blazui.Community.Admin.Pages
 {
     public abstract class ManagePageBase<T> : BComponentBase
     {
+        [Inject]
+        public ILogger<ManagePageBase<T>> _logger { get; set; }
+        [Inject]
+        public IMemoryCache MemoryCache { get; set; }
+        [Inject]
+        public NetworkService NetService { get; set; }
+
+        [Inject]
+        public MessageService MessageService { get; set; }
+        [Inject]
+        public MessageBox MessageBox { get; set; }
+        [Inject]
+        public ConfirmService ConfirmService { get; set; }
+        //[Inject]
+        //public IMapper Mapper { get; set; }
+
 
         protected int currentPage = 1;
         protected int pageSize = 10;
@@ -35,9 +51,8 @@ namespace Blazui.Community.Admin.Pages
             }
         }
 
-        protected  async Task SearchData(bool MustRefresh = false)
+        protected async Task SearchData(bool MustRefresh = false)
         {
-            currentPage = 1;
             await table.WithLoadingAsync(async () => await LoadDatas(MustRefresh));
         }
         protected abstract Task LoadDatas(bool MustRefresh = false);
@@ -53,7 +68,7 @@ namespace Blazui.Community.Admin.Pages
             StateHasChanged();
         }
 
-        protected TCondition BuildCondition<TCondition>() where TCondition : QueryBaseCondition,new()
+        protected TCondition BuildCondition<TCondition>() where TCondition : BaseQueryCondition, new()
         {
             TCondition condition = searchForm.GetValue<TCondition>();
             condition ??= new TCondition();
@@ -61,24 +76,6 @@ namespace Blazui.Community.Admin.Pages
             condition.PageSize = pageSize;
             return condition;
         }
-
-        [Inject]
-        public ILogger<ManagePageBase<T>> _logger { get; set; }
-        [Inject]
-        public IMemoryCache MemoryCache { get; set; }
-        [Inject]
-        public NetworkService NetService { get; set; }
-
-        [Inject]
-        public MessageService MessageService { get; set; }
-        [Inject]
-        public MessageBox MessageBox { get; set; }
-        [Inject]
-        public ConfirmService ConfirmService { get; set; }
-        [Inject]
-        public IMapper Mapper { get; set; }
-
-
 
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -98,10 +95,10 @@ namespace Blazui.Community.Admin.Pages
             }
         }
 
-        protected virtual Task InitilizePageDataAsync() =>  SearchData();
+        protected virtual async Task InitilizePageDataAsync() => await SearchData(true);
         protected override bool ShouldRender() => true;
 
 
-      
+
     }
 }

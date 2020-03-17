@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.QueryCondition
 {
-    public class QueryBaseCondition
+    public class BaseQueryCondition
     {
         public int PageIndex { get; set; } = 1;
         public int PageSize { get; set; } = 15;

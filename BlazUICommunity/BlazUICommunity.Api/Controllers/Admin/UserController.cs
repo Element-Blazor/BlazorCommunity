@@ -30,8 +30,7 @@ namespace Blazui.Community.Api.Controllers
     [Route("api/[Controller]")]
     [ApiController]
     [SwaggerTag(description: "用户相关")]
-    [HttpCacheExpiration(CacheLocation = CacheLocation.Public)]
-    [HttpCacheValidation(MustRevalidate = true)]
+    [HttpCacheExpiration(MaxAge =100)]
     public class UserController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -65,34 +64,31 @@ namespace Blazui.Community.Api.Controllers
         /// 删除
         /// </summary>
         /// <returns></returns>
-        [HttpPatch("Frozen/{Id}")]
-        public async Task<IActionResult> Frozen([FromRoute] string Id)
+        [HttpPatch("Delete/{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] string Id)
         {
-            var user = await _bZUserRepository.FindAsync(Id);
-            if (user is null)
-                return BadRequest();
-            if (user.Status == -1)
-                return Ok();
-            user.Status = -1;
-            _bZUserRepository.Update(user);
-            _cacheService.Remove(nameof(BZUserModel));
-            return Ok();
+            return await DeleteOrResume(Id, -1);
         }
 
 
         /// <summary>
-        /// 解封
+        /// 恢复
         /// </summary>
         /// <returns></returns>
-        [HttpPatch("UnFrozen/{Id}")]
-        public async Task<IActionResult> UnFrozen([FromRoute] string Id)
+        [HttpPatch("Resume/{Id}")]
+        public async Task<IActionResult> Resume([FromRoute] string Id)
+        {
+            return await DeleteOrResume(Id,0);
+        }
+
+        private async Task<IActionResult> DeleteOrResume(string Id,int Status)
         {
             var user = await _bZUserRepository.FindAsync(Id);
             if (user is null)
                 return BadRequest();
-            if (user.Status == 0)
+            if (user.Status == Status)
                 return Ok();
-            user.Status = 0;
+            user.Status = Status;
             _bZUserRepository.Update(user);
             _cacheService.Remove(nameof(BZUserModel));
             return Ok();
@@ -120,7 +116,6 @@ namespace Blazui.Community.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("Query")]
-        [ResponseCache(Duration = 60)]
         public async Task<IActionResult> Query([FromQuery] UsersRequestCondition Request = null)
         {
             var query = Request.CreateQueryExpression<BZUserModel, UsersRequestCondition>();

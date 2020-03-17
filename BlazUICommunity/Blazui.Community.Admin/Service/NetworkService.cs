@@ -14,7 +14,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
-using HttpMethod = Blazui.Community.Utility.Extensions.HttpMethod;
 
 namespace Blazui.Community.Admin.Service
 {
@@ -25,7 +24,6 @@ namespace Blazui.Community.Admin.Service
         private readonly BaseResponse Unauthorized;
 
         private static Dictionary<string, PropertyInfo[]> QuaryParams = new Dictionary<string, PropertyInfo[]>();
-        private bool IsSupperRole = false;
         public NetworkService(IHttpClientFactory httpClientFactory, AdminUserService adminUserService)
         {
             this.httpClient = httpClientFactory.CreateClient("BlazuiCommunitiyAdmin");
@@ -77,18 +75,24 @@ namespace Blazui.Community.Admin.Service
                 queryparam = "?";
             foreach (PropertyInfo prop in props)
             {
-                var value = IsNullableEnum(prop.PropertyType)? (int)prop.GetValue(t) : prop.GetValue(t);//可空的枚举 如何判断他是枚举??????
+                var value = IsNullableEnum(prop.PropertyType) ? (int)prop.GetValue(t) : prop.GetValue(t);//可空的枚举 如何判断他是枚举??????
 
                 queryparam += $"{prop.Name}={value}&";
             }
             queryparam = queryparam.TrimEnd('&');
             return MustRefresh ? $"{queryparam}&MustRefresh={DateTime.Now.Ticks}" : queryparam;
         }
-         static bool IsNullableEnum( Type t)
+
+
+        static bool IsNullableEnum(Type t)
         {
             Type u = Nullable.GetUnderlyingType(t);
             return (u != null) && u.IsEnum;
         }
+
+
+
+        #region User
         /// <summary>
         /// 查询用户
         /// </summary>
@@ -103,22 +107,22 @@ namespace Blazui.Community.Admin.Service
         /// 封禁账号
         /// </summary>
         /// <returns></returns>
-        internal async Task<BaseResponse> FrozenUser(string UserId)
+        internal async Task<BaseResponse> DeleteUser(string UserId)
         {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
+            if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
-            return await httpClient.PatchWithJsonResultAsync($"api/user/Frozen/{UserId}");
+            return await httpClient.PatchWithJsonResultAsync($"api/user/Delete/{UserId}");
         }
         /// <summary>
         /// 解封
         /// </summary>
         /// <param name="UserId"></param>
         /// <returns></returns>
-        internal async Task<BaseResponse> UnFrozen(string UserId)
+        internal async Task<BaseResponse> ResumeUser(string UserId)
         {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
+            if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
-            return await httpClient.PatchWithJsonResultAsync($"api/user/UnFrozen/{UserId}");
+            return await httpClient.PatchWithJsonResultAsync($"api/user/Resume/{UserId}");
         }
 
 
@@ -130,20 +134,133 @@ namespace Blazui.Community.Admin.Service
         /// <returns></returns>
         internal async Task<BaseResponse> ResetPassword(string UserId)
         {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
+            if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
             return await httpClient.PatchWithJsonResultAsync($"api/user/ResetPassword/{UserId}");
         }
+        #endregion
+
+
+        #region Reply
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse> DeleteReply(string Id)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+            return await httpClient.PatchWithJsonResultAsync($"api/Reply/Delete/{Id}");
+        }
+        /// <summary>
+        /// 恢复
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse> ResumeReply(string Id)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+            return await httpClient.PatchWithJsonResultAsync($"api/Reply/Resume/{Id}");
+        }
+        /// <summary>
+        /// 查询回复贴
+        /// </summary>
+        /// <param name="querycondition"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse<PageDatas<BZReplyDto>>> QueryReplys(QueryReplyCondition querycondition, bool MustRefresh = false)
+        {
+            return await httpClient.GetWithJsonResultAsync<PageDatas<BZReplyDto>>($"api/Reply/Query{BuildHttpQueryParam(querycondition, MustRefresh)}");
+        }
+        #endregion
+
+
+        #region Topic 
         /// <summary>
         /// 查询帖子
         /// </summary>
         /// <param name="querycondition"></param>
         /// <returns></returns>
-        internal async Task<BaseResponse<PageDatas<BZTopicDto>>> QueryTopics(QueryTopicCondition querycondition,bool MustRefresh = false)
+        internal async Task<BaseResponse<PageDatas<TopicDisplayDto>>> QueryTopics(QueryTopicCondition querycondition, bool MustRefresh = false)
         {
-            return await httpClient.GetWithJsonResultAsync<PageDatas<BZTopicDto>>($"api/Topic/Query{BuildHttpQueryParam(querycondition, MustRefresh)}");
+            return await httpClient.GetWithJsonResultAsync<PageDatas<TopicDisplayDto>>($"api/Topic/Query{BuildHttpQueryParam(querycondition, MustRefresh)}");
+        }
+        /// <summary>
+        /// 发表帖子
+        /// </summary>
+        /// <param name="bZTopicDto"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse> NewTopic(BZTopicDto bZTopicDto)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+
+            return await httpClient.PostWithJsonResultAsync("api/Topic/Add", BuildHttpContent(bZTopicDto));
         }
 
+
+
+        /// <summary>
+        /// 删除帖子
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse> DelTopic(string Id)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+            return await httpClient.PatchWithJsonResultAsync($"api/Topic/Delete/{Id}");
+        }
+
+        /// <summary>
+        /// 恢复帖子
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse> ResumeTopic(string Id)
+        {
+            return await httpClient.PatchWithJsonResultAsync($"api/Topic/Resume/{Id}");
+        }
+        /// <summary>
+        /// 加精
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse> BestTopic(string Id)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+            return await httpClient.PatchWithJsonResultAsync($"api/Topic/Best/{Id}");
+        }
+        /// <summary>
+        /// 置顶
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse> TopTopic(string Id)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+            return await httpClient.PatchWithJsonResultAsync($"api/Topic/Top/{Id}");
+        }
+
+        /// <summary>
+        /// 结贴
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse> EndTopic(string Id)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+            return await httpClient.PatchWithJsonResultAsync($"api/Topic/End/{Id}");
+        }
+        #endregion
+
+
+        #region Version
         /// <summary>
         /// 查询版本
         /// </summary>
@@ -151,9 +268,9 @@ namespace Blazui.Community.Admin.Service
         /// <param name="PageIndex"></param>
         /// <param name="projectId"></param>
         /// <returns></returns>
-        internal async Task<BaseResponse<PageDatas<BZVersionDto>>> GetVersions(QueryVersionCondition querycondition, bool MustRefresh = false)
+        internal async Task<BaseResponse<PageDatas<VersionDisplayDto>>> QueryVersions(QueryVersionCondition querycondition, bool MustRefresh = false)
         {
-            return await httpClient.GetWithJsonResultAsync<PageDatas<BZVersionDto>>($"api/version/GetPageList{BuildHttpQueryParam(querycondition, MustRefresh)}");
+            return await httpClient.GetWithJsonResultAsync<PageDatas<VersionDisplayDto>>($"api/version/Query{BuildHttpQueryParam(querycondition, MustRefresh)}");
         }
 
 
@@ -164,22 +281,31 @@ namespace Blazui.Community.Admin.Service
         /// <returns></returns>
         internal async Task<BaseResponse> DeleteVersion(string Id)
         {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
+            if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
-            return await httpClient.GetJsonResultAsync($"api/version/Delete/{Id}", HttpMethod.Delete);
+            return await httpClient.PatchWithJsonResultAsync($"api/version/Delete/{Id}");
         }
-
+        /// <summary>
+        /// 恢复
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse> ResumeVersion(string Id)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+            return await httpClient.PatchWithJsonResultAsync($"api/version/Resume/{Id}");
+        }
         /// <summary>
         /// 新增版本
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        internal async Task<BaseResponse> NewVersion(VersionAutoGenerateColumnsDto dto)
+        internal async Task<BaseResponse> NewVersion(VersionDisplayDto dto)
         {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
+            if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
-            HttpContent httpContent = BuildHttpContent(dto);
-            return await httpClient.GetJsonResultAsync($"api/version/Add", HttpMethod.Post, httpContent);
+            return await httpClient.PostWithJsonResultAsync($"api/version/Add", BuildHttpContent(dto));
         }
 
 
@@ -188,119 +314,28 @@ namespace Blazui.Community.Admin.Service
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        internal async Task<BaseResponse> UpdateVersion(VersionAutoGenerateColumnsDto dto)
+        internal async Task<BaseResponse> UpdateVersion(VersionDisplayDto dto)
         {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
+            if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
-            HttpContent httpContent = BuildHttpContent(dto);
-            return await httpClient.GetJsonResultAsync($"api/version/Update", HttpMethod.Post, httpContent);
+            return await httpClient.PutWithJsonResultAsync($"api/version/Update", BuildHttpContent(dto));
         }
+        #endregion
+
+
+        #region Banner
+
+      
 
         /// <summary>
-        /// 查询回复贴
+        /// 查询Banner
         /// </summary>
-        /// <param name="querycondition"></param>
+        /// <param name="pageInfo"></param>
         /// <returns></returns>
-        internal async Task<BaseResponse<PageDatas<BZReplyDto>>> QueryReplys(QueryReplyCondition querycondition,bool MustRefresh=false)
+        internal async Task<BaseResponse<PageDatas<BannerDisplayDto>>> QueryBanners(QueryBannerCondition queryBannerCondition, bool MustRefresh = false)
         {
-            //var url = "api/Reply/QueryReplys";
-            //if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(title))
-            //{
-            //    url += $"?username={username}";
-            //    url += $"&topicTitle={title}";
-            //}
-            //else
-            //{
-            //    if (!string.IsNullOrWhiteSpace(username))
-            //    {
-            //        url += $"?username={username}";
-            //    }
-            //    if (!string.IsNullOrWhiteSpace(title))
-            //    {
-            //        url += $"?topicTitle={title}";
-            //    }
-            //}
-            return await httpClient.GetWithJsonResultAsync<PageDatas<BZReplyDto>>($"api/Reply/Query{BuildHttpQueryParam(querycondition,MustRefresh)}");
+            return await httpClient.GetWithJsonResultAsync<PageDatas<BannerDisplayDto>>($"api/banner/Query{BuildHttpQueryParam(queryBannerCondition, MustRefresh)}");
         }
-
-
-        /// <summary>
-        /// 发表帖子
-        /// </summary>
-        /// <param name="bZTopicDto"></param>
-        /// <returns></returns>
-        internal async Task<BaseResponse> NewTopic(BZTopicDto bZTopicDto)
-        {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
-                return Unauthorized;
-            HttpContent httpContent = BuildHttpContent(bZTopicDto);
-
-            return await httpClient.GetJsonResultAsync("api/Topic/Add", HttpMethod.Post, httpContent);
-        }
-
-
-
-        /// <summary>
-        /// 删除帖子
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        internal async Task<BaseResponse> DelTopic(string Id, int status)
-        {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
-                return Unauthorized;
-            if (status == -1)
-                return await httpClient.GetJsonResultAsync($"api/Topic/Active/{Id}", HttpMethod.Delete);
-            return await httpClient.GetJsonResultAsync($"api/Topic/Delete/{Id}", HttpMethod.Delete);
-        }
-
-        /// <summary>
-        /// 加精
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        internal async Task<BaseResponse> BestTopic(string Id)
-        {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
-                return Unauthorized;
-            return await httpClient.GetJsonResultAsync($"api/Topic/BestTopic/{Id}");
-        }
-        /// <summary>
-        /// 置顶
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        internal async Task<BaseResponse> TopTopic(string Id)
-        {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
-                return Unauthorized;
-            return await httpClient.GetJsonResultAsync($"api/Topic/TopTopic/{Id}");
-        }
-
-        /// <summary>
-        /// 结贴
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        internal async Task<BaseResponse> EndTopic(string Id)
-        {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
-                return Unauthorized;
-            return await httpClient.GetJsonResultAsync($"api/Topic/EndTopic/{Id}");
-        }
-
-        /// <summary>
-        /// 删除或恢复回帖
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        internal async Task<BaseResponse> DelReply(string Id)
-        {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
-                return Unauthorized;
-            return await httpClient.GetJsonResultAsync($"api/Reply/DeleteOrActive/{Id}", HttpMethod.Delete);
-        }
-
 
         /// <summary>
         /// 删除Banner
@@ -309,46 +344,48 @@ namespace Blazui.Community.Admin.Service
         /// <returns></returns>
         internal async Task<BaseResponse> DeleteBanner(string Id)
         {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
+            if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
-            return await httpClient.GetJsonResultAsync($"api/banner/Delete/{Id}", HttpMethod.Delete);
+            return await httpClient.PatchWithJsonResultAsync($"api/banner/Delete/{Id}");
         }
 
         /// <summary>
-        /// 查询Banner
+        /// 删除Banner
         /// </summary>
-        /// <param name="pageInfo"></param>
+        /// <param name="Id"></param>
         /// <returns></returns>
-        internal async Task<BaseResponse<PageDatas<BzBannerDto>>> GetBanners(int PageSize,int PageIndex)
+        internal async Task<BaseResponse> ResumeBanner(string Id)
         {
-            return await httpClient.GetJsonResultAsync<PageDatas<BzBannerDto>>($"api/banner/GetPageList/{PageSize}/{PageIndex}");
-        }
-
-
-        /// <summary>
-        /// 发布Banner
-        /// </summary>
-        /// <param name="bzBannerDto"></param>
-        /// <returns></returns>
-        internal async Task<BaseResponse> NewBanner(BzBannerDto bzBannerDto)
-        {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
+            if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
-            HttpContent httpContent = BuildHttpContent(bzBannerDto);
-            return await httpClient.GetJsonResultAsync("api/Banner/Add", HttpMethod.Post, httpContent);
+            return await httpClient.PatchWithJsonResultAsync($"api/banner/Resume/{Id}");
         }
-
         /// <summary>
         /// 发布Banner
         /// </summary>
         /// <param name="bzBannerDto"></param>
         /// <returns></returns>
-        internal async Task<BaseResponse> UpdateBanner(BzBannerDto bzBannerDto)
+        internal async Task<BaseResponse> NewBanner(BannerDisplayDto bzBannerDto)
         {
-            if (!(await _adminUserService.IsSupperAdminLogin()))
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+            return await httpClient.PostWithJsonResultAsync("api/Banner/Add", BuildHttpContent(bzBannerDto));
+        }
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="bzBannerDto"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse> UpdateBanner(BannerDisplayDto bzBannerDto)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
             HttpContent httpContent = BuildHttpContent(bzBannerDto);
-            return await httpClient.GetJsonResultAsync("api/Banner/Update", HttpMethod.Post, httpContent);
+            return await httpClient.PostWithJsonResultAsync("api/Banner/Update", httpContent);
         }
+
+      
+        #endregion
     }
 }

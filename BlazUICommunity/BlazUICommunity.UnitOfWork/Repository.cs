@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.ComponentModel.DataAnnotations.Schema;
+using Blazui.Community.UnitOfWork.Collections;
 
 namespace Arch.EntityFrameworkCore.UnitOfWork
 {
@@ -1022,58 +1023,18 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
             return _dbContext.Database.ExecuteSqlRaw(sql, parameters) > 0;
         }
 
-
-        public bool LogicDelete(string Id, string oprationId="")
+          public async Task<bool> ChangeStateByIdAsync(string Id, int Status, string oprationId)
         {
-            var sql = BuildDeleteSql(Id, oprationId, -1);
-            return _dbContext.Database.ExecuteSqlRaw(sql) > 0;
-        }
-
-        public async Task<bool> LogicDeleteAsync(string Id, string oprationId = "")
-        {
-         
-            var sql = BuildDeleteSql(Id,oprationId,-1);
+            var entity =await FindAsync(Id);
+            if (entity is null)
+                return false;
+            var updateModifyId = !string.IsNullOrWhiteSpace(oprationId) ? $"  , LastModifyDate= '{oprationId}' " : "";
+            var sql = $"update { typeof(TEntity).GetTableName<TEntity>()}  set Status={Status},  LastModifyDate =now() {updateModifyId}  where Id= '{Id}'";
             return await _dbContext.Database.ExecuteSqlRawAsync(sql) > 0;
         }
-
-        public bool LogicRecovery(string Id, string oprationId = "")
-        {
-
-            var sql = BuildDeleteSql(Id, oprationId, 0);
-            return _dbContext.Database.ExecuteSqlRaw(sql) > 0;
-        }
-
-        public async Task<bool> LogicRecoveryAsync(string Id, string oprationId = "")
-        {
-            var sql = BuildDeleteSql(Id, oprationId, 0);
-            return await  _dbContext.Database.ExecuteSqlRawAsync(sql) > 0;
-        }
-
         #endregion
 
-        readonly Dictionary<string, string> EntityTableNames = new Dictionary<string, string>();
-     
-        string BuildDeleteSql(string Id, string oprationId,int Status)
-        {
-            var TableName = GetTableName();
-            if(!string.IsNullOrWhiteSpace(oprationId))
-            return $"update {TableName}  set Status={Status},  LastModifyDate =now(),  CreatorId='{oprationId}' where Id= '{Id}'";
-            else
-            return $"update {TableName}  set Status={Status},  LastModifyDate =now() where Id= '{Id}'";
 
-        }
-
-        string GetTableName()
-        {
-            var type = typeof(TEntity);
-            if (EntityTableNames.TryGetValue(type.FullName, out string TableName))
-                return TableName;
-            else
-            {
-                var tableName = type.IsDefined(typeof(TableAttribute), true) ? type.GetCustomAttribute<TableAttribute>().Name : type.Name;
-                EntityTableNames.Add(type.FullName, tableName);
-                return tableName;
-            }
-        }
+      
     }
 }

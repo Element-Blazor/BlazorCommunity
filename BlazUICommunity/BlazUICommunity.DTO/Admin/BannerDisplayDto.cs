@@ -1,16 +1,17 @@
-﻿using Blazui.Community.Admin.QueryCondition;
-using Blazui.Community.DTO;
-using Blazui.Community.Enums;
+﻿using Blazui.Community.Enums;
 using Blazui.Community.Utility;
+using Blazui.Community.Utility.Extensions;
 using Blazui.Component;
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
-namespace Blazui.Community.Admin.ViewModel
+namespace Blazui.Community.DTO.Admin
 {
-    public class BannerAutoGenerateColumnsDto
+    public class BannerDisplayDto
     {
+
         /// <summary>
         /// banner标题
         /// </summary>
@@ -28,45 +29,36 @@ namespace Blazui.Community.Admin.ViewModel
         /// <summary>
         /// 创建时间
         /// </summary>
-        //[Required]
         public DateTime CreateDate { get; set; }
         /// <summary>
         /// 修改时间
         /// </summary>
-        public DateTime? LastModifyDate { get; set; }
+        public DateTime LastModifyDate { get; set; }
         /// <summary>
         /// 创建人Id
         /// </summary>
-        //[Required]
         public string CreatorId { get; set; }
+        /// <summary>
+        /// 最后修改人Id
+        /// </summary>
+        public string LastModifierId { get; set; }
         /// <summary>
         /// 删除状态 0：正常，-1：已删除
         /// </summary>
 
         public int Status { get; set; } = 0;
-        [NotMapped]
-        public string StatusDisplay
-        {
-            get
-            {
-                return ((DelStatus)Status).Description();
-            }
-        }
-        [NotMapped]
-        public string CreateDateDisplay
-        {
-            get
-            {
-                return CreateDate.ConvertToDateDiffStr();
-            }
-        }
-        /// <summary>
-        /// 最后修改人Id
-        /// </summary>
-        public string LastModifierId { get; set; } = null;
 
+        [AutoNotMap]
+        [NotMapped]
+        public string StatusDisplay => ((DelStatus)Status).Description();
+
+        [AutoNotMap]
+        [NotMapped]
+        public string CreateDateDisplay => CreateDate.ConvertToDateDiffStr();
+
+
+        [AutoNotMap]
         [NotMapped]
         public IFileModel[] Previews { get; set; }
     }
-
 }

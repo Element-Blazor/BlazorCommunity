@@ -246,7 +246,7 @@ namespace Blazui.Community.Api.Controllers.Client
             var query = Request.CreateQueryExpression<BZTopicModel, TopicRequestCondition>();
             if (!string.IsNullOrWhiteSpace(userName))
             {
-                var Users = await _cacheService.Users(p => p.UserName.Contains(userName) || p.NickName.Contains(userName));
+                var Users = await _cacheService.Users(p => p.UserName.IfContains(userName) || p.NickName.IfContains(userName));
                 if (Users != null)
                 {
                     query = query.And(p => Users.Select(x => x.Id).Contains(p.CreatorId));
@@ -325,7 +325,7 @@ namespace Blazui.Community.Api.Controllers.Client
             Expression<Func<BZTopicModel, bool>> expression = p => p.Status == 0;
             if (string.IsNullOrWhiteSpace(Title))
                 return NoContent();
-            expression = expression.And(p => p.Title.ToLower().Contains(Title.ToLower()));
+            expression = expression.And(p => p.Title.IfContains(Title));
             pagedList = await _bZTopicRepository.GetPagedListAsync(expression, o => o.OrderBy(p => p.Id), null, PageIndex - 1, PageSize);
             if (pagedList != null && pagedList.Items.Any())
             {

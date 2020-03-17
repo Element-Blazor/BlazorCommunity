@@ -9,12 +9,14 @@ using AutoMapper;
 using Blazui.Community.Api.Extensions;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
+using Blazui.Community.DTO.Admin;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
 using Blazui.Community.Request;
 using Blazui.Community.Utility.Extensions;
 using Blazui.Community.Utility.Filter;
 using Blazui.Community.Utility.Response;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -27,6 +29,7 @@ namespace Blazui.Community.Api.Controllers
     [Route("api/[Controller]")]
     [ApiController]
     [SwaggerTag(description: "主贴相关")]
+    [HttpCacheExpiration(MaxAge = 100)]
     public class TopicController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -59,7 +62,7 @@ namespace Blazui.Community.Api.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        [HttpGet("TopTopic/{Id}")]
+        [HttpPatch("Top/{Id}")]
         public IActionResult TopTopic([FromRoute] string Id)
         {
             var topic = _bZTopicRepository.Find(Id);
@@ -77,7 +80,7 @@ namespace Blazui.Community.Api.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        [HttpGet("BestTopic/{Id}")]
+        [HttpPatch("Best/{Id}")]
         public IActionResult BestTopic([FromRoute] string Id)
         {
             var topic = _bZTopicRepository.Find(Id);
@@ -95,7 +98,7 @@ namespace Blazui.Community.Api.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        [HttpGet("EndTopic/{Id}")]
+        [HttpPatch("End/{Id}")]
         public IActionResult EndTopic([FromRoute] string Id)
         {
             var topic = _bZTopicRepository.Find(Id);
@@ -112,28 +115,30 @@ namespace Blazui.Community.Api.Controllers
         /// 根据ID删除帖子
         /// </summary>
         /// <returns></returns>
-        [HttpDelete("Delete/{Id}")]
+        [HttpPatch("Delete/{Id}")]
         public IActionResult Delete([FromRoute] string Id)
         {
-            return Ok(DeleteOrActiveTopic(Id, -1));
+            return DeleteOrResume(Id, -1);
         }
 
         /// <summary>
         /// 恢复帖子
         /// </summary>
         /// <returns></returns>
-        [HttpDelete("Active/{Id}")]
+        [HttpPatch("Resume/{Id}")]
         public IActionResult Active([FromRoute] string Id)
         {
-            return Ok(DeleteOrActiveTopic(Id, 0));
+            return DeleteOrResume(Id, 0);
         }
 
-        private bool DeleteOrActiveTopic(string Id, int status)
+        private IActionResult DeleteOrResume(string Id, int status)
         {
-            return _unitOfWork.CommitWithTransaction
+            var topic = _bZTopicRepository.Find(Id);
+            if (topic is null)
+                return BadRequest();
+            return Ok( _unitOfWork.CommitWithTransaction
                 (() =>
                 {
-                    var topic = _bZTopicRepository.Find(Id);
                     if (topic != null)
                     {
                         topic.Status = status;
@@ -146,7 +151,7 @@ namespace Blazui.Community.Api.Controllers
                         _bZReplyRepository.Update(replys);
                     }
                 }
-                );
+                ));
         }
 
         /// <summary>
@@ -154,15 +159,15 @@ namespace Blazui.Community.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("Query")]
-        public async Task<IActionResult> Query([FromQuery]TopicRequestCondition Request = null)
+        public async Task<ActionResult<IPagedList<TopicDisplayDto>>> Query([FromQuery]TopicRequestCondition Request = null)
         {
             IPagedList<BZTopicModel> pagedList = null;
             var query = Request.CreateQueryExpression<BZTopicModel, TopicRequestCondition>();
             if (!string.IsNullOrWhiteSpace(Request.UserName))
             {
-                var Users = await _cacheService.Users(p => 
-                p.UserName.ToLower().Contains(Request.UserName.ToLower()) ||
-                p.NickName.ToLower().Contains(Request.UserName.ToLower()));
+                var Users = await _cacheService.Users(p =>
+                p.UserName.IfContains(Request.UserName) ||
+                p.NickName.IfContains(Request.UserName));
                 if (Users != null)
                     query = query.And(p => Users.Select(x => x.Id).Contains(p.CreatorId));
                 else return NoContent();
@@ -170,14 +175,12 @@ namespace Blazui.Community.Api.Controllers
             pagedList = await _bZTopicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
             if (pagedList.Items.Any())
             {
-                var pagedatas = pagedList.From(result => _mapper.Map<List<BZTopicDto>>(result));
+                var pagedatas = pagedList.From(result => _mapper.Map<List<TopicDisplayDto>>(result));
                 var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
-                foreach (BZTopicDto topic in pagedatas.Items)
+
+                foreach (TopicDisplayDto topic in pagedatas.Items)
                 {
-                    var user = users.FirstOrDefault(p => p.Id == topic.CreatorId);
-                    topic.UserName = user.UserName;
-                    topic.Avator = user.Avator;
-                    topic.NickName = user.NickName;
+                    topic.UserName = users.FirstOrDefault(p => p.Id == topic.CreatorId)?.UserName;
                 }
                 return Ok(pagedatas);
             }

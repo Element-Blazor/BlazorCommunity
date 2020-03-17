@@ -29,17 +29,26 @@ namespace Blazui.Community.Admin.Pages.Reply
                 SetData();
         }
 
-
-        protected async Task Delete(object obj)
+        protected async Task Resume(object obj)
         {
-            if (obj is BZReplyDto dtoWithUser)
+            if (obj is BZReplyDto dto)
             {
                 await ConfirmService.ConfirmAsync(
-                    async () => await NetService.DelReply(dtoWithUser.Id),
+                    async () => await NetService.ResumeReply(dto.Id),
                     async () => await SearchData(true));
             }
-
         }
+        protected async Task Delete(object obj)
+        {
+            if (obj is BZReplyDto dto)
+            {
+                await ConfirmService.ConfirmAsync(
+                    async () => await NetService.DeleteReply(dto.Id),
+                    async () => await SearchData(true));
+            }
+        }
+
+        
         protected async Task Detail(object obj)
         {
             if (obj is BZReplyDto dto)

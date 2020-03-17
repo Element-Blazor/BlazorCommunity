@@ -5,14 +5,12 @@ using Blazui.Community.Model.Models;
 using Blazui.Community.Utility;
 using Blazui.Community.Utility.Configure;
 using Blazui.Community.Utility.Extensions;
-using Blazui.Community.Utility.MiddleWare;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using AutoMapper;
 using Blazui.Community.Api.Service;
 using System.IO;
@@ -20,8 +18,8 @@ using Blazui.Community.Api.Configuration;
 using Blazui.Community.Utility.Jwt;
 using Blazui.Community.Enums;
 using NLog.LayoutRenderers;
-using static Blazui.Community.Api.Configuration.ConstantConfiguration;
 using Marvin.Cache.Headers;
+using static Blazui.Community.Api.Configuration.ConstantConfiguration;
 
 namespace Blazui.Community.Api
 {
@@ -42,7 +40,7 @@ namespace Blazui.Community.Api
                 expires =>
                 {
                     expires.MaxAge = 60;
-                    expires.CacheLocation = CacheLocation.Private;
+                    expires.CacheLocation = CacheLocation.Public;
                 },
                 validation => { validation.MustRevalidate = true; }
                 );
@@ -54,7 +52,7 @@ namespace Blazui.Community.Api
             services.AddCustomCors(Configuration.GetSection("AllowOrigins"));
             services.AddCustomSwagger();
 
-            services.AddAutoMapper(typeof(AutoMapConfiguration));
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddCustomAspIdenitty<BZUserModel, BlazUICommunityContext>();
 

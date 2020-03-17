@@ -25,12 +25,12 @@ namespace Blazui.Community.Admin.Pages.User
 
         }
 
-        protected async Task Frozen(object obj)
+        protected async Task Delete(object obj)
         {
             if (obj is UserDisplayDto dto)
             {
                 await ConfirmService.ConfirmAsync(
-                    async () => await NetService.FrozenUser(dto.Id),
+                    async () => await NetService.DeleteUser(dto.Id),
                      async () => await SearchData(true),
                 "确定要冻结该账号吗？");
 
@@ -41,12 +41,12 @@ namespace Blazui.Community.Admin.Pages.User
             MessageService.Show(((UserDisplayDto)obj).UserName);
             await Task.CompletedTask;
         }
-        protected async Task UnFrozen(object obj)
+        protected async Task Resume(object obj)
         {
             if (obj is UserDisplayDto dto)
             {
                 await ConfirmService.ConfirmAsync(
-                    async () => await NetService.UnFrozen(dto.Id),
+                    async () => await NetService.ResumeUser(dto.Id),
                     async () => await SearchData(true),
                 "确定要激活该账号吗？");
             }

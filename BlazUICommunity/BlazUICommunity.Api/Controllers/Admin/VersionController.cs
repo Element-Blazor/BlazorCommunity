@@ -4,7 +4,9 @@ using AutoMapper;
 using Blazui.Community.Api.Extensions;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
+using Blazui.Community.DTO.Admin;
 using Blazui.Community.Model.Models;
+using Blazui.Community.Request;
 using Blazui.Community.Utility.Extensions;
 using Blazui.Community.Utility.Filter;
 using Marvin.Cache.Headers;
@@ -24,8 +26,7 @@ namespace Blazui.Community.Api.Controllers
     [Route("api/[Controller]")]
     [ApiController]
     [SwaggerTag(description: "版本信息")]
-    [HttpCacheExpiration(CacheLocation = CacheLocation.Public)]
-    [HttpCacheValidation(MustRevalidate = true)]
+    [HttpCacheExpiration(MaxAge = 200)]
     public class VersionController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -44,19 +45,36 @@ namespace Blazui.Community.Api.Controllers
             _mapper = mapper;
             _cacheService = cacheService;
         }
+     
         /// <summary>
         /// 删除
         /// </summary>
         /// <returns></returns>
-        [HttpGet("Delete/{Id}")]
-        public IActionResult Delete(string Id)
+        [HttpPatch("Delete/{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] string Id)
+        {
+            return await DeleteOrResume(Id,-1);
+        }
+
+        /// <summary>
+        /// 恢复
+        /// </summary>
+        /// <returns></returns>
+        [HttpPatch("Resume/{Id}")]
+        public async Task<IActionResult> Resume([FromRoute] string Id)
+        {
+            return await DeleteOrResume(Id,0);
+        }
+
+        private async Task<IActionResult> DeleteOrResume(string Id,int Status)
         {
             var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
-            var version = verRepository.Find(Id);
-            if (version != null && !string.IsNullOrWhiteSpace(version.Id))
-            {
-                version.Status = version.Status == -1 ? 0 : -1;
-            }
+            var version = await verRepository.FindAsync(Id);
+            if (version is null)
+                return BadRequest();
+            if (version.Status == Status)
+                return Ok();
+            version.Status = Status;
             verRepository.Update(version);
             _cacheService.Remove(nameof(BZVersionModel));
             return Ok();
@@ -83,7 +101,7 @@ namespace Blazui.Community.Api.Controllers
         /// 更新
         /// </summary>
         /// <returns></returns>
-        [HttpPost("Update")]
+        [HttpPut("Update")]
         public IActionResult Update(BZVersionDto dto)
         {
             var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
@@ -93,57 +111,23 @@ namespace Blazui.Community.Api.Controllers
             return Ok();
 
         }
-        /// <summary>
-        /// 获取版本数据
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("Query/{Project}")]
-        public async Task<IActionResult> Get([SwaggerParameter(Required = false)]int Project = -1)
-        {
-            Expression<Func<BZVersionModel, bool>> expression = p => p.Status == 0;
-            if (Project != -1)
-                expression = expression.And(p => p.Project == Project);
-            var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
-            var versions = await verRepository.GetAllAsync(expression);
-
-            return Ok(versions);
-        }
 
         /// <summary>
         /// 获取版本数据
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
-        {
-            Expression<Func<BZVersionModel, bool>> expression = p => p.Status == 0;
-            var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
-            var versions = await verRepository.GetAllAsync(expression);
-            return Ok(versions);
-        }
-
-        /// <summary>
-        /// 获取版本数据
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetPageList/{projectId}/{pageSize}/{pageIndex}")]
-        public async Task<IActionResult> GetPageList(int projectId, int pageSize, int pageIndex)
+        [HttpGet("Query")]
+        public async Task<ActionResult<VersionDisplayDto>> GetPageList([FromQuery] VersionRequestCondition requestCondition)
         {
             var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
             IPagedList<BZVersionModel> versions;
-            if (projectId < 0)
-            {
-                versions = await verRepository.GetPagedListAsync(pageIndex - 1, pageSize);
-
-            }
-            else
-            {
-                versions = await verRepository.GetPagedListAsync(p => p.Project == projectId, orderBy: o => o.OrderByDescending(p => p.CreateDate), null, pageIndex - 1, pageSize);
-
-            }
-            var pagedatas = versions.ConvertToPageData<BZVersionModel, BZVersionDto>();
-            pagedatas.Items = _mapper.Map<IList<BZVersionDto>>(versions.Items);
-            return Ok(pagedatas);
+            Expression<Func<BZVersionModel, bool>> query = p => true;
+            if (requestCondition.ProjectId >= 0)
+                query = query.And(p => p.Project == requestCondition.ProjectId);
+            versions = await verRepository.GetPagedListAsync(query, o => o.OrderByDescending(p => p.CreateDate), null, requestCondition.PageIndex - 1, requestCondition.PageSize);
+            if(versions.Items.Any())
+            return Ok(versions.From(result => _mapper.Map<IList<VersionDisplayDto>>(result)));
+            return NoContent();
         }
     }
 }
