@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.HttpClientExtensions
@@ -12,6 +13,7 @@ namespace Blazui.Community.HttpClientExtensions
     public static class HttpClientExtension
     {
         private static readonly Dictionary<string, string> EtagCaches = new Dictionary<string, string>();
+        private static Dictionary<string, PropertyInfo[]> QuaryParams = new Dictionary<string, PropertyInfo[]>();
         private static readonly string IfNoMatch = "If-None-Match";
 
         public static async Task<BaseResponse<T>> GetWithJsonResultAsync<T>
@@ -63,7 +65,7 @@ namespace Blazui.Community.HttpClientExtensions
         /// <param name="httpMethod"></param>
         /// <param name="httpContent"></param>
         /// <returns></returns>
-        public static async Task<BaseResponse<T>> GetJsonResultAsync<T>(this HttpClient httpClient, string url, HttpMethod httpMethod = HttpMethod.Get, HttpContent httpContent = null)
+        private static async Task<BaseResponse<T>> GetJsonResultAsync<T>(this HttpClient httpClient, string url, HttpMethod httpMethod, HttpContent httpContent = null)
         {
             HttpResponseMessage response = null;
             try
@@ -87,7 +89,7 @@ namespace Blazui.Community.HttpClientExtensions
         /// <param name="httpMethod"></param>
         /// <param name="httpContent"></param>
         /// <returns></returns>
-        public static async Task<BaseResponse> GetJsonResultAsync(this HttpClient httpClient, string url, HttpMethod httpMethod = HttpMethod.Get, HttpContent httpContent = null)
+        private static async Task<BaseResponse> GetJsonResultAsync(this HttpClient httpClient, string url, HttpMethod httpMethod, HttpContent httpContent = null)
         {
             HttpResponseMessage response = null;
             try
@@ -112,59 +114,40 @@ namespace Blazui.Community.HttpClientExtensions
                 throw new ArgumentException(nameof(url));
 
             httpContent ??= new StringContent("");
-
             httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            //if ((httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Put) && httpContent is null)
-            //    throw new ArgumentException(nameof(httpContent));
 
-            HttpResponseMessage response;
-            switch (httpMethod)
+            #region 对Get请求做缓存处理
+
+            //if (httpMethod == HttpMethod.Get)
+            //{
+            //    var ETagCacheKey = url.Contains("?") ? url.Substring(0, url.IndexOf('?')) : url;
+            //    if (EtagCaches.TryGetValue(ETagCacheKey, out string OldEtag))
+            //        httpClient.AddEtagToHttpHeader(OldEtag);
+            //    var response = await httpClient.GetAsync(url);
+            //    var CurrentETag = response.Headers.GetValues("ETag")?.First();
+            //    OldEtag ??= string.Empty;
+            //    if (!string.IsNullOrWhiteSpace(CurrentETag) && !OldEtag.Equals(CurrentETag))
+            //        CreateOrResetEtagCache(CurrentETag, ETagCacheKey);
+            //    return response;
+            //}
+
+            #endregion 对Get请求做缓存处理
+
+            //else
+            //{
+            return httpMethod.Method.ToUpper() switch
             {
-                case HttpMethod.Get:
-                    var ETagCacheKey = url.Contains("?") ? url.Substring(0, url.IndexOf('?')) : url;
-                    if (EtagCaches.TryGetValue(ETagCacheKey, out string OldEtag))
-                        httpClient.AddEtagToHttpHeader(OldEtag);
-
-                    response = await httpClient.GetAsync(url);
-                    var CurrentETag = response.Headers.GetValues("ETag")?.First();
-                    OldEtag ??= string.Empty;
-                    if (!string.IsNullOrWhiteSpace(CurrentETag) && !OldEtag.Equals(CurrentETag))
-                        CreateOrResetEtagCache(CurrentETag, ETagCacheKey);
-                    break;
-
-                case HttpMethod.Post:
-                    response = await httpClient.PostAsync(url, httpContent);
-                    break;
-
-                case HttpMethod.Delete:
-                    response = await httpClient.DeleteAsync(url);
-                    break;
-
-                case HttpMethod.Put:
-                    response = await httpClient.PutAsync(url, httpContent);
-                    break;
-
-                case HttpMethod.Patch:
-                    response = await httpClient.PatchAsync(url, httpContent);
-                    break;
-
-                case HttpMethod.Head:
-                    response = await httpClient.HeadAsync(url, httpContent);
-                    break;
-
-                case HttpMethod.Trace:
-                    response = await httpClient.Tracesync(url, httpContent);
-                    break;
-
-                case HttpMethod.Options:
-                    response = await httpClient.OptionsAsync(url, httpContent);
-                    break;
-
-                default:
-                    throw new NotSupportedException(nameof(httpMethod));
-            }
-
-            return response;
+                "GET" => await httpClient.GetAsync(url),
+                "DELETE" => await httpClient.DeleteAsync(url),
+                "POST" => await httpClient.PostAsync(url, httpContent),
+                "PUT" => await httpClient.PutAsync(url, httpContent),
+                "PATCH" => await httpClient.PatchAsync(url, httpContent),
+                "HEAD" => await httpClient.HeadAsync(url, httpContent),
+                "TRACE" => await httpClient.Tracesync(url, httpContent),
+                "OPTIONS" => await httpClient.OptionsAsync(url, httpContent),
+                _ => throw new NotSupportedException(nameof(httpMethod)),
+            };
+            //}
         }
 
         /// <summary>
@@ -198,15 +181,15 @@ namespace Blazui.Community.HttpClientExtensions
 
         private static async Task<HttpResponseMessage> OptionsAsync(this HttpClient httpClient, string url, HttpContent httpContent)
         {
-            return await httpClient.OtherHttpMethodRequest(url, httpContent, System.Net.Http.HttpMethod.Options);
+            return await httpClient.OtherHttpMethodRequest(url, httpContent, HttpMethod.Options);
         }
 
         private static async Task<HttpResponseMessage> Tracesync(this HttpClient httpClient, string url, HttpContent httpContent)
         {
-            return await httpClient.OtherHttpMethodRequest(url, httpContent, System.Net.Http.HttpMethod.Trace);
+            return await httpClient.OtherHttpMethodRequest(url, httpContent, HttpMethod.Trace);
         }
 
-        private static async Task<HttpResponseMessage> OtherHttpMethodRequest(this HttpClient httpClient, string url, HttpContent httpContent, System.Net.Http.HttpMethod httpMethod)
+        private static async Task<HttpResponseMessage> OtherHttpMethodRequest(this HttpClient httpClient, string url, HttpContent httpContent, HttpMethod httpMethod)
         {
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage
             {
@@ -216,17 +199,55 @@ namespace Blazui.Community.HttpClientExtensions
             };
             return await httpClient.SendAsync(httpRequestMessage);
         }
-    }
 
-    public enum HttpMethod
-    {
-        Get,
-        Post,
-        Delete,
-        Put,
-        Patch,
-        Head,
-        Trace,
-        Options
+        /// <summary>
+        /// 构建HttpContent
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static HttpContent BuildHttpContent<T>(this T t) where T : class
+        {
+            if (t is null)
+                return new StringContent("");
+            var requestJson = JsonConvert.SerializeObject(t);
+            HttpContent httpContent = new StringContent(requestJson);
+            return httpContent;
+        }
+
+        /// <summary>
+        /// 构建QueryParam
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static string BuildHttpQueryParam<T>(this T t, bool MustRefresh = false) where T : class, new()
+        {
+            if (t is null)
+                return MustRefresh ? $"MustRefresh={DateTime.Now.Ticks}" : string.Empty;
+            var queryparam = string.Empty;
+            var queryKey = t.GetType().FullName;
+            if (!QuaryParams.TryGetValue(queryKey, out PropertyInfo[] props))
+            {
+                props = t.GetType().GetProperties();
+                QuaryParams.Add(queryKey, props);
+            }
+            props = props.Where(p => p.GetValue(t) != null).ToArray();
+            if (props.Any())
+                queryparam = "?";
+            foreach (PropertyInfo prop in props)
+            {
+                var value = IsNullableEnum(prop.PropertyType) ? (int)prop.GetValue(t) : prop.GetValue(t);
+                queryparam += $"{prop.Name}={value}&";
+            }
+            queryparam = queryparam.TrimEnd('&');
+            return MustRefresh ? $"{queryparam}&MustRefresh={DateTime.Now.Ticks}" : queryparam;
+        }
+
+        private static bool IsNullableEnum(Type t)
+        {
+            Type u = Nullable.GetUnderlyingType(t);
+            return (u != null) && u.IsEnum;
+        }
     }
 }

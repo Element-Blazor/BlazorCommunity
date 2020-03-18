@@ -26,7 +26,7 @@ namespace Blazui.Community.Api.Controllers
     [Route("api/[Controller]")]
     [ApiController]
     [SwaggerTag(description: "主贴相关")]
-    [HttpCacheExpiration(MaxAge = 100)]
+    //[HttpCacheExpiration(MaxAge = 100)]
     public class TopicController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -66,6 +66,9 @@ namespace Blazui.Community.Api.Controllers
             if (topic != null)
             {
                 topic.Top = topic.Top == 1 ? 0 : 1;
+
+                topic.LastModifyDate = DateTime.Now;
+                topic.LastModifierId = Guid.Empty.ToString();
                 _bZTopicRepository.Update(topic);
                 _cacheService.Remove(nameof(BZTopicModel));
             }
@@ -84,6 +87,8 @@ namespace Blazui.Community.Api.Controllers
             if (topic != null)
             {
                 topic.Good = topic.Good == 1 ? 0 : 1;
+                topic.LastModifyDate = DateTime.Now;
+                topic.LastModifierId = Guid.Empty.ToString();
                 _bZTopicRepository.Update(topic);
                 _cacheService.Remove(nameof(BZTopicModel));
             }
@@ -102,6 +107,8 @@ namespace Blazui.Community.Api.Controllers
             if (topic != null)
             {
                 topic.Status = topic.Status == 1 ? 0 : 1;
+                topic.LastModifyDate = DateTime.Now;
+                topic.LastModifierId = Guid.Empty.ToString();
                 _bZTopicRepository.Update(topic);
                 _cacheService.Remove(nameof(BZTopicModel));
             }
@@ -139,8 +146,15 @@ namespace Blazui.Community.Api.Controllers
                     if (topic != null)
                     {
                         topic.Status = status;
+                        topic.LastModifyDate = DateTime.Now;
+                        topic.LastModifierId = Guid.Empty.ToString();
                         var follows = _cacheService.Follows(p => p.TopicId == Id).Result.ToList();
-                        follows.ForEach(p => p.Status = status);
+                        follows.ForEach(p =>
+                        {
+                            p.Status = status;
+                            p.LastModifyDate = DateTime.Now;
+                            p.LastModifierId = Guid.Empty.ToString();
+                        });
                         _bZFollowRepository.Update(follows);
                         _bZTopicRepository.Update(topic);
                         var replys = _cacheService.Replys(p => p.TopicId == Id).Result.ToList();

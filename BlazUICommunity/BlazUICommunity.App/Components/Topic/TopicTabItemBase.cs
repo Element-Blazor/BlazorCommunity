@@ -10,7 +10,7 @@ namespace Blazui.Community.App.Components
 {
     public class TopicTabItemBase : PageBase
     {
-        protected List<BZTopicDto> Topics = new List<BZTopicDto>();
+        protected static List<BZTopicDto> Topics = new List<BZTopicDto>();
 
         protected int PageSize { get; set; } = 5;
         protected int currentPage = 1;
@@ -73,18 +73,19 @@ namespace Blazui.Community.App.Components
 
         private async Task LoadData()
         {
-            var datas = await NetService.GetTopicsByOrder(OrderType, TopicType, currentPage, PageSize);
+            var datas = await NetService.QueryTopicsByOrder(OrderType, TopicType, currentPage, PageSize);
             if (datas != null && datas.IsSuccess && datas.Data.Items != null)
             {
                 Topics = datas.Data.Items.ToList();
                 Total = datas.Data.TotalCount;
+                StateHasChanged();
             }
-            else
+            else if (datas.Code == 204)
             {
                 Topics = new List<BZTopicDto>();
                 Total = 0;
+                StateHasChanged();
             }
-            StateHasChanged();
         }
 
         internal async Task CurrentPageChangedAsync(int page)

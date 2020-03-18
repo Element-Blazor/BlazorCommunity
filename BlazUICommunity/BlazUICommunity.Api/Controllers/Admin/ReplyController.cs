@@ -27,7 +27,7 @@ namespace Blazui.Community.Api.Controllers
     [Route("api/[Controller]")]
     [ApiController]
     [SwaggerTag(description: "回帖相关")]
-    [HttpCacheExpiration(MaxAge = 100)]
+    //[HttpCacheExpiration(MaxAge = 100)]
     public class ReplyController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

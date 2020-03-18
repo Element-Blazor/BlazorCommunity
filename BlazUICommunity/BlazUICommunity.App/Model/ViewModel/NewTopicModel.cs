@@ -2,6 +2,6 @@
 {
     public class ReplyModel
     {
-        public string Content { get; set; }
+        public string Content { get; set; } = "";
     }
 }

@@ -112,7 +112,7 @@ namespace Blazui.Community.App.Pages
             return await memoryCache.GetOrCreateAsync("Version", async p =>
             {
                 p.SetSlidingExpiration(TimeSpan.FromMinutes(10));
-                var result = await NetService.GetAllVersions();
+                var result = await NetService.QueryAllVersions();
                 if (result.IsSuccess)
                     return result.Data;
                 else return new List<BZVersionDto>();

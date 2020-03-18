@@ -57,7 +57,7 @@ namespace Blazui.Community.App.Pages
 
         private async Task LoadTopic()
         {
-            var result = await NetService.GetTopicById(TopicId);
+            var result = await NetService.QueryTopicById(TopicId);
             if (result.IsSuccess && result.Data != null)
             {
                 TopicModel = result.Data;
@@ -84,7 +84,7 @@ namespace Blazui.Community.App.Pages
             return await memoryCache.GetOrCreateAsync("Version", async p =>
             {
                 p.SetSlidingExpiration(TimeSpan.FromMinutes(10));
-                var result = await NetService.GetAllVersions();
+                var result = await NetService.QueryAllVersions();
                 if (result.IsSuccess)
                     return result.Data;
                 else return new List<BZVersionDto>();
@@ -102,7 +102,7 @@ namespace Blazui.Community.App.Pages
                 IsFollow = false;
                 return;
             }
-            var result = await NetService.IsStar(User.Id, TopicId);
+            var result = await NetService.IsFollowed(User.Id, TopicId);
             if (result.IsSuccess && result.Data != null)
             {
                 FollowModel = result.Data;

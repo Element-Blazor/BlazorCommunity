@@ -25,7 +25,7 @@ namespace Blazui.Community.Api.Controllers
     [Route("api/[Controller]")]
     [ApiController]
     [SwaggerTag(description: "版本信息")]
-    [HttpCacheExpiration(MaxAge = 200)]
+    //[HttpCacheExpiration(MaxAge = 200)]
     public class VersionController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -74,6 +74,8 @@ namespace Blazui.Community.Api.Controllers
             if (version.Status == Status)
                 return Ok();
             version.Status = Status;
+            version.LastModifyDate = DateTime.Now;
+            version.LastModifierId = Guid.Empty.ToString();
             verRepository.Update(version);
             _cacheService.Remove(nameof(BZVersionModel));
             return Ok();
@@ -88,6 +90,10 @@ namespace Blazui.Community.Api.Controllers
         {
             var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
             BZVersionModel model = _mapper.Map<BZVersionModel>(dto);
+            model.CreateDate = DateTime.Now;
+            model.CreatorId = Guid.Empty.ToString();
+            model.LastModifyDate = DateTime.Now;
+            model.LastModifierId = Guid.Empty.ToString();
             await verRepository.InsertAsync(model);
             _cacheService.Remove(nameof(BZVersionModel));
             return Ok();
@@ -102,6 +108,8 @@ namespace Blazui.Community.Api.Controllers
         {
             var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
             BZVersionModel model = _mapper.Map<BZVersionModel>(dto);
+            model.LastModifyDate = DateTime.Now;
+            model.LastModifierId = Guid.Empty.ToString();
             verRepository.Update(model);
             _cacheService.Remove(nameof(BZVersionModel));
             return Ok();

@@ -42,11 +42,11 @@
             <Body>
                 @if (ReplyModel.ShoudEdit)
                 {
-                    <BMarkdownEditor @bind-Value="@ReplyModel.Content" UploadUrl="@UploadUrl" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="300" Height="300"></BMarkdownEditor>
+                    <BMarkdownEditor @bind-Value="@ReplyModel.Content" EnableAlwaysRender="true" UploadUrl="@UploadUrl" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="300" Height="300"></BMarkdownEditor>
                 }
                 else
                 {
-                    <BMarkdown Text="@ReplyModel.Content"></BMarkdown>
+                    <BMarkdown EnableAlwaysRender="true" Text="@ReplyModel.Content"></BMarkdown>
                 }
             </Body>
         </BCard>

@@ -34,7 +34,7 @@ namespace Blazui.Community.App.Features.Account.Pages
             }
             else
             {
-                var response = await NetService.VerifyVerifyCode(UserId, VerifyCodeType.EmailRetrievePassword, model.VerCode);
+                var response = await NetService.ValidateVerifyCode(UserId, VerifyCodeType.EmailRetrievePassword, model.VerCode);
                 if (response.IsSuccess)
                     navigationManager.NavigateTo($"/account/reset/{UserId}", true);
                 else

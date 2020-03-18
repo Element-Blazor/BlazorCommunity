@@ -68,7 +68,7 @@ namespace Blazui.Community.App.Components
             if (Confirm == MessageBoxResult.Ok)
                 if (topic is PersonalTopicModel followModel)
                 {
-                    var result = await NetService.DelFollows(followModel.Id, User.Id);
+                    var result = await NetService.CancelFollow(followModel.Id, User.Id);
                     if (result.IsSuccess)
                     {
                         await LoadDatas();
@@ -88,7 +88,7 @@ namespace Blazui.Community.App.Components
         {
             User = await GetUser();
             condition = CreateCondition(condition);
-            var result = await NetService.GetFollows(condition);
+            var result = await NetService.QueryFollows(condition);
             if (result == null)
                 return;
             ConvertDataToDto(result);

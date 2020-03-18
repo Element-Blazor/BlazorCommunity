@@ -20,7 +20,7 @@ namespace Blazui.Community.App.Components
         internal BForm form;
         internal BFormItem<string> formItem;
         protected BMarkdownEditor bMarkdownEditor;
-        internal ReplyModel Model;
+        internal ReplyModel Model = new ReplyModel();
 
         [Parameter] public EventCallback OnReplySuccess { get; set; }
 
@@ -60,7 +60,7 @@ namespace Blazui.Community.App.Components
                 navigationManager.NavigateTo("/");
                 return;
             }
-            var topicResult = await NetService.GetTopicById(TopicId);
+            var topicResult = await NetService.QueryTopicById(TopicId);
             if (!topicResult.IsSuccess)
             {
                 ToastError($"主贴已被删除");

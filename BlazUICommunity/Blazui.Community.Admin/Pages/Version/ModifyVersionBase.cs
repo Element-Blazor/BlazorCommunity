@@ -26,16 +26,15 @@ namespace Blazui.Community.Admin.Pages.Version
             if (!versionForm.IsValid())
                 return;
             var version = versionForm.GetValue<VersionDisplayDto>();
+            version.LastModifyDate = DateTime.Now;
             if (EntryOperation == EntryOperation.Add)
             {
                 version.CreateDate = DateTime.Now;
-                version.LastModifyDate = DateTime.Now;
                 var newResult = await NetService.NewVersion(version);
                 await CloseAsync(newResult.IsSuccess);
             }
             else
             {
-                version.LastModifyDate = DateTime.Now;
                 var newResult = await NetService.UpdateVersion(version);
                 await CloseAsync(newResult.IsSuccess);
             }

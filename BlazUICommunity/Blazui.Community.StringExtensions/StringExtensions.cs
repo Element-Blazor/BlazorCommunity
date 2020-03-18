@@ -17,7 +17,7 @@ namespace Blazui.Community.StringExtensions
                 throw new ArgumentNullException(nameof(source));
             if (string.IsNullOrWhiteSpace(toCompareString))
                 return false;
-            return source.Trim().Contains(Regex.Replace(toCompareString, @"\s", ""), StringComparison.OrdinalIgnoreCase);
+            return source.Contains(Regex.Replace(toCompareString, @"\s", ""), StringComparison.OrdinalIgnoreCase);
         }
     }
 }

@@ -104,7 +104,7 @@ namespace Blazui.Community.App.Components
 
         private async Task SetPhoneNumberAsync(BindMobileModel model)
         {
-            var response = await NetService.VerifyVerifyCode(User.Id, VerifyCodeType.MobileBind, VerifyCode);
+            var response = await NetService.ValidateVerifyCode(User.Id, VerifyCodeType.MobileBind, VerifyCode);
             if (response.IsSuccess)
             {
                 var bindMobile = await userManager.SetPhoneNumberAsync(User, model.Mobile);

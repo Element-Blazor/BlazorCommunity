@@ -147,8 +147,8 @@ namespace Blazui.Community.Api.Controllers.Client
         /// 查询指定用户是否收藏了指定帖子
         /// </summary>
         /// <returns></returns>
-        [HttpGet("IsStar/{UserId}/{TopicId}")]
-        public async Task<IActionResult> IsStar([FromRoute] string UserId, [FromRoute] string TopicId)
+        [HttpGet("IsFollowed/{UserId}/{TopicId}")]
+        public async Task<IActionResult> IsFollowed([FromRoute] string UserId, [FromRoute] string TopicId)
         {
             var res = await _followRepository.GetFirstOrDefaultAsync(p => p.CreatorId == UserId && p.TopicId == TopicId);
             if (res is null)
@@ -168,10 +168,16 @@ namespace Blazui.Community.Api.Controllers.Client
                 return await Add(Dto);
             else
             {
-                await _bZFollowRepository.ChangeStateByIdAsync(Dto.Id, Dto.Status == 0 ? -1 : 0, "");
+                if(await _bZFollowRepository.ChangeStateByIdAsync(Dto.Id, Dto.Status == 0 ? -1 : 0, ""))
+                {
+                    _cacheService.Remove(nameof(BZFollowModel));
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
-            _cacheService.Remove(nameof(BZFollowModel));
-            return Ok();
         }
 
         /// <summary>
@@ -194,15 +200,17 @@ namespace Blazui.Community.Api.Controllers.Client
         /// <returns></returns>
         [Authorize]
         [HttpDelete("Cancel/{TopicId}/{UserId}")]
-        public async Task<IActionResult> CancelFollow([FromRoute] string TopicId, [FromRoute] string UserId)
+        public async Task<IActionResult> Cancel([FromRoute] string TopicId, [FromRoute] string UserId)
         {
-            if (await _bZFollowRepository.Cancel(TopicId, UserId))
-            {
-                _cacheService.Remove(nameof(BZFollowModel));
-                return Ok();
-            }
-            else
-                return new BadRequestResponse("  error");
+            var follow = await _bZFollowRepository.GetFirstOrDefaultAsync(p=>p.TopicId==TopicId&&p.CreatorId== UserId);
+            if (follow is null)
+                return BadRequest();
+            follow.Status = follow.Status == 0 ? -1 : 0;
+            follow.LastModifierId = UserId;
+            follow.LastModifyDate = DateTime.Now;
+             _bZFollowRepository.UpdateAsync(follow);
+            return Ok();
+          
         }
     }
 }

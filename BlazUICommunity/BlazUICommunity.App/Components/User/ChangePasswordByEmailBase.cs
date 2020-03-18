@@ -83,7 +83,7 @@ namespace Blazui.Community.App.Components.User
             }
             else
             {
-                var response = await NetService.VerifyVerifyCode(User.Id, VerifyCodeType.EmailRetrievePassword, model.VerCode);
+                var response = await NetService.ValidateVerifyCode(User.Id, VerifyCodeType.EmailRetrievePassword, model.VerCode);
                 if (response.IsSuccess)
                 {
                     NewPasswordFormShow = true;

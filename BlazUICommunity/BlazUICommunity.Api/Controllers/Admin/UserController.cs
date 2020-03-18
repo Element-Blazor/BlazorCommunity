@@ -26,7 +26,7 @@ namespace Blazui.Community.Api.Controllers
     [Route("api/[Controller]")]
     [ApiController]
     [SwaggerTag(description: "用户相关")]
-    [HttpCacheExpiration(MaxAge = 100)]
+    //[HttpCacheExpiration(MaxAge = 100)]
     public class UserController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -82,6 +82,8 @@ namespace Blazui.Community.Api.Controllers
             if (user.Status == Status)
                 return Ok();
             user.Status = Status;
+            user.LastModifyDate = DateTime.Now;
+            user.LastModifierId = Guid.Empty.ToString();
             _bZUserRepository.Update(user);
             _cacheService.Remove(nameof(BZUserModel));
             return Ok();

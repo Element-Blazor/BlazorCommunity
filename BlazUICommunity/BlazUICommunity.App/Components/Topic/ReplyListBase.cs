@@ -12,7 +12,7 @@ namespace Blazui.Community.App.Components
 {
     public class ReplyListBase : PageBase
     {
-        internal List<BZReplyDto> Replys { get; set; } = new List<BZReplyDto>();
+        internal IList<BZReplyDto> Replys { get; set; } = new List<BZReplyDto>();
 
         [Parameter]
         public string TopicId { get; set; }
@@ -79,7 +79,7 @@ namespace Blazui.Community.App.Components
             Total = 0;
             Replys = new List<BZReplyDto>();
             //await Task.Delay(1000);
-            var result = await NetService.GetReplys(TopicId, currentPage, PageSize);
+            var result = await NetService.QueryReplysByTopicId(TopicId, currentPage, PageSize);
             if (result.IsSuccess)
                 HandData(result);
 
@@ -89,7 +89,7 @@ namespace Blazui.Community.App.Components
 
         private void HandData(BaseResponse<PageDatas<BZReplyDto>> result)
         {
-            Total = result.Data.TotalCount;
+         
 
             foreach (var item in result.Data.Items)
             {
@@ -97,7 +97,8 @@ namespace Blazui.Community.App.Components
                 item.IsMySelf = item.CreatorId == User?.Id;
                 item.ShoudEdit = false;
             }
-            Replys = result.Data.Items.ToList();
+            Replys = result.Data.Items;
+            Total = result.Data.TotalCount;
         }
 
         protected async Task EditReply(BZReplyDto ReplyModel)
@@ -128,7 +129,7 @@ namespace Blazui.Community.App.Components
             MessageBoxResult Confirm = await MessageBox.ConfirmAsync("确定要删除？");
             if (Confirm == MessageBoxResult.Ok)
             {
-                var result = await NetService.DelRelpy(replyId);
+                var result = await NetService.DeleteRelpy(replyId);
                 if (result.IsSuccess)
                 {
                     //if (OnItemDeleted.HasDelegate)

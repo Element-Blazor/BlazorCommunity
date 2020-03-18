@@ -3,7 +3,7 @@
 @inherits ReplyTopicBase
 
 <div class="container">
-    @if (!string.IsNullOrWhiteSpace(TopicId))
+    @if (!string.IsNullOrWhiteSpace(TopicModel.Content))
     {
         <BLayout EastWidth="350" EnableAlwaysRender="true">
             <North>

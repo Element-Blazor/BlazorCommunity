@@ -12,7 +12,7 @@ namespace Blazui.Community.App.Components
 
         protected override async Task InitilizePageDataAsync()
         {
-            var result = await NetService.GetTopdTopics();
+            var result = await NetService.QueryTopdTopics();
             if (result.IsSuccess)
             {
                 if (result.Data.Any())

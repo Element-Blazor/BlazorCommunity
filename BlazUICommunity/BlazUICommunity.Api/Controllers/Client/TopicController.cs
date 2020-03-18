@@ -172,7 +172,7 @@ namespace Blazui.Community.Api.Controllers.Client
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        [HttpPost("UpdateContent")]
+        [HttpPatch("UpdateContent")]
         public IActionResult UpdateContent([FromBody] BZTopicDto Dto)
         {
             if (string.IsNullOrWhiteSpace(Dto.Id))
@@ -238,51 +238,11 @@ namespace Blazui.Community.Api.Controllers.Client
         }
 
         /// <summary>
-        /// 根据条件分页查询帖子---后台
+        /// 根据条件分页查询帖子
         /// </summary>
         /// <returns></returns>
-        [HttpPost("Query")]
-        public async Task<IActionResult> Query([FromBody] TopicRequestCondition Request = null, [SwaggerParameter(Required = false)] string userName = "")
-        {
-            IPagedList<BZTopicModel> pagedList = null;
-            var query = Request.CreateQueryExpression<BZTopicModel, TopicRequestCondition>();
-            if (!string.IsNullOrWhiteSpace(userName))
-            {
-                var Users = await _cacheService.Users(p => p.UserName.IfContains(userName) || p.NickName.IfContains(userName));
-                if (Users != null)
-                {
-                    query = query.And(p => Users.Select(x => x.Id).Contains(p.CreatorId));
-                }
-            }
-            pagedList = await _bZTopicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
-            if (pagedList != null && pagedList.Items.Any())
-            {
-                var pagedatas = pagedList.From(res => _mapper.Map<List<BZTopicDto>>(res));
-
-                var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
-                foreach (BZTopicModel topic in pagedList.Items)
-                {
-                    var topicwithuser = _mapper.Map<BZTopicDto>(topic);
-                    var user = users.FirstOrDefault(p => p.Id == topic.CreatorId);
-                    topicwithuser.UserName = user.UserName;
-                    topicwithuser.Avator = user.Avator;
-                    topicwithuser.NickName = user.NickName;
-                    pagedatas.Items.Add(topicwithuser);
-                }
-                if (pagedatas is null || pagedatas.TotalCount == 0)
-                    return NoContent();
-                return Ok(pagedatas);
-            }
-
-            return NoContent();
-        }
-
-        /// <summary>
-        /// 根据条件分页查询帖子---前端
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("AppQuery")]
-        public async Task<IActionResult> AppQuery([FromBody] TopicRequestCondition Request = null)
+        [HttpGet("Query")]
+        public async Task<IActionResult> Query([FromQuery] TopicRequestCondition Request = null)
         {
             IPagedList<BZTopicModel> pagedList = null;
             var query = Request.CreateQueryExpression<BZTopicModel, TopicRequestCondition>();
@@ -290,17 +250,18 @@ namespace Blazui.Community.Api.Controllers.Client
             pagedList = await _bZTopicRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
             if (pagedList != null && pagedList.Items.Any())
             {
-                var pagedatas = pagedList.From(res => _mapper.Map<List<BZTopicDto>>(res));
+                var pagedatas = pagedList.From(res => _mapper.Map<List<PersonalTopicDisplayDto>>(res));
 
                 var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
-                foreach (BZTopicModel topic in pagedList.Items)
+                foreach (PersonalTopicDisplayDto topic in pagedatas.Items)
                 {
-                    var topicwithuser = _mapper.Map<BZTopicDto>(topic);
                     var user = users.FirstOrDefault(p => p.Id == topic.CreatorId);
-                    topicwithuser.UserName = user.UserName;
-                    topicwithuser.Avator = user.Avator;
-                    topicwithuser.NickName = user.NickName;
-                    pagedatas.Items.Add(topicwithuser);
+                    if (user != null)
+                    {
+                        topic.UserName = user?.UserName;
+                        topic.Avator = user?.Avator;
+                        topic.NickName = user?.NickName;
+                    }
                 }
                 if (pagedatas is null || pagedatas.TotalCount == 0)
                     return NoContent();
@@ -317,7 +278,7 @@ namespace Blazui.Community.Api.Controllers.Client
         /// <param name="PageIndex"></param>
         /// <param name="PageSize"></param>
         /// <returns></returns>
-        [HttpGet("SeachTopicByTitle/{Title}/{PageIndex}/{PageSize}")]
+        [HttpGet("SeachByTitle/{Title}/{PageIndex}/{PageSize}")]
         public async Task<IActionResult> SeachTopicByTitle(string Title, int PageIndex, int PageSize)
         {
             IPagedList<BZTopicModel> pagedList = null;
@@ -357,18 +318,16 @@ namespace Blazui.Community.Api.Controllers.Client
                 var topic = await _bZTopicRepository.GetFirstOrDefaultAsync(p => p.Id == topicId);
                 var pagedatas = pagedList.From(res => _mapper.Map<List<BZReplyDto>>(res));
                 var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
-                foreach (var replyDto in pagedList.Items)
+                foreach (var replyDto in pagedatas.Items)
                 {
                     var user = users.FirstOrDefault(p => p.Id == replyDto.CreatorId);
-                    var replywithuser = _mapper.Map<BZReplyDto>(replyDto);
-                    pagedatas.Items.Add(replywithuser);
                     if (user != null)
                     {
-                        replywithuser.NickName = user?.NickName;
-                        replywithuser.Avator = user?.Avator;
-                        replywithuser.UserName = user?.UserName;
-                        replywithuser.UserId = user.Id;
-                        replywithuser.Title = topic?.Title;
+                        replyDto.NickName = user?.NickName;
+                        replyDto.Avator = user?.Avator;
+                        replyDto.UserName = user?.UserName;
+                        replyDto.UserId = user.Id;
+                        replyDto.Title = topic?.Title;
                     }
                 }
                 return Ok(pagedatas);
@@ -417,7 +376,7 @@ namespace Blazui.Community.Api.Controllers.Client
         /// <param name="pageSize"></param>
         /// <param name="pageIndex"></param>
         /// <returns></returns>
-        [HttpGet("QueryTopicsByOrder/{orderType}/{topicType}/{pageSize}/{pageIndex}")]
+        [HttpGet("QueryByOrder/{orderType}/{topicType}/{pageSize}/{pageIndex}")]
         public async Task<IActionResult> QueryTopicsByOrder([SwaggerParameter(Required = false)] int orderType = 0,
             [SwaggerParameter(Required = false)] int topicType = -1,
             [SwaggerParameter(Required = false)] int pageSize = 10,
@@ -460,17 +419,15 @@ namespace Blazui.Community.Api.Controllers.Client
             var pagedatas = pagedList.From(res => _mapper.Map<List<BZTopicDto>>(res));
             var userRepository = _unitOfWork.GetRepository<BZUserModel>();
             var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
-            foreach (BZTopicModel topic in pagedList.Items)
+            foreach (BZTopicDto topic in pagedatas.Items)
             {
-                var topicwithuser = _mapper.Map<BZTopicDto>(topic);
                 var user = users.FirstOrDefault(p => p.Id == topic.CreatorId);
                 if (user != null)
                 {
-                    topicwithuser.UserName = user.UserName;
-                    topicwithuser.Avator = user.Avator;
-                    topicwithuser.NickName = user.NickName;
+                    topic.UserName = user.UserName;
+                    topic.Avator = user.Avator;
+                    topic.NickName = user.NickName;
                 }
-                pagedatas.Items.Add(topicwithuser);
             }
             if (pagedatas is null || pagedatas.TotalCount == 0)
                 return NoContent();

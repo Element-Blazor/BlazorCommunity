@@ -25,7 +25,7 @@ namespace Blazui.Community.Api.Controllers
     [HiddenApi]
     [ApiController]
     [SwaggerTag(description: "banner")]
-    [HttpCacheExpiration(MaxAge = 100)]
+    //[HttpCacheExpiration(MaxAge = 100)]
     public class BannerController : ControllerBase
     {
         private readonly IMapper _mapper;

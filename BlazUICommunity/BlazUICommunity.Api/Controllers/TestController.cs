@@ -9,8 +9,8 @@ namespace Blazui.Community.Api.Controllers
     [Route("[controller]")]
     [ApiController]
     //[SwaggerTag(description: "测试")]
-    [HttpCacheExpiration(CacheLocation = CacheLocation.Public)]
-    [HttpCacheValidation(MustRevalidate = true)]
+    //[HttpCacheExpiration(CacheLocation = CacheLocation.Public)]
+    //[HttpCacheValidation(MustRevalidate = true)]
     public class TestController : ControllerBase
     {
         [HttpGet("Time")]

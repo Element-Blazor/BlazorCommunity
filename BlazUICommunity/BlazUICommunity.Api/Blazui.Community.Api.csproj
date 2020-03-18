@@ -71,7 +71,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration\Profiles\App\" />
     <Folder Include="Extensions\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>

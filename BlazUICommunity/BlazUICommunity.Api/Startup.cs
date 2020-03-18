@@ -39,14 +39,14 @@ namespace Blazui.Community.Api
         {
             services.AddHttpContextAccessor();
             //services.AddResponseCaching();
-            services.AddHttpCacheHeaders(
-                expires =>
-                {
-                    expires.MaxAge = 60;
-                    expires.CacheLocation = CacheLocation.Public;
-                },
-                validation => { validation.MustRevalidate = true; }
-                );
+            //services.AddHttpCacheHeaders(
+            //    expires =>
+            //    {
+            //        expires.MaxAge = 60;
+            //        expires.CacheLocation = CacheLocation.Public;
+            //    },
+            //    validation => { validation.MustRevalidate = true; }
+            //    );
 
             services.AddTransient<LoggerMiddleware>();
             services.AddDbContext<BlazUICommunityContext>(opt => opt.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>();
@@ -103,8 +103,8 @@ namespace Blazui.Community.Api
             app.UseCustomSwaggerUI(p => p.Title = "Blazui 社区 WebApi Docs");
 
             //缓存
-            app.UseResponseCaching();
-            app.UseHttpCacheHeaders();
+            //app.UseResponseCaching();
+            //app.UseHttpCacheHeaders();
 
             app.UseRouting();
             //认证

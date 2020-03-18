@@ -52,10 +52,10 @@ namespace Blazui.Community.App.Components
             model.Title ??= "";
             await table?.WithLoadingAsync(async () =>
              {
-                 DataCount = (int)(await NetService.GetMyReplysCount(User.Id, model.Title))?.Data;
+                 DataCount = (int)(await NetService.QueryPersonalReplysCount(User.Id, model.Title))?.Data;
                  if (DataCount > 0)
                  {
-                     var result = await NetService.GetMyReplys(User.Id, currentPage, pageSize, model.Title);
+                     var result = await NetService.QueryPersonalReplys(User.Id, currentPage, pageSize, model.Title);
                      if (result.IsSuccess)
                          Datas = result.Data;
                  }
@@ -76,7 +76,7 @@ namespace Blazui.Community.App.Components
             if (Confirm == MessageBoxResult.Ok)
                 if (topic is BZReplyDto replyDto)
                 {
-                    var result = await NetService.DelRelpy(replyDto.Id);
+                    var result = await NetService.DeleteRelpy(replyDto.Id);
                     if (result.IsSuccess)
                     {
                         await LoadDatas();

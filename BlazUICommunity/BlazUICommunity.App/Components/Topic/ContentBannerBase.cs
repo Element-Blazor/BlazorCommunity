@@ -9,7 +9,7 @@ namespace Blazui.Community.App.Components
 {
     public class ContentBannerBase : BComponentBase
     {
-        internal List<BzBannerDto> Banners { get; set; } = new List<BzBannerDto>();
+        internal static List<BzBannerDto> Banners { get; set; } = new List<BzBannerDto>();
 
         [Inject]
         public NetworkService NetService { get; set; }
@@ -19,10 +19,17 @@ namespace Blazui.Community.App.Components
             await base.OnAfterRenderAsync(firstRender);
             if (!firstRender)
                 return;
-            var ResultData = await NetService.GetBanners();
+            var ResultData = await NetService.QueryBanners();
+
             if (ResultData.IsSuccess)
             {
                 Banners = ResultData.Data;
+                RequireRender = true;
+                StateHasChanged();
+            }
+            else if (ResultData.Code == 204)
+            {
+                Banners = new List<BzBannerDto>();
                 RequireRender = true;
                 StateHasChanged();
             }

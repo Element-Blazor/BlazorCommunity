@@ -20,7 +20,7 @@ namespace Blazui.Community.App.Components
         protected int currentPage = 1;
         protected TopicCategory? Category;
         internal bool requireRender = false;
-        protected List<PersonalTopicModel> Datas = new List<PersonalTopicModel>();
+        protected static IList<PersonalTopicModel> Datas = new List<PersonalTopicModel>();
         protected int DataCount = 5;
         protected BTable table;
         protected BForm searchForm;
@@ -81,7 +81,7 @@ namespace Blazui.Community.App.Components
             if (Confirm == MessageBoxResult.Ok)
                 if (topic is PersonalTopicModel topicModel)
                 {
-                    var result = await NetService.DelTopic(topicModel.Id);
+                    var result = await NetService.DeleteTopic(topicModel.Id);
                     if (result.IsSuccess)
                     {
                         await LoadDatas();
@@ -107,9 +107,22 @@ namespace Blazui.Community.App.Components
         {
             User = await GetUser();
             condition = CreateCondition(condition);
-            var result = await NetService.GetTopics(condition);
-            ConvertDataToDto(result);
-            UpdateUI();
+            var result = await NetService.QueryPersonalTopics(condition);
+            if (result.IsSuccess && result.Data != null && result.Data.TotalCount > 0)
+            {
+                Datas = result.Data.Items;
+                DataCount = result.Data.TotalCount;
+                UpdateUI();
+            }
+            else
+            {
+                if (result.Code == 204)
+                {
+                    Datas = new List<PersonalTopicModel>();
+                    DataCount = 0;
+                    UpdateUI();
+                }
+            }
         }
 
         private SearchPersonalTopicCondition CreateCondition(SearchPersonalTopicCondition condition)
@@ -119,20 +132,6 @@ namespace Blazui.Community.App.Components
             condition.PageIndex = currentPage;
             condition.PageSize = pageSize;
             return condition;
-        }
-
-        private void ConvertDataToDto(BaseResponse<PageDatas<BZTopicDto>> result)
-        {
-            if (result.IsSuccess && result.Data != null && result.Data.TotalCount > 0)
-            {
-                Datas = mapper.Map<List<PersonalTopicModel>>(result.Data.Items);
-                DataCount = result.Data.TotalCount;
-            }
-            else
-            {
-                Datas = new List<PersonalTopicModel>();
-                DataCount = 0;
-            }
         }
 
         /// <summary>

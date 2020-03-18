@@ -262,51 +262,7 @@
             
              </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.BannerController.#ctor(Blazui.Community.Repository.BZBannerRepository,AutoMapper.IMapper,Blazui.Community.Api.Service.ICacheService)">
-             <summary>
-            
-             </summary>
-             <param name="bZBannerRepository"></param>
-             <param name="mapper"></param>
-             <param name="cacheService"></param>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.BannerController.Add(Blazui.Community.DTO.BzBannerDto)">
-            <summary>
-            新增
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.BannerController.Delete(System.String)">
-            <summary>
-            逻辑删除
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.BannerController.Update(Blazui.Community.DTO.BzBannerDto)">
-            <summary>
-            更新
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.BannerController.Query(System.String)">
-            <summary>
-            根据Id查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.BannerController.Query(Blazui.Community.Request.BannerRequestCondition)">
-            <summary>
-            根据条件分页查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.BannerController.Query(System.Int32,System.Int32)">
-            <summary>
-            根据条件分页查询
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.BannerController.QueryAll">
+        <member name="M:Blazui.Community.Api.Controllers.Client.BannerController.QueryAll(Blazui.Community.Api.Service.ICacheService)">
             <summary>
             根据条件分页查询
             </summary>
@@ -386,7 +342,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.FollowController.IsStar(System.String,System.String)">
+        <member name="M:Blazui.Community.Api.Controllers.Client.FollowController.IsFollowed(System.String,System.String)">
             <summary>
             查询指定用户是否收藏了指定帖子
             </summary>
@@ -404,7 +360,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.FollowController.CancelFollow(System.String,System.String)">
+        <member name="M:Blazui.Community.Api.Controllers.Client.FollowController.Cancel(System.String,System.String)">
             <summary>
             改变是否收藏状态
             </summary>
@@ -544,15 +500,9 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.Query(Blazui.Community.Request.TopicRequestCondition,System.String)">
+        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.Query(Blazui.Community.Request.TopicRequestCondition)">
             <summary>
-            根据条件分页查询帖子---后台
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.AppQuery(Blazui.Community.Request.TopicRequestCondition)">
-            <summary>
-            根据条件分页查询帖子---前端
+            根据条件分页查询帖子
             </summary>
             <returns></returns>
         </member>

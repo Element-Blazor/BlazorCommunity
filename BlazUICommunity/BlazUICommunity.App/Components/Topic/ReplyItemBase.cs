@@ -26,7 +26,6 @@ namespace Blazui.Community.App.Components
 
         protected override void OnInitialized()
         {
-            base.OnInitialized();
             UploadUrl = Configuration["ServerUrl"] + "/api/upload/" + UploadPath.Topic.Description();
         }
     }

@@ -87,7 +87,7 @@ namespace Blazui.Community.App.Components
                 ToastError("验证码无效");
                 return;
             }
-            var result = await NetService.VerifyVerifyCode(User.Id, VerifyCodeType.EmailBind, VerifyCode);
+            var result = await NetService.ValidateVerifyCode(User.Id, VerifyCodeType.EmailBind, VerifyCode);
             await SetEmailAsync(model, result);
         }
 

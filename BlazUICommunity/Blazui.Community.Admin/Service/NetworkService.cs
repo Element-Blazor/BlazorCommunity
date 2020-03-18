@@ -19,7 +19,7 @@ namespace Blazui.Community.Admin.Service
         private readonly AdminUserService _adminUserService;
         private readonly BaseResponse Unauthorized;
 
-        private static Dictionary<string, PropertyInfo[]> QuaryParams = new Dictionary<string, PropertyInfo[]>();
+
 
         public NetworkService(IHttpClientFactory httpClientFactory, AdminUserService adminUserService)
         {
@@ -36,56 +36,9 @@ namespace Blazui.Community.Admin.Service
             Unauthorized = new BaseResponse(403, "Unauthorized ，对不起您没有权限进行该操作 ", null);
         }
 
-        /// <summary>
-        /// 构建HttpContent
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        private static HttpContent BuildHttpContent<T>(T t)
-        {
-            if (t is null)
-                return new StringContent("");
-            var requestJson = JsonConvert.SerializeObject(t);
-            HttpContent httpContent = new StringContent(requestJson);
-            return httpContent;
-        }
 
-        /// <summary>
-        /// 构建QueryParam
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        private static string BuildHttpQueryParam<T>(T t, bool MustRefresh = false)
-        {
-            if (t is null)
-                return MustRefresh ? $"MustRefresh={DateTime.Now.Ticks}" : string.Empty;
-            var queryparam = string.Empty;
-            var queryKey = t.GetType().FullName;
-            if (!QuaryParams.TryGetValue(queryKey, out PropertyInfo[] props))
-            {
-                props = t.GetType().GetProperties();
-                QuaryParams.Add(queryKey, props);
-            }
-            props = props.Where(p => p.GetValue(t) != null).ToArray();
-            if (props.Any())
-                queryparam = "?";
-            foreach (PropertyInfo prop in props)
-            {
-                var value = IsNullableEnum(prop.PropertyType) ? (int)prop.GetValue(t) : prop.GetValue(t);//可空的枚举 如何判断他是枚举??????
 
-                queryparam += $"{prop.Name}={value}&";
-            }
-            queryparam = queryparam.TrimEnd('&');
-            return MustRefresh ? $"{queryparam}&MustRefresh={DateTime.Now.Ticks}" : queryparam;
-        }
 
-        private static bool IsNullableEnum(Type t)
-        {
-            Type u = Nullable.GetUnderlyingType(t);
-            return (u != null) && u.IsEnum;
-        }
 
         #region User
 
@@ -96,7 +49,7 @@ namespace Blazui.Community.Admin.Service
         internal async Task<BaseResponse<PageDatas<UserDisplayDto>>> QueryUsers(QueryUserCondition querycondition, bool MustRefresh = false)
         {
             return await httpClient.GetWithJsonResultAsync<PageDatas<UserDisplayDto>>
-                ($"api/user/Query{BuildHttpQueryParam(querycondition, MustRefresh)}");
+                ($"api/user/Query{querycondition.BuildHttpQueryParam(MustRefresh)}");
         }
 
         /// <summary>
@@ -169,7 +122,7 @@ namespace Blazui.Community.Admin.Service
         /// <returns></returns>
         internal async Task<BaseResponse<PageDatas<BZReplyDto>>> QueryReplys(QueryReplyCondition querycondition, bool MustRefresh = false)
         {
-            return await httpClient.GetWithJsonResultAsync<PageDatas<BZReplyDto>>($"api/Reply/Query{BuildHttpQueryParam(querycondition, MustRefresh)}");
+            return await httpClient.GetWithJsonResultAsync<PageDatas<BZReplyDto>>($"api/Reply/Query{querycondition.BuildHttpQueryParam(MustRefresh)}");
         }
 
         #endregion Reply
@@ -183,7 +136,7 @@ namespace Blazui.Community.Admin.Service
         /// <returns></returns>
         internal async Task<BaseResponse<PageDatas<TopicDisplayDto>>> QueryTopics(QueryTopicCondition querycondition, bool MustRefresh = false)
         {
-            return await httpClient.GetWithJsonResultAsync<PageDatas<TopicDisplayDto>>($"api/Topic/Query{BuildHttpQueryParam(querycondition, MustRefresh)}");
+            return await httpClient.GetWithJsonResultAsync<PageDatas<TopicDisplayDto>>($"api/Topic/Query{querycondition.BuildHttpQueryParam(MustRefresh)}");
         }
 
         /// <summary>
@@ -196,7 +149,7 @@ namespace Blazui.Community.Admin.Service
             if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
 
-            return await httpClient.PostWithJsonResultAsync("api/Topic/Add", BuildHttpContent(bZTopicDto));
+            return await httpClient.PostWithJsonResultAsync("api/Topic/Add", bZTopicDto.BuildHttpContent());
         }
 
         /// <summary>
@@ -270,7 +223,7 @@ namespace Blazui.Community.Admin.Service
         /// <returns></returns>
         internal async Task<BaseResponse<PageDatas<VersionDisplayDto>>> QueryVersions(QueryVersionCondition querycondition, bool MustRefresh = false)
         {
-            return await httpClient.GetWithJsonResultAsync<PageDatas<VersionDisplayDto>>($"api/version/Query{BuildHttpQueryParam(querycondition, MustRefresh)}");
+            return await httpClient.GetWithJsonResultAsync<PageDatas<VersionDisplayDto>>($"api/version/Query{querycondition.BuildHttpQueryParam(MustRefresh)}");
         }
 
         /// <summary>
@@ -306,7 +259,7 @@ namespace Blazui.Community.Admin.Service
         {
             if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
-            return await httpClient.PostWithJsonResultAsync($"api/version/Add", BuildHttpContent(dto));
+            return await httpClient.PostWithJsonResultAsync($"api/version/Add", dto.BuildHttpContent());
         }
 
         /// <summary>
@@ -318,7 +271,7 @@ namespace Blazui.Community.Admin.Service
         {
             if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
-            return await httpClient.PutWithJsonResultAsync($"api/version/Update", BuildHttpContent(dto));
+            return await httpClient.PutWithJsonResultAsync($"api/version/Update", dto.BuildHttpContent());
         }
 
         #endregion Version
@@ -332,7 +285,7 @@ namespace Blazui.Community.Admin.Service
         /// <returns></returns>
         internal async Task<BaseResponse<PageDatas<BannerDisplayDto>>> QueryBanners(QueryBannerCondition queryBannerCondition, bool MustRefresh = false)
         {
-            return await httpClient.GetWithJsonResultAsync<PageDatas<BannerDisplayDto>>($"api/banner/Query{BuildHttpQueryParam(queryBannerCondition, MustRefresh)}");
+            return await httpClient.GetWithJsonResultAsync<PageDatas<BannerDisplayDto>>($"api/banner/Query{queryBannerCondition.BuildHttpQueryParam(MustRefresh)}");
         }
 
         /// <summary>
@@ -368,7 +321,7 @@ namespace Blazui.Community.Admin.Service
         {
             if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
-            return await httpClient.PostWithJsonResultAsync("api/Banner/Add", BuildHttpContent(bzBannerDto));
+            return await httpClient.PostWithJsonResultAsync("api/Banner/Add", bzBannerDto.BuildHttpContent());
         }
 
         /// <summary>
@@ -380,7 +333,7 @@ namespace Blazui.Community.Admin.Service
         {
             if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
-            HttpContent httpContent = BuildHttpContent(bzBannerDto);
+            HttpContent httpContent = bzBannerDto.BuildHttpContent();
             return await httpClient.PostWithJsonResultAsync("api/Banner/Update", httpContent);
         }
 
