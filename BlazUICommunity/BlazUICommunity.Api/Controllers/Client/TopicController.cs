@@ -67,61 +67,7 @@ namespace Blazui.Community.Api.Controllers.Client
             return Ok(model.Entity.Id);
         }
 
-        /// <summary>
-        /// 置顶或取消置顶
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        [HttpGet("TopTopic/{Id}")]
-        public IActionResult TopTopic([FromRoute] string Id)
-        {
-            var topic = _bZTopicRepository.Find(Id);
-            if (topic != null)
-            {
-                topic.Top = topic.Top == 1 ? 0 : 1;
-                _bZTopicRepository.Update(topic);
-                _cacheService.Remove(nameof(BZTopicModel));
-            }
-            return Ok();
-        }
 
-        /// <summary>
-        /// 加精或取消加精
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        [Authorize]
-        [HttpGet("BestTopic/{Id}")]
-        public IActionResult BestTopic([FromRoute] string Id)
-        {
-            var topic = _bZTopicRepository.Find(Id);
-            if (topic != null)
-            {
-                topic.Good = topic.Good == 1 ? 0 : 1;
-                _bZTopicRepository.Update(topic);
-                _cacheService.Remove(nameof(BZTopicModel));
-            }
-            return Ok();
-        }
-
-        /// <summary>
-        /// 结贴
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        [Authorize]
-        [HttpGet("EndTopic/{Id}")]
-        public IActionResult EndTopic([FromRoute] string Id)
-        {
-            var topic = _bZTopicRepository.Find(Id);
-            if (topic != null)
-            {
-                topic.Status = topic.Status == 1 ? 0 : 1;
-                _bZTopicRepository.Update(topic);
-                _cacheService.Remove(nameof(BZTopicModel));
-            }
-            return Ok();
-        }
 
         /// <summary>
         /// 根据ID删除帖子--假删除--前后台均调用
@@ -183,22 +129,6 @@ namespace Blazui.Community.Api.Controllers.Client
             topic.Content = Dto.Content;
             topic.Title = Dto.Title;
             topic.LastModifyDate = DateTime.Now;
-            _bZTopicRepository.Update(topic);
-            _cacheService.Remove(nameof(BZTopicModel));
-            return Ok();
-        }
-
-        /// <summary>
-        /// 更新主题帖
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [HttpPost("Update")]
-        public IActionResult Update([FromBody] BZTopicDto Dto)
-        {
-            if (string.IsNullOrWhiteSpace(Dto.Id))
-                return new BadRequestResponse("id is error");
-            var topic = _mapper.Map<BZTopicModel>(Dto);
             _bZTopicRepository.Update(topic);
             _cacheService.Remove(nameof(BZTopicModel));
             return Ok();
@@ -285,7 +215,7 @@ namespace Blazui.Community.Api.Controllers.Client
             Expression<Func<BZTopicModel, bool>> expression = p => p.Status == 0;
             if (string.IsNullOrWhiteSpace(Title))
                 return NoContent();
-            expression = expression.And(p => p.Title.IfContains(Title));
+            expression = expression.And(p => p.Title.Contains(Title.Replace(" ", "")));
             pagedList = await _bZTopicRepository.GetPagedListAsync(expression, o => o.OrderBy(p => p.Id), null, PageIndex - 1, PageSize);
             if (pagedList.Items.Any())
             {

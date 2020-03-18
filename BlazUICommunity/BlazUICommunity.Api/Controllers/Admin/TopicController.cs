@@ -177,8 +177,8 @@ namespace Blazui.Community.Api.Controllers
             if (!string.IsNullOrWhiteSpace(Request.UserName))
             {
                 var Users = await _cacheService.Users(p =>
-                p.UserName.IfContains(Request.UserName) ||
-                p.NickName.IfContains(Request.UserName));
+                p.UserName.Contains(Request.UserName) ||
+                p.NickName.Contains(Request.UserName));
                 if (Users != null)
                     query = query.And(p => Users.Select(x => x.Id).Contains(p.CreatorId));
                 else return NoContent();

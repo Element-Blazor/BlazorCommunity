@@ -49,7 +49,7 @@ namespace Blazui.Community.Api
         {
             _stopwatch.Restart();
             HttpRequest request = context.Request;
-            if (request.Path.ToString().IfContains("upload"))
+            if (request.Path.ToString().Contains("upload"))
             {
                 await _next(context);
             }
@@ -113,7 +113,7 @@ namespace Blazui.Community.Api
 
         private static void WriteLog(HttpMiddlewareModel model)
         {
-            if (!model.Request.Url.IfContains("swagger") && !model.Request.Url.IfContains("html"))
+            if (!model.Request.Url.Contains("swagger") && !model.Request.Url.Contains("html"))
             {
                 _logger.LogDebug("============================================================================");
                 _logger.LogDebug($"Start：{model.ExecuteStart}");

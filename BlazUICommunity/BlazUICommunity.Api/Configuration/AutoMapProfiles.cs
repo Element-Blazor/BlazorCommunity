@@ -8,12 +8,12 @@ namespace Blazui.Community.Api
     /// <summary>
     ///
     /// </summary>
-    public class AutoMapConfiguration : Profile
+    public class AutoMapProfiles : Profile
     {
         /// <summary>
         ///
         /// </summary>
-        public AutoMapConfiguration()
+        public AutoMapProfiles()
         {
             CreateMap<BZUserModel, BZUserDto>().IngoreNotMapped();
             CreateMap<BZUserDto, BZUserModel>();

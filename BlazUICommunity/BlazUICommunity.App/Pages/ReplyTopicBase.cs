@@ -137,6 +137,7 @@ namespace Blazui.Community.App.Pages
                 FollowModel.TopicId = TopicId;
                 FollowModel.CreatorId = User.Id;
                 FollowModel.LastModifierId = User.Id;
+                FollowModel.LastModifyDate = DateTime.Now;
             }
 
             await WithFullScreenLoading(async () =>

@@ -39,16 +39,7 @@ namespace Blazui.Community.Api.Controllers.Client
             _bZVerifyCodeRepository = bZVerifyCodeRepository;
         }
 
-        /// <summary>
-        /// 发送验证码
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("Send")]
-        public async Task<IActionResult> Send()
-        {
-            await _messageService.SendEmail("279225040@qq.com", "3333", VerifyCodeType.EmailBind);
-            return Ok();
-        }
+      
 
         /// <summary>
         /// 发送验证码
@@ -64,7 +55,7 @@ namespace Blazui.Community.Api.Controllers.Client
         {
             var code = _codeService.GenerateNumberCode(4);
 
-            BzVerifyCodeModel bzVerifyCodeModel = BuildModel(verifyCodeType, userId, code);
+            BzVerifyCodeModel bzVerifyCodeModel = CreateModel(verifyCodeType, userId, code);
             var result = await _bZVerifyCodeRepository.InsertAsync(bzVerifyCodeModel);
             if (!string.IsNullOrEmpty(result.Entity.Id))
             {
@@ -107,7 +98,7 @@ namespace Blazui.Community.Api.Controllers.Client
             return sendResult;
         }
 
-        private static BzVerifyCodeModel BuildModel(VerifyCodeType verifyCodeType, string userId, string code)
+        private static BzVerifyCodeModel CreateModel(VerifyCodeType verifyCodeType, string userId, string code)
         {
             return new BzVerifyCodeModel()
             {

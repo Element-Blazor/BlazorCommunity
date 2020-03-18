@@ -7,7 +7,7 @@
         {
             <BForm @ref="bForm" Value="value" LabelAlign="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
                 <BFormItem TValue="string" Label="" Name="@nameof(BindEmailModel.Email)" IsRequired="false">
-                    <BButton Type="ButtonType.Primary" IsPlain="true" Style="border:none" IsDisabled="true">@($"您已经绑定了邮箱：{ value.Email}")</BButton>
+                    <BButton Type="ButtonType.Info" IsPlain="true" Style="border:none" IsDisabled="true">@($"已绑定：{ value.Email}")</BButton>
                 </BFormItem>
             </BForm>
         }

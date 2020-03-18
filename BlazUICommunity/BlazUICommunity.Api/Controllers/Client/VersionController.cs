@@ -24,70 +24,18 @@ namespace Blazui.Community.Api.Controllers.Client
     public class VersionController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-        private readonly ICacheService _cacheService;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="unitOfWork"></param>
-        /// <param name="mapper"></param>
-        /// <param name="cacheService"></param>
-        public VersionController(IUnitOfWork unitOfWork, IMapper mapper, ICacheService cacheService)
+        public VersionController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
-            _cacheService = cacheService;
         }
 
-        /// <summary>
-        /// 删除
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [HttpGet("Delete/{Id}")]
-        public IActionResult Delete(string Id)
-        {
-            var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
-            var version = verRepository.Find(Id);
-            if (version != null && !string.IsNullOrWhiteSpace(version.Id))
-            {
-                version.Status = version.Status == -1 ? 0 : -1;
-            }
-            verRepository.Update(version);
-            _cacheService.Remove(nameof(BZVersionModel));
-            return Ok();
-        }
 
-        /// <summary>
-        /// 删除
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [HttpPost("Add")]
-        public async Task<IActionResult> Add(BZVersionDto dto)
-        {
-            var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
-            BZVersionModel model = _mapper.Map<BZVersionModel>(dto);
-            await verRepository.InsertAsync(model);
-            _cacheService.Remove(nameof(BZVersionModel));
-            return Ok();
-        }
 
-        /// <summary>
-        /// 更新
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [HttpPost("Update")]
-        public IActionResult Update(BZVersionDto dto)
-        {
-            var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
-            BZVersionModel model = _mapper.Map<BZVersionModel>(dto);
-            verRepository.Update(model);
-            _cacheService.Remove(nameof(BZVersionModel));
-            return Ok();
-        }
 
         /// <summary>
         /// 获取版本数据
@@ -118,26 +66,6 @@ namespace Blazui.Community.Api.Controllers.Client
             return Ok(versions);
         }
 
-        /// <summary>
-        /// 获取版本数据
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetPageList/{projectId}/{pageSize}/{pageIndex}")]
-        public async Task<IActionResult> GetPageList(int projectId, int pageSize, int pageIndex)
-        {
-            var verRepository = _unitOfWork.GetRepository<BZVersionModel>();
-            IPagedList<BZVersionModel> versions;
-            if (projectId < 0)
-            {
-                versions = await verRepository.GetPagedListAsync(pageIndex - 1, pageSize);
-            }
-            else
-            {
-                versions = await verRepository.GetPagedListAsync(p => p.Project == projectId, orderBy: o => o.OrderByDescending(p => p.CreateDate), null, pageIndex - 1, pageSize);
-            }
-            if (versions.Items.Any())
-                return Ok(versions.From(result => _mapper.Map<List<BZVersionDto>>(result)));
-            return NoContent();
-        }
+
     }
 }

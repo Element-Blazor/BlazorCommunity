@@ -97,7 +97,7 @@ namespace Blazui.Community.Api.Controllers
             Expression<Func<BZTopicModel, bool>> where = p => true;
             if (!string.IsNullOrWhiteSpace(Request.Title))
             {
-                where = where.And(p => p.Title.IfContains(Request.Title));
+                where = where.And(p => p.Title.Contains(Request.Title));
                 var Topics = await _cacheService.Topics(where);
                 if (Topics != null && Topics.Any())
                     query = query.And(p => Topics.Select(x => x.Id).Contains(p.TopicId));
@@ -107,8 +107,8 @@ namespace Blazui.Community.Api.Controllers
             if (!string.IsNullOrWhiteSpace(Request.UserName))
             {
                 var Users = await _cacheService.Users(p =>
-               p.UserName.IfContains(Request.UserName) ||
-               p.NickName.IfContains(Request.UserName));
+               p.UserName.Contains(Request.UserName) ||
+               p.NickName.Contains(Request.UserName));
                 if (Users.Any())
                     query = query.And(p => Users.Select(x => x.Id).Contains(p.CreatorId));
                 else

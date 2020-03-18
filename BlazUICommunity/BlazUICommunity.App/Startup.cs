@@ -36,8 +36,10 @@ namespace Blazui.Community.App
         public void ConfigureServices(IServiceCollection services)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            services.AddDbContext<BlazUICommunityContext>(options => options.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>();
-            services.AddHttpClient("BlazuiCommunitiyApp", client => client.BaseAddress = new Uri(Configuration["ServerUrl"] ?? throw new ArgumentNullException("ServerUrl is null")));
+            services.AddDbContext<BlazUICommunityContext>(options =>
+            options.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>();
+            services.AddHttpClient("BlazuiCommunitiyApp",
+                client => client.BaseAddress = new Uri(Configuration["ServerUrl"] ?? throw new ArgumentNullException("ServerUrl")));
             services.AddCustomAspIdenitty<BZUserModel, BlazUICommunityContext>();
 
             services.ConfigureApplicationCookie(options =>
@@ -55,7 +57,6 @@ namespace Blazui.Community.App
             services.AddBlazuiServices();
             services.AddMarkdown();
             services.AddCustomRepository<BZUserModel, BZUserIdentityRepository>();
-            services.AddAutoMapper(typeof(AutoMapConfiguration));
             services.AddScoped<NetworkService>();
             services.AddScoped<TokenService>();
             services.AddOptions<List<HeaderMenu>>().Configure(options => Configuration.GetSection("HeaderMenus").Bind(options));

@@ -13,7 +13,7 @@ namespace Blazui.Community.App.Components
         protected int pageSize = 6;
         protected int currentPage = 1;
         internal bool requireRender = false;
-        protected List<BZReplyDto> Datas = new List<BZReplyDto>();
+        protected IList<PersonalReplyDisplayDto> Datas = new List<PersonalReplyDisplayDto>();
         protected int DataCount = 5;
         protected BTable table;
         protected BForm searchForm;
@@ -52,16 +52,17 @@ namespace Blazui.Community.App.Components
             model.Title ??= "";
             await table?.WithLoadingAsync(async () =>
              {
-                 DataCount = (int)(await NetService.QueryPersonalReplysCount(User.Id, model.Title))?.Data;
-                 if (DataCount > 0)
+                 var result = await NetService.QueryPersonalReplys(User.Id, currentPage, pageSize, model.Title);
+                 if (result.IsSuccess)
                  {
-                     var result = await NetService.QueryPersonalReplys(User.Id, currentPage, pageSize, model.Title);
-                     if (result.IsSuccess)
-                         Datas = result.Data;
+                     Datas = result.Data.Items;
+                     DataCount = result.Data.TotalCount;
                  }
                  else
-                     Datas = new List<BZReplyDto>();
-
+                 {
+                     Datas = new List<PersonalReplyDisplayDto>();
+                     DataCount = 0;
+                 }
                  UpdateUI();
              });
         }
@@ -74,7 +75,7 @@ namespace Blazui.Community.App.Components
         {
             MessageBoxResult Confirm = await MessageBox.ConfirmAsync("确定要删除？");
             if (Confirm == MessageBoxResult.Ok)
-                if (topic is BZReplyDto replyDto)
+                if (topic is PersonalReplyDisplayDto replyDto)
                 {
                     var result = await NetService.DeleteRelpy(replyDto.Id);
                     if (result.IsSuccess)
@@ -87,7 +88,7 @@ namespace Blazui.Community.App.Components
 
         protected void LinktoTopic(object topic)
         {
-            if (topic is BZReplyDto topicModel)
+            if (topic is PersonalReplyDisplayDto topicModel)
                 navigationManager.NavigateTo($"/topic/{topicModel.TopicId}");
         }
 

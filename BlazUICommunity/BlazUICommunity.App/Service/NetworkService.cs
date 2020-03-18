@@ -138,8 +138,7 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public async Task<BaseResponse> UpdateTopic(BZTopicDto dto)
         {
-            HttpContent httpContent = dto.BuildHttpContent();
-            return await HttpRequestWithValidate($"api/client/topic/UpdateContent", HttpMethod.Patch, httpContent);
+            return await HttpRequestWithValidate($"api/client/topic/UpdateContent", HttpMethod.Patch, dto.BuildHttpContent());
         }
 
         #endregion Topic
@@ -163,26 +162,13 @@ namespace Blazui.Community.App.Service
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public async Task<BaseResponse<List<BZReplyDto>>> QueryPersonalReplys(string UserId, int pageIndex, int pageSize, string Title)
+        public async Task<BaseResponse<PageDatas<PersonalReplyDisplayDto>>> QueryPersonalReplys(string UserId, int pageIndex, int pageSize, string Title)
         {
-            if (string.IsNullOrWhiteSpace(Title))
-                return await httpClient.GetWithJsonResultAsync<List<BZReplyDto>>($"api/client/reply/GetByUserId/{UserId}/{pageSize}/{pageIndex}");
-            return await httpClient.GetWithJsonResultAsync<List<BZReplyDto>>($"api/client/reply/GetByUserId/{UserId}/{pageSize}/{pageIndex}/{Title}");
+            var url = $"api/client/reply/GetByUserId/{UserId}/{pageSize}/{pageIndex}";
+            return await httpClient.GetWithJsonResultAsync<PageDatas<PersonalReplyDisplayDto>>(
+                string.IsNullOrWhiteSpace(Title) ? url : url + $"/{Title}");
         }
 
-        /// <summary>
-        /// 获取我的回帖数量
-        /// </summary>
-        /// <param name="UserId"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
-        public async Task<BaseResponse<int>> QueryPersonalReplysCount(string UserId, string Title)
-        {
-            if (string.IsNullOrWhiteSpace(Title))
-                return await httpClient.GetWithJsonResultAsync<int>($"api/client/reply/GetRepyCount/{UserId}");
-            return await httpClient.GetWithJsonResultAsync<int>($"api/client/reply/GetRepyCount/{UserId}/{Title}");
-        }
 
         /// <summary>
         /// 修改回贴内容
@@ -191,8 +177,7 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public async Task<BaseResponse> UpdateReply(BZReplyDto dto)
         {
-            HttpContent httpContent = dto.BuildHttpContent();
-            return await HttpRequestWithValidate($"api/client/reply/UpdateContent", HttpMethod.Post, httpContent);
+            return await HttpRequestWithValidate($"api/client/reply/UpdateContent", HttpMethod.Patch, dto.BuildHttpContent());
         }
 
         /// <summary>
@@ -257,8 +242,7 @@ namespace Blazui.Community.App.Service
         /// <returns></returns>
         public async Task<BaseResponse> ToggleFollow(BZFollowDto dto)
         {
-            HttpContent httpContent = dto.BuildHttpContent();
-            return await HttpRequestWithValidate($"api/client/Follow/Toggle", HttpMethod.Post, httpContent);
+            return await HttpRequestWithValidate($"api/client/Follow/Toggle", HttpMethod.Patch, dto.BuildHttpContent());
         }
 
         /// <summary>
@@ -275,10 +259,9 @@ namespace Blazui.Community.App.Service
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public async Task<BaseResponse<PageDatas<BZTopicDto>>> QueryFollows(SearchPersonalFollowCondition condition)
+        public async Task<BaseResponse<PageDatas<PersonalFollowDisplayDto>>> QueryFollows(SearchPersonalFollowCondition condition)
         {
-            HttpContent httpContent = condition.BuildHttpContent();
-            return await httpClient.PostWithJsonResultAsync<PageDatas<BZTopicDto>>("api/client/follow/Query", httpContent);
+            return await httpClient.GetWithJsonResultAsync<PageDatas<PersonalFollowDisplayDto>>($"api/client/follow/Query{condition.BuildHttpQueryParam()}");
         }
 
         /// <summary>
@@ -286,9 +269,9 @@ namespace Blazui.Community.App.Service
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public async Task<BaseResponse> CancelFollow(string TopicId, string UserId)
+        public async Task<BaseResponse> CancelFollow(string FollowId)
         {
-            return await HttpRequestWithValidate($"api/client/follow/Cancel/{TopicId}/{UserId}", HttpMethod.Delete);
+            return await HttpRequestWithValidate($"api/client/follow/Cancel/{FollowId}", HttpMethod.Patch);
         }
 
         #endregion Follow

@@ -35,9 +35,6 @@ namespace Blazui.Community.App.Pages
         [Inject]
         public MessageBox MessageBox { get; set; }
 
-        [Inject]
-        public IMapper mapper { get; set; }
-
         [CascadingParameter]
         public Task<AuthenticationState> authenticationStateTask { get; set; }
 

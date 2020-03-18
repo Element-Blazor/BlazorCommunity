@@ -23,7 +23,7 @@ namespace Blazui.Community.App.Components
 
             if (ResultData.IsSuccess)
             {
-                Banners = ResultData.Data;
+                Banners = ResultData.Data ??= new List<BzBannerDto>();
                 RequireRender = true;
                 StateHasChanged();
             }

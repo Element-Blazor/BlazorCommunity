@@ -82,28 +82,6 @@ namespace Blazui.Community.Api.Controllers.Client
         }
 
         /// <summary>
-        /// 根据用户查询回复帖子
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetByUserId/{UserId}/{PageSize}/{PageIndex}")]
-        [HttpGet("GetByUserId/{UserId}/{PageSize}/{PageIndex}/{Title}")]
-        public async Task<IActionResult> GetByUserId(string UserId, int PageSize, int PageIndex, string Title = null)
-        {
-            return Ok(await _replyRepository.QueryMyReplys(UserId, PageSize, PageIndex - 1, Title));
-        }
-
-        /// <summary>
-        /// 根据用户查询回复帖子
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetRepyCount/{UserId}")]
-        [HttpGet("GetRepyCount/{UserId}/{Title}")]
-        public async Task<IActionResult> GetRepyCount(string UserId, string Title = null)
-        {
-            return Ok(await _replyRepository.QueryMyReplysCount(UserId, Title));
-        }
-
-        /// <summary>
         /// 根据ID删除帖子
         /// </summary>
         /// <returns></returns>
@@ -111,13 +89,13 @@ namespace Blazui.Community.Api.Controllers.Client
         [HttpDelete("Delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] string Id)
         {
-            await _unitOfWork.CommitWithTransactionAsync(async () =>
-            {
+                var reply = await _replyRepository.FindAsync(Id);
+                if (reply is null)
+                    return BadRequest();
                 var delete = await _replyRepository.ChangeStateByIdAsync(Id, -1, "");
                 if (delete)
                 {
                     _cacheService.Remove(nameof(BZReplyModel));
-                    var reply = _replyRepository.Find(Id);
                     var topicRepo = _unitOfWork.GetRepository<BZTopicModel>();
                     var topic = topicRepo.GetFirstOrDefault(p => p.Id == reply.TopicId);
                     if (topic != null)
@@ -127,7 +105,6 @@ namespace Blazui.Community.Api.Controllers.Client
                         _cacheService.Remove(nameof(BZTopicModel));
                     }
                 }
-            });
             return Ok();
         }
 
@@ -136,25 +113,7 @@ namespace Blazui.Community.Api.Controllers.Client
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        [HttpPost("Update/{Id}")]
-        public IActionResult Update([FromBody] BZReplyDto Dto, [FromRoute] string Id)
-        {
-            if (string.IsNullOrWhiteSpace(Id))
-                return new BadRequestResponse("id is error");
-            var reply = _mapper.Map<BZReplyModel>(Dto);
-            reply.Id = Id;
-
-            _replyRepository.Update(reply);
-            _cacheService.Remove(nameof(BZReplyModel));
-            return Ok();
-        }
-
-        /// <summary>
-        /// 更新回帖
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [HttpPost("UpdateContent")]
+        [HttpPatch("UpdateContent")]
         public IActionResult UpdateContent([FromBody] BZTopicDto Dto)
         {
             if (string.IsNullOrWhiteSpace(Dto.Id))
@@ -171,119 +130,47 @@ namespace Blazui.Community.Api.Controllers.Client
         }
 
         /// <summary>
-        /// 根据Id查询回帖
+        /// 根据用户查询回复帖子
         /// </summary>
         /// <returns></returns>
-        [HttpGet("Query/{Id}")]
-        public async Task<IActionResult> Query([FromRoute] string Id)
+        [HttpGet("GetByUserId/{UserId}/{PageSize}/{PageIndex}")]
+        [HttpGet("GetByUserId/{UserId}/{PageSize}/{PageIndex}/{Title}")]
+        public async Task<IActionResult> GetByUserId(string UserId, int PageSize, int PageIndex, string Title = null)
         {
-            var replys = await _cacheService.Replys(p => p.Id == Id);
-            if (replys.Any())
-                return Ok(_mapper.Map<BZReplyDto>(replys.FirstOrDefault()));
-            var res = await _replyRepository.FindAsync(Id);
-            if (res is null)
-                return NoContent();
-            return Ok(res);
-        }
+            if (string.IsNullOrWhiteSpace(UserId)) return BadRequest(nameof(UserId));
 
-        /// <summary>
-        /// 根据条件分页查询回帖
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("Query")]
-        public async Task<IActionResult> Query([FromBody] ReplyRequestCondition Request = null)
-        {
-            IPagedList<BZReplyModel> pagedList = null;
-            var query = Request.CreateQueryExpression<BZReplyModel, ReplyRequestCondition>();
-            query ??= p => true;
-            query = query.And(p => p.Status == 0);
-            pagedList = await _replyRepository.GetPagedListAsync(query, o => o.OrderByDescending(p => p.CreateDate), null, Request.PageIndex - 1, Request.PageSize);
-            if (pagedList.TotalCount > 0)
+
+            Expression<Func<BZReplyModel, bool>> query = p => p.CreatorId == UserId && p.Status == 0;
+            if (!string.IsNullOrWhiteSpace(Title))
             {
-                var pagedatas = pagedList.From(r => _mapper.Map<List<BZReplyDto>>(r));
-                var topics = await _cacheService.Topics(p => pagedList.Items.Select(d => d.TopicId).Contains(p.Id));
-                var Users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
-                foreach (var replyDto in pagedList.Items)
+                var TopicList = await _unitOfWork.GetRepository<BZTopicModel>().GetAllAsync(p => p.Status == 0 && p.Title.Contains(Title));
+                if (TopicList != null && TopicList.Any())
+                    query = query.And(p => TopicList.Select(x => x.Id).Contains(p.TopicId));
+                else return NoContent();
+            }
+
+            var replyList = await _replyRepository.GetPagedListAsync(query, o => o.OrderByDescending(p => p.CreateDate), null, PageIndex - 1, PageSize);
+            if (replyList.Items.Any())
+            {
+                var replysDatas = replyList.From(result => _mapper.Map<List<PersonalReplyDisplayDto>>(result));
+                var topics = await _cacheService.Topics(p => replyList.Items.Select(x => x.TopicId).Contains(p.Id));
+                var users = await _cacheService.Users(p => topics.Select(x => x.CreatorId).Contains(p.Id));
+                foreach (var reply in replysDatas.Items)
                 {
-                    var user = Users.FirstOrDefault(p => p.Id == replyDto.CreatorId);
-                    var topic = topics.FirstOrDefault(p => p.Id == replyDto.TopicId);
-                    var replywithuser = _mapper.Map<BZReplyDto>(replyDto);
-                    pagedatas.Items.Add(replywithuser);
-                    if (user != null)
-                    {
-                        replywithuser.NickName = user?.NickName;
-                        replywithuser.Avator = user?.Avator;
-                        replywithuser.UserName = user?.UserName;
-                        replywithuser.UserId = user.Id;
-                        replywithuser.Title = topic?.Title;
-                    }
+                    var topic = topics?.FirstOrDefault(p => p.Id == reply.TopicId);
+                    var user = users?.FirstOrDefault(p => p.Id == topic?.CreatorId);
+                    reply.Author = user?.NickName;
+                    reply.Title = topic.Title;
                 }
-                return Ok(pagedatas);
+                return Ok(replysDatas);
             }
             else
             {
                 return NoContent();
             }
+
         }
 
-        /// <summary>
-        /// 根据条件分页查询回帖
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("QueryReplys")]
-        public async Task<IActionResult> QueryReplys([FromBody] ReplyRequestCondition Request = null
-            , [SwaggerParameter(Required = false)] string userName = "",
-            [SwaggerParameter(Required = false)] string topicTitle = "")
-        {
-            IPagedList<BZReplyModel> pagedList = null;
-            var query = Request.CreateQueryExpression<BZReplyModel, ReplyRequestCondition>();
-            IList<BZUserModel> Users = new List<BZUserModel>();
-            IList<BZTopicModel> Topics = new List<BZTopicModel>();
-            Expression<Func<BZTopicModel, bool>> where = p => true;
-            if (!string.IsNullOrWhiteSpace(topicTitle))
-            {
-                where = where.And(p => p.Title.IfContains(topicTitle));
-                Topics = await _cacheService.Topics(where);
-                if (Topics != null && Topics.Any())
-                    query = query.And(p => Topics.Select(x => x.Id).Contains(p.TopicId));
-                else
-                    return NoContent();
-            }
-            if (!string.IsNullOrWhiteSpace(userName))
-            {
-                Users = await _cacheService.Users(p => p.UserName.IfContains(userName) || p.NickName.IfContains(userName));
-                if (Users.Any())
-                    query = query.And(p => Users.Select(x => x.Id).Contains(p.CreatorId));
-                else
-                    return NoContent();
-            }
-            pagedList = await _replyRepository.GetPagedListAsync(query, o => o.OrderByDescending(p => p.CreateDate), null, Request.PageIndex - 1, Request.PageSize);
-            if (pagedList.TotalCount > 0)
-            {
-                var pagedatas = pagedList.From(r => _mapper.Map<List<BZReplyDto>>(r));
-                var topics = await _cacheService.Topics(p => pagedList.Items.Select(d => d.TopicId).Contains(p.Id));
-                var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
-                foreach (var replyDto in pagedList.Items)
-                {
-                    var user = users.FirstOrDefault(p => p.Id == replyDto.CreatorId);
-                    var topic = topics.FirstOrDefault(p => p.Id == replyDto.TopicId);
-                    var replywithuser = _mapper.Map<BZReplyDto>(replyDto);
-                    pagedatas.Items.Add(replywithuser);
-                    if (user != null)
-                    {
-                        replywithuser.NickName = user?.NickName;
-                        replywithuser.Avator = user?.Avator;
-                        replywithuser.UserName = user?.UserName;
-                        replywithuser.UserId = user.Id;
-                        replywithuser.Title = topic?.Title;
-                    }
-                }
-                return Ok(pagedatas);
-            }
-            else
-            {
-                return NoContent();
-            }
-        }
+
     }
 }

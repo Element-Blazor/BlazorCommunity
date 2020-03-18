@@ -15,6 +15,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Controllers.Client
@@ -53,6 +54,7 @@ namespace Blazui.Community.Api.Controllers.Client
         /// <summary>
         /// 新增关注
         /// </summary>
+        /// <param name="dto"></param>
         /// <returns></returns>
         [Authorize]
         [HttpPost("Add")]
@@ -67,75 +69,36 @@ namespace Blazui.Community.Api.Controllers.Client
         }
 
         /// <summary>
-        /// 取消关注
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [HttpDelete("Delete/{Id}/{oprationId?}")]
-        public async Task<IActionResult> Delete(string Id, string oprationId)
-        {
-            var result = await _followRepository.ChangeStateByIdAsync(Id, -1, oprationId);
-            _cacheService.Remove(nameof(BZFollowModel));
-            return Ok(result);
-        }
-
-        /// <summary>
-        /// 根据Id查询
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("Query/{Id}")]
-        public async Task<IActionResult> Query([FromRoute] string Id)
-        {
-            var follows = await _cacheService.Follows(p => p.Id == Id);
-            if (follows.Any())
-                return Ok(_mapper.Map<BZFollowDto>(follows.FirstOrDefault()));
-            var res = await _followRepository.FindAsync(Id);
-            if (res != null)
-                return Ok(_mapper.Map<BZFollowDto>(res));
-            return NoContent();
-        }
-
-        /// <summary>
         /// 根据条件分页查询
         /// </summary>
+        /// <param name="Request"></param>
         /// <returns></returns>
-        [HttpPost("Query")]
-        public async Task<IActionResult> Query([FromBody] FollowRequestCondition Request = null)
+        [HttpGet("Query")]
+        public async Task<IActionResult> Query([FromQuery] FollowRequestCondition Request = null)
         {
-            IPagedList<BZFollowModel> pagedList = null;
             var query = Request.CreateQueryExpression<BZFollowModel, FollowRequestCondition>();
             query = query.And(p => p.Status == 0);
-            if (!string.IsNullOrWhiteSpace(Request.TopicTitle))
+            var followList = await _cacheService.Follows(query);
+
+            if (followList.Any())
             {
-                var topicscontaintitle = await _cacheService.Topics(p => p.Title.IfContains(Request.TopicTitle));
-                if (topicscontaintitle?.Count > 0)
+                var followTopicIds = followList.Select(p => p.TopicId);
+                var topicRepository = _unitOfWork.GetRepository<BZTopicModel>();
+
+                Expression<Func<BZTopicModel, bool>> expression = p => p.Status == 0 && followTopicIds.Contains(p.Id);
+                if (!string.IsNullOrWhiteSpace(Request.TopicTitle))
+                    expression = p => p.Status == 0 && followTopicIds.Contains(p.Id) && p.Title.Contains(Request.TopicTitle);
+
+                var topicList = await topicRepository.GetPagedListAsync(expression, o => o.OrderByDescending(p => p.CreateDate), null, Request.PageIndex - 1, Request.PageSize);
+                var pagedatas = topicList.From(result => _mapper.Map<List<PersonalFollowDisplayDto>>(result));
+                var Users = await _cacheService.Users(p => pagedatas.Items.Select(d => d.CreatorId).Contains(p.Id));
+                foreach (PersonalFollowDisplayDto topic in pagedatas.Items)
                 {
-                    query = query.And(p => topicscontaintitle.Select(x => x.Id).Contains(p.TopicId));
-                }
-                else
-                    return NoContent();
-            }
-            pagedList = await _followRepository.GetPagedListAsync(query, o => o.OrderBy(p => p.Id), null, Request.PageIndex - 1, Request.PageSize);
-            if (pagedList.TotalCount > 0)
-            {
-                var pagedatas = pagedList.From(result => _mapper.Map<List<BZTopicDto>>(result));
-                var topics = await _cacheService.Topics(p => pagedList.Items.Select(d => d.TopicId).Contains(p.Id));
-                var Users = await _cacheService.Users(p => topics.Select(d => d.CreatorId).Contains(p.Id));
-                foreach (BZFollowModel follow in pagedList.Items)
-                {
-                    var topic = topics.FirstOrDefault(p => p.Id == follow.TopicId);
-                    if (topic != null)
-                    {
-                        var topicdto = _mapper.Map<BZTopicDto>(topic);
-                        var User = Users.FirstOrDefault(p => p.Id == topic.CreatorId);
-                        if (User != null)
-                        {
-                            topicdto.UserName = User.UserName;
-                            topicdto.NickName = User.NickName;
-                            topicdto.Avator = User.Avator;
-                        }
-                        pagedatas.Items.Add(topicdto);
-                    }
+                    var User = Users.FirstOrDefault(p => p.Id == topic.CreatorId);
+                    topic.UserName = User?.UserName;
+                    topic.NickName = User?.NickName;
+                    topic.Avator = User?.Avator;
+                    topic.FollowId = followList.FirstOrDefault(p => p.TopicId == topic.Id)?.Id;
                 }
                 return Ok(pagedatas);
             }
@@ -143,9 +106,12 @@ namespace Blazui.Community.Api.Controllers.Client
                 return NoContent();
         }
 
+
         /// <summary>
-        /// 查询指定用户是否收藏了指定帖子
+        /// 用户是否收藏了指定帖子
         /// </summary>
+        /// <param name="UserId"></param>
+        /// <param name="TopicId"></param>
         /// <returns></returns>
         [HttpGet("IsFollowed/{UserId}/{TopicId}")]
         public async Task<IActionResult> IsFollowed([FromRoute] string UserId, [FromRoute] string TopicId)
@@ -159,16 +125,19 @@ namespace Blazui.Community.Api.Controllers.Client
         /// <summary>
         /// 改变是否收藏状态
         /// </summary>
+        /// <param name="Dto"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPost("Toggle")]
+        [HttpPatch("Toggle")]
         public async Task<IActionResult> ToggleFollow([FromBody] BZFollowDto Dto)
         {
             if (string.IsNullOrWhiteSpace(Dto.Id))
+            {
                 return await Add(Dto);
+            }
             else
             {
-                if(await _bZFollowRepository.ChangeStateByIdAsync(Dto.Id, Dto.Status == 0 ? -1 : 0, ""))
+                if (await _bZFollowRepository.ChangeStateByIdAsync(Dto.Id, Dto.Status == 0 ? -1 : 0, ""))
                 {
                     _cacheService.Remove(nameof(BZFollowModel));
                     return Ok();
@@ -181,36 +150,20 @@ namespace Blazui.Community.Api.Controllers.Client
         }
 
         /// <summary>
-        /// 更新关注
+        /// 取消收藏
         /// </summary>
+        /// <param name="FollowId"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPut("Update")]
-        public IActionResult Update([FromBody] BZFollowDto Dto)
+        [HttpPatch("Cancel/{FollowId}")]
+        public async Task<IActionResult> Cancel([FromRoute] string FollowId)
         {
-            var follow = _mapper.Map<BZFollowModel>(Dto);
-            _followRepository.Update(follow);
-            _cacheService.Remove(nameof(BZFollowModel));
-            return Ok();
-        }
-
-        /// <summary>
-        /// 改变是否收藏状态
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [HttpDelete("Cancel/{TopicId}/{UserId}")]
-        public async Task<IActionResult> Cancel([FromRoute] string TopicId, [FromRoute] string UserId)
-        {
-            var follow = await _bZFollowRepository.GetFirstOrDefaultAsync(p=>p.TopicId==TopicId&&p.CreatorId== UserId);
-            if (follow is null)
-                return BadRequest();
-            follow.Status = follow.Status == 0 ? -1 : 0;
-            follow.LastModifierId = UserId;
-            follow.LastModifyDate = DateTime.Now;
-             _bZFollowRepository.UpdateAsync(follow);
-            return Ok();
-          
+            if (await _bZFollowRepository.ChangeStateByIdAsync(FollowId, -1, ""))
+            {
+                _cacheService.Remove(nameof(BZFollowModel));
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

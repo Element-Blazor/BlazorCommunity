@@ -7,7 +7,7 @@
         {
             <BForm @ref="bForm" Value="value" LabelAlign="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
                 <BFormItem TValue="string" Label="" Name="@nameof(BindMobileModel.Mobile)" IsRequired="false">
-                    <BButton Type="ButtonType.Primary" IsPlain="true" Style="border:none" IsDisabled="true">@($"您已经绑定了手机：{ value.Mobile}")</BButton>
+                    <BButton Type="ButtonType.Info" IsPlain="true" Style="border:none" IsDisabled="true">@($"已绑定：{ value.Mobile}")</BButton>
                 </BFormItem>
             </BForm>
         }
