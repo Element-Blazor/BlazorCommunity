@@ -8,15 +8,15 @@ using Blazui.Component.Container;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using static Blazui.Community.App.ConstantConfiguration;
 
 namespace Blazui.Community.App.Components
 {
     [Authorize]
     public class BindEmailBase : PageBase
+
     {
         protected BForm bForm { get; set; }
-        internal BindEmailModel value { get; set; }
+        internal PasswordModel value { get; set; }
         protected bool showInput { get; set; } = false;
         protected BCard bCard { get; set; }
         internal bool IsDisabled { get; set; } = false;
@@ -43,7 +43,7 @@ namespace Blazui.Community.App.Components
         {
             if (!bForm.IsValid())
                 return;
-            var model = bForm.GetValue<BindEmailModel>();
+            var model = bForm.GetValue<PasswordModel>();
             var mobileValid = Regex.Match(model.Email, "^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$").Success;
             if (!mobileValid)
             {
@@ -80,9 +80,9 @@ namespace Blazui.Community.App.Components
 
         protected async Task CheckVerifyCode()
         {
-            var model = bForm.GetValue<BindEmailModel>();
+            var model = bForm.GetValue<PasswordModel>();
 
-            if (VerifyCode != model.VerifyCode)
+            if (VerifyCode != model.Code)
             {
                 ToastError("验证码无效");
                 return;
@@ -91,7 +91,7 @@ namespace Blazui.Community.App.Components
             await SetEmailAsync(model, result);
         }
 
-        private async Task SetEmailAsync(BindEmailModel model, BaseResponse response)
+        private async Task SetEmailAsync(PasswordModel model, BaseResponse response)
         {
             if (response.IsSuccess)
             {
@@ -114,10 +114,10 @@ namespace Blazui.Community.App.Components
         private async Task LoadData()
         {
             User = await GetUser();
-            value = new BindEmailModel()
+            value = new PasswordModel()
             {
                 Email = User?.Email ?? "",
-                VerifyCode = ""
+                Code = ""
             };
             showInput = !string.IsNullOrWhiteSpace(value.Email);
         }

@@ -1,10 +1,8 @@
-﻿using Blazui.Community.App.Model;
-using Blazui.Community.App.Model.Condition;
+﻿using Blazui.Community.App.Model.Condition;
 using Blazui.Community.App.Pages;
 using Blazui.Community.DTO;
 using Blazui.Community.Enums;
 using Blazui.Community.Model.Models;
-using Blazui.Community.Response;
 using Blazui.Component;
 using Microsoft.AspNetCore.Authorization;
 using System;
@@ -20,7 +18,7 @@ namespace Blazui.Community.App.Components
         protected int currentPage = 1;
         protected TopicCategory? Category;
         internal bool requireRender = false;
-        protected static IList<PersonalTopicModel> Datas = new List<PersonalTopicModel>();
+        protected static IList<PersonalTopicDisplayDto> Datas = new List<PersonalTopicDisplayDto>();
         protected int DataCount = 5;
         protected BTable table;
         protected BForm searchForm;
@@ -79,7 +77,7 @@ namespace Blazui.Community.App.Components
         {
             MessageBoxResult Confirm = await MessageBox.ConfirmAsync("确定要删除？");
             if (Confirm == MessageBoxResult.Ok)
-                if (topic is PersonalTopicModel topicModel)
+                if (topic is PersonalTopicDisplayDto topicModel)
                 {
                     var result = await NetService.DeleteTopic(topicModel.Id);
                     if (result.IsSuccess)
@@ -92,7 +90,7 @@ namespace Blazui.Community.App.Components
 
         protected void LinktoTopic(object topic)
         {
-            if (topic is PersonalTopicModel topicModel)
+            if (topic is PersonalTopicDisplayDto topicModel)
                 navigationManager.NavigateTo($"/topic/{topicModel.Id}");
         }
 
@@ -118,7 +116,7 @@ namespace Blazui.Community.App.Components
             {
                 if (result.Code == 204)
                 {
-                    Datas = new List<PersonalTopicModel>();
+                    Datas = new List<PersonalTopicDisplayDto>();
                     DataCount = 0;
                     UpdateUI();
                 }

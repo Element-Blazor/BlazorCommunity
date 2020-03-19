@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Blazui.Community.App.Service;
+﻿using Blazui.Community.App.Service;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Response;
 using Blazui.Component;
@@ -46,11 +45,12 @@ namespace Blazui.Community.App.Pages
 
         public string UploadUrl { get; protected set; }
 
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-            UploadUrl = Configuration["ServerUrl"] + "/api/upload/";
-        }
+        /// <summary>
+        /// 发送验证码，按钮禁用倒计时
+        /// </summary>
+        public const int CountDownTime = 120;
+
+        protected override void OnInitialized() => UploadUrl = Configuration["ServerUrl"] + "/api/upload/";
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {

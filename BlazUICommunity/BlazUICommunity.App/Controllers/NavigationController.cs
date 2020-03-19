@@ -4,14 +4,14 @@ using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Blazui.Community.App.Data
+namespace Blazui.Community.App.Controllers
 {
     [ApiController]
-    public class NaviController : ControllerBase
+    public class NavigationController : ControllerBase
     {
-        private readonly IOptionsMonitor<List<HeaderMenu>> _options;
+        private readonly IOptionsMonitor<List<TopNaviHeaderMenuModel>> _options;
 
-        public NaviController(IOptionsMonitor<List<HeaderMenu>> options)
+        public NavigationController(IOptionsMonitor<List<TopNaviHeaderMenuModel>> options)
         {
             _options = options;
         }

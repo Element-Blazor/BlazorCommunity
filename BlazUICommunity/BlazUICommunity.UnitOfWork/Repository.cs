@@ -1018,7 +1018,6 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
 
         public async Task<bool> ChangeStateByIdAsync(string Id, int Status, string oprationId)
         {
-          
             var updateModifyId = !string.IsNullOrWhiteSpace(oprationId) ? $"  , LastModifyDate= '{oprationId}' " : "";
             var sql = $"update { typeof(TEntity).GetTableName<TEntity>()}  set Status={Status},  LastModifyDate =now() {updateModifyId}  where Id= '{Id}'";
             return await _dbContext.Database.ExecuteSqlRawAsync(sql) > 0;

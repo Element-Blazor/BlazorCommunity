@@ -508,8 +508,8 @@ app .blaz-layout > .blaz-layout-container > .blaz-layout-center::-webkit-scrollb
     text-align: right;
     margin-right: 5px;
     width: 360px;
-    border-bottom: 2px solid #EBEEF5;
-    padding-bottom: 1px;
+    border-bottom: 1px solid #E4E7ED;
+    padding-bottom: 2px;
 }
 
 .newtopic-reply {
@@ -756,7 +756,15 @@ el-center {
 .content-east {
     width: 100%;
 }
-
+.el-table__header-wrapper .cell {
+    text-align: center !important;
+}
+.el-table__body-wrapper .cell {
+    text-align: center !important;
+}
+.el-tabs__nav-wrap::after{
+    height:1px !important;
+}
 .container {
     width: 100%;
     padding-right: 0px;

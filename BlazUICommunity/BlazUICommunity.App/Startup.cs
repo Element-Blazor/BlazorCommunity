@@ -1,6 +1,5 @@
 using Arch.EntityFrameworkCore.UnitOfWork;
 using Autofac;
-using AutoMapper;
 using Blazui.Community.App.Model;
 using Blazui.Community.App.Service;
 using Blazui.Community.AutofacModules;
@@ -59,7 +58,7 @@ namespace Blazui.Community.App
             services.AddCustomRepository<BZUserModel, BZUserIdentityRepository>();
             services.AddScoped<NetworkService>();
             services.AddScoped<TokenService>();
-            services.AddOptions<List<HeaderMenu>>().Configure(options => Configuration.GetSection("HeaderMenus").Bind(options));
+            services.AddOptions<List<TopNaviHeaderMenuModel>>().Configure(options => Configuration.GetSection("HeaderMenus").Bind(options));
         }
 
         /// <summary>

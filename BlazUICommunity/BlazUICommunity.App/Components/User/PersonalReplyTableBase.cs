@@ -1,4 +1,5 @@
-﻿using Blazui.Community.App.Model.Condition;
+﻿using Blazui.Community.App.Components.User;
+using Blazui.Community.App.Model.Condition;
 using Blazui.Community.App.Pages;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
@@ -48,7 +49,7 @@ namespace Blazui.Community.App.Components
 
         private async Task LoadDatas()
         {
-            var model = searchForm.GetValue<SearchPersonalTopicCondition>();
+            var model = searchForm.GetValue<SearchPersonalReplyCondition>();
             model.Title ??= "";
             await table?.WithLoadingAsync(async () =>
              {
@@ -67,11 +68,28 @@ namespace Blazui.Community.App.Components
              });
         }
 
+
+        protected async Task ShowContent(object topic)
+        {
+            if (topic is PersonalReplyDisplayDto replyDto)
+            {
+                var Parameters = new Dictionary<string, object> { { "Content", replyDto.Content } };
+                if (replyDto.Content.Length < 100)
+                    await DialogService.ShowDialogAsync<ReplyContent>("回复内容", 500, Parameters);
+                else if (replyDto.Content.Length < 500)
+                    await DialogService.ShowDialogAsync<ReplyContent>("回复内容", 800, Parameters);
+                else
+                    await DialogService.ShowDialogAsync<ReplyContent>("回复内容", true, Parameters);
+
+
+            }
+        }
+
         /// <summary>
         /// 删除纪录
         /// </summary>
         /// <param name="topic"></param>
-        public async Task Del(object topic)
+        protected async Task Del(object topic)
         {
             MessageBoxResult Confirm = await MessageBox.ConfirmAsync("确定要删除？");
             if (Confirm == MessageBoxResult.Ok)

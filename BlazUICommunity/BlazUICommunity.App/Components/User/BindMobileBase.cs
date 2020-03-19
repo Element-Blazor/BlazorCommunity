@@ -3,15 +3,11 @@ using Blazui.Community.App.Pages;
 using Blazui.Community.Enums;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Response;
-
-using Blazui.Community.Response;
-
 using Blazui.Component;
 using Blazui.Component.Container;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using static Blazui.Community.App.ConstantConfiguration;
 
 namespace Blazui.Community.App.Components
 {
@@ -19,7 +15,7 @@ namespace Blazui.Community.App.Components
     public class BindMobileBase : PageBase
     {
         protected BForm bForm { get; set; }
-        internal BindMobileModel value { get; set; }
+        internal PasswordModel value { get; set; }
         protected bool showInput { get; set; } = false;
         protected BCard bCard { get; set; }
         internal bool IsDisabled { get; set; } = false;
@@ -46,7 +42,7 @@ namespace Blazui.Community.App.Components
         {
             if (!bForm.IsValid())
                 return;
-            var model = bForm.GetValue<BindMobileModel>();
+            var model = bForm.GetValue<PasswordModel>();
             var mobileValid = Regex.Match(model.Mobile, "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$").Success;
             if (!mobileValid)
             {
@@ -92,9 +88,9 @@ namespace Blazui.Community.App.Components
             if (!bForm.IsValid())
                 return;
 
-            var model = bForm.GetValue<BindMobileModel>();
+            var model = bForm.GetValue<PasswordModel>();
 
-            if (!model.VerifyCode.Equals(VerifyCode))
+            if (!model.Code.Equals(VerifyCode))
             {
                 ToastError("验证码无效");
                 return;
@@ -102,7 +98,7 @@ namespace Blazui.Community.App.Components
             await SetPhoneNumberAsync(model);
         }
 
-        private async Task SetPhoneNumberAsync(BindMobileModel model)
+        private async Task SetPhoneNumberAsync(PasswordModel model)
         {
             var response = await NetService.ValidateVerifyCode(User.Id, VerifyCodeType.MobileBind, VerifyCode);
             if (response.IsSuccess)
@@ -126,10 +122,10 @@ namespace Blazui.Community.App.Components
         private async Task LoadData()
         {
             User = await GetUser();
-            value = new BindMobileModel()
+            value = new PasswordModel()
             {
                 Mobile = User?.PhoneNumber ?? "",
-                VerifyCode = ""
+                Code = ""
             };
             showInput = !string.IsNullOrWhiteSpace(value.Mobile);
         }

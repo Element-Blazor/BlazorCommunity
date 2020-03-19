@@ -2,6 +2,7 @@
 @using System.Text.RegularExpressions
 @inherits PageBase
 
+
 <BInput Type="InputType.Text" TValue="string" Size="@InputSize.Small" @bind-Value="@SearchText"
         Style="width:220px;margin-left: -100px;display:inline-block;" EnableAlwaysRender="true" EnableClearButton="true"></BInput>
 <BButton Type="@ButtonType.Text" Size="@ButtonSize.Medium" Icon="el-icon-search" OnClick="e=>Search()"
@@ -14,9 +15,9 @@
 
     internal void Search()
     {
-        SearchText = RemoveSpecialCharacter(SearchText);
         if (string.IsNullOrWhiteSpace(SearchText))
             return;
+        SearchText = RemoveSpecialCharacter(SearchText);
         navigationManager.NavigateTo($"search/{SearchText}");
     }
 

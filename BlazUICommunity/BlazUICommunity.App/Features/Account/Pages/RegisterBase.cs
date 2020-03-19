@@ -42,43 +42,43 @@ namespace Blazui.Community.App.Features.Account.Pages
             {
                 return;
             }
-            var registerAccountModel = registerForm.GetValue<RegisterAccountDto>();
-            if (ContainsChineseCharacters(registerAccountModel.UserAccount))
-            {
-                ToastError("不支持中文账号");
-                return;
-            }
-
-            if (!registerAccountModel.Password.Equals(registerAccountModel.ConfirmPassword))
-            {
-                ToastError("两次密码输入不一致");
-                return;
-            }
-            var user = await userManager.FindByNameAsync(registerAccountModel.UserAccount);
-            if (user != null)
-            {
-                ToastError("用户账号已存在");
-                return;
-            }
-            var identityResult = await BZUserRepository.CreateUserAsync(registerAccountModel.UserAccount, registerAccountModel.Password);
-            if (!identityResult.Succeeded)
-            {
-                foreach (var identityError in identityResult.Errors)
+            await WithFullScreenLoading(async () => {
+                await Task.Delay(new Random().Next(3000));
+                var registerAccountModel = registerForm.GetValue<RegisterAccountDto>();
+                if (ContainsChineseCharacters(registerAccountModel.UserAccount))
                 {
-                    ToastError(identityError.Description);
+                    ToastError("不支持中文账号");
+                    return;
                 }
-                return;
-            }
-            else
-            {
-                ToastSuccess("注册成功，正在自动登陆...");
-                await Task.Delay(1000);
 
-                await WithFullScreenLoading(async () =>
+                if (!registerAccountModel.Password.Equals(registerAccountModel.ConfirmPassword))
                 {
+                    ToastError("两次密码输入不一致");
+                    return;
+                }
+                var user = await userManager.FindByNameAsync(registerAccountModel.UserAccount);
+                if (user != null)
+                {
+                    ToastError("用户账号已存在");
+                    return;
+                }
+                var identityResult = await BZUserRepository.CreateUserAsync(registerAccountModel.UserAccount, registerAccountModel.Password);
+                if (!identityResult.Succeeded)
+                {
+                    foreach (var identityError in identityResult.Errors)
+                    {
+                        ToastError(identityError.Description);
+                    }
+                    return;
+                }
+                else
+                {
+                    ToastSuccess("注册成功，5秒后自动登陆...");
+                    await Task.Delay(5000);
                     await AutoLogin(registerAccountModel.UserAccount);
-                });
-            }
+                }
+            });
+           
         }
 
         private bool ContainsChineseCharacters(string input)

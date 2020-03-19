@@ -1,0 +1,27 @@
+﻿@inherits BComponentBase
+<div class="@Cls">
+    <span class="go-back" @onclick="e=>OnBackClick()">
+        <i class="el-icon-back"></i>
+    </span>
+    @if (string.IsNullOrWhiteSpace(Title))
+    {
+        <span class="find-password-title">
+            @Title
+        </span>
+    }
+</div>
+@code{
+    [Inject]
+    private NavigationManager navigationManager { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Route { get; set; }
+
+    internal void OnBackClick()
+    {
+        if (!string.IsNullOrWhiteSpace(Route)) navigationManager.NavigateTo(Route, true);
+    }
+}

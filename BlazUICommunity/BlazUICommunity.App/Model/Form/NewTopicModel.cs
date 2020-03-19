@@ -2,7 +2,7 @@
 
 namespace Blazui.Community.App.Model
 {
-    public class TopicFormModel
+    public class NewTopicModel
     {
         /// <summary>
         /// 帖子标题
@@ -13,13 +13,7 @@ namespace Blazui.Community.App.Model
         /// 类别
         /// </summary>
 
-        public string CategoryDisplay
-        {
-            get
-            {
-                return Category.Description();
-            }
-        }
+        public string CategoryDisplay => Category.Description();
 
         public TopicCategory Category { get; set; }
 

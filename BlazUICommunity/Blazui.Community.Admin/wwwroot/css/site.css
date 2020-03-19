@@ -190,3 +190,10 @@ app > .el-dialog__wrapper .el-form-item {
     max-width: 300px;
     height: 70px;
 }
+.el-table__header-wrapper .cell {
+    text-align: center !important;
+}
+
+.el-table__body-wrapper .cell {
+    text-align: center !important;
+}

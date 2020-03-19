@@ -2,27 +2,27 @@
 @inherits NewTopicBase
 
 <div class="content-newtopic">
-    <BTab  EnableAlwaysRender="true">
+    <BTab EnableAlwaysRender="true">
         <BTabPanel Title="发表新帖">
             <BForm Inline="false" @ref="form" Value="article" LabelAlign="@LabelAlign.Left">
 
                 <div class="form-inline">
-                    <BFormItem TValue="string" Label="帖子标题" Name="@nameof(TopicFormModel.Title)" IsRequired="true">
+                    <BFormItem TValue="string" Label="帖子标题" Name="@nameof(NewTopicModel.Title)" IsRequired="true">
                         <BInput TValue="string" Style="min-width:500px;max-width:600px;margin-left:-30px;" Placeholder="请输入标题"></BInput>
                     </BFormItem>
-                    <BFormItem TValue="TopicCategory" Label="类型" IsRequired="true" Name="@nameof(TopicFormModel.Category)">
+                    <BFormItem TValue="TopicCategory" Label="类型" IsRequired="true" Name="@nameof(NewTopicModel.Category)">
                         <div class="el-form-item-custom">
                             <BSelect Value="TopicCategory.Ask">
                             </BSelect>
                         </div>
                     </BFormItem>
-                    <BFormItem TValue="ProjectType" Label="项目" IsRequired="true" Name="@nameof(TopicFormModel.projectType)" Style="margin-left: 20px;">
+                    <BFormItem TValue="ProjectType" Label="项目" IsRequired="true" Name="@nameof(NewTopicModel.projectType)" Style="margin-left: 20px;">
                         <div class="el-form-item-custom">
                             <BSelect TValue="ProjectType" Value="ProjectType.Blazui" ValueChanged="e=>OnChange(e)">
                             </BSelect>
                         </div>
                     </BFormItem>
-                    <BFormItem TValue="string" Label="版本" IsRequired="true" Name="@nameof(TopicFormModel.VerNo)" Style="margin-left: 20px;">
+                    <BFormItem TValue="string" Label="版本" IsRequired="true" Name="@nameof(NewTopicModel.VerNo)" Style="margin-left: 20px;">
                         <div class="el-form-item-custom">
                             <BSelect TValue="string" @ref="bverNoSelect">
                                 @if (bZVersions != null && bZVersions.Any())
@@ -37,7 +37,7 @@
                     </BFormItem>
                 </div>
 
-                <BFormItem TValue="string" IsRequired="true" Name="@nameof(TopicFormModel.Content)">
+                <BFormItem TValue="string" IsRequired="true" Name="@nameof(NewTopicModel.Content)">
                     <div style="width:99%;">
                         <BMarkdownEditor @ref="bMarkdownEditor" UploadUrl="@(UploadUrl+ UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="480" FileMaxSize="300" ImageMaxSize="300"></BMarkdownEditor>
                         <div>
@@ -48,10 +48,7 @@
                 <BFormItem TValue="object">
                     <div style="margin-right: 20px;text-align: right;">
                         <BButton Type="@ButtonType.Success" OnClick="e=>Submit()" IsPlain="true" Style="float: left; ">立即发布</BButton>
-                        <div class="go-home custome-button-hover" style="float: right;">
-                            <BButton Type="@ButtonType.Text" Icon="el-icon-back" Size="@ButtonSize.Medium" Style="color:#909399"></BButton>
-                            <BButton Type="@ButtonType.Text" OnClick="e=>GoHome()" IsPlain="true" Size="@ButtonSize.Medium" Style="color:#909399">Go Back</BButton>
-                        </div>
+                        <GoHome Float="@("right")"></GoHome>
                     </div>
                 </BFormItem>
             </BForm>

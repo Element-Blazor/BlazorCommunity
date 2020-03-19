@@ -1,6 +1,6 @@
 ﻿namespace Blazui.Community.App.Model
 {
-    public class HeaderMenu
+    public class TopNaviHeaderMenuModel
     {
         public string Title { get; set; }
         public string Route { get; set; }

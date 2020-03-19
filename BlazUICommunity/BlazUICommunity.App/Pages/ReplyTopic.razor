@@ -6,69 +6,34 @@
     @if (!string.IsNullOrWhiteSpace(TopicModel.Content))
     {
         <BLayout EastWidth="350" EnableAlwaysRender="true">
-            <North>
-                <div class="content-flex-row" style="width:100%;border-bottom: 1px solid #EBEEF5;">
-                    <div class="go-home custome-button-hover">
-                        <BButton Type="@ButtonType.Text" Icon="el-icon-back" Size="@ButtonSize.Medium" Style="color:#909399"></BButton>
-                        <BButton Type="@ButtonType.Text" OnClick="e=>GoHome()" IsPlain="true" Size="@ButtonSize.Medium" Style="color:#909399">Go Back</BButton>
-                    </div>
-                    <div class="newtopic-reply">
-                        <NewTopicAndSearch></NewTopicAndSearch>
-                    </div>
-                </div>
-            </North>
             <Center>
-                <div class="margin-top-5"></div>
-                <TopicContent EnableAlwaysRender="true" TopicModel="@TopicModel" IsFollow="@IsFollow" IsMySelf="@IsMySelf" IsEditing="@IsEditing"
-                              OnFollowStatusChanging="@ToggleFollow" OnEditStatusChanging="ToggleEditing">
-                </TopicContent>
-                <div class="margin-top-5"></div>
-                <BCard EnableAlwaysRender="true">
-                    <Header>
-                        <div class="el-divider el-divider--horizontal">
-                            <div class="el-divider__text is-center">
-                                回帖
-                            </div>
-                        </div>
-                    </Header>
-                    <Body>
-                        <ReplyList TopicId="@TopicId" OnItemDeleted="OnReplyDelete" OnNewReply="OnReplySuccess"></ReplyList> @*  OnNewReply="OnReplySuccess"*@
-                    </Body>
-                </BCard>
+
+                <BTab TabPosition="@TabPosition.Top" EnableAlwaysRender="true" Style="margin-top:-4px;">
+                    <GoHome></GoHome>
+                    <BTabPanel Title="" Style="margin-top:-5px;">
+                        <TopicContent EnableAlwaysRender="true" TopicModel="@TopicModel" IsFollow="@IsFollow" IsMySelf="@IsMySelf" IsEditing="@IsEditing" OnFollowStatusChanging="@ToggleFollow" OnEditStatusChanging="ToggleEditing">
+                        </TopicContent>
+                        <div class="margin-top-5"></div>
+                        <BCard EnableAlwaysRender="true">
+                            <Header>
+                                <div class="el-divider el-divider--horizontal">
+                                    <div class="el-divider__text is-center">
+                                        回帖
+                                    </div>
+                                </div>
+                            </Header>
+                            <Body>
+                                <ReplyList TopicId="@TopicId" OnItemDeleted="OnReplyDelete" OnNewReply="OnReplySuccess"></ReplyList> @*  OnNewReply="OnReplySuccess"*@
+                            </Body>
+                        </BCard>
+                    </BTabPanel>
+                </BTab>
+              
             </Center>
 
             <East>
-                <div class="margin-top-5" style="width:100%;">
-                    <BLayout>
-                        <North>
-                            <div class="content-card">
-                                <BCard Shadow="@ShadowShowType.Never">
-                                    <Body>
-                                        <RightTop></RightTop>
-                                    </Body>
-                                </BCard>
-                            </div>
-                        </North>
-                        <Center>
-                            <div class="content-card margin-top-5">
-                                <BCard Shadow="@ShadowShowType.Never">
-                                    <Body>
-                                        <RightCenter></RightCenter>
-                                    </Body>
-                                </BCard>
-                            </div>
-                        </Center>
-                        <South>
-                            <div class="content-card margin-top-10">
-                                <BCard Shadow="@ShadowShowType.Never">
-                                    <Body>
-                                        <RightBottom></RightBottom>
-                                    </Body>
-                                </BCard>
-                            </div>
-                        </South>
-                    </BLayout>
-                </div>
+
+                <AppRightLayout Style="margin-top:9px !important;"></AppRightLayout>
             </East>
         </BLayout>
     }

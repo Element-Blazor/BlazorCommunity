@@ -29,49 +29,54 @@ namespace Blazui.Community.App.Features.Account.Pages
 
         protected async Task Login()
         {
+
             if (!signInForm.IsValid())
                 return;
-            var signInModel = signInForm.GetValue<SignInModel>();
-            var user = await userManager.FindByNameAsync(signInModel.UserAccount);
-            if (user == null)
-            {
-                ToastError("账号不存在，请先注册");
-                return;
-            }
-            if (user.Status != 0)
-            {
-                ToastError("账号已被封，请联系管理员");
-                return;
-            }
-            if (user != null && await userManager.CheckPasswordAsync(user, signInModel.Password))
-            {
-                memoryCache.Remove(user.UserName);    //清除token
-
-                var token = await userManager.GenerateUserTokenAsync(user, TokenOptions.DefaultProvider, "SignIn");
-
-                var data = $"{user.Id}|{token}";
-
-                var parsedQuery = System.Web.HttpUtility.ParseQueryString(new Uri(navigationManager.Uri).Query);
-
-                var returnUrl = parsedQuery["returnUrl"];
-
-                if (!string.IsNullOrWhiteSpace(returnUrl))
+            await WithFullScreenLoading(async () => {
+                await Task.Delay(new Random().Next(3000));
+                var signInModel = signInForm.GetValue<SignInModel>();
+                var user = await userManager.FindByNameAsync(signInModel.UserAccount);
+                if (user == null)
                 {
-                    data += $"|{returnUrl}";
+                    ToastError("账号不存在，请先注册");
+                    return;
                 }
-                user.LastLoginDate = DateTime.Now;
-                user.LastLoginType = 0;
-                user.LastLoginAddr = this.httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
-                await userManager.UpdateAsync(user);
-                var protector = dataProtectionProvider.CreateProtector("SignIn");
-                var pdata = protector.Protect(data);
-                navigationManager.NavigateTo("/account/signinactual?t=" + pdata, forceLoad: true);
-            }
-            else
-            {
-                ToastError("登录失败，用户名或密码错误");
-                return;
-            }
+                if (user.Status != 0)
+                {
+                    ToastError("账号已被封，请联系管理员");
+                    return;
+                }
+                if (user != null && await userManager.CheckPasswordAsync(user, signInModel.Password))
+                {
+                    memoryCache.Remove(user.UserName);    //清除token
+
+                    var token = await userManager.GenerateUserTokenAsync(user, TokenOptions.DefaultProvider, "SignIn");
+
+                    var data = $"{user.Id}|{token}";
+
+                    var parsedQuery = System.Web.HttpUtility.ParseQueryString(new Uri(navigationManager.Uri).Query);
+
+                    var returnUrl = parsedQuery["returnUrl"];
+
+                    if (!string.IsNullOrWhiteSpace(returnUrl))
+                    {
+                        data += $"|{returnUrl}";
+                    }
+                    user.LastLoginDate = DateTime.Now;
+                    user.LastLoginType = 0;
+                    user.LastLoginAddr = this.httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+                    await userManager.UpdateAsync(user);
+                    var protector = dataProtectionProvider.CreateProtector("SignIn");
+                    var pdata = protector.Protect(data);
+                    navigationManager.NavigateTo("/account/signinactual?t=" + pdata, forceLoad: true);
+                }
+                else
+                {
+                    ToastError("登录失败，用户名或密码错误");
+                    return;
+                }
+            });
+           
         }
 
         internal void TogglePassword() => passwordType = passwordType == InputType.Text ? InputType.Password : InputType.Text;

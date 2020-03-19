@@ -1,10 +1,9 @@
-﻿using Blazui.Community.App.Model.ViewModel;
+﻿using Blazui.Community.App.Model;
 using Blazui.Community.App.Pages;
 using Blazui.Community.Enums;
 using Blazui.Component;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using static Blazui.Community.App.ConstantConfiguration;
 
 namespace Blazui.Community.App.Features.Account.Pages
 {
@@ -26,15 +25,15 @@ namespace Blazui.Community.App.Features.Account.Pages
             }
             if (!form.IsValid())
                 return;
-            var model = form.GetValue<ForgetPasswordModel>();
-            if (!model.VerCode.Equals(verifyCode))
+            var model = form.GetValue<PasswordModel>();
+            if (!model.Code.Equals(verifyCode))
             {
                 ToastError("验证码无效");
                 return;
             }
             else
             {
-                var response = await NetService.ValidateVerifyCode(UserId, VerifyCodeType.EmailRetrievePassword, model.VerCode);
+                var response = await NetService.ValidateVerifyCode(UserId, VerifyCodeType.EmailRetrievePassword, model.Code);
                 if (response.IsSuccess)
                     navigationManager.NavigateTo($"/account/reset/{UserId}", true);
                 else
@@ -50,7 +49,7 @@ namespace Blazui.Community.App.Features.Account.Pages
             if (!form.IsValid())
                 return;
 
-            var model = form.GetValue<ForgetPasswordModel>();
+            var model = form.GetValue<PasswordModel>();
             if (!Regex.Match(model.Email, "^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$").Success)
             {
                 ToastError("邮箱号码错误");

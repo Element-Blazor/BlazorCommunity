@@ -22,7 +22,7 @@ namespace Blazui.Community.App.Components.Topic
         internal string UploadApiUrl { get; private set; }
 
         [Parameter]
-        public ReplyModel model { get; set; }
+        public NewReplyModel model { get; set; }
 
         internal BForm form;
 
@@ -37,9 +37,9 @@ namespace Blazui.Community.App.Components.Topic
 
         internal async Task ReplyNow()
         {
-            var model = form.GetValue<ReplyModel>();
+            var model = form.GetValue<NewReplyModel>();
             if (string.IsNullOrWhiteSpace(model?.Content))
-                await CloseAsync(new ReplyModel());
+                await CloseAsync(new NewReplyModel());
             else
             {
                 MessageBoxResult Confirm = await MessageBox.ConfirmAsync("是否要提交回复");

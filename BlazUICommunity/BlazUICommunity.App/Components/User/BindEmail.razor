@@ -1,12 +1,11 @@
 ﻿@inherits BindEmailBase
-@using static Blazui.Community.App.ConstantConfiguration
-
+@using Blazui.Community.App.Model
 <BCard EnableAlwaysRender="true" @ref="bCard">
     <Body>
         @if (value != null && !string.IsNullOrWhiteSpace(value.Email))
         {
             <BForm @ref="bForm" Value="value" LabelAlign="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
-                <BFormItem TValue="string" Label="" Name="@nameof(BindEmailModel.Email)" IsRequired="false">
+                <BFormItem TValue="string" Label="" Name="@nameof(PasswordModel.Email)" IsRequired="false">
                     <BButton Type="ButtonType.Info" IsPlain="true" Style="border:none" IsDisabled="true">@($"已绑定：{ value.Email}")</BButton>
                 </BFormItem>
             </BForm>
@@ -14,7 +13,7 @@
         else
         {
             <BForm @ref="bForm" Value="value" LabelAlign="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
-                <BFormItem TValue="string" Label="邮箱：" Name="@nameof(BindEmailModel.Email)" IsRequired="true">
+                <BFormItem TValue="string" Label="邮箱：" Name="@nameof(PasswordModel.Email)" IsRequired="true">
                     <BInput TValue="string" Type="InputType.Tel" Placeholder="请输入邮箱地址"></BInput>
                 </BFormItem>
                 <BFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
@@ -24,7 +23,7 @@
                 </BFormActionItem>
                 @if (showInput)
                 {
-                    <BFormItem TValue="string" Label="验证码：" Name="@nameof(BindEmailModel.VerifyCode)" IsRequired="false">
+                    <BFormItem TValue="string" Label="验证码：" Name="@nameof(PasswordModel.Code)" IsRequired="false">
                         <BInput TValue="string" Placeholder="请输入验证码"></BInput>
                     </BFormItem>
                     <BFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">

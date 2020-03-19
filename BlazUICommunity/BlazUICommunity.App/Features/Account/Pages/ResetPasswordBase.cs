@@ -1,4 +1,4 @@
-﻿using Blazui.Community.App.Model.ViewModel;
+﻿using Blazui.Community.App.Model;
 using Blazui.Community.App.Pages;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
@@ -24,8 +24,8 @@ namespace Blazui.Community.App.Features.Account.Pages
                 navigationManager.NavigateTo(PreviousRoute, true);
             if (!form.IsValid())
                 return;
-            var model = form.GetValue<ResetPasswordModel>();
-            if (model.ComfrimPassword.Equals(model.Password))
+            var model = form.GetValue<PasswordModel>();
+            if (model.ConfirmPassword.Equals(model.Password))
             {
                 var user = await userManager.FindByIdAsync(UserId);
                 if (user is null)

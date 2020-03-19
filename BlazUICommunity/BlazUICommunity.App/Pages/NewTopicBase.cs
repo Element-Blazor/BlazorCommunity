@@ -17,7 +17,7 @@ namespace Blazui.Community.App.Pages
     public partial class NewTopicBase : PageBase
     {
         internal BForm form;
-        internal TopicFormModel article;
+        internal NewTopicModel article;
         protected BMarkdownEditor bMarkdownEditor;
         protected TopicCategory _TopicType;
         protected List<BZVersionDto> bZVersions;
@@ -34,7 +34,7 @@ namespace Blazui.Community.App.Pages
             {
                 return;
             }
-            var article = form.GetValue<TopicFormModel>();
+            var article = form.GetValue<NewTopicModel>();
             if (article is null)
             {
                 form.Toast("验证不通过");
@@ -48,7 +48,7 @@ namespace Blazui.Community.App.Pages
             await AddTopic(article);
         }
 
-        private async Task AddTopic(TopicFormModel article)
+        private async Task AddTopic(NewTopicModel article)
         {
             var User = await GetUser();
 
@@ -97,14 +97,14 @@ namespace Blazui.Community.App.Pages
 
         protected override async Task InitilizePageDataAsync()
         {
-            article = new TopicFormModel() { Title = "", Content = "" };
+            article = new NewTopicModel() { Title = "", Content = "" };
             await LoadProjects(ProjectType.Blazui);
         }
 
         private async Task LoadProjects(ProjectType type)
         {
             var resut = await QueryVersions();
-            bZVersions = resut.Where(p => p.Project == (int)type).ToList();
+            bZVersions = resut?.Where(p => p.Project == (int)type).ToList();
         }
 
         protected async Task<List<BZVersionDto>> QueryVersions()
@@ -119,9 +119,6 @@ namespace Blazui.Community.App.Pages
             });
         }
 
-        internal void GoHome()
-        {
-            navigationManager.NavigateTo("/");
-        }
+       
     }
 }

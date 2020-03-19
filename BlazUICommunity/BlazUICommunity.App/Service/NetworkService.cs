@@ -72,9 +72,9 @@ namespace Blazui.Community.App.Service
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public async Task<BaseResponse<PageDatas<PersonalTopicModel>>> QueryPersonalTopics(SearchPersonalTopicCondition condition, bool MustRefresh = false)
+        public async Task<BaseResponse<PageDatas<PersonalTopicDisplayDto>>> QueryPersonalTopics(SearchPersonalTopicCondition condition, bool MustRefresh = false)
         {
-            return await httpClient.GetWithJsonResultAsync<PageDatas<PersonalTopicModel>>($"api/client/Topic/Query{condition.BuildHttpQueryParam(MustRefresh)}");
+            return await httpClient.GetWithJsonResultAsync<PageDatas<PersonalTopicDisplayDto>>($"api/client/Topic/Query{condition.BuildHttpQueryParam(MustRefresh)}");
         }
 
         /// <summary>

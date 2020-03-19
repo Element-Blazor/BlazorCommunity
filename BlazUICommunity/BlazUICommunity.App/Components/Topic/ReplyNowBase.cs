@@ -20,7 +20,7 @@ namespace Blazui.Community.App.Components
         internal BForm form;
         internal BFormItem<string> formItem;
         protected BMarkdownEditor bMarkdownEditor;
-        internal ReplyModel Model = new ReplyModel();
+        internal NewReplyModel Model = new NewReplyModel();
 
         [Parameter] public EventCallback OnReplySuccess { get; set; }
 
@@ -43,11 +43,11 @@ namespace Blazui.Community.App.Components
                 return;
             }
 
-            var article = form.GetValue<ReplyModel>();
+            var article = form.GetValue<NewReplyModel>();
             await NewReply(article, user);
         }
 
-        private async Task NewReply(ReplyModel model, BZUserModel userModel)
+        private async Task NewReply(NewReplyModel model, BZUserModel userModel)
         {
             if (string.IsNullOrWhiteSpace(model.Content))
             {
@@ -109,13 +109,13 @@ namespace Blazui.Community.App.Components
         internal async Task FullScreen()
         {
             //ToastWarning("全屏markdon编辑器，尚未实现");
-            var replyModel = form.GetValue<ReplyModel>();
+            var replyModel = form.GetValue<NewReplyModel>();
             Dictionary<string, object> values = new Dictionary<string, object>
             {
                 { "model", replyModel }
             };
             var dialogResult = await DialogService.ShowDialogAsync<FullScreenMarkdown>("", true, values);
-            if (dialogResult.Result is ReplyModel model && !string.IsNullOrWhiteSpace(model.Content))
+            if (dialogResult.Result is NewReplyModel model && !string.IsNullOrWhiteSpace(model.Content))
             {
                 Model = model;
                 var user = await GetUser();
@@ -126,7 +126,7 @@ namespace Blazui.Community.App.Components
             }
             else
             {
-                Model = new ReplyModel();
+                Model = new NewReplyModel();
                 this.MarkAsRequireRender();
                 StateHasChanged();
             }

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Blazui.Community.DTO
 {
-   public class PersonalReplyDisplayDto
+    public class PersonalReplyDisplayDto
     {
         public string Id { get; set; }
 
@@ -14,5 +12,7 @@ namespace Blazui.Community.DTO
         public string Author { get; set; }
         public DateTime CreateDate { get; set; }
         public int Status { get; set; }
+
+        public string Content { get; set; }
     }
 }

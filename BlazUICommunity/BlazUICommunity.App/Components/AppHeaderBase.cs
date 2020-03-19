@@ -12,10 +12,10 @@ namespace Blazui.Community.App.Shared
 {
     public class AppHeaderBase : PageBase
     {
-        internal List<HeaderMenu> headerMenus = new List<HeaderMenu>();
+        internal List<TopNaviHeaderMenuModel> headerMenus = new List<TopNaviHeaderMenuModel>();
 
         [Inject]
-        private IOptionsMonitor<List<HeaderMenu>> Options { get; set; }
+        private IOptionsMonitor<List<TopNaviHeaderMenuModel>> Options { get; set; }
 
         internal BZUserModel CurrentUser;
 
@@ -26,10 +26,10 @@ namespace Blazui.Community.App.Shared
             CurrentUser = await GetUser();
         }
 
-        protected void GotoUCentor()
+        protected void Personal()
         => navigationManager.NavigateTo("/user/base", forceLoad: true);
 
-        protected void NavigateToLogin()
+        protected void Login()
         => navigationManager.NavigateTo("/account/signin?returnUrl=" + WebUtility.UrlEncode(new Uri(navigationManager.Uri).PathAndQuery));
 
         protected void LoginOut()

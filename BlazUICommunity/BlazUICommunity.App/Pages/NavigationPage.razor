@@ -1,12 +1,12 @@
-﻿@inherits PageBase
-@page "/navigate"
+﻿@page "/navigate"
 @page "/navigate/{Route}"
 
 @code {
 
     [Parameter]
     public string Route { get; set; }
-
+    [Inject]
+    NavigationManager navigationManager { get; set; }
     protected override async Task OnInitializedAsync()
     {
         if (!string.IsNullOrEmpty(Route))

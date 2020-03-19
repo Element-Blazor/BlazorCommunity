@@ -28,7 +28,7 @@
                         </BButton>
                     </Trigger>
                     <Items>
-                        <BDropDownItem OnClick="e=>GotoUCentor()">个人中心</BDropDownItem>
+                        <BDropDownItem OnClick="e=>Personal()">个人中心</BDropDownItem>
                         <BDropDownItem OnClick="e=>LoginOut()">退出</BDropDownItem>
                     </Items>
                 </BDropDown>
@@ -36,7 +36,7 @@
             else
             {
                 <div>
-                    <BButton Type="@ButtonType.Text" OnClick="e=>NavigateToLogin()" Style="color:#fff;">登录/注册</BButton>
+                    <BButton Type="@ButtonType.Text" OnClick="e=>Login()" Style="color:#fff;">登录/注册</BButton>
                 </div>
             }
         </div>
