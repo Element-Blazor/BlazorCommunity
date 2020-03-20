@@ -74,10 +74,10 @@ namespace Blazui.Community.App.Components
             if (topic is PersonalReplyDisplayDto replyDto)
             {
                 var Parameters = new Dictionary<string, object> { { "Content", replyDto.Content } };
-                if (!dto.Content.Contains("upload/Topic"))
+                //if (!replyDto.Content.Contains("upload/Topic"))
                     await DialogService.ShowDialogAsync<ReplyContent>("回复内容", 800, Parameters);
-                else
-                    await DialogService.ShowDialogAsync<ReplyContent>("回复内容", true, Parameters);
+                //else
+                //    await DialogService.ShowDialogAsync<ReplyContent>("回复内容", true, Parameters);
 
 
             }

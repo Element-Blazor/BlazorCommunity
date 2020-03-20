@@ -45,10 +45,10 @@ namespace Blazui.Community.Admin.Pages.Reply
             if (obj is ReplyDisplayDto dto)
             {
                 var Parameters = new Dictionary<string, object> { { "Content", dto.Content } };
-                if (!dto.Content.Contains("upload/Topic"))
+                //if (!dto.Content.Contains("upload/Topic"))
                     await DialogService.ShowDialogAsync<ReplyDetail>("回复内容", 800, Parameters);
-                else
-                    await DialogService.ShowDialogAsync<ReplyDetail>("回复内容", true, Parameters);
+                //else
+                //    await DialogService.ShowDialogAsync<ReplyDetail>("回复内容", true, Parameters);
             }
         }
     }

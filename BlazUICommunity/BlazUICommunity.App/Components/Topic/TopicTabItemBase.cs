@@ -10,7 +10,7 @@ namespace Blazui.Community.App.Components
 {
     public class TopicTabItemBase : PageBase
     {
-        protected static List<BZTopicDto> Topics = new List<BZTopicDto>();
+        protected  List<BZTopicDto> Topics = new List<BZTopicDto>();
 
         protected int PageSize { get; set; } = 5;
         protected int currentPage = 1;
@@ -55,7 +55,7 @@ namespace Blazui.Community.App.Components
         /// <summary>
         /// 总数据条数
         /// </summary>
-        public int Total { get; set; }
+        public int Total { get; set; } = 0;
 
         internal int CurrentPage
         {
@@ -102,6 +102,8 @@ namespace Blazui.Community.App.Components
 
         protected override async Task InitilizePageDataAsync()
         {
+            Topics = new List<BZTopicDto>();
+            Total = 0;
             await WithFullScreenLoading(async () =>
             {
                 await LoadData();
