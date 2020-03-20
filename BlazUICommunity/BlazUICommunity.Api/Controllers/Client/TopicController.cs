@@ -324,16 +324,16 @@ namespace Blazui.Community.Api.Controllers.Client
             switch (orderType)
             {
                 case 0:
-                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderBy(o => (o.ReplyCount * 1.5 + o.Hot)).ThenByDescending(o => o.LastModifyDate), null, pageIndex - 1, pageSize);
+                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => o.LastModifyDate).ThenBy(o => (o.ReplyCount * 1.5 + o.Hot)), null, pageIndex - 1, pageSize);
                     break;
 
                 case 1:
-                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderBy(o => (o.Hot)).ThenByDescending(o => o.LastModifyDate), null, pageIndex - 1, pageSize);
+                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => o.LastModifyDate).ThenBy(o => (o.Hot)), null, pageIndex - 1, pageSize);
                     break;
 
                 case 2:
                     predicate = predicate.And(p => p.Good == 1);//精华帖
-                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => (o.Good)).ThenByDescending(o => o.LastModifyDate), null, pageIndex - 1, pageSize);
+                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => o.LastModifyDate).ThenBy(o => (o.Good)), null, pageIndex - 1, pageSize);
                     break;
 
                 case 3:
