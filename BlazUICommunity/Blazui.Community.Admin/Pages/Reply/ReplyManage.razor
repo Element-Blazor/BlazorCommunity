@@ -1,6 +1,6 @@
 ﻿@page "/manage/reply"
 @using Blazui.Community.Admin.QueryCondition
-@using Blazui.Community.DTO;
+@using Blazui.Community.DTO.Admin;
 @inherits ReplyManageBase
 
 <BForm Inline="true" @ref="searchForm">
@@ -28,16 +28,18 @@
 
 <BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
     <BTableColumns>
-        <BTableColumn Width="300" Property="@nameof(BZReplyDto.Title)" Text="主贴标题" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(BZReplyDto.NickName)" Text="回帖人" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="400" Property="@nameof(BZReplyDto.Content)" Text="回帖内容" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="50" Property="@nameof(BZReplyDto.StatusDisplay)" Text="状态" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(BZReplyDto.CreateDate)" Format="yyyy-MM-dd" Text="发表时间" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="300" Property="@nameof(ReplyDisplayDto.Title)" Text="主贴标题" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(ReplyDisplayDto.Author)" Text="发帖人" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(ReplyDisplayDto.NickName)" Text="回帖人" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(ReplyDisplayDto.Content)" Text="回复内容">
+            <BButton Type="@ButtonType.Text" OnClick="e=>Detail(context)">查看详情</BButton>
+        </BTableColumn>
+        <BTableColumn Width="50" Property="@nameof(ReplyDisplayDto.StatusDisplay)" Text="状态" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="100" Property="@nameof(ReplyDisplayDto.CreateDate)" Format="yyyy-MM-dd" Text="发表时间" Style="text-align:center;"></BTableColumn>
         <BTableTemplateColumn Text="操作" Width="150">
-            <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Detail(context))">查看</BButton>
             @{
 
-                var reply = (BZReplyDto)context;
+                var reply = (ReplyDisplayDto)context;
                 if (reply.Status == 0)
                 {
                     <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Delete(context))">删除</BButton>

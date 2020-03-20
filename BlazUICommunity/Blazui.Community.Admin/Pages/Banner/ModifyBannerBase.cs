@@ -51,11 +51,17 @@ namespace Blazui.Community.Admin.Pages.Banner
             if (!versionForm.IsValid())
                 return;
             var banner = versionForm.GetValue<BannerDisplayDto>();
+            if (banner.Previews == null|| banner.Previews.Length == 0)
+            {
+                MessageService.Show("请上传图片后再提交", MessageType.Error);
+                return;
+            }
             if (banner.Previews.Length > 1)
             {
                 MessageService.Show("一次只能上传一张图片", MessageType.Error);
                 return;
             }
+          
             banner.BannerImg = ((IFileModel[])banner.Previews).FirstOrDefault().Url;
             BaseResponse response;
 

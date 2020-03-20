@@ -120,9 +120,9 @@ namespace Blazui.Community.Admin.Service
         /// </summary>
         /// <param name="querycondition"></param>
         /// <returns></returns>
-        internal async Task<BaseResponse<PageDatas<BZReplyDto>>> QueryReplys(QueryReplyCondition querycondition, bool MustRefresh = false)
+        internal async Task<BaseResponse<PageDatas<ReplyDisplayDto>>> QueryReplys(QueryReplyCondition querycondition, bool MustRefresh = false)
         {
-            return await httpClient.GetWithJsonResultAsync<PageDatas<BZReplyDto>>($"api/Reply/Query{querycondition.BuildHttpQueryParam(MustRefresh)}");
+            return await httpClient.GetWithJsonResultAsync<PageDatas<ReplyDisplayDto>>($"api/Reply/Query{querycondition.BuildHttpQueryParam(MustRefresh)}");
         }
 
         #endregion Reply

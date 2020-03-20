@@ -3,6 +3,7 @@ using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
+using Blazui.Community.DTO.Admin;
 using Blazui.Community.LinqExtensions;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
@@ -117,18 +118,18 @@ namespace Blazui.Community.Api.Controllers
             pagedList = await _replyRepository.GetPagedListAsync(query, o => o.OrderByDescending(p => p.CreateDate), null, Request.PageIndex - 1, Request.PageSize);
             if (pagedList.Items.Any())
             {
-                var pagedatas = pagedList.From(result => _mapper.Map<List<BZReplyDto>>(result));
+                var pagedatas = pagedList.From(result => _mapper.Map<List<ReplyDisplayDto>>(result));
                 var topics = await _cacheService.Topics(p => pagedList.Items.Select(d => d.TopicId).Contains(p.Id));
                 var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
                 foreach (var replyDto in pagedatas.Items)
                 {
                     var user = users.FirstOrDefault(p => p.Id == replyDto.CreatorId);
                     var topic = topics.FirstOrDefault(p => p.Id == replyDto.TopicId);
+                    var topicuser =(await _cacheService.Users(p=>true)).FirstOrDefault(p => p.Id == topic.CreatorId);
                     if (user != null)
                     {
                         replyDto.NickName = user?.NickName;
-                        replyDto.Avator = user?.Avator;
-                        replyDto.UserName = user?.UserName;
+                        replyDto.Author = topicuser?.NickName;
                         replyDto.UserId = user.Id;
                         replyDto.Title = topic?.Title;
                     }

@@ -1,6 +1,7 @@
 ﻿using Blazui.Community.Admin.Pages.Topic;
 using Blazui.Community.Admin.QueryCondition;
 using Blazui.Community.DTO;
+using Blazui.Community.DTO.Admin;
 using Blazui.Component;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.Pages.Reply
 {
-    public class ReplyManageBase : ManagePageBase<BZReplyDto>
+    public class ReplyManageBase : ManagePageBase<ReplyDisplayDto>
     {
         protected override async Task LoadDatas(bool MustRefresh = false)
         {
@@ -27,7 +28,7 @@ namespace Blazui.Community.Admin.Pages.Reply
 
         protected async Task Resume(object obj)
         {
-            if (obj is BZReplyDto dto)
+            if (obj is ReplyDisplayDto dto)
             {
                 await ConfirmService.ConfirmAsync(
                     async () => await NetService.ResumeReply(dto.Id),
@@ -37,7 +38,7 @@ namespace Blazui.Community.Admin.Pages.Reply
 
         protected async Task Delete(object obj)
         {
-            if (obj is BZReplyDto dto)
+            if (obj is ReplyDisplayDto dto)
             {
                 await ConfirmService.ConfirmAsync(
                     async () => await NetService.DeleteReply(dto.Id),
@@ -47,9 +48,15 @@ namespace Blazui.Community.Admin.Pages.Reply
 
         protected async Task Detail(object obj)
         {
-            if (obj is BZReplyDto dto)
+            if (obj is ReplyDisplayDto dto)
             {
-                await DialogService.ShowDialogAsync<TopicDeatil>("回贴内容", new Dictionary<string, object> { { "Content", dto.Content } });
+                var Parameters = new Dictionary<string, object> { { "Content", dto.Content } };
+                if (dto.Content.Length < 100)
+                    await DialogService.ShowDialogAsync<ReplyDetail>("回复内容", 500, Parameters);
+                else if (dto.Content.Length < 500)
+                    await DialogService.ShowDialogAsync<ReplyDetail>("回复内容", 800, Parameters);
+                else
+                    await DialogService.ShowDialogAsync<ReplyDetail>("回复内容", true, Parameters);
             }
         }
     }
