@@ -60,7 +60,7 @@ namespace Blazui.Community.App.Components
                 VerifyCode = response.Data.ToString();
                 IsDisabled = true;
                 showInput = true;
-                await MessageBox.AlertAsync($"验证码：{response.Data},1分钟内有效");
+                ToastSuccess("验证码发送成功，2分钟内有效，请前往邮箱查收");
                 while (TimeOut > 0)
                 {
                     if (TimeOut == 1)

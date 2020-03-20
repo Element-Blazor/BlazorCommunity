@@ -39,8 +39,6 @@ namespace Blazui.Community.Api.Controllers.Client
             _bZVerifyCodeRepository = bZVerifyCodeRepository;
         }
 
-      
-
         /// <summary>
         /// 发送验证码
         /// </summary>
@@ -105,7 +103,7 @@ namespace Blazui.Community.Api.Controllers.Client
                 VerifyCode = code,
                 UserId = userId,
                 VerifyType = (int)verifyCodeType,
-                ExpireTime = DateTime.Now.AddSeconds(60),
+                ExpireTime = DateTime.Now.AddSeconds(120),
                 CreateDate = DateTime.Now,
                 CreatorId = Guid.Empty.ToString(),
                 LastModifierId = Guid.Empty.ToString(),

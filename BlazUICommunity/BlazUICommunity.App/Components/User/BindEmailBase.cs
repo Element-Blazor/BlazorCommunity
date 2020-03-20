@@ -57,7 +57,7 @@ namespace Blazui.Community.App.Components
         {
             if (result.IsSuccess)
             {
-                ToastSuccess("验证码发送成功");
+                ToastSuccess("验证码发送成功，2分钟内有效，请前往邮箱查收");
                 VerifyCode = result.Data.ToString();
                 IsDisabled = true;
                 showInput = true;

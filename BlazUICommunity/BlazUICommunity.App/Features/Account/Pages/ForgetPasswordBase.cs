@@ -70,7 +70,7 @@ namespace Blazui.Community.App.Features.Account.Pages
                         if (response.IsSuccess)
                         {
                             verifyCode = response.Data.ToString();
-                            ToastSuccess("发送成功，请到邮箱查收,如果未收到，可以查看一下垃圾邮箱");
+                            ToastSuccess("验证码发送成功，2分钟内有效，请前往邮箱查收");
                             btnSendIsDisabled = true;
                             StateHasChanged();
                         }
