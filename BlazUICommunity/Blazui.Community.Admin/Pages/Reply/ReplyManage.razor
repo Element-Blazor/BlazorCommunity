@@ -11,7 +11,7 @@
         <BInput IsClearable="true" TValue="string"></BInput>
     </BFormItem>
     <BFormItem TValue="DelStatus?" Label="状态" Name="@nameof(QueryReplyCondition.Status)" IsRequired="false">
-        <div style="width:100px;"><BSelect TValue="DelStatus?"></BSelect></div>
+        <div style="width:100px;"><BSelect TValue="DelStatus?" Value="DelStatus.Normal"></BSelect></div>
     </BFormItem>
     <BFormItem TValue="DateTime?" Label="回复时间" IsRequired="false" Name="@nameof(QueryReplyCondition.CreateDateStart)">
         <BDatePicker IsClearable="true"></BDatePicker>
