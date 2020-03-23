@@ -9,10 +9,24 @@
             <div class="app-user-info">
                 <BForm LabelAlign="@LabelAlign.Right" @ref="userInfoForm" Value="User" EnableAlwaysRender="true">
 
-                    <BFormItem TValue="string" Label="账号" Name="@nameof(BZUserModel.UserName)">
-                        @User?.UserName
-                    </BFormItem>
-                    <BFormItem TValue="string" Label="昵称" Name="@nameof(BZUserModel.NickName)" EnableAlwaysRender="true">
+                    <div style=" display:flex;">
+                        <BFormItem TValue="string" Label="账号" Name="@nameof(BZUserModel.UserName)">
+                            @User?.UserName
+                        </BFormItem>
+                        <BFormActionItem Style="text-align:left;margin-left:300px;" EnableAlwaysRender="true">
+                            @if (Disabled)
+                            {
+                                <BButton Type="@ButtonType.Default" OnClick=" EditUser" IsCircle="true" IsPlain="true" Icon="el-icon-edit"></BButton>                                                 
+                            }                                                             
+                            else                                                          
+                            {                                                             
+                                <BButton Type="@ButtonType.Default" OnClick="SaveUser" IsCircle="true"  IsPlain="true" Icon="el-icon-check"></BButton>
+                            }
+                        </BFormActionItem>
+                    </div>
+
+                  
+                    <BFormItem TValue="string" Label="昵称" Name="@nameof(BZUserModel.NickName)" Style="max-width:300px;" EnableAlwaysRender="true">
                         @if (Disabled)
                         {
                             @User?.NickName
@@ -44,16 +58,16 @@
                         }
                     </BFormItem>
                     @*<BFormItem TValue="string" Label="地区" Name="@nameof(BZUserModel.LastLoginAddr)" EnableAlwaysRender="true">
-                            @if (Disabled)
-                            {
-                                @(User?.LastLoginAddr ?? "未知")
-                            }
-                            else
-                            {
-                                <BInput TValue="string" ></BInput>
-                            }
-                        </BFormItem>*@
-                    <BFormItem TValue="string" Label="签名" Name="@nameof(BZUserModel.Signature)" EnableAlwaysRender="true">
+            @if (Disabled)
+            {
+                @(User?.LastLoginAddr ?? "未知")
+            }
+            else
+            {
+                <BInput TValue="string" ></BInput>
+            }
+        </BFormItem>*@
+                    <BFormItem TValue="string" Label="签名" Name="@nameof(BZUserModel.Signature)" Style="max-width:500px;" EnableAlwaysRender="true">
                         @if (Disabled)
                         {
                             @(User?.Signature ?? "您还没有设置一个座右铭")
@@ -64,19 +78,6 @@
                         }
                     </BFormItem>
 
-                    <BFormActionItem Style="text-align:right;" EnableAlwaysRender="true">
-                        <div style="margin-right:50px;">
-
-                            @if (Disabled)
-                            {
-                                <BButton Type="@ButtonType.Default" OnClick=" EditUser" IsCircle="true" IsPlain="true" Icon="el-icon-edit"></BButton>
-                            }
-                            else
-                            {
-                                <BButton Type="@ButtonType.Primary" OnClick="SaveUser" IsCircle="true" IsPlain="true" Icon="el-icon-check"></BButton>
-                            }
-                        </div>
-                    </BFormActionItem>
 
                     <BFormItem TValue="string" Name="@nameof(BZUserModel.Id)" IsHidden="true">
                         <BInput TValue="string"></BInput>

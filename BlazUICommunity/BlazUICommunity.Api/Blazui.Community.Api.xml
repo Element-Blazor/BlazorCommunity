@@ -4,10 +4,15 @@
         <name>Blazui.Community.Api</name>
     </assembly>
     <members>
-        <member name="P:Blazui.Community.Api.Configuration.AllowOriginsConfiguration.Host">
-            <summary>
-            域名或主机
-            </summary>
+        <member name="T:Blazui.Community.Api.AutoMapProfiles">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:Blazui.Community.Api.AutoMapProfiles.#ctor">
+             <summary>
+            
+             </summary>
         </member>
         <member name="F:Blazui.Community.Api.Configuration.ConstantConfiguration.UploadRootPath">
             <summary>
@@ -35,16 +40,6 @@
              </summary>
         </member>
         <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.FromName">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="T:Blazui.Community.Api.AutoMapProfiles">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="M:Blazui.Community.Api.AutoMapProfiles.#ctor">
              <summary>
             
              </summary>
