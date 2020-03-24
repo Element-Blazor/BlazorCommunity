@@ -1,17 +1,18 @@
 ﻿@inherits LayoutComponentBase
 <BPopup></BPopup>
-<BLayout>
-    <North>
-        <div class="account-header"></div>
-    </North>
+@*<BLayout>
     <Center>
         <BCard Shadow="@ShadowShowType.Never" Style="border:none; border-radius:unset; background: #409EFF; ">
             <Body>
-                @Body
+
             </Body>
         </BCard>
     </Center>
     <South>
-        <AppFooter></AppFooter>
+
     </South>
-</BLayout>
+</BLayout>*@
+<div class="account-container">
+    @Body
+</div>
+<AppFooter></AppFooter>
