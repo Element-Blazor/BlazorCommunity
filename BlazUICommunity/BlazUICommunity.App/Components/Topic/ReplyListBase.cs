@@ -4,8 +4,8 @@ using Blazui.Community.Model.Models;
 using Blazui.Community.Response;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Components
@@ -20,7 +20,7 @@ namespace Blazui.Community.App.Components
         protected int PageSize { get; set; } = 10;
         protected int currentPage = 1;
 
-        private BZUserModel User;
+        protected BZUserModel User;
 
         [Parameter]
         public EventCallback OnItemDeleted { get; set; }
@@ -89,8 +89,6 @@ namespace Blazui.Community.App.Components
 
         private void HandData(BaseResponse<PageDatas<BZReplyDto>> result)
         {
-         
-
             foreach (var item in result.Data.Items)
             {
                 item.OriginalContent = item.Content;
@@ -173,5 +171,7 @@ namespace Blazui.Community.App.Components
                 await OnNewReply.InvokeAsync("");
             await LoadData();
         }
+
+        internal void NavigateToLoginPage()=> navigationManager.NavigateTo("/account/signin?returnUrl=" + System.Net.WebUtility.UrlEncode(new Uri(navigationManager.Uri).PathAndQuery));
     }
 }

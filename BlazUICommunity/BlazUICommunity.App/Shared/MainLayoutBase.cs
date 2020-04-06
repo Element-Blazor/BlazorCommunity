@@ -1,5 +1,5 @@
 ﻿using Blazui.Community.App.Components;
-using Blazui.Component.Container;
+using Blazui.Component;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;

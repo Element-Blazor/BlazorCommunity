@@ -36,7 +36,7 @@
                             </div>
                             <div class="topic-title"><BButton Type="ButtonType.Text" Style="color:#000033" OnClick="e=>NavigationToReply(Topic?.Id)">@Topic?.Title</BButton></div>
                             <div class="topic-tag">
-                                @if (Topic.Good==1)
+                                @if (Topic.Good == 1)
                                 {
                                     <span class="el-tag el-tag--danger el-tag--mini el-tag--dark">精华</span>
                                 }

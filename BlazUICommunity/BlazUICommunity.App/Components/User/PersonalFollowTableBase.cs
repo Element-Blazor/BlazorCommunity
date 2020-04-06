@@ -1,9 +1,7 @@
-﻿using Blazui.Community.App.Model;
-using Blazui.Community.App.Model.Condition;
+﻿using Blazui.Community.App.Model.Condition;
 using Blazui.Community.App.Pages;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
-using Blazui.Community.Response;
 using Blazui.Component;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +19,6 @@ namespace Blazui.Community.App.Components
         protected BZUserModel User;
 
         protected BForm searchForm;
-
-    
 
         internal int CurrentPage
         {
@@ -79,7 +75,6 @@ namespace Blazui.Community.App.Components
         /// <returns></returns>
         protected async Task LoadDatas()
         {
-           
             var result = await NetService.QueryFollows(CreateCondition());
             if (result == null)
                 return;
@@ -98,18 +93,15 @@ namespace Blazui.Community.App.Components
             UpdateUI();
         }
 
-        private SearchPersonalFollowCondition CreateCondition( )
+        private SearchPersonalFollowCondition CreateCondition()
         {
-          var  condition = searchForm.GetValue<SearchPersonalFollowCondition>();
+            var condition = searchForm.GetValue<SearchPersonalFollowCondition>();
             condition ??= new SearchPersonalFollowCondition();
             condition.CreatorId = User.Id;
             condition.PageSize = pageSize;
             condition.PageIndex = currentPage;
             return condition;
         }
-
-       
-
 
         private void UpdateUI()
         {

@@ -5,12 +5,24 @@
         <div class="fill"></div>
         @if (headerMenus.Any())
         {
-            <BMenu BackgroundColor="transparent" Mode="MenuMode.Horizontal" HoverColor="#409EFF" TextColor="#fff" DefaultActive="0" ActiveTextColor="#fff" EnableAlwaysRender="true">
+
+            <ul role="menubar" class="el-menu--horizontal el-menu" style="overflow:auto;">
+
                 @foreach (var menu in headerMenus)
                 {
-                    <BMenuItem Icon="@menu.Icon" Route="@(string.IsNullOrWhiteSpace(menu.Route)?"/":$"/navigate{menu.Route}")" Style="@($"width:{90/headerMenus.Count}%")">@menu.Title</BMenuItem>
+                <li role="menuitem" tabindex="0" class="el-menu-item is-active" style="background-color:transparent;color:#fff; border-bottom-color:#fff;">
+                    @{
+                        var target = @menu.URL=="/"? "_self" : "_blank";
+                        <a href="@menu.URL" target=@target>
+                            <i class="@menu.Icon"></i>
+                            @menu.Title
+                        </a>
+                    }
+
+                </li>
                 }
-            </BMenu>
+            </ul>
+
         }
         <div class="fill"></div>
         <div style="flex:1;margin-left:20px;">

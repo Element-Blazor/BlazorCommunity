@@ -23,5 +23,17 @@ else
         </span>
     </div>
 }
-
-<ReplyNow EnableAlwaysRender="true" TopicId="@TopicId" OnReplySuccess="OnReplySuccess"></ReplyNow>
+@if (User is null)
+{
+    <div style="height:100px; display:flex;margin-top:10px; justify-items:center;justify-content:center;" role="alert" class="el-alert el-alert--warning is-center is-light">
+        <i class="el-alert__icon el-icon-warning"></i>
+        <div class="el-alert__content">
+            <span class="el-alert__title" style="font-size:15px;margin-right:10px;">抱歉请登录后再开始你的表演</span>
+        </div>
+        <BButton OnClick="NavigateToLoginPage" Type="ButtonType.Text">登录/注册</BButton>
+    </div>
+}
+else
+{
+    <ReplyNow EnableAlwaysRender="true" TopicId="@TopicId" OnReplySuccess="OnReplySuccess"></ReplyNow>
+}

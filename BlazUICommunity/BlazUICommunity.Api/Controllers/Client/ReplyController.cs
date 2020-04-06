@@ -6,9 +6,7 @@ using Blazui.Community.DTO;
 using Blazui.Community.LinqExtensions;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
-using Blazui.Community.Request;
 using Blazui.Community.Response;
-using Blazui.Community.StringExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -89,22 +87,22 @@ namespace Blazui.Community.Api.Controllers.Client
         [HttpDelete("Delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] string Id)
         {
-                var reply = await _replyRepository.FindAsync(Id);
-                if (reply is null)
-                    return BadRequest();
-                var delete = await _replyRepository.ChangeStateByIdAsync(Id, -1, "");
-                if (delete)
+            var reply = await _replyRepository.FindAsync(Id);
+            if (reply is null)
+                return BadRequest();
+            var delete = await _replyRepository.ChangeStateByIdAsync(Id, -1, "");
+            if (delete)
+            {
+                _cacheService.Remove(nameof(BZReplyModel));
+                var topicRepo = _unitOfWork.GetRepository<BZTopicModel>();
+                var topic = topicRepo.GetFirstOrDefault(p => p.Id == reply.TopicId);
+                if (topic != null)
                 {
-                    _cacheService.Remove(nameof(BZReplyModel));
-                    var topicRepo = _unitOfWork.GetRepository<BZTopicModel>();
-                    var topic = topicRepo.GetFirstOrDefault(p => p.Id == reply.TopicId);
-                    if (topic != null)
-                    {
-                        topic.ReplyCount--;
-                        topicRepo.Update(topic);
-                        _cacheService.Remove(nameof(BZTopicModel));
-                    }
+                    topic.ReplyCount--;
+                    topicRepo.Update(topic);
+                    _cacheService.Remove(nameof(BZTopicModel));
                 }
+            }
             return Ok();
         }
 
@@ -139,7 +137,6 @@ namespace Blazui.Community.Api.Controllers.Client
         {
             if (string.IsNullOrWhiteSpace(UserId)) return BadRequest(nameof(UserId));
 
-
             Expression<Func<BZReplyModel, bool>> query = p => p.CreatorId == UserId && p.Status == 0;
             if (!string.IsNullOrWhiteSpace(Title))
             {
@@ -168,9 +165,6 @@ namespace Blazui.Community.Api.Controllers.Client
             {
                 return NoContent();
             }
-
         }
-
-
     }
 }

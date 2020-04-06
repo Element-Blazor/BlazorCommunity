@@ -1,4 +1,5 @@
-﻿using Blazui.Community.Model.Models;
+﻿using Blazui.Community.HttpClientExtensions;
+using Blazui.Community.Model.Models;
 using Blazui.Community.Response;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -7,7 +8,6 @@ using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Blazui.Community.HttpClientExtensions;
 
 namespace Blazui.Community.App.Service
 {

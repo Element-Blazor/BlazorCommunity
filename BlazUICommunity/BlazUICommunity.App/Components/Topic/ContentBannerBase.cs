@@ -9,7 +9,7 @@ namespace Blazui.Community.App.Components
 {
     public class ContentBannerBase : BComponentBase
     {
-        internal  List<BzBannerDto> Banners { get; set; } = new List<BzBannerDto>();
+        internal List<BzBannerDto> Banners { get; set; } = new List<BzBannerDto>();
 
         [Inject]
         public NetworkService NetService { get; set; }

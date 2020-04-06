@@ -1,19 +1,8 @@
-﻿using Arch.EntityFrameworkCore.UnitOfWork;
-using Arch.EntityFrameworkCore.UnitOfWork.Collections;
-using AutoMapper;
-using Blazui.Community.Api.Service;
-using Blazui.Community.DTO;
-using Blazui.Community.Model.Models;
+﻿using Blazui.Community.Api.Service;
 using Blazui.Community.Repository;
-using Blazui.Community.Request;
-using Blazui.Community.Response;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,7 +20,7 @@ namespace Blazui.Community.Api.Controllers.Client
         private readonly ICacheService _cacheService;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="bZUserRepository"></param>
         /// <param name="cacheService"></param>
@@ -41,7 +30,6 @@ namespace Blazui.Community.Api.Controllers.Client
             _bZUserRepository = bZUserRepository;
             _cacheService = cacheService;
         }
-
 
         /// <summary>
         /// 活跃度

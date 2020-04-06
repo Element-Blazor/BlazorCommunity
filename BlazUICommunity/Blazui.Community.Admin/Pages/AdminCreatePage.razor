@@ -1,5 +1,5 @@
 ﻿@using Blazui.Community.Admin.ViewModel
-@inherits  AdminCreatePageBase
+@inherits AdminCreatePageBase
 
 <div class="login-container">
     <BForm @ref="form" EnableAlwaysRender="true">
@@ -9,10 +9,10 @@
             </h3>
         </div>
         <BFormItem IsRequired="true" TValue="string" RequiredMessage="请输入账号" Name="@nameof(AdminLoginInfoModel.Username)">
-            <BInput PrefixIcon="el-icon-user-solid"  TValue="string" Placeholder="账号" ></BInput>
+            <BInput PrefixIcon="el-icon-user-solid" TValue="string" Placeholder="账号"></BInput>
         </BFormItem>
         <BFormItem IsRequired="true" TValue="string" RequiredMessage="请输入密码" Name="@nameof(AdminLoginInfoModel.Password)" EnableAlwaysRender="true">
-            <BInput PrefixIcon="el-icon-lock" SuffixIcon="el-icon-view" OnSuffixIconClick="e=>TogglePassword()" Type="@passwordType"  TValue="string" Placeholder="密码"  EnableClearButton="true"></BInput>
+            <BInput PrefixIcon="el-icon-lock" SuffixIcon="el-icon-view" OnSuffixIconClick="e=>TogglePassword()" Type="@passwordType" TValue="string" Placeholder="密码" EnableClearButton="true"></BInput>
         </BFormItem>
 
         <BFormActionItem>

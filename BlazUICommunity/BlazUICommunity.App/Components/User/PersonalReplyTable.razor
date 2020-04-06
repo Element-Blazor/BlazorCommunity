@@ -15,7 +15,7 @@
         <BTableColumn Width="100" Property="@nameof(PersonalReplyDisplayDto.Author)" Text="发帖人"></BTableColumn>
         <BTableColumn Width="100" Format="yyyy-MM-dd" Property="@nameof(PersonalReplyDisplayDto.CreateDate)" Text="回复时间"></BTableColumn>
         <BTableColumn Width="100" Property="@nameof(PersonalReplyDisplayDto.Content)" Text="回复内容">
-            <BButton  Type="@ButtonType.Text" OnClick="e=>ShowContent(context)">查看</BButton>
+            <BButton Type="@ButtonType.Text" OnClick="e=>ShowContent(context)">查看</BButton>
         </BTableColumn>
         <BTableTemplateColumn Text="操作" Width="100">
             <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Mini" Style="border-color:transparent !important" IsPlain="true" IsCircle="true" Icon="el-icon-remove-outline" OnClick="@(e=> Del(context))">

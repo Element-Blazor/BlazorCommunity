@@ -1,16 +1,9 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
-using Arch.EntityFrameworkCore.UnitOfWork.Collections;
-using AutoMapper;
-using Blazui.Community.Api.Service;
-using Blazui.Community.DTO;
 using Blazui.Community.LinqExtensions;
 using Blazui.Community.Model.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -33,9 +26,6 @@ namespace Blazui.Community.Api.Controllers.Client
         {
             _unitOfWork = unitOfWork;
         }
-
-
-
 
         /// <summary>
         /// 获取版本数据
@@ -65,7 +55,5 @@ namespace Blazui.Community.Api.Controllers.Client
             var versions = await verRepository.GetAllAsync(expression);
             return Ok(versions);
         }
-
-
     }
 }

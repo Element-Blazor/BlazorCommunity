@@ -17,41 +17,38 @@ body app {
     width: 100%;
     height: 100%;
     align-items: center;
- 
 }
 
-
-
-.login-container form {
-    width: 460px;
-    margin: 150px 250px 150px auto;
-    padding: 0 35px;
-    box-sizing: border-box;
-    background-color: #FFF;
-    color: #303133;
-    -webkit-transition: .3s;
-    transition: .3s;
-}
-    .login-container form .title-container .title {
-        display: block;
-        margin-top: 30px;
-        margin-bottom: 30px;
-        font-size: 20px;
-        color: #3d3d3d;
-        text-align: center;
-        line-height: 30px;
-    }
-    .login-container form .el-form-item {
-        border-radius: 5px;
+    .login-container form {
+        width: 460px;
+        margin: 150px 250px 150px auto;
+        padding: 0 35px;
+        box-sizing: border-box;
+        background-color: #FFF;
+        color: #303133;
+        -webkit-transition: .3s;
+        transition: .3s;
     }
 
-        .login-container form .el-form-item .el-input input {
-            -webkit-appearance: none;
-            border-radius: 0;
-            padding-left: 40px;
+        .login-container form .title-container .title {
+            display: block;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            font-size: 20px;
+            color: #3d3d3d;
+            text-align: center;
+            line-height: 30px;
         }
 
+        .login-container form .el-form-item {
+            border-radius: 5px;
+        }
 
+            .login-container form .el-form-item .el-input input {
+                -webkit-appearance: none;
+                border-radius: 0;
+                padding-left: 40px;
+            }
 
 .el-header {
     width: 100%;
@@ -471,10 +468,13 @@ app > .blaz-layout > .blaz-layout-container {
 }
 
 /*滚动条*/
-app .blaz-layout > .blaz-layout-container > .blaz-layout-center::-webkit-scrollbar, *::-webkit-scrollbar-thumb {
-    width: 1px;
-    height: 10px;
-    border-radius: 13px;
+ app 
+.blaz-layout > 
+.blaz-layout-container > 
+.blaz-layout-center::-webkit-scrollbar, *::-webkit-scrollbar-thumb {
+    width: 2px;
+    height: 2px;
+    border-radius: 20px;
     background-clip: padding-box;
 }
 
@@ -731,15 +731,19 @@ el-center {
 .content-east {
     width: 100%;
 }
+
 .el-table__header-wrapper .cell {
     text-align: center !important;
 }
+
 .el-table__body-wrapper .cell {
     text-align: center !important;
 }
-.el-tabs__nav-wrap::after{
-    height:1px !important;
+
+.el-tabs__nav-wrap::after {
+    height: 1px !important;
 }
+
 .container {
     width: 100%;
     padding-right: 0px;
@@ -795,6 +799,7 @@ el-center {
         margin: 0 !important;
         padding: 0 !important;
     }
+
     .login-container form {
         width: 460px;
         margin: 150px auto;

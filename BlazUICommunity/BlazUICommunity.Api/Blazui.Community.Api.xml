@@ -19,6 +19,11 @@
             上传文件根目录
             </summary>
         </member>
+        <member name="F:Blazui.Community.Api.Configuration.ConstantConfiguration.PolicyName">
+            <summary>
+            跨域
+            </summary>
+        </member>
         <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.Account">
              <summary>
             
@@ -488,11 +493,11 @@
              </summary>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.UserController.#ctor(Blazui.Community.Repository.BZUserRepository,Blazui.Community.Api.Service.ICacheService)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="bZUserRepository"></param>
-            <param name="cacheService"></param>
+             </summary>
+             <param name="bZUserRepository"></param>
+             <param name="cacheService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.UserController.Active(System.Int32)">
             <summary>

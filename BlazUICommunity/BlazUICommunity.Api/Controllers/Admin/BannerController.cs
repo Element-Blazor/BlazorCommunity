@@ -8,7 +8,6 @@ using Blazui.Community.Repository;
 using Blazui.Community.Request;
 using Blazui.Community.Response;
 using Blazui.Community.SwaggerExtensions;
-using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;

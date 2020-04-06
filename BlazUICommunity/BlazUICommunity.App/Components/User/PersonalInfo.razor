@@ -16,16 +16,15 @@
                         <BFormActionItem Style="text-align:left;margin-left:300px;" EnableAlwaysRender="true">
                             @if (Disabled)
                             {
-                                <BButton Type="@ButtonType.Default" OnClick=" EditUser" IsCircle="true" IsPlain="true" Icon="el-icon-edit"></BButton>                                                 
-                            }                                                             
-                            else                                                          
-                            {                                                             
+                                <BButton Type="@ButtonType.Default" OnClick=" EditUser" IsCircle="true" IsPlain="true" Icon="el-icon-edit"></BButton>
+                            }
+                            else
+                            {
                                 <BButton Type="@ButtonType.Default" OnClick="SaveUser" IsCircle="true"  IsPlain="true" Icon="el-icon-check"></BButton>
                             }
                         </BFormActionItem>
                     </div>
 
-                  
                     <BFormItem TValue="string" Label="昵称" Name="@nameof(BZUserModel.NickName)" Style="max-width:300px;" EnableAlwaysRender="true">
                         @if (Disabled)
                         {
@@ -77,7 +76,6 @@
                             <BInput TValue="string" Type="InputType.Textarea" Placeholder="输入座右铭" EnableAlwaysRender="true"></BInput>
                         }
                     </BFormItem>
-
 
                     <BFormItem TValue="string" Name="@nameof(BZUserModel.Id)" IsHidden="true">
                         <BInput TValue="string"></BInput>

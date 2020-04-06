@@ -1,6 +1,5 @@
 ﻿using Blazui.Community.App.Model;
-using Blazui.Component.Container;
-using Blazui.Component.NavMenu;
+using Blazui.Component;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;

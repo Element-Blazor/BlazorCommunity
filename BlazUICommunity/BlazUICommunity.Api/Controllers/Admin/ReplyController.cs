@@ -2,15 +2,12 @@
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
 using Blazui.Community.Api.Service;
-using Blazui.Community.DTO;
 using Blazui.Community.DTO.Admin;
 using Blazui.Community.LinqExtensions;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
 using Blazui.Community.Request;
-using Blazui.Community.StringExtensions;
 using Blazui.Community.SwaggerExtensions;
-using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -125,7 +122,7 @@ namespace Blazui.Community.Api.Controllers
                 {
                     var user = users.FirstOrDefault(p => p.Id == replyDto.CreatorId);
                     var topic = topics.FirstOrDefault(p => p.Id == replyDto.TopicId);
-                    var topicuser =(await _cacheService.Users(p=>true)).FirstOrDefault(p => p.Id == topic.CreatorId);
+                    var topicuser = (await _cacheService.Users(p => true)).FirstOrDefault(p => p.Id == topic.CreatorId);
                     if (user != null)
                     {
                         replyDto.NickName = user?.NickName;

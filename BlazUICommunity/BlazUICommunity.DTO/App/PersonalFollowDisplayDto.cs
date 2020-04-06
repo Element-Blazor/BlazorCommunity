@@ -1,9 +1,7 @@
 ﻿using Blazui.Community.AutoMapperExtensions;
+using Blazui.Community.DateTimeExtensions;
 using Blazui.Community.Enums;
 using System;
-using Blazui.Community.DateTimeExtensions;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Blazui.Community.DTO
 {

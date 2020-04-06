@@ -10,7 +10,7 @@ namespace Blazui.Community.App.Components
 {
     public class TopicTabItemBase : PageBase
     {
-        protected  List<BZTopicDto> Topics = new List<BZTopicDto>();
+        protected List<BZTopicDto> Topics = new List<BZTopicDto>();
 
         protected int PageSize { get; set; } = 5;
         protected int currentPage = 1;

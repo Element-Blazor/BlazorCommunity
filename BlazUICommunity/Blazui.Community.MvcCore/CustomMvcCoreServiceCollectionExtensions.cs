@@ -31,19 +31,18 @@ namespace Blazui.Community.MvcCore
             return services;
         }
 
-        public static IServiceCollection AddCustomCors(this IServiceCollection services, IConfiguration Configuration)
+        public static IServiceCollection AddCustomCors(this IServiceCollection services, string[] AllowOrigins,string PolicyName)
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("any", policy =>
+                options.AddPolicy(PolicyName, policy =>
                 {
-                    policy.AllowAnyOrigin() //允许任何来源的主机访问
+                    policy.WithOrigins(AllowOrigins)
+                    //.AllowAnyOrigin() //允许任何来源的主机访问
                     .AllowAnyHeader()
                     .AllowAnyMethod()
-                    .AllowCredentials();//指定处理cookie
-                    var AllowOrigins = new List<string>();
-                    Configuration.Bind(AllowOrigins);
-                    policy.WithOrigins(AllowOrigins.ToArray());
+                    .AllowCredentials()
+                    .SetIsOriginAllowedToAllowWildcardSubdomains();//指定处理cookie
                 });
             });
             return services;

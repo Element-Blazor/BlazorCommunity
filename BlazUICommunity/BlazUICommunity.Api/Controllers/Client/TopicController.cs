@@ -8,7 +8,6 @@ using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
 using Blazui.Community.Request;
 using Blazui.Community.Response;
-using Blazui.Community.StringExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -66,8 +65,6 @@ namespace Blazui.Community.Api.Controllers.Client
             _cacheService.Remove(nameof(BZTopicModel));
             return Ok(model.Entity.Id);
         }
-
-
 
         /// <summary>
         /// 根据ID删除帖子--假删除--前后台均调用

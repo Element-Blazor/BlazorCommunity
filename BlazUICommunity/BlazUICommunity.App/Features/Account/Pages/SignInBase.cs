@@ -1,6 +1,5 @@
 ﻿using Blazui.Community.App.Pages;
 using Blazui.Component;
-using Blazui.Component.Input;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
@@ -29,10 +28,10 @@ namespace Blazui.Community.App.Features.Account.Pages
 
         protected async Task Login()
         {
-
             if (!signInForm.IsValid())
                 return;
-            await WithFullScreenLoading(async () => {
+            await WithFullScreenLoading(async () =>
+            {
                 await Task.Delay(new Random().Next(3000));
                 var signInModel = signInForm.GetValue<SignInModel>();
                 var user = await userManager.FindByNameAsync(signInModel.UserAccount);
@@ -76,7 +75,6 @@ namespace Blazui.Community.App.Features.Account.Pages
                     return;
                 }
             });
-           
         }
 
         internal void TogglePassword() => passwordType = passwordType == InputType.Text ? InputType.Password : InputType.Text;

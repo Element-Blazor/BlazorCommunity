@@ -20,7 +20,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog.LayoutRenderers;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using static Blazui.Community.Api.Configuration.ConstantConfiguration;
 
 namespace Blazui.Community.Api
@@ -50,9 +52,8 @@ namespace Blazui.Community.Api
 
             services.AddTransient<LoggerMiddleware>();
             services.AddDbContext<BlazUICommunityContext>(opt => opt.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>();
-
             services.AddCustomAddControllers();
-            services.AddCustomCors(Configuration.GetSection("AllowOrigins"));
+            services.AddCustomCors(GetAllowOrigins(), PolicyName);
             services.AddCustomSwagger();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -70,6 +71,13 @@ namespace Blazui.Community.Api
             services.AddJwtConfiguration(Configuration);
 
             services.Configure<EmailConfiguration>(Configuration.GetSection("EmailSetting"));
+
+            string[] GetAllowOrigins()
+            {
+                var AllowOrigins = new List<string>();
+                Configuration.GetSection("AllowOrigins").Bind(AllowOrigins);
+                return AllowOrigins.ToArray() ;
+            }
         }
 
         /// <summary>
@@ -111,7 +119,7 @@ namespace Blazui.Community.Api
             app.UseAuthentication();
             //ÊÚÈ¨
             app.UseAuthorization();
-            app.UseCors("any");
+            app.UseCors(PolicyName);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

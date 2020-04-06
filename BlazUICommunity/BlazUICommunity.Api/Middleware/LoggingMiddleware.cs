@@ -1,5 +1,4 @@
 ﻿using Blazui.Community.Response;
-using Blazui.Community.StringExtensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;

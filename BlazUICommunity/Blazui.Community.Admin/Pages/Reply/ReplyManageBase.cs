@@ -1,10 +1,7 @@
-﻿using Blazui.Community.Admin.Pages.Topic;
-using Blazui.Community.Admin.QueryCondition;
-using Blazui.Community.DTO;
+﻿using Blazui.Community.Admin.QueryCondition;
 using Blazui.Community.DTO.Admin;
 using Blazui.Component;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.Pages.Reply
@@ -46,7 +43,7 @@ namespace Blazui.Community.Admin.Pages.Reply
             {
                 var Parameters = new Dictionary<string, object> { { "Content", dto.Content } };
                 //if (!dto.Content.Contains("upload/Topic"))
-                    await DialogService.ShowDialogAsync<ReplyDetail>("回复内容", 800, Parameters);
+                await DialogService.ShowDialogAsync<ReplyDetail>("回复内容", 800, Parameters);
                 //else
                 //    await DialogService.ShowDialogAsync<ReplyDetail>("回复内容", true, Parameters);
             }

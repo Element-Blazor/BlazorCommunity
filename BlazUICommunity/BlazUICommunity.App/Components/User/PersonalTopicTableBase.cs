@@ -18,7 +18,7 @@ namespace Blazui.Community.App.Components
         protected int currentPage = 1;
         protected TopicCategory? Category;
         internal bool requireRender = false;
-        protected  IList<PersonalTopicDisplayDto> Datas = new List<PersonalTopicDisplayDto>();
+        protected IList<PersonalTopicDisplayDto> Datas = new List<PersonalTopicDisplayDto>();
         protected int DataCount = 5;
         protected BTable table;
         protected BForm searchForm;

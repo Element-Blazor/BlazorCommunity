@@ -2,7 +2,6 @@
 using Blazui.Community.DTO;
 using Blazui.Community.Repository;
 using Blazui.Component;
-using Blazui.Component.Input;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
@@ -42,7 +41,8 @@ namespace Blazui.Community.App.Features.Account.Pages
             {
                 return;
             }
-            await WithFullScreenLoading(async () => {
+            await WithFullScreenLoading(async () =>
+            {
                 await Task.Delay(new Random().Next(3000));
                 var registerAccountModel = registerForm.GetValue<RegisterAccountDto>();
                 if (ContainsChineseCharacters(registerAccountModel.UserAccount))
@@ -78,7 +78,6 @@ namespace Blazui.Community.App.Features.Account.Pages
                     await AutoLogin(registerAccountModel.UserAccount);
                 }
             });
-           
         }
 
         private bool ContainsChineseCharacters(string input)

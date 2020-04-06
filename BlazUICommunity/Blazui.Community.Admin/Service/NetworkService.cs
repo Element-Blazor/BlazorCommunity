@@ -1,14 +1,10 @@
 ﻿using Blazui.Community.Admin.QueryCondition;
 using Blazui.Community.DTO;
 using Blazui.Community.DTO.Admin;
-using Blazui.Community.Response;
 using Blazui.Community.HttpClientExtensions;
-using Newtonsoft.Json;
+using Blazui.Community.Response;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.Service
@@ -18,8 +14,6 @@ namespace Blazui.Community.Admin.Service
         private readonly HttpClient httpClient;
         private readonly AdminUserService _adminUserService;
         private readonly BaseResponse Unauthorized;
-
-
 
         public NetworkService(IHttpClientFactory httpClientFactory, AdminUserService adminUserService)
         {
@@ -35,10 +29,6 @@ namespace Blazui.Community.Admin.Service
             _adminUserService = adminUserService;
             Unauthorized = new BaseResponse(403, "Unauthorized ，对不起您没有权限进行该操作 ", null);
         }
-
-
-
-
 
         #region User
 

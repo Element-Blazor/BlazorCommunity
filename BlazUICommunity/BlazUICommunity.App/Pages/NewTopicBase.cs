@@ -2,7 +2,6 @@
 using Blazui.Community.DTO;
 using Blazui.Community.Enums;
 using Blazui.Component;
-using Blazui.Component.Select;
 using Blazui.Markdown;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Memory;
@@ -118,7 +117,5 @@ namespace Blazui.Community.App.Pages
                 else return new List<BZVersionDto>();
             });
         }
-
-       
     }
 }

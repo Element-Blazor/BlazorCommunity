@@ -13,7 +13,7 @@ using static Blazui.Community.Api.Configuration.ConstantConfiguration;
 
 namespace Blazui.Community.Api.Controllers
 {
-    [EnableCors("any")]
+    [EnableCors(PolicyName)]
     [Route("api/[controller]")]
     [ApiController]
     [BlazuiUploadApiResult]
@@ -54,6 +54,8 @@ namespace Blazui.Community.Api.Controllers
         {
             try
             {
+                if (fileContent is null)
+                    return BadRequest();
                 var FileSaveFolder = Path.Combine(UploadRootPath, Upload.Description());
                 var FileSaveFullFolder = Path.Combine(_hostingEnvironment.WebRootPath, FileSaveFolder);
 

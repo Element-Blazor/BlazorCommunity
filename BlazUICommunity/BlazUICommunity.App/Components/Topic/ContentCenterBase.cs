@@ -1,6 +1,4 @@
 ﻿using Blazui.Component;
-using Blazui.Component.Container;
-using Blazui.Component.EventArgs;
 using Microsoft.AspNetCore.Components;
 
 namespace Blazui.Community.App.Components
