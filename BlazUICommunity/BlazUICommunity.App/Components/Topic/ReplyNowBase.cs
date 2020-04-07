@@ -114,7 +114,7 @@ namespace Blazui.Community.App.Components
             {
                 { "model", replyModel }
             };
-            var dialogResult = await DialogService.ShowDialogAsync<FullScreenMarkdown>("", true, values);
+            var dialogResult = await DialogService.ShowFullScreenDialogAsync<FullScreenMarkdown>("", values);
             if (dialogResult.Result is NewReplyModel model && !string.IsNullOrWhiteSpace(model.Content))
             {
                 Model = model;
