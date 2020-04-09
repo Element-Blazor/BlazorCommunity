@@ -15,7 +15,7 @@ namespace Blazui.Community.Api.Service
         /// <param name="code"></param>
         /// <param name="verifyCodeType"></param>
         /// <returns></returns>
-        Task<bool> SendMessage(string Mobile, string code, VerifyCodeType verifyCodeType);
+        Task<bool> SendMessageAsync(string Mobile, string code, VerifyCodeType verifyCodeType);
 
         /// <summary>
         /// 发送邮箱验证码
@@ -24,6 +24,13 @@ namespace Blazui.Community.Api.Service
         /// <param name="code"></param>
         /// <param name="verifyCodeType"></param>
         /// <returns></returns>
-        Task<bool> SendEmail(string Email, string code, VerifyCodeType verifyCodeType);
+        Task<bool> SendEmailAsync(string Email, string code, VerifyCodeType verifyCodeType);
+
+        /// <summary>
+        /// 新的提问发邮件通知
+        /// </summary>
+        /// <param name="TopicUrl"></param>
+        /// <returns></returns>
+        Task<bool> EmailNoticeForNewAskOrReplyAsync(string TopicUrl);
     }
 }

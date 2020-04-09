@@ -20,39 +20,39 @@ namespace Blazui.Community.Api.Service
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IList<BZAddressModel>> Address(Expression<Func<BZAddressModel, bool>> condition)
+        public async Task<IList<BZAddressModel>> GetAddressAsync(Expression<Func<BZAddressModel, bool>> condition)
         {
-            return await GetOrCreateAsync(nameof(BZAddressModel), TimeSpan.FromSeconds(60), condition);
+            return await GetOrCreateAsync(nameof(BZAddressModel), TimeSpan.FromSeconds(new Random(DateTime.Now.Second).Next(30,100)), condition);
         }
 
-        public async Task<IList<BzBannerModel>> Banners(Expression<Func<BzBannerModel, bool>> condition)
+        public async Task<IList<BzBannerModel>> GetBannersAsync(Expression<Func<BzBannerModel, bool>> condition)
         {
-            return await GetOrCreateAsync(nameof(BzBannerModel), TimeSpan.FromSeconds(60), condition);
+            return await GetOrCreateAsync(nameof(BzBannerModel), TimeSpan.FromSeconds(new Random(DateTime.Now.Second).Next(30, 100)), condition);
         }
 
-        public async Task<IList<BZFollowModel>> Follows(Expression<Func<BZFollowModel, bool>> condition)
+        public async Task<IList<BZFollowModel>> GetFollowsAsync(Expression<Func<BZFollowModel, bool>> condition)
         {
-            return await GetOrCreateAsync(nameof(BZFollowModel), TimeSpan.FromSeconds(30), condition);
+            return await GetOrCreateAsync(nameof(BZFollowModel), TimeSpan.FromSeconds(new Random(DateTime.Now.Second).Next(30, 100)), condition);
         }
 
-        public async Task<IList<BZReplyModel>> Replys(Expression<Func<BZReplyModel, bool>> condition)
+        public async Task<IList<BZReplyModel>> GetReplysAsync(Expression<Func<BZReplyModel, bool>> condition)
         {
-            return await GetOrCreateAsync(nameof(BZReplyModel), TimeSpan.FromSeconds(30), condition);
+            return await GetOrCreateAsync(nameof(BZReplyModel), TimeSpan.FromSeconds(new Random(DateTime.Now.Second).Next(30, 100)), condition);
         }
 
-        public async Task<IList<BZTopicModel>> Topics(Expression<Func<BZTopicModel, bool>> condition)
+        public async Task<IList<BZTopicModel>> GetTopicsAsync(Expression<Func<BZTopicModel, bool>> condition)
         {
-            return await GetOrCreateAsync(nameof(BZTopicModel), TimeSpan.FromSeconds(30), condition);
+            return await GetOrCreateAsync(nameof(BZTopicModel), TimeSpan.FromSeconds(new Random(DateTime.Now.Second).Next(30, 100)), condition);
         }
 
-        public async Task<IList<BZUserModel>> Users(Expression<Func<BZUserModel, bool>> condition)
+        public async Task<IList<BZUserModel>> GetUsersAsync(Expression<Func<BZUserModel, bool>> condition)
         {
-            return await GetOrCreateAsync(nameof(BZUserModel), TimeSpan.FromSeconds(30), condition);
+            return await GetOrCreateAsync(nameof(BZUserModel), TimeSpan.FromSeconds(new Random(DateTime.Now.Second).Next(30, 100)), condition);
         }
 
-        public async Task<IList<BZVersionModel>> Versions(Expression<Func<BZVersionModel, bool>> condition)
+        public async Task<IList<BZVersionModel>> GetVersionsAsync(Expression<Func<BZVersionModel, bool>> condition)
         {
-            return await GetOrCreateAsync(nameof(BZVersionModel), TimeSpan.FromSeconds(60 * 5), condition);
+            return await GetOrCreateAsync(nameof(BZVersionModel), TimeSpan.FromSeconds(new Random(DateTime.Now.Second).Next(30, 100)), condition);
         }
 
         private async Task<IList<T>> GetOrCreateAsync<T>(string key, TimeSpan Expiration, Expression<Func<T, bool>> condition = null) where T : class

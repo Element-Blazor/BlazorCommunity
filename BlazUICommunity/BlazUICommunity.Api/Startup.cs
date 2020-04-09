@@ -36,22 +36,14 @@ namespace Blazui.Community.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
-            //services.AddResponseCaching();
-            //services.AddHttpCacheHeaders(
-            //    expires =>
-            //    {
-            //        expires.MaxAge = 60;
-            //        expires.CacheLocation = CacheLocation.Public;
-            //    },
-            //    validation => { validation.MustRevalidate = true; }
-            //    );
+           
 
             services.AddTransient<LoggerMiddleware>();
-            services.AddDbContext<BlazUICommunityContext>(opt => opt.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>();
+            services.AddDbContext<BlazUICommunityContext>(opt =>
+            opt.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>();
             services.AddCustomAddControllers();
             services.AddCustomCors(GetAllowOrigins(), PolicyName);
             services.AddCustomSwagger();
@@ -63,15 +55,19 @@ namespace Blazui.Community.Api
             services.AddMemoryCache(p => p.ExpirationScanFrequency = TimeSpan.FromSeconds(100));
 
             services.AddScoped<ICacheService, CacheService>();
-            services.AddScoped<IMessageService, MessageService>();
-            services.AddScoped<ICodeService, CodeService>();
-            services.AddScoped<ISmtpClientService, SmtpClientService>();
-
+           
             services.AddScoped<JwtService>();
             services.AddJwtConfiguration(Configuration);
 
-            services.Configure<EmailConfiguration>(Configuration.GetSection("EmailSetting"));
-
+            services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<ICodeService, CodeService>();
+            services.AddScoped<ISmtpClientService, SmtpClientService>();
+            //services.AddOptions<EmailNoticeOptions>()
+            //   .Configure(option => Configuration.GetSection("EmailNotices").Bind(option));
+            //services.AddOptions<Test>()
+            // .Configure(option => Configuration.Bind(option));
+            services.Configure<EmailStmpOptions>(Configuration.GetSection("EmailSetting"));
+            services.Configure<EmailNoticeOptions>(Configuration.GetSection("EmailNotices"));
             string[] GetAllowOrigins()
             {
                 var AllowOrigins = new List<string>();
@@ -94,7 +90,6 @@ namespace Blazui.Community.Api
             builder.RegisterModule<CustomAutofacModule>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime appLitetime)
         {
             if (env.IsDevelopment())

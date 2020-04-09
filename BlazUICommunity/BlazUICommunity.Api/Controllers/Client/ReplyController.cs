@@ -150,8 +150,8 @@ namespace Blazui.Community.Api.Controllers.Client
             if (replyList.Items.Any())
             {
                 var replysDatas = replyList.From(result => _mapper.Map<List<PersonalReplyDisplayDto>>(result));
-                var topics = await _cacheService.Topics(p => replyList.Items.Select(x => x.TopicId).Contains(p.Id));
-                var users = await _cacheService.Users(p => topics.Select(x => x.CreatorId).Contains(p.Id));
+                var topics = await _cacheService.GetTopicsAsync(p => replyList.Items.Select(x => x.TopicId).Contains(p.Id));
+                var users = await _cacheService.GetUsersAsync(p => topics.Select(x => x.CreatorId).Contains(p.Id));
                 foreach (var reply in replysDatas.Items)
                 {
                     var topic = topics?.FirstOrDefault(p => p.Id == reply.TopicId);

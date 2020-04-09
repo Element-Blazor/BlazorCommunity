@@ -1,6 +1,7 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
+using Blazui.Community.Api.Configuration;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
 using Blazui.Community.LinqExtensions;
@@ -10,6 +11,7 @@ using Blazui.Community.Request;
 using Blazui.Community.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
@@ -33,16 +35,22 @@ namespace Blazui.Community.Api.Controllers.Client
         private readonly IRepository<BZFollowModel> _bZFollowRepository;
         private readonly IRepository<BZReplyModel> _bZReplyRepository;
         private readonly ICacheService _cacheService;
+        private readonly IMessageService messageService;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="unitOfWork"></param>
-        /// <param name="mapper"></param>
-        /// <param name="bZTopicRepository"></param>
-        /// <param name="cacheService"></param>
-        public TopicController(IUnitOfWork unitOfWork,
-            IMapper mapper, BZTopicRepository bZTopicRepository, ICacheService cacheService)
+
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <param name="unitOfWork"></param>
+       /// <param name="mapper"></param>
+       /// <param name="bZTopicRepository"></param>
+       /// <param name="cacheService"></param>
+       /// <param name="messageService"></param>
+        public TopicController(
+            IUnitOfWork unitOfWork,
+            IMapper mapper, 
+            BZTopicRepository bZTopicRepository,
+            ICacheService cacheService,   IMessageService messageService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -50,8 +58,14 @@ namespace Blazui.Community.Api.Controllers.Client
             _bZFollowRepository = unitOfWork.GetRepository<BZFollowModel>();
             _bZReplyRepository = unitOfWork.GetRepository<BZReplyModel>();
             _cacheService = cacheService;
+            this.messageService = messageService;
         }
 
+        [HttpGet]
+        public async Task<bool> SendEmailTest()
+        {
+            return await messageService.EmailNoticeForNewAskOrReplyAsync("www.blazor.group");
+        }
         /// <summary>
         /// 新增主题帖
         /// </summary>
@@ -98,11 +112,11 @@ namespace Blazui.Community.Api.Controllers.Client
                     if (topic != null)
                     {
                         topic.Status = status;
-                        var follows = _cacheService.Follows(p => p.TopicId == Id).Result.ToList();
+                        var follows = _cacheService.GetFollowsAsync(p => p.TopicId == Id).Result.ToList();
                         follows.ForEach(p => p.Status = status);
                         _bZFollowRepository.Update(follows);
                         _bZTopicRepository.Update(topic);
-                        var replys = _cacheService.Replys(p => p.TopicId == Id).Result.ToList();
+                        var replys = _cacheService.GetReplysAsync(p => p.TopicId == Id).Result.ToList();
                         replys.ForEach(p => p.Status = status);
                         _bZReplyRepository.Update(replys);
                     }
@@ -138,13 +152,13 @@ namespace Blazui.Community.Api.Controllers.Client
         [HttpGet("Query/{Id}")]
         public async Task<IActionResult> Query([FromRoute] string Id)
         {
-            var topics = await _cacheService.Topics(p => p.Id == Id);
+            var topics = await _cacheService.GetTopicsAsync(p => p.Id == Id);
             if (topics.Any())
             {
                 var topic = topics.FirstOrDefault();
                 var topicDto = _mapper.Map<BZTopicDto>(topic);
-                var users = await _cacheService.Users(p => p.Id == topic.CreatorId);
-                var version = (await _cacheService.Versions(p => p.Id == topic.Id)).FirstOrDefault();
+                var users = await _cacheService.GetUsersAsync(p => p.Id == topic.CreatorId);
+                var version = (await _cacheService.GetVersionsAsync(p => p.Id == topic.Id)).FirstOrDefault();
                 if (users.Any())
                 {
                     topicDto.UserName = users?.FirstOrDefault()?.UserName;
@@ -179,7 +193,7 @@ namespace Blazui.Community.Api.Controllers.Client
             {
                 var pagedatas = pagedList.From(res => _mapper.Map<List<PersonalTopicDisplayDto>>(res));
 
-                var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
+                var users = await _cacheService.GetUsersAsync(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
                 foreach (PersonalTopicDisplayDto topic in pagedatas.Items)
                 {
                     var user = users.FirstOrDefault(p => p.Id == topic.CreatorId);
@@ -244,7 +258,7 @@ namespace Blazui.Community.Api.Controllers.Client
             {
                 var topic = await _bZTopicRepository.GetFirstOrDefaultAsync(p => p.Id == topicId);
                 var pagedatas = pagedList.From(res => _mapper.Map<List<BZReplyDto>>(res));
-                var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
+                var users = await _cacheService.GetUsersAsync(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
                 foreach (var replyDto in pagedatas.Items)
                 {
                     var user = users.FirstOrDefault(p => p.Id == replyDto.CreatorId);
@@ -345,7 +359,7 @@ namespace Blazui.Community.Api.Controllers.Client
                 return NoContent();
             var pagedatas = pagedList.From(res => _mapper.Map<List<BZTopicDto>>(res));
             var userRepository = _unitOfWork.GetRepository<BZUserModel>();
-            var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
+            var users = await _cacheService.GetUsersAsync(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
             foreach (BZTopicDto topic in pagedatas.Items)
             {
                 var user = users.FirstOrDefault(p => p.Id == topic.CreatorId);

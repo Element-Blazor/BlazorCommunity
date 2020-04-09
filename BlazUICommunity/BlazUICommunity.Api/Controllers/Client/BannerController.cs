@@ -21,7 +21,7 @@ namespace Blazui.Community.Api.Controllers.Client
         [HttpGet("QueryAll")]
         public async Task<IActionResult> QueryAll([FromServices] ICacheService cacheService)
         {
-            return Ok(await cacheService.Banners(p => p.Show && p.Status == 0));
+            return Ok(await cacheService.GetBannersAsync(p => p.Show && p.Status == 0));
         }
     }
 }

@@ -11,6 +11,6 @@ namespace Blazui.Community.Api.Service
         /// <param name="Content"></param>
         /// <param name="Subject"></param>
         /// <returns></returns>
-        Task SendEmail(string ToEmail, string Content, string Subject);
+        Task SendAsync(string ToEmail, string Content, string Subject);
     }
 }

@@ -10,7 +10,7 @@ namespace Blazui.Community.Api.Service
 {
     public class SmtpClientService : ISmtpClientService
     {
-        private static EmailConfiguration emailConfig;
+        private static EmailStmpOptions emailConfig;
         private ILogger<SmtpClientService> _logger;
 
         /// <summary>
@@ -18,7 +18,7 @@ namespace Blazui.Community.Api.Service
         /// </summary>
         /// <param name="options"></param>
         /// <param name="logger"></param>
-        public SmtpClientService(IOptionsMonitor<EmailConfiguration> options, ILogger<SmtpClientService> logger)
+        public SmtpClientService(IOptionsMonitor<EmailStmpOptions> options, ILogger<SmtpClientService> logger)
         {
             emailConfig = options.CurrentValue;
             _logger = logger;
@@ -31,7 +31,7 @@ namespace Blazui.Community.Api.Service
         /// <param name="Content"></param>
         /// <param name="Subject"></param>
         /// <returns></returns>
-        public async Task SendEmail(string ToEmail, string Content, string Subject)
+        public async Task SendAsync(string ToEmail, string Content, string Subject)
         {
             try
             {

@@ -24,27 +24,37 @@
             跨域
             </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.Account">
+        <member name="P:Blazui.Community.Api.Configuration.EmailNoticeModel.Email">
+            <summary>
+            通知邮箱
+            </summary>
+        </member>
+        <member name="P:Blazui.Community.Api.Configuration.EmailNoticeModel.Weight">
+            <summary>
+            权重
+            </summary>
+        </member>
+        <member name="P:Blazui.Community.Api.Configuration.EmailStmpOptions.Account">
              <summary>
             
              </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.Auth">
+        <member name="P:Blazui.Community.Api.Configuration.EmailStmpOptions.Auth">
              <summary>
             
              </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.StmpHost">
+        <member name="P:Blazui.Community.Api.Configuration.EmailStmpOptions.StmpHost">
              <summary>
             
              </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.StmpPort">
+        <member name="P:Blazui.Community.Api.Configuration.EmailStmpOptions.StmpPort">
              <summary>
             
              </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailConfiguration.FromName">
+        <member name="P:Blazui.Community.Api.Configuration.EmailStmpOptions.FromName">
              <summary>
             
              </summary>
@@ -391,14 +401,15 @@
             主题帖相关
             </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZTopicRepository,Blazui.Community.Api.Service.ICacheService)">
-             <summary>
+        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZTopicRepository,Blazui.Community.Api.Service.ICacheService,Blazui.Community.Api.Service.IMessageService)">
+            <summary>
             
-             </summary>
-             <param name="unitOfWork"></param>
-             <param name="mapper"></param>
-             <param name="bZTopicRepository"></param>
-             <param name="cacheService"></param>
+            </summary>
+            <param name="unitOfWork"></param>
+            <param name="mapper"></param>
+            <param name="bZTopicRepository"></param>
+            <param name="cacheService"></param>
+            <param name="messageService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.Add(Blazui.Community.DTO.BZTopicDto)">
             <summary>
@@ -642,49 +653,49 @@
             </summary>
             <param name="Key"></param>
         </member>
-        <member name="M:Blazui.Community.Api.Service.ICacheService.Users(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BZUserModel,System.Boolean}})">
+        <member name="M:Blazui.Community.Api.Service.ICacheService.GetUsersAsync(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BZUserModel,System.Boolean}})">
             <summary>
             用户缓存数据
             </summary>
             <param name="condition"></param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Service.ICacheService.Topics(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BZTopicModel,System.Boolean}})">
+        <member name="M:Blazui.Community.Api.Service.ICacheService.GetTopicsAsync(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BZTopicModel,System.Boolean}})">
             <summary>
             主贴缓存数据
             </summary>
             <param name="condition"></param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Service.ICacheService.Banners(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BzBannerModel,System.Boolean}})">
+        <member name="M:Blazui.Community.Api.Service.ICacheService.GetBannersAsync(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BzBannerModel,System.Boolean}})">
             <summary>
             Banner缓存数据
             </summary>
             <param name="condition"></param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Service.ICacheService.Replys(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BZReplyModel,System.Boolean}})">
+        <member name="M:Blazui.Community.Api.Service.ICacheService.GetReplysAsync(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BZReplyModel,System.Boolean}})">
             <summary>
             回帖缓存数据
             </summary>
             <param name="condition"></param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Service.ICacheService.Address(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BZAddressModel,System.Boolean}})">
+        <member name="M:Blazui.Community.Api.Service.ICacheService.GetAddressAsync(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BZAddressModel,System.Boolean}})">
             <summary>
             地址信息缓存数据
             </summary>
             <param name="condition"></param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Service.ICacheService.Follows(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BZFollowModel,System.Boolean}})">
+        <member name="M:Blazui.Community.Api.Service.ICacheService.GetFollowsAsync(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BZFollowModel,System.Boolean}})">
             <summary>
             收藏帖子
             </summary>
             <param name="condition"></param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Service.ICacheService.Versions(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BZVersionModel,System.Boolean}})">
+        <member name="M:Blazui.Community.Api.Service.ICacheService.GetVersionsAsync(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BZVersionModel,System.Boolean}})">
             <summary>
             项目版本
             </summary>
@@ -716,7 +727,7 @@
             
              </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Service.IMessageService.SendMessage(System.String,System.String,Blazui.Community.Enums.VerifyCodeType)">
+        <member name="M:Blazui.Community.Api.Service.IMessageService.SendMessageAsync(System.String,System.String,Blazui.Community.Enums.VerifyCodeType)">
             <summary>
             发送短信验证码
             </summary>
@@ -725,7 +736,7 @@
             <param name="verifyCodeType"></param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Service.IMessageService.SendEmail(System.String,System.String,Blazui.Community.Enums.VerifyCodeType)">
+        <member name="M:Blazui.Community.Api.Service.IMessageService.SendEmailAsync(System.String,System.String,Blazui.Community.Enums.VerifyCodeType)">
             <summary>
             发送邮箱验证码
             </summary>
@@ -734,7 +745,14 @@
             <param name="verifyCodeType"></param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Service.ISmtpClientService.SendEmail(System.String,System.String,System.String)">
+        <member name="M:Blazui.Community.Api.Service.IMessageService.EmailNoticeForNewAskOrReplyAsync(System.String)">
+            <summary>
+            新的提问发邮件通知
+            </summary>
+            <param name="TopicUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Service.ISmtpClientService.SendAsync(System.String,System.String,System.String)">
             <summary>
             发送邮件
             </summary>
@@ -743,14 +761,14 @@
             <param name="Subject"></param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Service.SmtpClientService.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Blazui.Community.Api.Configuration.EmailConfiguration},Microsoft.Extensions.Logging.ILogger{Blazui.Community.Api.Service.SmtpClientService})">
+        <member name="M:Blazui.Community.Api.Service.SmtpClientService.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Blazui.Community.Api.Configuration.EmailStmpOptions},Microsoft.Extensions.Logging.ILogger{Blazui.Community.Api.Service.SmtpClientService})">
              <summary>
             
              </summary>
              <param name="options"></param>
              <param name="logger"></param>
         </member>
-        <member name="M:Blazui.Community.Api.Service.SmtpClientService.SendEmail(System.String,System.String,System.String)">
+        <member name="M:Blazui.Community.Api.Service.SmtpClientService.SendAsync(System.String,System.String,System.String)">
              <summary>
             
              </summary>

@@ -79,14 +79,14 @@ namespace Blazui.Community.Api.Controllers.Client
                 case VerifyCodeType.EmailChangePassword:
                 case VerifyCodeType.EmailRetrievePassword:
                 case VerifyCodeType.EmailBind:
-                    sendResult = await _messageService.SendEmail(Target, code, verifyCodeType);
+                    sendResult = await _messageService.SendEmailAsync(Target, code, verifyCodeType);
                     break;
 
                 case VerifyCodeType.MobileLogin:
                 case VerifyCodeType.MobileBind:
                 case VerifyCodeType.MobileRetrievePassword:
                 case VerifyCodeType.MobileChangePassword:
-                    sendResult = await _messageService.SendEmail(Target, code, verifyCodeType);
+                    sendResult = await _messageService.SendEmailAsync(Target, code, verifyCodeType);
                     break;
 
                 default:

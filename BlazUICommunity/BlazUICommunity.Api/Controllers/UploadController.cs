@@ -27,30 +27,30 @@ namespace Blazui.Community.Api.Controllers
         }
 
         [HttpPost(nameof(UploadPath.Avator))]
-        public async Task<IActionResult> Avator([FromForm]IFormFile fileContent)
+        public async Task<IActionResult> AvatorAsync([FromForm]IFormFile fileContent)
         {
-            return await Upload(UploadPath.Avator, fileContent);
+            return await UploadAsync(UploadPath.Avator, fileContent);
         }
 
         [HttpPost(nameof(UploadPath.Banner))]
-        public async Task<IActionResult> Banner([FromForm]IFormFile fileContent)
+        public async Task<IActionResult> BannerAsync([FromForm]IFormFile fileContent)
         {
-            return await Upload(UploadPath.Banner, fileContent);
+            return await UploadAsync(UploadPath.Banner, fileContent);
         }
 
         [HttpPost(nameof(UploadPath.Topic))]
-        public async Task<IActionResult> Topic([FromForm]IFormFile fileContent)
+        public async Task<IActionResult> TopicAsync([FromForm]IFormFile fileContent)
         {
-            return await Upload(UploadPath.Topic, fileContent);
+            return await UploadAsync(UploadPath.Topic, fileContent);
         }
 
         [HttpPost(nameof(UploadPath.Other))]
-        public async Task<IActionResult> Other([FromForm]IFormFile fileContent)
+        public async Task<IActionResult> OtherAsync([FromForm]IFormFile fileContent)
         {
-            return await Upload(UploadPath.Other, fileContent);
+            return await UploadAsync(UploadPath.Other, fileContent);
         }
 
-        private async Task<IActionResult> Upload(UploadPath Upload, IFormFile fileContent)
+        private async Task<IActionResult> UploadAsync(UploadPath Upload, IFormFile fileContent)
         {
             try
             {

@@ -76,7 +76,7 @@ namespace Blazui.Community.Api.Controllers.Client
         {
             var query = Request.CreateQueryExpression<BZFollowModel, FollowRequestCondition>();
             query = query.And(p => p.Status == 0);
-            var followList = await _cacheService.Follows(query);
+            var followList = await _cacheService.GetFollowsAsync(query);
 
             if (followList.Any())
             {
@@ -89,7 +89,7 @@ namespace Blazui.Community.Api.Controllers.Client
 
                 var topicList = await topicRepository.GetPagedListAsync(expression, o => o.OrderByDescending(p => p.CreateDate), null, Request.PageIndex - 1, Request.PageSize);
                 var pagedatas = topicList.From(result => _mapper.Map<List<PersonalFollowDisplayDto>>(result));
-                var Users = await _cacheService.Users(p => pagedatas.Items.Select(d => d.CreatorId).Contains(p.Id));
+                var Users = await _cacheService.GetUsersAsync(p => pagedatas.Items.Select(d => d.CreatorId).Contains(p.Id));
                 foreach (PersonalFollowDisplayDto topic in pagedatas.Items)
                 {
                     var User = Users.FirstOrDefault(p => p.Id == topic.CreatorId);

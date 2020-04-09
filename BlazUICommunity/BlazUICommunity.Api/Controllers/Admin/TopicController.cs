@@ -146,7 +146,7 @@ namespace Blazui.Community.Api.Controllers
                         topic.Status = status;
                         topic.LastModifyDate = DateTime.Now;
                         topic.LastModifierId = Guid.Empty.ToString();
-                        var follows = _cacheService.Follows(p => p.TopicId == Id).Result.ToList();
+                        var follows = _cacheService.GetFollowsAsync(p => p.TopicId == Id).Result.ToList();
                         follows.ForEach(p =>
                         {
                             p.Status = status;
@@ -155,7 +155,7 @@ namespace Blazui.Community.Api.Controllers
                         });
                         _bZFollowRepository.Update(follows);
                         _bZTopicRepository.Update(topic);
-                        var replys = _cacheService.Replys(p => p.TopicId == Id).Result.ToList();
+                        var replys = _cacheService.GetReplysAsync(p => p.TopicId == Id).Result.ToList();
                         replys.ForEach(p => p.Status = status);
                         _bZReplyRepository.Update(replys);
                     }
@@ -174,7 +174,7 @@ namespace Blazui.Community.Api.Controllers
             var query = Request.CreateQueryExpression<BZTopicModel, TopicRequestCondition>();
             if (!string.IsNullOrWhiteSpace(Request.UserName))
             {
-                var Users = await _cacheService.Users(p =>
+                var Users = await _cacheService.GetUsersAsync(p =>
                 p.UserName.Contains(Request.UserName) ||
                 p.NickName.Contains(Request.UserName));
                 if (Users != null)
@@ -185,7 +185,7 @@ namespace Blazui.Community.Api.Controllers
             if (pagedList.Items.Any())
             {
                 var pagedatas = pagedList.From(result => _mapper.Map<List<TopicDisplayDto>>(result));
-                var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
+                var users = await _cacheService.GetUsersAsync(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
 
                 foreach (TopicDisplayDto topic in pagedatas.Items)
                 {

@@ -96,7 +96,7 @@ namespace Blazui.Community.Api.Controllers
             if (!string.IsNullOrWhiteSpace(Request.Title))
             {
                 where = where.And(p => p.Title.Contains(Request.Title));
-                var Topics = await _cacheService.Topics(where);
+                var Topics = await _cacheService.GetTopicsAsync(where);
                 if (Topics != null && Topics.Any())
                     query = query.And(p => Topics.Select(x => x.Id).Contains(p.TopicId));
                 else
@@ -104,7 +104,7 @@ namespace Blazui.Community.Api.Controllers
             }
             if (!string.IsNullOrWhiteSpace(Request.UserName))
             {
-                var Users = await _cacheService.Users(p =>
+                var Users = await _cacheService.GetUsersAsync(p =>
                p.UserName.Contains(Request.UserName) ||
                p.NickName.Contains(Request.UserName));
                 if (Users.Any())
@@ -116,13 +116,13 @@ namespace Blazui.Community.Api.Controllers
             if (pagedList.Items.Any())
             {
                 var pagedatas = pagedList.From(result => _mapper.Map<List<ReplyDisplayDto>>(result));
-                var topics = await _cacheService.Topics(p => pagedList.Items.Select(d => d.TopicId).Contains(p.Id));
-                var users = await _cacheService.Users(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
+                var topics = await _cacheService.GetTopicsAsync(p => pagedList.Items.Select(d => d.TopicId).Contains(p.Id));
+                var users = await _cacheService.GetUsersAsync(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
                 foreach (var replyDto in pagedatas.Items)
                 {
                     var user = users.FirstOrDefault(p => p.Id == replyDto.CreatorId);
                     var topic = topics.FirstOrDefault(p => p.Id == replyDto.TopicId);
-                    var topicuser = (await _cacheService.Users(p => true)).FirstOrDefault(p => p.Id == topic.CreatorId);
+                    var topicuser = (await _cacheService.GetUsersAsync(p => true)).FirstOrDefault(p => p.Id == topic.CreatorId);
                     if (user != null)
                     {
                         replyDto.NickName = user?.NickName;
