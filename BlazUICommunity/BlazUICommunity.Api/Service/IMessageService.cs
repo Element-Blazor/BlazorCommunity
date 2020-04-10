@@ -29,8 +29,8 @@ namespace Blazui.Community.Api.Service
         /// <summary>
         /// 新的提问发邮件通知
         /// </summary>
-        /// <param name="TopicUrl"></param>
+        /// <param name="TopicRoute"></param>
         /// <returns></returns>
-        Task<bool> EmailNoticeForNewAskOrReplyAsync(string TopicUrl);
+        Task<bool> EmailNoticeForNewAskOrReplyAsync(string TopicRoute);
     }
 }

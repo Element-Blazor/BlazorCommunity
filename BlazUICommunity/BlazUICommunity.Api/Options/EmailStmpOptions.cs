@@ -1,4 +1,4 @@
-﻿namespace Blazui.Community.Api.Configuration
+﻿namespace Blazui.Community.Api.Options
 {
     public class EmailStmpOptions
     {

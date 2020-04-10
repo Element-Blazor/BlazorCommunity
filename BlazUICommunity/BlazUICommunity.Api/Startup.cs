@@ -1,8 +1,8 @@
 using Arch.EntityFrameworkCore.UnitOfWork;
 using Autofac;
 using AutoMapper;
-using Blazui.Community.Api.Configuration;
 using Blazui.Community.Api.Jwt;
+using Blazui.Community.Api.Options;
 using Blazui.Community.Api.Service;
 using Blazui.Community.AutofacModules;
 using Blazui.Community.Enums;
@@ -11,7 +11,6 @@ using Blazui.Community.JWTServiceCollectionExtensions;
 using Blazui.Community.Model.Models;
 using Blazui.Community.MvcCore;
 using Blazui.Community.SwaggerExtensions;
-using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +21,6 @@ using NLog.LayoutRenderers;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using static Blazui.Community.Api.Configuration.ConstantConfiguration;
 
 namespace Blazui.Community.Api
@@ -62,12 +60,15 @@ namespace Blazui.Community.Api
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<ICodeService, CodeService>();
             services.AddScoped<ISmtpClientService, SmtpClientService>();
-            //services.AddOptions<EmailNoticeOptions>()
-            //   .Configure(option => Configuration.GetSection("EmailNotices").Bind(option));
-            //services.AddOptions<Test>()
-            // .Configure(option => Configuration.Bind(option));
+
             services.Configure<EmailStmpOptions>(Configuration.GetSection("EmailSetting"));
-            services.Configure<EmailNoticeOptions>(Configuration.GetSection("EmailNotices"));
+
+
+            services.Configure<EmailNoticeOptions>(Configuration);
+            services.Configure<BaseDomainOptions>(Configuration);
+            //services.AddOptions<EmailNoticeOptions>().Configure(option => Configuration.Bind(option));
+
+
             string[] GetAllowOrigins()
             {
                 var AllowOrigins = new List<string>();

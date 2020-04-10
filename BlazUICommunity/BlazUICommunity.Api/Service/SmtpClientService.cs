@@ -1,4 +1,4 @@
-﻿using Blazui.Community.Api.Configuration;
+﻿using Blazui.Community.Api.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;

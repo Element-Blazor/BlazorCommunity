@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 
-namespace Blazui.Community.Api.Configuration
+namespace Blazui.Community.Api.Options
 {
     public class EmailNoticeOptions
     {
-        public EmailNoticeModel[] EmailNotices { get; set; }
+        /// <summary>
+        /// 字段名称必须与配置项一致
+        /// </summary>
+        public List<EmailNoticeModel> EmailNotices { get; set; }
     }
 
     public class EmailNoticeModel

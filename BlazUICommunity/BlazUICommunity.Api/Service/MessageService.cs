@@ -1,10 +1,8 @@
-﻿using Blazui.Community.Api.Configuration;
+﻿using Blazui.Community.Api.Options;
 using Blazui.Community.Enums;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,20 +12,22 @@ namespace Blazui.Community.Api.Service
     {
         private readonly ISmtpClientService _smtpClientService;
         private readonly IOptions<EmailNoticeOptions> emailNoticeOptions;
+        private readonly IOptions<BaseDomainOptions> domainOption;
 
-        public MessageService(ISmtpClientService smtpClientService, IOptions<EmailNoticeOptions> EmailNoticeOptions)
+        public MessageService(ISmtpClientService smtpClientService, IOptions<EmailNoticeOptions> EmailNoticeOptions,IOptions<BaseDomainOptions> DomainOption)
         {
             _smtpClientService = smtpClientService;
-            this._smtpClientService = smtpClientService;
+            _smtpClientService = smtpClientService;
             emailNoticeOptions = EmailNoticeOptions;
+            domainOption = DomainOption;
         }
 
-        public async Task<bool> EmailNoticeForNewAskOrReplyAsync(string TopicUrl)
+        public async Task<bool> EmailNoticeForNewAskOrReplyAsync(string TopicRoute)
         {
             var noticeEmail = RandomAnEmail();
             if(noticeEmail !=null)
             {
-                await _smtpClientService.SendAsync(noticeEmail.Email, $"问题地址：{TopicUrl}", "Blazui社区有人发布了新的提问，请尽快去回复！");
+                await _smtpClientService.SendAsync(noticeEmail.Email, $"刚刚有人在社区发表了提问，请尽快回复，链接地址：{domainOption.Value.BaseDomain}{TopicRoute}", "Blazui社区通知您");
                 return await Task.FromResult(true);
             }
             return await Task.FromResult(false);
@@ -35,6 +35,11 @@ namespace Blazui.Community.Api.Service
 
         public async Task<bool> SendEmailAsync(string Email, string code, VerifyCodeType verifyCodeType)
         {
+
+            if (string.IsNullOrWhiteSpace(Email))
+                return await Task.FromResult(false);
+            if (string.IsNullOrWhiteSpace(code))
+                return await Task.FromResult(false);
             string Subject;
             string Content;
             switch (verifyCodeType)
@@ -65,13 +70,9 @@ namespace Blazui.Community.Api.Service
             Content += $"验证码为：{code}，一分钟内有效";
             if (string.IsNullOrWhiteSpace(Content))
                 await Task.FromResult(false);
-            if (string.IsNullOrWhiteSpace(Content))
+            if (string.IsNullOrWhiteSpace(Subject))
                 await Task.FromResult(false);
-            //Stopwatch stopwatch = new Stopwatch();
-            //stopwatch.Start();
             await  _smtpClientService.SendAsync(Email, Content, Subject);
-            //stopwatch.Stop();
-            //Console.WriteLine("_smtpClientService-SendEmail：" + stopwatch.ElapsedMilliseconds);
            return await Task.FromResult(true);
         }
 

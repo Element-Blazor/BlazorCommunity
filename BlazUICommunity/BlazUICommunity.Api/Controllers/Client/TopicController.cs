@@ -1,7 +1,6 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
-using Blazui.Community.Api.Configuration;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
 using Blazui.Community.LinqExtensions;
@@ -11,7 +10,6 @@ using Blazui.Community.Request;
 using Blazui.Community.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
@@ -61,11 +59,7 @@ namespace Blazui.Community.Api.Controllers.Client
             this.messageService = messageService;
         }
 
-        [HttpGet]
-        public async Task<bool> SendEmailTest()
-        {
-            return await messageService.EmailNoticeForNewAskOrReplyAsync("www.blazor.group");
-        }
+     
         /// <summary>
         /// 新增主题帖
         /// </summary>
@@ -77,6 +71,8 @@ namespace Blazui.Community.Api.Controllers.Client
             var topicModel = _mapper.Map<BZTopicModel>(dto);
             var model = await _bZTopicRepository.InsertAsync(topicModel);
             _cacheService.Remove(nameof(BZTopicModel));
+            if(dto.Category!=4)
+                await messageService.EmailNoticeForNewAskOrReplyAsync($"topic/{model.Entity.Id}");
             return Ok(model.Entity.Id);
         }
 

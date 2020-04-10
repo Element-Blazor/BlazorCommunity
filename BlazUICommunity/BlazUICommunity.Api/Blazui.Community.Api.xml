@@ -24,41 +24,6 @@
             跨域
             </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailNoticeModel.Email">
-            <summary>
-            通知邮箱
-            </summary>
-        </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailNoticeModel.Weight">
-            <summary>
-            权重
-            </summary>
-        </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailStmpOptions.Account">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailStmpOptions.Auth">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailStmpOptions.StmpHost">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailStmpOptions.StmpPort">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Blazui.Community.Api.Configuration.EmailStmpOptions.FromName">
-             <summary>
-            
-             </summary>
-        </member>
         <member name="T:Blazui.Community.Api.Controllers.BannerController">
              <summary>
             
@@ -634,6 +599,46 @@
              <param name="app"></param>
              <returns></returns>
         </member>
+        <member name="P:Blazui.Community.Api.Options.EmailNoticeOptions.EmailNotices">
+            <summary>
+            字段名称必须与配置项一致
+            </summary>
+        </member>
+        <member name="P:Blazui.Community.Api.Options.EmailNoticeModel.Email">
+            <summary>
+            通知邮箱
+            </summary>
+        </member>
+        <member name="P:Blazui.Community.Api.Options.EmailNoticeModel.Weight">
+            <summary>
+            权重
+            </summary>
+        </member>
+        <member name="P:Blazui.Community.Api.Options.EmailStmpOptions.Account">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:Blazui.Community.Api.Options.EmailStmpOptions.Auth">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:Blazui.Community.Api.Options.EmailStmpOptions.StmpHost">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:Blazui.Community.Api.Options.EmailStmpOptions.StmpPort">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:Blazui.Community.Api.Options.EmailStmpOptions.FromName">
+             <summary>
+            
+             </summary>
+        </member>
         <member name="M:Blazui.Community.Api.Program.Main(System.String[])">
              <summary>
             
@@ -749,7 +754,7 @@
             <summary>
             新的提问发邮件通知
             </summary>
-            <param name="TopicUrl"></param>
+            <param name="TopicRoute"></param>
             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Service.ISmtpClientService.SendAsync(System.String,System.String,System.String)">
@@ -761,7 +766,7 @@
             <param name="Subject"></param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Service.SmtpClientService.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Blazui.Community.Api.Configuration.EmailStmpOptions},Microsoft.Extensions.Logging.ILogger{Blazui.Community.Api.Service.SmtpClientService})">
+        <member name="M:Blazui.Community.Api.Service.SmtpClientService.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Blazui.Community.Api.Options.EmailStmpOptions},Microsoft.Extensions.Logging.ILogger{Blazui.Community.Api.Service.SmtpClientService})">
              <summary>
             
              </summary>
