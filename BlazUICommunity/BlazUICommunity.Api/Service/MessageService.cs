@@ -27,7 +27,7 @@ namespace Blazui.Community.Api.Service
             var noticeEmail = RandomAnEmail();
             if(noticeEmail !=null)
             {
-                await _smtpClientService.SendAsync(noticeEmail.Email, $"刚刚有人在社区发表了提问，请尽快回复，链接地址：{domainOption.Value.BaseDomain}{TopicRoute}", "Blazui社区通知您");
+                await _smtpClientService.SendAsync(noticeEmail.Email, $"有人在社区发表了提问，请尽快回复，链接地址：{domainOption.Value.BaseDomain}{TopicRoute}", "Blazor-Blazui社区通知您");
                 return await Task.FromResult(true);
             }
             return await Task.FromResult(false);

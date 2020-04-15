@@ -47,17 +47,17 @@ namespace Blazui.Community.App.Pages
             await AddTopic(article);
         }
 
-        private async Task AddTopic(NewTopicModel article)
+        private async Task AddTopic(NewTopicModel newTopicModel)
         {
             var User = await GetUser();
 
             BZTopicDto bZTopicDto = new BZTopicDto()
             {
-                Content = article.Content,
-                Title = article.Title,
-                Category = (int)article.Category,
+                Content = newTopicModel.Content,
+                Title = newTopicModel.Title,
+                Category = (int)newTopicModel.Category,
                 CreatorId = User.Id,
-                VersionId = bZVersions.FirstOrDefault(p => p.VerNo == article.VerNo)?.Id,
+                VersionId = bZVersions.FirstOrDefault(p => p.VerNo == newTopicModel.VerNo)?.Id,
                 LastModifyDate = DateTime.Now,
                 CreateDate = DateTime.Now,
                 Good = 0,
@@ -69,7 +69,7 @@ namespace Blazui.Community.App.Pages
 
             await WithFullScreenLoading(async () =>
             {
-                var result = await NetService.AddTopic(bZTopicDto);
+                var result = await NetService.AddTopic(bZTopicDto, newTopicModel.Notice);
 
                 if (result.IsSuccess)
                 {

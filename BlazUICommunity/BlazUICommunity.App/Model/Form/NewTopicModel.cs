@@ -28,5 +28,7 @@ namespace Blazui.Community.App.Model
         public string Id { get; internal set; }
 
         public ProjectType projectType { get; set; }
+
+        public bool Notice { get; set; }
     }
 }

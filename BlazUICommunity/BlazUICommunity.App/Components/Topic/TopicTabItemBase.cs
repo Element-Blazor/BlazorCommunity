@@ -12,7 +12,7 @@ namespace Blazui.Community.App.Components
     {
         protected List<BZTopicDto> Topics = new List<BZTopicDto>();
 
-        protected int PageSize { get; set; } = 5;
+        protected int PageSize { get; set; } = 15;
         protected int currentPage = 1;
         internal bool requireRender = false;
 

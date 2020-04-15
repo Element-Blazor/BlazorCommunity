@@ -59,10 +59,11 @@ namespace Blazui.Community.App.Service
         /// </summary>
         /// <param name="bZTopicDto"></param>
         /// <returns></returns>
-        public async Task<BaseResponse> AddTopic(BZTopicDto bZTopicDto)
+        public async Task<BaseResponse> AddTopic(BZTopicDto bZTopicDto,bool Notice)
         {
             HttpContent httpContent = bZTopicDto.BuildHttpContent();
-            return await HttpRequestWithValidate("api/client/Topic/Add", HttpMethod.Post, httpContent);
+            var notice = Notice ? 1 : 0;
+            return await HttpRequestWithValidate($"api/client/Topic/Add/{notice}", HttpMethod.Post, httpContent);
         }
 
         /// <summary>

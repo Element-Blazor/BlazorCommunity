@@ -46,8 +46,9 @@
                 }
                 else
                 {
-                    <BMarkdown EnableAlwaysRender="true" Text="@ReplyModel.Content"></BMarkdown>
+                    <BMarkdown Text="@ReplyModel.Content"></BMarkdown>
                 }
+                <UserSignature Signature="@ReplyModel.Signature" />
             </Body>
         </BCard>
     </div>

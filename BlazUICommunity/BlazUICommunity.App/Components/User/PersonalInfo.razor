@@ -20,7 +20,7 @@
                             }
                             else
                             {
-                                <BButton Type="@ButtonType.Default" OnClick="SaveUser" IsCircle="true"  IsPlain="true" Icon="el-icon-check"></BButton>
+                                <BButton Type="@ButtonType.Default" OnClick="SaveUser" IsCircle="true" IsPlain="true" Icon="el-icon-check"></BButton>
                             }
                         </BFormActionItem>
                     </div>
@@ -57,30 +57,40 @@
                         }
                     </BFormItem>
                     @*<BFormItem TValue="string" Label="地区" Name="@nameof(BZUserModel.LastLoginAddr)" EnableAlwaysRender="true">
-            @if (Disabled)
-            {
-                @(User?.LastLoginAddr ?? "未知")
-            }
-            else
-            {
-                <BInput TValue="string" ></BInput>
-            }
-        </BFormItem>*@
-                    <BFormItem TValue="string" Label="签名" Name="@nameof(BZUserModel.Signature)" Style="max-width:500px;" EnableAlwaysRender="true">
                         @if (Disabled)
                         {
-                            @(User?.Signature ?? "您还没有设置一个座右铭")
+                            @(User?.LastLoginAddr ?? "未知")
                         }
                         else
                         {
-                            <BInput TValue="string" Type="InputType.Textarea" Placeholder="输入座右铭" EnableAlwaysRender="true"></BInput>
+                            <BInput TValue="string" ></BInput>
                         }
+                    </BFormItem>*@
+                <BFormItem TValue="string" Label="签名" Name="@nameof(BZUserModel.Signature)" Style="max-width:500px;" EnableAlwaysRender="true">
+                    @*@if (Disabled)
+        {
+            @(User?.Signature ?? "您还没有设置一个座右铭")
+        }
+        else
+        {
+            <BInput TValue="string" Type="InputType.Textarea" Placeholder="输入座右铭" EnableAlwaysRender="true"></BInput>
+        }*@
+                    <div style="margin-top:6px; width:800px;">
+                        @if (Disabled)
+                        {
+                            <BMarkdown Text="@(string.IsNullOrWhiteSpace(User.Signature) ? "写点什么呗": User.Signature)"></BMarkdown>
+                        }
+                        else
+                        {
+                            <BMarkdownEditor @bind-Value="@User.Signature" UploadUrl="@(UploadUrl+ UploadPath.Avator.Description())" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="100" Height="300"></BMarkdownEditor>
+                        }
+                    </div>
                     </BFormItem>
 
-                    <BFormItem TValue="string" Name="@nameof(BZUserModel.Id)" IsHidden="true">
-                        <BInput TValue="string"></BInput>
-                    </BFormItem>
-                </BForm>
+            <BFormItem TValue="string" Name="@nameof(BZUserModel.Id)" IsHidden="true">
+                <BInput TValue="string"></BInput>
+            </BFormItem>
+            </BForm>
             </div>
         }
     </BTabPanel>

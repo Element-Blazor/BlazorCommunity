@@ -56,7 +56,13 @@ namespace Blazui.Community.App.Components
         {
             if (!userInfoForm.IsValid())
                 return;
-            await UpdateUser();
+            var model = userInfoForm.GetValue<BZUserModel>();
+            if ( SubstringCount( model.Signature.ToLower(), "upload/avator/") >1)
+            {
+                ToastError("只能上传一张图片");
+                return;
+            }
+            await UpdateUser(model);
         }
 
         /*
@@ -66,9 +72,9 @@ namespace Blazui.Community.App.Components
 		 * / <returns></returns>
 		 */
 
-        private async Task UpdateUser()
+        private async Task UpdateUser(BZUserModel model)
         {
-            var model = userInfoForm.GetValue<BZUserModel>();
+         
             var user = await userManager.FindByNameAsync(model.UserName);
 
             user.NickName = model.NickName;
@@ -94,5 +100,22 @@ namespace Blazui.Community.App.Components
         }
 
         protected override bool ShouldRender() => true;
+
+        /// <summary>
+        /// 计算字符串中子串出现的次数
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <param name="substring">子串</param>
+        /// <returns>出现的次数</returns>
+        static int SubstringCount(string str, string substring)
+        {
+            if (str.Contains(substring))
+            {
+                string strReplaced = str.Replace(substring, "");
+                return (str.Length - strReplaced.Length) / substring.Length;
+            }
+
+            return 0;
+        }
     }
 }

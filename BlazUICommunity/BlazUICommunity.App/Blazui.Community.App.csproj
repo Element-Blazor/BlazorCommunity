@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Blazui\src\Components\Blazui.Component.csproj" />
     <ProjectReference Include="..\..\..\Blazui\src\Markdown\Blazui.Markdown.csproj" />
     <ProjectReference Include="..\Blazui.Community.AutofacModules\Blazui.Community.AutofacModules.csproj" />
     <ProjectReference Include="..\Blazui.Community.FileExtensions\Blazui.Community.FileExtensions.csproj" />

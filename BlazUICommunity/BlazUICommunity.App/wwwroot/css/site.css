@@ -387,6 +387,10 @@ app > .blaz-layout > .blaz-layout-container {
     height: 80%;
 }
 
+.blaz-layout > .blaz-layout-container {
+    border: none !important;
+}
+
 .content-center .blaz-layout > .blaz-layout-container > .blaz-layout-card .el-card {
     border-radius: 0px;
 }
@@ -468,9 +472,9 @@ app > .blaz-layout > .blaz-layout-container {
 }
 
 /*滚动条*/
- app 
-.blaz-layout > 
-.blaz-layout-container > 
+app
+.blaz-layout >
+.blaz-layout-container >
 .blaz-layout-center::-webkit-scrollbar, *::-webkit-scrollbar-thumb {
     width: 2px;
     height: 2px;
@@ -484,7 +488,8 @@ app > .blaz-layout > .blaz-layout-container {
     margin-right: 5px;
     width: 360px;
     border-bottom: 1px solid #E4E7ED;
-    padding-bottom: 2px;
+    margin-top: -16px;
+    /*padding-bottom: 2px;*/
 }
 
 .newtopic-reply {
@@ -553,11 +558,17 @@ app > .blaz-layout > .blaz-layout-container {
     box-sizing: border-box;
 }
 
-.content-reply-base .el-card__header {
+.content-topic-base .el-card__header {
     padding: 10px 10px 0px 10px;
     border-bottom: 1px solid #EBEEF5;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+.user-signature {
+    /*background-color: #EBEEF5 !important;*/
+    /*border: 1px solid #EBEEF5;*/
+    padding: 10px;
 }
 
 .content-topic-img {
@@ -669,7 +680,7 @@ app .el-dialog__wrapper .el-dialog .is-fullscreen .el-dialog__body {
 }
 
 .content-newtopic {
-    margin-left: 10px;
+    /*margin-left: 10px;*/
 }
 
 .account-header {

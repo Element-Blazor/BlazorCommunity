@@ -36,19 +36,19 @@ namespace Blazui.Community.Api.Controllers.Client
         private readonly IMessageService messageService;
 
 
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <param name="unitOfWork"></param>
-       /// <param name="mapper"></param>
-       /// <param name="bZTopicRepository"></param>
-       /// <param name="cacheService"></param>
-       /// <param name="messageService"></param>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unitOfWork"></param>
+        /// <param name="mapper"></param>
+        /// <param name="bZTopicRepository"></param>
+        /// <param name="cacheService"></param>
+        /// <param name="messageService"></param>
         public TopicController(
             IUnitOfWork unitOfWork,
-            IMapper mapper, 
+            IMapper mapper,
             BZTopicRepository bZTopicRepository,
-            ICacheService cacheService,   IMessageService messageService)
+            ICacheService cacheService, IMessageService messageService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -59,19 +59,20 @@ namespace Blazui.Community.Api.Controllers.Client
             this.messageService = messageService;
         }
 
-     
+
         /// <summary>
         /// 新增主题帖
         /// </summary>
         /// <returns></returns>
         [Authorize]
         [HttpPost("Add")]
-        public async Task<IActionResult> Add([FromBody] BZTopicDto dto)
+        [HttpPost("Add/{Notice}")]
+        public async Task<IActionResult> Add([FromBody] BZTopicDto dto, [FromRoute] int Notice = 0)
         {
             var topicModel = _mapper.Map<BZTopicModel>(dto);
             var model = await _bZTopicRepository.InsertAsync(topicModel);
             _cacheService.Remove(nameof(BZTopicModel));
-            if(dto.Category!=4)
+            if (dto.Category != 4 || Notice == 1)
                 await messageService.EmailNoticeForNewAskOrReplyAsync($"topic/{model.Entity.Id}");
             return Ok(model.Entity.Id);
         }
@@ -152,16 +153,18 @@ namespace Blazui.Community.Api.Controllers.Client
             if (topics.Any())
             {
                 var topic = topics.FirstOrDefault();
+                if(topic.Status!=0)
+                    return NoContent();
                 var topicDto = _mapper.Map<BZTopicDto>(topic);
-                var users = await _cacheService.GetUsersAsync(p => p.Id == topic.CreatorId);
+                var user = (await _cacheService.GetUsersAsync(p => p.Id == topic.CreatorId)).FirstOrDefault();
                 var version = (await _cacheService.GetVersionsAsync(p => p.Id == topic.Id)).FirstOrDefault();
-                if (users.Any())
-                {
-                    topicDto.UserName = users?.FirstOrDefault()?.UserName;
-                    topicDto.NickName = users?.FirstOrDefault()?.NickName;
-                    topicDto.Avator = users?.FirstOrDefault()?.Avator;
-                    topicDto.VerName = version?.VerName;
-                }
+
+                topicDto.UserName = user?.UserName;
+                topicDto.NickName = user?.NickName;
+                topicDto.Avator = user?.Avator;
+                topicDto.VerName = version?.VerName;
+                topicDto.Signature = user.Signature;
+
                 return Ok(topicDto);
             }
             else
@@ -249,12 +252,13 @@ namespace Blazui.Community.Api.Controllers.Client
 
             var repo = _unitOfWork.GetRepository<BZReplyModel>(true);
 
-            var pagedList = await repo.GetPagedListAsync(p => p.TopicId == topicId && p.Status == 0, o => o.OrderByDescending(p => p.CreateDate), null, pageIndex - 1, pageSize);
+            var pagedList = await repo.GetPagedListAsync(p => p.TopicId == topicId && p.Status == 0, o => o.OrderBy(p => p.CreateDate), null, pageIndex - 1, pageSize);
             if (pagedList.TotalCount > 0)
             {
                 var topic = await _bZTopicRepository.GetFirstOrDefaultAsync(p => p.Id == topicId);
                 var pagedatas = pagedList.From(res => _mapper.Map<List<BZReplyDto>>(res));
                 var users = await _cacheService.GetUsersAsync(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
+               
                 foreach (var replyDto in pagedatas.Items)
                 {
                     var user = users.FirstOrDefault(p => p.Id == replyDto.CreatorId);
@@ -263,6 +267,7 @@ namespace Blazui.Community.Api.Controllers.Client
                         replyDto.NickName = user?.NickName;
                         replyDto.Avator = user?.Avator;
                         replyDto.UserName = user?.UserName;
+                        replyDto.Signature = user?.Signature;
                         replyDto.UserId = user.Id;
                         replyDto.Title = topic?.Title;
                     }
@@ -289,7 +294,7 @@ namespace Blazui.Community.Api.Controllers.Client
             var topicRepo = _unitOfWork.GetRepository<BZTopicModel>(true);
             var replyRepo = _unitOfWork.GetRepository<BZReplyModel>(true);
             var reply = await replyRepo.FindAsync(replyId);
-            if (reply is null)
+            if (reply is null ||reply.Status!=0)
                 return NoContent();
             var topic = await topicRepo.FindAsync(reply.TopicId);
             if (topic is null)
@@ -331,16 +336,16 @@ namespace Blazui.Community.Api.Controllers.Client
             switch (orderType)
             {
                 case 0:
-                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => o.LastModifyDate).ThenBy(o => (o.ReplyCount * 1.5 + o.Hot)), null, pageIndex - 1, pageSize);
+                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => o.LastModifyDate).ThenByDescending(o => (o.ReplyCount * 1.5 + o.Hot)), null, pageIndex - 1, pageSize);
                     break;
 
                 case 1:
-                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => o.LastModifyDate).ThenBy(o => (o.Hot)), null, pageIndex - 1, pageSize);
+                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => o.ReplyCount).ThenByDescending(o => (o.Hot)), null, pageIndex - 1, pageSize);
                     break;
 
                 case 2:
                     predicate = predicate.And(p => p.Good == 1);//精华帖
-                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => o.LastModifyDate).ThenBy(o => (o.Good)), null, pageIndex - 1, pageSize);
+                    pagedList = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => o.LastModifyDate).ThenByDescending(o => (o.Good)), null, pageIndex - 1, pageSize);
                     break;
 
                 case 3:
@@ -359,12 +364,10 @@ namespace Blazui.Community.Api.Controllers.Client
             foreach (BZTopicDto topic in pagedatas.Items)
             {
                 var user = users.FirstOrDefault(p => p.Id == topic.CreatorId);
-                if (user != null)
-                {
-                    topic.UserName = user.UserName;
-                    topic.Avator = user.Avator;
-                    topic.NickName = user.NickName;
-                }
+                topic.UserName = user?.UserName;
+                topic.Avator = user?.Avator;
+                topic.NickName = user?.NickName;
+                topic.Signature = user?.Signature;
             }
             if (pagedatas is null || pagedatas.TotalCount == 0)
                 return NoContent();

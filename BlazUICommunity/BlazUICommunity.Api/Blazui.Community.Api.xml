@@ -376,7 +376,7 @@
             <param name="cacheService"></param>
             <param name="messageService"></param>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.Add(Blazui.Community.DTO.BZTopicDto)">
+        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.Add(Blazui.Community.DTO.BZTopicDto,System.Int32)">
             <summary>
             新增主题帖
             </summary>

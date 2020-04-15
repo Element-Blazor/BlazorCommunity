@@ -7,8 +7,8 @@
             <BForm Inline="false" @ref="form" Value="article" LabelAlign="@LabelAlign.Left">
 
                 <div class="form-inline">
-                    <BFormItem TValue="string" Label="帖子标题" Name="@nameof(NewTopicModel.Title)" IsRequired="true">
-                        <BInput TValue="string" Style="min-width:500px;max-width:600px;margin-left:-30px;" Placeholder="请输入标题"></BInput>
+                    <BFormItem TValue="string" Style="width:400px" RequiredMessage="请填写标题" Label="帖子标题" Name="@nameof(NewTopicModel.Title)" IsRequired="true">
+                        <BInput TValue="string"  Placeholder="请输入标题"></BInput>
                     </BFormItem>
                     <BFormItem TValue="TopicCategory" Label="类型" IsRequired="true" Name="@nameof(NewTopicModel.Category)">
                         <div class="el-form-item-custom">
@@ -16,13 +16,13 @@
                             </BSelect>
                         </div>
                     </BFormItem>
-                    <BFormItem TValue="ProjectType" Label="项目" IsRequired="true" Name="@nameof(NewTopicModel.projectType)" Style="margin-left: 20px;">
+                    <BFormItem TValue="ProjectType" Label="项目" RequiredMessage="请选择项目" IsRequired="true" Name="@nameof(NewTopicModel.projectType)">
                         <div class="el-form-item-custom">
                             <BSelect TValue="ProjectType" Value="ProjectType.Blazui" ValueChanged="e=>OnChange(e)">
                             </BSelect>
                         </div>
                     </BFormItem>
-                    <BFormItem TValue="string" Label="版本" IsRequired="true" Name="@nameof(NewTopicModel.VerNo)" Style="margin-left: 20px;">
+                    <BFormItem TValue="string" Label="版本" IsRequired="true" RequiredMessage="请选择版本" Name="@nameof(NewTopicModel.VerNo)" >
                         <div class="el-form-item-custom">
                             <BSelect TValue="string" @ref="bverNoSelect">
                                 @if (bZVersions != null && bZVersions.Any())
@@ -34,6 +34,10 @@
                                 }
                             </BSelect>
                         </div>
+                    </BFormItem>
+                    <BFormItem TValue="bool" Label="通知管理员" IsRequired="true" 
+                               Name="@nameof(NewTopicModel.Notice)" >
+                        <BSwitch TValue="bool" ActiveValue="true" InactiveValue="false"></BSwitch>
                     </BFormItem>
                 </div>
 
