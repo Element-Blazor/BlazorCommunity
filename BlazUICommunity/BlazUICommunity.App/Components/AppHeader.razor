@@ -1,6 +1,6 @@
 ﻿@inherits AppHeaderBase
 <div class="nav">
-    <div class="container">
+    <div class="container app-header-dropdown">
         <img src="img/logo.svg" width="146" height="38" />
         <div class="fill"></div>
         @if (headerMenus.Any())
@@ -25,12 +25,12 @@
 
         }
         <div class="fill"></div>
-        <div style="flex:1;margin-left:20px;">
+        <div style="flex:1;">
             @if (CurrentUser != null)
             {
                 <BDropDown EnableAlwaysRender="true">
                     <Trigger>
-                        <BButton Style="border:none;background:transparent;padding:0px;margin:40px auto">
+                        <BButton Style="border:none;background:transparent;padding:0px;">
                             <div style="display:flex;">
                                 <img src="@CurrentUser?.Avator" class="app-nav-avatar-img" />
                                 <span class="el-dropdown-link" style="margin:auto;color:#fff;">
@@ -40,8 +40,9 @@
                         </BButton>
                     </Trigger>
                     <Items>
-                        <BDropDownItem OnClick="e=>Personal()">个人中心</BDropDownItem>
-                        <BDropDownItem OnClick="e=>LoginOut()">退出</BDropDownItem>
+                            <BDropDownItem OnClick="e=>Personal()">个人中心</BDropDownItem>
+                            <BDropDownItem OnClick="e=>LoginOut()">退出</BDropDownItem>
+                      
                     </Items>
                 </BDropDown>
             }

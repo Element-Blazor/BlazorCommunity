@@ -350,7 +350,9 @@ app > div .is-active {
     height: 178px;
     display: block;
 }
-
+.app-header-dropdown .el-dropdown{
+    display:flex !important;
+}
 .app-user-info {
     font-size: 15px;
 }
@@ -575,6 +577,7 @@ app
     padding: 10px;
     height:100px;
 }*/
+
 
 .content-topic-img {
     margin-top: 3px;
