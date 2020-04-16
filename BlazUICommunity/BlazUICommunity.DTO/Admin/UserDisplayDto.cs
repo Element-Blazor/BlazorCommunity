@@ -1,6 +1,7 @@
 ﻿using Blazui.Community.AutoMapperExtensions;
 using Blazui.Community.Enums;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blazui.Community.DTO.Admin
 {
@@ -56,6 +57,7 @@ namespace Blazui.Community.DTO.Admin
         /// <summary>
         /// 签名
         /// </summary>
+        [NotMapped]
         public string Signature { get; set; }
 
         /// <summary>

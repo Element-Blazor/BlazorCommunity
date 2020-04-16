@@ -47,7 +47,7 @@ namespace Blazui.Community.DTO
 
         [AutoNotMap]
         public string Avator { get; set; }
-        [AutoNotMap]
+        [NotMapped]
         public string Signature { get; set; }
 
         [NotMapped]

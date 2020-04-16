@@ -558,6 +558,10 @@ app
     box-sizing: border-box;
 }
 
+.reply-list .el-card__body {
+    padding: 5px !important;
+}
+
 .content-topic-base .el-card__header {
     padding: 10px 10px 0px 10px;
     border-bottom: 1px solid #EBEEF5;
@@ -565,11 +569,12 @@ app
     box-sizing: border-box;
 }
 
-.user-signature {
-    /*background-color: #EBEEF5 !important;*/
-    /*border: 1px solid #EBEEF5;*/
+/*.user-signature {
+    background-color: #EBEEF5 !important;
+    border: 1px solid #EBEEF5;
     padding: 10px;
-}
+    height:100px;
+}*/
 
 .content-topic-img {
     margin-top: 3px;
@@ -624,6 +629,10 @@ app
 
 .reply-now .el-card__header {
     padding: 0px;
+    margin: 0px;
+}
+.reply-now {
+    /*border-top: 1px solid #DCDFE6;*/
 }
 
 .form-inline {
@@ -682,7 +691,10 @@ app .el-dialog__wrapper .el-dialog .is-fullscreen .el-dialog__body {
 .content-newtopic {
     /*margin-left: 10px;*/
 }
-
+.content-reply-base {
+    /*border-bottom: 1px solid #EBEEF5;*/
+    padding: 10px 0px 10px 0px;
+}
 .account-header {
     height: 120px;
     background: #409EFF;

@@ -3,53 +3,54 @@
 @if (ReplyModel != null)
 {
     <div class="content-reply-base custome-button-hover">
-        <BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
-            <Header>
-                <div class="content-topic-head">
-                    <div class="content-info">
-                        <div class="content-user">
-                            <div class="content-user-avator">
-                                @if (string.IsNullOrWhiteSpace(ReplyModel.Avator))
-                                {
-                                    <img class="reply-avator-img" src="/img/defaultAct.png" />
-                                }
-                                else
-                                {
-                                    <img class="reply-avator-img" src="@ReplyModel.Avator" />
-                                }
-                            </div>
-                        </div>
+        @*<BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
+        <Header>*@
+        <div class="content-topic-head">
+            <div class="content-info">
+                <div class="content-user">
+                    <div class="content-user-avator">
+                        @if (string.IsNullOrWhiteSpace(ReplyModel.Avator))
+                        {
+                            <img class="reply-avator-img" src="/img/defaultAct.png" />
+                        }
+                        else
+                        {
+                            <img class="reply-avator-img" src="@ReplyModel.Avator" />
+                        }
                     </div>
-                    <div class="content-flex-col">
-                        <div class="reply-user-name">@ReplyModel.NickName</div>
-                        <div class="content-time">
-                            @ReplyModel?.LastModifyDateDisplay
-                        </div>
-                    </div>
-                    @if (ReplyModel.IsMySelf)
-                    {
-                        var buttonedit = "color:#909399;font-size:20px;";
-                        var buttonsave = "color:#909399;font-size:20px;";
-                        <div style="position: absolute; right: 17px;">
-                            <BButtonGroup>
-                                <BButton Type="ButtonType.Text" Style=@(ReplyModel.ShoudEdit?buttonedit:buttonsave) IsPlain="true" Size="ButtonSize.Default" Icon=@(ReplyModel.ShoudEdit?"el-icon-finished":"el-icon-edit") OnClick="OnEdit"> </BButton>
-                                <BButton Type="ButtonType.Text" Style="color:#909399;font-size:20px; margin-left: 10px;" IsPlain="true" Size="ButtonSize.Default" Icon="el-icon-circle-close" OnClick="OnDeleted"></BButton>
-                            </BButtonGroup>
-                        </div>
-                    }
                 </div>
-            </Header>
-            <Body>
-                @if (ReplyModel.ShoudEdit)
-                {
-                    <BMarkdownEditor @bind-Value="@ReplyModel.Content" EnableAlwaysRender="true" UploadUrl="@UploadUrl" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="300" Height="300"></BMarkdownEditor>
-                }
-                else
-                {
-                    <BMarkdown Text="@ReplyModel.Content"></BMarkdown>
-                }
-                <UserSignature Signature="@ReplyModel.Signature" />
-            </Body>
-        </BCard>
+            </div>
+            <div class="content-flex-col">
+                <div class="reply-user-name">@ReplyModel.NickName</div>
+                <div class="content-time">
+                    @ReplyModel?.LastModifyDateDisplay
+                </div>
+            </div>
+            @if (ReplyModel.IsMySelf)
+            {
+                var buttonedit = "color:#909399;font-size:20px;";
+                var buttonsave = "color:#909399;font-size:20px;";
+                <div style="position: absolute; right: 17px;">
+                    <BButtonGroup>
+                        <BButton Type="ButtonType.Text" Style=@(ReplyModel.ShoudEdit?buttonedit:buttonsave) IsPlain="true" Size="ButtonSize.Default" Icon=@(ReplyModel.ShoudEdit?"el-icon-finished":"el-icon-edit") OnClick="OnEdit"> </BButton>
+                        <BButton Type="ButtonType.Text" Style="color:#909399;font-size:20px; margin-left: 10px;" IsPlain="true" Size="ButtonSize.Default" Icon="el-icon-circle-close" OnClick="OnDeleted"></BButton>
+                    </BButtonGroup>
+                </div>
+            }
+        </div>
+        @*</Header>
+        <Body>*@
+        @if (ReplyModel.ShoudEdit)
+        {
+            <BMarkdownEditor @bind-Value="@ReplyModel.Content" EnableAlwaysRender="true" UploadUrl="@UploadUrl" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="300" Height="300"></BMarkdownEditor>
+        }
+        else
+        {
+            <BMarkdown Text="@ReplyModel.Content"></BMarkdown>
+        }
+        <UserSignature Signature="@ReplyModel.Signature" />
+        <div class="el-divider el-divider--horizontal" style="margin:10px 0"></div>
+        @*</Body>
+        </BCard>*@
     </div>
 }

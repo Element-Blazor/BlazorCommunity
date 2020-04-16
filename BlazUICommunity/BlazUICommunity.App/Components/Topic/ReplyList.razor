@@ -1,5 +1,5 @@
 ﻿@inherits ReplyListBase
-
+<div class="reply-list">
 @if (Replys.Count > 0)
 {
     foreach (var reply in Replys)
@@ -37,3 +37,4 @@ else
 {
     <ReplyNow EnableAlwaysRender="true" TopicId="@TopicId" OnReplySuccess="OnReplySuccess"></ReplyNow>
 }
+</div>

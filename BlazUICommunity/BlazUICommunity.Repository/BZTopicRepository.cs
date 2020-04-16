@@ -48,7 +48,7 @@ namespace Blazui.Community.Repository
         /// <returns></returns>
         public async Task<IEnumerable<BZTopicDto>> QueryTops(int topSize)
         {
-            string sql = $"select t1.*,t2.UserName,t2.NickName,t2.Avator from bztopic t1 left join bzuser t2 on t1.CreatorId=t2.id where t1.Top=1 and t1.`Status`=0 order by t1.CreateDate desc limit {topSize}";
+            string sql = $"select t1.*,t2.UserName,t2.NickName,t2.Avator,t2.Signature from bztopic t1 left join bzuser t2 on t1.CreatorId=t2.id where t1.Top=1 and t1.`Status`=0 order by t1.CreateDate desc limit {topSize}";
             return await QueryDataFromSql<BZTopicDto>(sql);
         }
 
@@ -59,7 +59,7 @@ namespace Blazui.Community.Repository
         /// <returns></returns>
         public async Task<IEnumerable<BZTopicDto>> QueryTopById(string topicId)
         {
-            string sql = $"select t1.*,t2.UserName,t2.NickName,t2.Avator from bztopic t1 left join bzuser t2 on t1.CreatorId=t2.id where t1.Id=@topicId and t1.`Status`=0 ";
+            string sql = $"select t1.*,t2.UserName,t2.NickName,t2.Avator,t2.Signature from bztopic t1 left join bzuser t2 on t1.CreatorId=t2.id where t1.Id=@topicId and t1.`Status`=0 ";
 
             MySqlParameter mySqlParameter = new MySqlParameter("topicId", topicId);
 

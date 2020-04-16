@@ -1,7 +1,7 @@
 ﻿@inherits ReplyNowBase
 <div class="reply-now">
-    <BCard EnableAlwaysRender="true">
-        <Header>
+    @*<BCard EnableAlwaysRender="true">
+        <Header>*@
             <div class="content-flex-row custome-button-hover">
                 <div style="margin:25px;font-weight:800;">发表回复</div>
                 <div style="margin:25px;position: absolute;right: 10px; ">
@@ -13,8 +13,8 @@
 
                 </div>
             </div>
-        </Header>
-        <Body>
+        @*</Header>
+        <Body>*@
             <BForm Inline="false" @ref="form" Value="Model" LabelAlign="@LabelAlign.Left" EnableAlwaysRender="true">
                 <BFormItem TValue="string" IsRequired="false" Name="@nameof(NewReplyModel.Content)" EnableAlwaysRender="true" @ref="formItem">
                     <BMarkdownEditor @ref="bMarkdownEditor" UploadUrl="@(UploadUrl+ UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="300" ImageMaxSize="300" EnableAlwaysRender="true"></BMarkdownEditor>
@@ -26,6 +26,6 @@
                     <BButton Type="@ButtonType.Success" OnClick="e=>ReplyNow()" IsPlain="true">立即回复</BButton>
                 </BFormItem>
             </BForm>
-        </Body>
-    </BCard>
+        @*</Body>
+    </BCard>*@
 </div>
