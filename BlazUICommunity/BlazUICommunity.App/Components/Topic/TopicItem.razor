@@ -43,17 +43,23 @@
                             </div>
                         </div>
                         <div class="topic-item">
-                            <div class="topic-author">@Topic?.NickName</div>
-                            <div class="topic-time">@Topic?.LastModifyDateDisplay</div>
+                            <div class="topic-author" title="作者">@Topic?.NickName</div>
+                            <div class="topic-time" title="最后修改时间">@Topic?.LastModifyDateDisplay</div>
                             @if (Topic.ReplyCount > 0)
                             {
-                                <div class="topic-reply">
+                                <div class="topic-reply" title="回复量">
                                     <div>
                                         <i class="el-icon-chat-dot-square" style="color: #909399;"></i>
                                         <span style="margin-left:0px;color: #909399;">@Topic?.ReplyCount</span>
                                     </div>
                                 </div>
                             }
+                                <div class="topic-hot" title="浏览量">
+                                    <div>
+                                        <i class="el-icon-view" style="color: #909399;"></i>
+                                        <span style="margin-left:0px;color: #909399;">@Topic?.Hot</span>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </Body>

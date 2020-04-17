@@ -23,7 +23,7 @@
             <div class="content-flex-col">
                 <div class="reply-user-name">@ReplyModel.NickName</div>
                 <div class="content-time">
-                    @ReplyModel?.LastModifyDateDisplay
+                   发布时间： @ReplyModel?.LastModifyDate.ToString("yyyy-MM-dd")
                 </div>
             </div>
             @if (ReplyModel.IsMySelf)

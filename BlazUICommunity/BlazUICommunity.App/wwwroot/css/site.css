@@ -418,7 +418,7 @@ app > .blaz-layout > .blaz-layout-container {
 
 .topic-item {
     line-height: 40px;
-    display: inline-flex;
+    display: flex;
 }
 
 .topic-wrap {
@@ -463,9 +463,12 @@ app > .blaz-layout > .blaz-layout-container {
 
 .topic-reply {
     position: absolute;
+    right: 50px;
+}
+.topic-hot {
+    position: absolute;
     right: 12px;
 }
-
 .topic-pagination {
     margin: 25px 0px 15px 0px;
     text-align: right;
@@ -612,6 +615,7 @@ app
     margin-left: 13px;
     margin-top: 10px;
     color: #606266;
+    font-size:13px;
 }
 
 .go-home {

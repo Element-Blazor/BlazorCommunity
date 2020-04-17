@@ -155,6 +155,8 @@ namespace Blazui.Community.Api.Controllers.Client
                 var topic = topics.FirstOrDefault();
                 if(topic.Status!=0)
                     return NoContent();
+                topic.Hot++;
+                _bZTopicRepository.Update(topic);
                 var topicDto = _mapper.Map<BZTopicDto>(topic);
                 var user = (await _cacheService.GetUsersAsync(p => p.Id == topic.CreatorId)).FirstOrDefault();
                 var version = (await _cacheService.GetVersionsAsync(p => p.Id == topic.Id)).FirstOrDefault();
