@@ -33,7 +33,8 @@
     <BTableColumns>
         <BTableColumn Width="100" Property="@nameof(TopicDisplayDto.UserName)" Text="作者" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="100" Property="@nameof(TopicDisplayDto.CategoryDisplay)" Text="类型" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="400" Property="@nameof(TopicDisplayDto.Title)" Text="标题" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Width="400" Property="@nameof(TopicDisplayDto.Title)" Text="标题" Style="text-align:left;"></BTableColumn>
+        <BTableColumn Width="400" Property="@nameof(TopicDisplayDto.RoleName)" Text="权限" Style="text-align:left;"></BTableColumn>
         <BTableColumn Width="50" Property="@nameof(TopicDisplayDto.StatusDisplay)" Text="状态" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="50" Property="@nameof(TopicDisplayDto.ReplyCount)" Text="回复" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="50" Property="@nameof(TopicDisplayDto.GoodDisplay)" Text="精华" Style="text-align:center;"></BTableColumn>
@@ -73,6 +74,9 @@
                                     删除
                                 </BDropDownItem>
                             }
+                            <BDropDownItem OnClick="@(e=> SetAuthorize(context))">
+                                设置权限
+                            </BDropDownItem>
                         }
                     }
                 </Items>

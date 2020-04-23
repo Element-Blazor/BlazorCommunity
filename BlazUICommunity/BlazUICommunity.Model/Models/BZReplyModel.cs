@@ -33,5 +33,10 @@ namespace Blazui.Community.Model.Models
         /// 是否精华帖0否，1-是
         /// </summary>
         public int Good { get; set; }
+
+        /// <summary>
+        /// 回复回帖Id
+        /// </summary>
+        public string ReplyId { get; set; }
     }
 }

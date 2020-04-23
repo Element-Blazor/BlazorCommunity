@@ -64,5 +64,10 @@ namespace Blazui.Community.DTO.Admin
         /// 注册时间
         /// </summary>
         public DateTime CreateDate { get; set; }
+        /// <summary>
+        /// 角色
+        /// </summary>
+        [NotMapped]
+        public string RoleName { get; set; }
     }
 }

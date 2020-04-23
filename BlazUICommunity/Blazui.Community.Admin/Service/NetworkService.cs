@@ -4,7 +4,9 @@ using Blazui.Community.DTO.Admin;
 using Blazui.Community.HttpClientExtensions;
 using Blazui.Community.Response;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.Service
@@ -30,6 +32,12 @@ namespace Blazui.Community.Admin.Service
             Unauthorized = new BaseResponse(403, "Unauthorized ，对不起您没有权限进行该操作 ", null);
         }
 
+      
+
+
+
+
+
         #region User
 
         /// <summary>
@@ -40,6 +48,87 @@ namespace Blazui.Community.Admin.Service
         {
             return await httpClient.GetWithJsonResultAsync<PageDatas<UserDisplayDto>>
                 ($"api/user/Query{querycondition.BuildHttpQueryParam(MustRefresh)}");
+        }
+
+       
+
+        /// <summary>
+        /// 查询角色Claims
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse<List<RoleClaimDto>>> QueryRoleClaims(string roleId)
+        {
+            return await httpClient.GetWithJsonResultAsync<List<RoleClaimDto>>
+               ($"api/user/QueryRoleClaims/{roleId}");
+        }
+
+        internal async Task<BaseResponse> SetUserRoles(UserRoleDto userRoleDto)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+
+            return await httpClient.PostWithJsonResultAsync("api/user/AddRolesToUser", userRoleDto.BuildHttpContent());
+        }
+
+        internal Task<BaseResponse> DeleteRoleClaim(RoleClaimDto roleClaimDto)
+        {
+            return  httpClient.PostWithJsonResultAsync
+               ($"api/user/DeleteRoleClaim", roleClaimDto.BuildHttpContent());
+        }
+        internal async Task<BaseResponse<List<string>>> QueryUserRoles(string UserId)
+        {
+            return await httpClient.GetWithJsonResultAsync<List<string>>
+             ($"api/user/QueryUserRoles/{UserId}");
+        }
+
+        /// <summary>
+        /// 查询角色列表
+        /// </summary>
+        /// <returns></returns>
+        internal async Task<BaseResponse<List<RoleDisplayDto>>> QueryRoles( bool MustRefresh = false)
+        {
+            return await httpClient.GetWithJsonResultAsync< List<RoleDisplayDto>>
+                ($"api/user/QueryRoles");
+        }
+
+        /// <summary>
+        /// 创建角色
+        /// </summary>
+        /// <param name="roleDto"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse> AddRoleAsync(NewRoleDto roleDto)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+
+            return await httpClient.PostWithJsonResultAsync("api/user/CreateRole", roleDto.BuildHttpContent());
+        }
+        internal async Task<BaseResponse> AddRoleClaimAsync(RoleClaimDto  roleClaimDto)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+
+            return await httpClient.PostWithJsonResultAsync("api/user/CreateRoleClaim", roleClaimDto.BuildHttpContent());
+        }
+
+        internal async Task<BaseResponse> UpdateRoleAsync(RoleDisplayDto RoleDto)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+
+            return await httpClient.PostWithJsonResultAsync("api/user/UpdateRole", RoleDto.BuildHttpContent());
+        }
+        /// <summary>
+        /// 删除角色
+        /// </summary>
+        /// <param name="RoleId"></param>
+        /// <returns></returns>
+        internal async Task<BaseResponse> DeleteRoleAsync(string RoleId)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+            return await httpClient.DeleteWithJsonResultAsync($"api/user/DeleteRole/{RoleId}");
         }
 
         /// <summary>
@@ -198,6 +287,14 @@ namespace Blazui.Community.Admin.Service
             if (!(await _adminUserService.IsSupperAdmin()))
                 return Unauthorized;
             return await httpClient.PatchWithJsonResultAsync($"api/Topic/End/{Id}");
+        }
+
+
+        internal async Task<BaseResponse> SetAuthorizeToTopic(string topicId, string roleId)
+        {
+            if (!(await _adminUserService.IsSupperAdmin()))
+                return Unauthorized;
+            return await httpClient.PatchWithJsonResultAsync($"api/Topic/authorize/{topicId}/{roleId}");
         }
 
         #endregion Topic

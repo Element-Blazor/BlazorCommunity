@@ -1,8 +1,10 @@
 ﻿using Blazui.Community.Api.Service;
+using Blazui.Community.DTO;
 using Blazui.Community.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -49,6 +51,34 @@ namespace Blazui.Community.Api.Controllers.Client
             if (ResultDtos is null || !ResultDtos.Any())
                 return NoContent();
             return Ok(ResultDtos);
+        }
+
+        /// <summary>
+        /// 活跃用户前10
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Hot")]
+        public async Task<IActionResult> Hot()
+        {
+            return Ok(await _cacheService.GetHotUsersAsync());
+        }
+        
+        /// <summary>
+        /// 获取主题帖的作者信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("TopicUser/{TopicId}")]
+        public async Task<IActionResult> TopicUser(string TopicId)
+        {
+            HotUserDto userDto = new HotUserDto();
+            var topic =(await _cacheService.GetTopicsAsync(p => p.Id == TopicId))?.FirstOrDefault();
+            if (topic != null)
+            {
+                var user = await _bZUserRepository.QueryTopicUser(topic.CreatorId);
+                if (user != null)
+                    userDto = user;
+            }
+            return Ok(userDto);
         }
     }
 }

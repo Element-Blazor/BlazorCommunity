@@ -1,4 +1,5 @@
-﻿using Blazui.Component;
+﻿using Blazui.Admin;
+using Blazui.Component;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazAdmin

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -8,8 +9,8 @@ namespace Blazui.Community.Request
 {
     public static class ExpressionQueryExtensions
     {
-        private static readonly Dictionary<Type, PropertyInfo[]> souceProperties = new Dictionary<Type, PropertyInfo[]>();
-        private static readonly Dictionary<Type, PropertyInfo[]> searchProperties = new Dictionary<Type, PropertyInfo[]>();
+        private static readonly ConcurrentDictionary<Type, PropertyInfo[]> souceProperties = new ConcurrentDictionary<Type, PropertyInfo[]>();
+        private static readonly ConcurrentDictionary<Type, PropertyInfo[]> searchProperties = new ConcurrentDictionary<Type, PropertyInfo[]>();
 
         public static Expression<Func<TSource, bool>> CreateQueryExpression<TSource, TSearch>(this TSearch searchRequestEntity) where TSearch : class
         {

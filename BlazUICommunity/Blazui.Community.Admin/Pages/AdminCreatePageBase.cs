@@ -1,4 +1,5 @@
 ﻿using BlazAdmin;
+using Blazui.Admin;
 using Blazui.Community.Admin.ViewModel;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
@@ -45,7 +46,7 @@ namespace Blazui.Community.Admin.Pages
             }
             var model = form.GetValue<AdminLoginInfoModel>();
             var result = IsAdminDisable ?
-                    await UserService.CreateUserAsync(model.Username, model.Password) :
+                    await UserService.CreateUserAsync(new UserModel {  Username=model.Username,Password=model.Password }) :
                     await UserService.CreateSuperUserAsync(model.Username, model.Password);
             if (string.IsNullOrWhiteSpace(result))
             {

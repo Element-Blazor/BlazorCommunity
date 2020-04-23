@@ -20,7 +20,24 @@ namespace Blazui.Community.App.Components
         internal BForm form;
         internal BFormItem<string> formItem;
         protected BMarkdownEditor bMarkdownEditor;
-        internal NewReplyModel Model = new NewReplyModel();
+
+        private NewReplyModel _model;
+        [Parameter]
+        public NewReplyModel Model { get; set; }
+        //{
+        //    get { return _model; }
+        //    set
+        //    {
+        //        _model = value;
+        //        form?.MarkAsRequireRender();
+        //        formItem?.MarkAsRequireRender();
+        //        bMarkdownEditor?.MarkAsRequireRender();
+        //        this.MarkAsRequireRender();
+        //        StateHasChanged();
+        //    }
+        //}
+      
+
 
         [Parameter] public EventCallback OnReplySuccess { get; set; }
 
@@ -103,6 +120,7 @@ namespace Blazui.Community.App.Components
                 }
             });
         }
+       
 
         protected override bool ShouldRender() => true;
 

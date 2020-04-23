@@ -1,6 +1,9 @@
 ﻿using Blazui.Community.Admin.QueryCondition;
+using Blazui.Community.DictionaryExtensions;
 using Blazui.Community.DTO.Admin;
 using Blazui.Component;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin.Pages.User
@@ -33,6 +36,21 @@ namespace Blazui.Community.Admin.Pages.User
             MessageService.Show(((UserDisplayDto)obj).UserName);
             await Task.CompletedTask;
         }
+
+
+        protected async Task SetRole(object context)
+        {
+            if (context is UserDisplayDto dto)
+            {
+                var model = dto.ObjectToDictionary("model");
+                DialogResult result = await DialogService.ShowDialogAsync<RolesDialog>("设置用户角色", 700, model);
+                if (Convert.ToBoolean(result.Result))
+                {
+                    await SearchData(true);
+                }
+            }
+        }
+
 
         protected async Task Resume(object obj)
         {

@@ -2,6 +2,7 @@
 using Blazui.Community.Model.Models;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,8 @@ namespace Blazui.Community.App.Pages
         protected bool IsEditing { get; set; } = false;
 
         private BZUserModel User;
-
+        [Inject]
+        public RoleManager<IdentityRole<string>> roleManager { get; set; }
         protected override async Task InitilizePageDataAsync()
         {
             if (string.IsNullOrWhiteSpace(TopicId))
@@ -58,8 +60,30 @@ namespace Blazui.Community.App.Pages
         private async Task LoadTopic()
         {
             var result = await NetService.QueryTopicById(TopicId);
+            
             if (result.IsSuccess && result.Data != null)
             {
+                if (!string.IsNullOrWhiteSpace(result.Data.RoleId))
+                {
+                    if (User == null)
+                    {
+                        ToastWarning("抱歉，该主题设置了权限，请登录后再试");
+                        await Task.Delay(1000);
+                        navigationManager.NavigateTo("/");
+                        return;
+                    }
+                    var role = roleManager.Roles.FirstOrDefault(p => p.Id== result.Data.RoleId);
+                    var userroles = await userManager.GetRolesAsync(User);
+                    var isInRole = userroles.Contains(role.Name);
+
+                    if (!isInRole)
+                    {
+                       ToastWarning("抱歉，您当前没有权限查看该主题,请联系管理员");
+                        await Task.Delay(1000);
+                        navigationManager.NavigateTo("/");
+                        return;
+                    }
+                }
                 TopicModel = result.Data;
                 TopicModel.Avator ??= "/img/defaultAct.png";
                 IsMySelf = TopicModel.CreatorId == User?.Id;
@@ -76,8 +100,7 @@ namespace Blazui.Community.App.Pages
             }
         }
 
-        [Inject]
-        private IMemoryCache memoryCache { get; set; }
+       
 
         protected async Task<List<BZVersionDto>> QueryVersions()
         {
@@ -179,6 +202,11 @@ namespace Blazui.Community.App.Pages
                 }
             }
             IsEditing = !IsEditing;
+        }
+
+        protected async Task EndTopic()
+        {
+            await NetService.EndTopic(TopicModel.Id);
         }
 
         internal void GoHome() => navigationManager.NavigateTo("/");

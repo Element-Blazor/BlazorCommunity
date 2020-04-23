@@ -24,6 +24,26 @@ namespace Blazui.Community.App.Service
             Unauthorized = new BaseResponse(403, "Unauthorized ，对不起您没有权限进行该操作 ", null);
         }
 
+        
+
+
+
+
+        #region User
+        internal Task<BaseResponse<List<HotUserDto>>> QueryHotUsers()
+        {
+            return  httpClient.GetWithJsonResultAsync<List<HotUserDto>>($"api/client/user/Hot");
+        }
+
+        internal async Task<HotUserDto> QueryTopicUser(string topicId)
+        {
+            var result= await httpClient.GetWithJsonResultAsync<HotUserDto>($"api/client/user/TopicUser/{topicId}");
+            if (result.IsSuccess)
+                return result.Data;
+            else return new HotUserDto();
+        }
+        #endregion
+
         #region VerifyCode
 
         /// <summary>
@@ -140,6 +160,25 @@ namespace Blazui.Community.App.Service
             return await HttpRequestWithValidate($"api/client/topic/UpdateContent", HttpMethod.Patch, dto.BuildHttpContent());
         }
 
+        /// <summary>
+        /// 发帖人关闭帖子
+        /// </summary>
+        /// <param name="TopicId"></param>
+        /// <returns></returns>
+        public async Task<BaseResponse> EndTopic(string TopicId)
+        {
+            return await HttpRequestWithValidate($"api/client/topic/End/{TopicId}", HttpMethod.Patch);
+        }
+
+
+        internal async Task<BaseResponse<List<HotTopicDto>>> QueryShareHot()
+        {
+            return await httpClient.GetWithJsonResultAsync<List<HotTopicDto>>($"api/client/topic/ShareHot");
+        }
+        internal async Task<BaseResponse<List<HotTopicDto>>> QueryAskHot()
+        {
+            return await httpClient.GetWithJsonResultAsync<List<HotTopicDto>>($"api/client/topic/AskHot");
+        }
         #endregion Topic
 
         #region Reply

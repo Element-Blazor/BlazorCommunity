@@ -1,4 +1,3 @@
-using BlazAdmin.ServerRender;
 using Blazui.Community.Admin.Service;
 using Blazui.Community.Model.Models;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using Blazui.Component;
+using Blazui.Admin.ServerRender;
 
 namespace Blazui.Community.Admin
 {
@@ -21,9 +22,8 @@ namespace Blazui.Community.Admin
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+     
+        public async void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
@@ -40,7 +40,9 @@ namespace Blazui.Community.Admin
                    Public = false,
                };
            });
-            services.AddBlazAdmin<IdentityUser, AdminUserService, BlazUICommunityAdminDbContext>(null);
+            await services.AddBlazuiServicesAsync();
+            services.AddScoped<DbContext, BlazUICommunityAdminDbContext>();
+            services.AddAdmin<IdentityUser, AdminUserService, BlazUICommunityAdminDbContext>(null);
             services.AddScoped<AdminUserService>();
             services.ConfigureApplicationCookie(options =>
             {
@@ -54,7 +56,6 @@ namespace Blazui.Community.Admin
             //services.AddAutoMapper(typeof(AutoMapConfiguration));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

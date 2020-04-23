@@ -84,6 +84,8 @@ namespace Blazui.Community.DTO
         [AutoNotMap]
         [NotMapped]
         public string VerName { get; set; }
+
+        public string RoleId { get; set; }
     }
 
     public class SeachTopicDto

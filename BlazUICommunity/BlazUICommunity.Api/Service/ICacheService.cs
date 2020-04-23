@@ -1,4 +1,5 @@
-﻿using Blazui.Community.Model.Models;
+﻿using Blazui.Community.DTO;
+using Blazui.Community.Model.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -56,6 +57,21 @@ namespace Blazui.Community.Api.Service
         /// <param name="condition"></param>
         /// <returns></returns>
         Task<IList<BZVersionModel>> GetVersionsAsync(Expression<Func<BZVersionModel, bool>> condition = null);
+        /// <summary>
+        /// 缓存活跃用户
+        /// </summary>
+        /// <returns></returns>
+        Task<IList<HotUserDto>> GetHotUsersAsync();
+        /// <summary>
+        /// 缓存热点分享主题
+        /// </summary>
+        /// <returns></returns>
+        Task<IList<HotTopicDto>> GetShareHotsAsync();
+        /// <summary>
+        /// 缓存热点问题主题
+        /// </summary>
+        /// <returns></returns>
+        Task<IList<HotTopicDto>> GetAskHotsAsync();
 
         /// <summary>
         /// 移除缓存

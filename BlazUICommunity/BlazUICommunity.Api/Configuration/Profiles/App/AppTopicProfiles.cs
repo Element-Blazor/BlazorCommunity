@@ -10,6 +10,7 @@ namespace Blazui.Community.Api.Configuration.Profiles.App
         public AppTopicProfiles()
         {
             CreateMap<BZTopicModel, PersonalTopicDisplayDto>().IngoreNotMapped();
+            CreateMap<BZTopicModel,HotTopicDto>().IngoreNotMapped();
         }
     }
 }

@@ -102,7 +102,7 @@
             主题帖相关
             </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.TopicController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZTopicRepository,Blazui.Community.Api.Service.ICacheService)">
+        <member name="M:Blazui.Community.Api.Controllers.TopicController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZTopicRepository,Blazui.Community.Api.Service.ICacheService,Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole{System.String}})">
              <summary>
             
              </summary>
@@ -123,6 +123,14 @@
             加精或取消加精
             </summary>
             <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.TopicController.AuthorizeTopic(System.String,System.String)">
+            <summary>
+            设置帖子查看权限
+            </summary>
+            <param name="TopicId"></param>
+            <param name="RoleId"></param>
             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.TopicController.EndTopic(System.String)">
@@ -155,7 +163,7 @@
             
              </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.UserController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZUserRepository,Microsoft.AspNetCore.Identity.UserManager{Blazui.Community.Model.Models.BZUserModel},Blazui.Community.Api.Service.ICacheService)">
+        <member name="M:Blazui.Community.Api.Controllers.UserController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZUserRepository,Microsoft.AspNetCore.Identity.UserManager{Blazui.Community.Model.Models.BZUserModel},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole{System.String}},Blazui.Community.Api.Service.ICacheService)">
              <summary>
             
              </summary>
@@ -163,6 +171,7 @@
              <param name="mapper"></param>
              <param name="bZUserRepository"></param>
              <param name="userManager"></param>
+             <param name="roleManager"></param>
              <param name="cacheService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.UserController.Delete(System.String)">
@@ -187,6 +196,68 @@
             <summary>
             根据条件分页查询用户
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.UserController.CreateRole(Blazui.Community.DTO.Admin.NewRoleDto)">
+            <summary>
+            创建角色
+            </summary>
+            <param name="newRoleDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.UserController.QueryRoles">
+            <summary>
+            查询角色
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.UserController.UpdateRole(Blazui.Community.DTO.Admin.RoleDisplayDto)">
+            <summary>
+            更新角色
+            </summary>
+            <param name="roleDisplayDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.UserController.DeleteRole(System.String)">
+            <summary>
+            删除角色
+            </summary>
+            <param name="RoleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.UserController.CreateRoleClaim(Blazui.Community.DTO.Admin.RoleClaimDto)">
+            <summary>
+            添加角色声明
+            </summary>
+            <param name="roleClaimDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.UserController.QueryRoleClaims(System.String)">
+            <summary>
+            根据RoleId查询Claims
+            </summary>
+            <param name="RoleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.UserController.DeleteRoleClaim(Blazui.Community.DTO.Admin.RoleClaimDto)">
+            <summary>
+            修改角色声明
+            </summary>
+            <param name="roleClaimDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.UserController.AddRolesToUser(Blazui.Community.DTO.Admin.UserRoleDto)">
+            <summary>
+            为用户指定角色
+            </summary>
+            <param name="userRoleDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.UserController.QueryUserRoles(System.String)">
+            <summary>
+            根据用户ID查询角色
+            </summary>
+            <param name="UserId"></param>
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.Controllers.VersionController">
@@ -463,6 +534,25 @@
             <param name="HotType">1：月榜，2：周榜</param>
             <returns></returns>
         </member>
+        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.ShareHot">
+            <summary>
+            查询热门分享前10条
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.AskHot">
+            <summary>
+            查询热门问题前10条
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.EndTopic(System.String)">
+            <summary>
+            结贴
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
         <member name="T:Blazui.Community.Api.Controllers.Client.UserController">
              <summary>
             
@@ -480,6 +570,18 @@
             活跃度
             </summary>
             <param name="ActiveType">1：月榜，2：周榜</param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.Client.UserController.Hot">
+            <summary>
+            活跃用户前10
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.Client.UserController.TopicUser(System.String)">
+            <summary>
+            获取主题帖的作者信息
+            </summary>
             <returns></returns>
         </member>
         <member name="T:Blazui.Community.Api.Controllers.Client.VersionController">
@@ -705,6 +807,24 @@
             项目版本
             </summary>
             <param name="condition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Service.ICacheService.GetHotUsersAsync">
+            <summary>
+            缓存活跃用户
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Service.ICacheService.GetShareHotsAsync">
+            <summary>
+            缓存热点分享主题
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Service.ICacheService.GetAskHotsAsync">
+            <summary>
+            缓存热点问题主题
+            </summary>
             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Service.ICacheService.Remove(System.String)">

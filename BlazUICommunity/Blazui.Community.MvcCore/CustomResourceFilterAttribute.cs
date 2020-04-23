@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace Ruanmou.NetCore2.MVC6.Unitility.Filters
@@ -10,7 +11,7 @@ namespace Ruanmou.NetCore2.MVC6.Unitility.Filters
     /// </summary>
     public class CustomResourceFilterAttribute : Attribute, IResourceFilter
     {
-        private static readonly Dictionary<string, object> _Cache = new Dictionary<string, object>();
+        private static readonly ConcurrentDictionary<string, object> _Cache = new ConcurrentDictionary<string, object>();
         private string _cacheKey;
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace Ruanmou.NetCore2.MVC6.Unitility.Filters
                 var result = context.Result as ViewResult;
                 if (result != null)
                 {
-                    _Cache.Add(_cacheKey, result);
+                    _Cache.TryAdd(_cacheKey, result);
                 }
             }
         }

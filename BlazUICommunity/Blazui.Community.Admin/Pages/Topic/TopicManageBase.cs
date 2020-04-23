@@ -1,6 +1,7 @@
 ﻿using Blazui.Community.Admin.QueryCondition;
 using Blazui.Community.DTO.Admin;
 using Blazui.Component;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -82,6 +83,25 @@ namespace Blazui.Community.Admin.Pages.Topic
                     async () => await NetService.ResumeTopic(dto.Id),
                     async () => await SearchData(true)
                     );
+            }
+        }
+
+        protected async Task SetAuthorize(object context)
+        {
+            if (context is TopicDisplayDto dto)
+            {
+                Dictionary<string, object> parameters = new Dictionary<string, object>
+                {
+                    { "RoleId", dto.RoleId },
+                    { "TopicId", dto.Id }
+                };
+
+                var Result = await DialogService.ShowDialogAsync<ChooseRolesDialog>("选择权限", 500, parameters);
+                if (Convert.ToBoolean(Result.Result))
+                {
+                    await SearchData(true);
+                }
+
             }
         }
     }

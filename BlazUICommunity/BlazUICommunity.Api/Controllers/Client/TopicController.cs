@@ -153,7 +153,7 @@ namespace Blazui.Community.Api.Controllers.Client
             if (topics.Any())
             {
                 var topic = topics.FirstOrDefault();
-                if(topic.Status!=0)
+                if(topic.Status==-1)
                     return NoContent();
                 topic.Hot++;
                 _bZTopicRepository.Update(topic);
@@ -420,13 +420,53 @@ namespace Blazui.Community.Api.Controllers.Client
                 2 => -7,
                 _ => -7
             };
-            var topicRepo = _unitOfWork.GetRepository<BZTopicModel>(true);
             Expression<Func<BZTopicModel, bool>> predicate = p => p.CreateDate >= DateTime.Now.AddDays(beforeDays) && p.CreateDate <= DateTime.Now;
             var Topics = await _bZTopicRepository.GetPagedListAsync(predicate, o => o.OrderByDescending(o => o.Hot).ThenByDescending(o => o.ReplyCount), null, 1, 10);
             if (Topics is null || Topics.TotalCount == 0)
                 return NoContent();
             var ResultDtos = _mapper.Map<List<BZTopicDto>>(Topics.Items);
             return Ok(ResultDtos);
+        }
+
+        /// <summary>
+        /// 查询热门分享前10条
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("ShareHot")]
+        public async Task<IActionResult> ShareHot()
+        {
+         
+            return Ok(await _cacheService.GetShareHotsAsync());
+        }
+        /// <summary>
+        /// 查询热门问题前10条
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("AskHot")]
+        public async Task<IActionResult> AskHot()
+        {
+            return Ok(await _cacheService.GetAskHotsAsync());
+        }
+
+      
+        /// <summary>
+        /// 结贴
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpPatch("End/{Id}")]
+        public IActionResult EndTopic([FromRoute] string Id)
+        {
+            var topic = _bZTopicRepository.Find(Id);
+            if (topic != null)
+            {
+                topic.Status = topic.Status = 1;
+                topic.LastModifyDate = DateTime.Now;
+                topic.LastModifierId = Guid.Empty.ToString();
+                _bZTopicRepository.Update(topic);
+                _cacheService.Remove(nameof(BZTopicModel));
+            }
+            return Ok();
         }
     }
 }

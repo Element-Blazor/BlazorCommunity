@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Blazui\src\BlazAdmin\BlazAdmin.ServerRender\BlazAdmin.ServerRender.csproj" />
+    <ProjectReference Include="..\..\..\Blazui\src\Admin\Admin.ServerRender\Blazui.Admin.ServerRender.csproj" />
     <ProjectReference Include="..\..\..\Blazui\src\Markdown\Blazui.Markdown.csproj" />
     <ProjectReference Include="..\Blazui.Community.DictionaryExtensions\Blazui.Community.DictionaryExtensions.csproj" />
     <ProjectReference Include="..\Blazui.Community.HttpClientExtensions\Blazui.Community.HttpClientExtensions.csproj" />

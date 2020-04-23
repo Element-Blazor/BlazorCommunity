@@ -9,8 +9,8 @@
                 Blazor社区登录
             </h3>
         </div>
-        <BFormItem IsRequired="true" TValue="string" RequiredMessage="请输入账号" Name="@nameof(SignInModel.UserAccount)">
-            <BInput PrefixIcon="el-icon-user-solid" TValue="string" Placeholder="请输入账号"></BInput>
+        <BFormItem IsRequired="true" TValue="string" RequiredMessage="请输入账号或邮箱" Name="@nameof(SignInModel.UserAccount)">
+            <BInput PrefixIcon="el-icon-user-solid" TValue="string" Placeholder="请输入账号或邮箱"></BInput>
         </BFormItem>
         <BFormItem IsRequired="true" TValue="string" RequiredMessage="请输入密码" Name="@nameof(SignInModel.Password)" EnableAlwaysRender="true">
             <BInput PrefixIcon="el-icon-lock" SuffixIcon="el-icon-view" Type="@passwordType" TValue="string" Placeholder="请输入密码" OnSuffixIconClick="e=>TogglePassword()"></BInput>

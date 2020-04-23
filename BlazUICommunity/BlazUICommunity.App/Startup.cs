@@ -32,7 +32,7 @@ namespace Blazui.Community.App
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public async void ConfigureServices(IServiceCollection services)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             services.AddDbContext<BlazUICommunityContext>(options =>
@@ -53,7 +53,7 @@ namespace Blazui.Community.App
             services.AddRazorPages();
             services.AddControllers();
             services.AddServerSideBlazor();
-            services.AddBlazuiServices();
+            await services.AddBlazuiServicesAsync();
             services.AddMarkdown();
             services.AddCustomRepository<BZUserModel, BZUserIdentityRepository>();
             services.AddScoped<NetworkService>();

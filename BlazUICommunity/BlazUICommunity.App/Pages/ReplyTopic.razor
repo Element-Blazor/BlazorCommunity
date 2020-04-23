@@ -2,16 +2,15 @@
 @using Blazui.Community.App.Components.Topic
 @inherits ReplyTopicBase
 
-<div class="container reply-list">
+<div class="container">
     @if (!string.IsNullOrWhiteSpace(TopicModel.Content))
     {
         <BLayout EastWidth="350" EnableAlwaysRender="true">
             <Center>
-
                 <BTab TabPosition="@TabPosition.Top" EnableAlwaysRender="true" Style="margin-top:-4px;">
-                    <GoHome></GoHome>
+                    <GoHome/>
                     <BTabPanel Title="" Style="margin-top:-5px;">
-                        <TopicContent EnableAlwaysRender="true" TopicModel="@TopicModel" IsFollow="@IsFollow" IsMySelf="@IsMySelf" IsEditing="@IsEditing" OnFollowStatusChanging="@ToggleFollow" OnEditStatusChanging="ToggleEditing">
+                        <TopicContent EnableAlwaysRender="true" TopicModel="@TopicModel" IsFollow="@IsFollow" IsMySelf="@IsMySelf" IsEditing="@IsEditing" OnFollowStatusChanging="@ToggleFollow" OnEditStatusChanging="ToggleEditing" CloseTopic="EndTopic">
                         </TopicContent>
                         <div class="margin-top-5"></div>
                         <BCard EnableAlwaysRender="true">
@@ -23,15 +22,13 @@
                                 </div>
                             </Header>
                             <Body>
-                                <ReplyList TopicId="@TopicId" OnItemDeleted="OnReplyDelete" OnNewReply="OnReplySuccess"></ReplyList> @*  OnNewReply="OnReplySuccess"*@
+                                <ReplyList EnableAlwaysRender="true" TopicId="@TopicId"  OnItemDeleted="OnReplyDelete" OnNewReply="OnReplySuccess" ></ReplyList> @*  OnNewReply="OnReplySuccess"*@
                             </Body>
                         </BCard>
                     </BTabPanel>
                 </BTab>
             </Center>
-
             <East>
-
                 <AppRightLayout Style="margin-top:9px !important;"></AppRightLayout>
             </East>
         </BLayout>

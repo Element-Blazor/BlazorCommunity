@@ -26,13 +26,7 @@ namespace Blazui.Community.Model.Models
         public virtual DbSet<BzVerifyCodeModel> BzVerifyCode { get; set; }
         public virtual DbSet<BZVersionModel> BZVersion { get; set; }
         public virtual DbSet<BzBannerModel> BzBanner { get; set; }
-        public virtual DbSet<SysLogModel> SysLog { get; set; }
-        public virtual DbSet<SysUserModel> SysUser { get; set; }
-        public virtual DbSet<SysMenuModel> SysMenu { get; set; }
-        public virtual DbSet<SysRoleModel> SysRole { get; set; }
-        public virtual DbSet<SysRoleMenuMappingModel> SysRoleMenuMapping { get; set; }
-        public virtual DbSet<SysUserMenuMappingModel> SysUserMenuMapping { get; set; }
-        public virtual DbSet<SysUserRoleMappingModel> SysUserRoleMapping { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

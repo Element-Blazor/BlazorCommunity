@@ -8,6 +8,7 @@ using Blazui.Community.Model.Models;
 using Blazui.Community.Repository;
 using Blazui.Community.Request;
 using Blazui.Community.SwaggerExtensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -33,6 +34,7 @@ namespace Blazui.Community.Api.Controllers
         private readonly IRepository<BZFollowModel> _bZFollowRepository;
         private readonly IRepository<BZReplyModel> _bZReplyRepository;
         private readonly ICacheService _cacheService;
+        private readonly RoleManager<IdentityRole<string>> roleManager;
 
         /// <summary>
         ///
@@ -42,7 +44,7 @@ namespace Blazui.Community.Api.Controllers
         /// <param name="bZTopicRepository"></param>
         /// <param name="cacheService"></param>
         public TopicController(IUnitOfWork unitOfWork,
-            IMapper mapper, BZTopicRepository bZTopicRepository, ICacheService cacheService)
+            IMapper mapper, BZTopicRepository bZTopicRepository, ICacheService cacheService, RoleManager<IdentityRole<string>> roleManager)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -50,6 +52,7 @@ namespace Blazui.Community.Api.Controllers
             _bZFollowRepository = unitOfWork.GetRepository<BZFollowModel>();
             _bZReplyRepository = unitOfWork.GetRepository<BZReplyModel>();
             _cacheService = cacheService;
+            this.roleManager = roleManager;
         }
 
         /// <summary>
@@ -92,6 +95,30 @@ namespace Blazui.Community.Api.Controllers
             }
             return Ok();
         }
+
+        /// <summary>
+        /// 设置帖子查看权限
+        /// </summary>
+        /// <param name="TopicId"></param>
+        /// <param name="RoleId"></param>
+        /// <returns></returns>
+        [HttpPatch("authorize/{TopicId}/{RoleId}")]
+        public IActionResult AuthorizeTopic([FromRoute] string TopicId, [FromRoute] string RoleId)
+        {
+            var topic = _bZTopicRepository.Find(TopicId);
+            if (RoleId == "-")
+                RoleId = "";
+            if (topic != null)
+            {
+                topic.LastModifyDate = DateTime.Now;
+                topic.LastModifierId = Guid.Empty.ToString();
+                topic.RoleId = RoleId;
+                _bZTopicRepository.Update(topic);
+                _cacheService.Remove(nameof(BZTopicModel));
+            }
+            return Ok();
+        }
+
 
         /// <summary>
         /// 结贴
@@ -190,6 +217,8 @@ namespace Blazui.Community.Api.Controllers
                 foreach (TopicDisplayDto topic in pagedatas.Items)
                 {
                     topic.UserName = users.FirstOrDefault(p => p.Id == topic.CreatorId)?.UserName;
+                    if(!string.IsNullOrWhiteSpace(topic.RoleId))
+                    topic.RoleName = roleManager.Roles.FirstOrDefault(p=>p.Id==topic.RoleId)?.Name;
                 }
                 return Ok(pagedatas);
             }

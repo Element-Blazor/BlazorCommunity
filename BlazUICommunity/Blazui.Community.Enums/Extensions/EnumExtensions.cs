@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
@@ -7,7 +8,7 @@ namespace Blazui.Community.Enums
 {
     public static class EnumExtensions
     {
-        private static Dictionary<Enum, string> dictionaryDescriptions = new Dictionary<Enum, string>();
+        private static ConcurrentDictionary<Enum, string> dictionaryDescriptions = new ConcurrentDictionary<Enum, string>();
 
         /// <summary>
         /// 获取枚举标记的第一个Description或继承Description的特性描述
@@ -21,7 +22,7 @@ namespace Blazui.Community.Enums
             var attribute = e?.GetType().GetField(e?.ToString()).GetCustomAttribute<DescriptionAttribute>(true);
 
             var newdesc = (attribute == null || attribute.Description == null) ? e.ToString() : attribute.Description;
-            dictionaryDescriptions.Add(e, newdesc);
+            dictionaryDescriptions.TryAdd(e, newdesc);
             return newdesc;
         }
 

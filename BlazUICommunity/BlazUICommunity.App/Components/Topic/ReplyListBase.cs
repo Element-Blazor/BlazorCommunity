@@ -1,4 +1,5 @@
-﻿using Blazui.Community.App.Pages;
+﻿using Blazui.Community.App.Model;
+using Blazui.Community.App.Pages;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Response;
@@ -16,6 +17,7 @@ namespace Blazui.Community.App.Components
 
         [Parameter]
         public string TopicId { get; set; }
+        protected bool IsEnd = false;
 
         protected int PageSize { get; set; } = 10;
         protected int currentPage = 1;
@@ -76,6 +78,8 @@ namespace Blazui.Community.App.Components
                 navigationManager.NavigateTo("/");
             }
 
+            var topicResult = await NetService.QueryTopicById(TopicId);
+            IsEnd = (topicResult.IsSuccess && topicResult.Data != null && topicResult.Data.Status == 1);
             Total = 0;
             Replys = new List<BZReplyDto>();
             //await Task.Delay(1000);
@@ -145,6 +149,22 @@ namespace Blazui.Community.App.Components
             }
         }
 
+
+        public NewReplyModel MBZReplyDto  { get; set; }
+
+        protected void ReferenceRep(BZReplyDto reply)
+        {
+            if (User == null)
+            {
+                return;
+            }
+            else
+            {
+                MBZReplyDto = new NewReplyModel {  Content=reply.Content};
+                StateHasChanged();
+            }
+        }
+        
         internal async Task CurrentPageChangedAsync(int page)
         {
             CurrentPage = page;

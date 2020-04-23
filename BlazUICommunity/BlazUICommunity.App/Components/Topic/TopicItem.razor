@@ -49,17 +49,18 @@
                             {
                                 <div class="topic-reply" title="回复量">
                                     <div>
-                                        <i class="el-icon-chat-dot-square" style="color: #909399;"></i>
+                                        <i class="el-icon-chat-dot-square" style="color:#909399;font-size:16px;"></i>
                                         <span style="margin-left:0px;color: #909399;">@Topic?.ReplyCount</span>
                                     </div>
                                 </div>
                             }
+                            @if (Topic.Hot > 0)
+                            {
                                 <div class="topic-hot" title="浏览量">
-                                    <div>
-                                        <i class="el-icon-view" style="color: #909399;"></i>
-                                        <span style="margin-left:0px;color: #909399;">@Topic?.Hot</span>
-                                    </div>
+                                    <i class="el-icon-view" style="color: #909399;font-size:16px;"></i>
+                                    <span style="margin-left:0px;color: #909399;">@Topic.Hot</span>
                                 </div>
+                            }
                         </div>
                     </div>
                 </Body>

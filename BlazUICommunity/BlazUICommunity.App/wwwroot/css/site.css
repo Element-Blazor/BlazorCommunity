@@ -241,37 +241,28 @@ app .blaz-layout > .blaz-layout-container > .blaz-layout-center {
 }
 
 .flex-centor {
-    /*flex 布局*/
-    display: flex;
-    /*实现垂直居中*/
-    align-items: center;
-    /*实现水平居中*/
-    justify-content: center;
+    width: 100%;
 }
 
-.right-top {
-    font-family: monospace;
-    font-size: 20px;
-    height: 300px;
-    width: 100%;
-    color: #C0C4CC;
-}
+    .flex-centor .el-card__header {
+        padding: 10px !important;
+        font-size: 14px;
+        font-family: 'Microsoft YaHei';
+        font-weight:800;
+    }
 
-.right-bottom {
-    font-family: monospace;
-    font-size: 20px;
-    height: 250px;
-    width: 100%;
-    color: #C0C4CC;
-}
+    .hot-item {
+        display: flex;
+        margin: 10px 0px 0px 0px;
+    }
 
-.right-centor {
-    font-family: monospace;
-    font-size: 20px;
-    height: 250px;
-    width: 100%;
-    color: #C0C4CC;
-}
+    .hot-item .el-link--inner {
+        font-size: 13px !important;
+    }
+
+
+
+
 
 .main-layout-center .content-top {
     overflow-y: hidden;
@@ -350,9 +341,11 @@ app > div .is-active {
     height: 178px;
     display: block;
 }
-.app-header-dropdown .el-dropdown{
-    display:flex !important;
+
+.app-header-dropdown .el-dropdown {
+    display: flex !important;
 }
+
 .app-user-info {
     font-size: 15px;
 }
@@ -463,12 +456,14 @@ app > .blaz-layout > .blaz-layout-container {
 
 .topic-reply {
     position: absolute;
-    right: 50px;
+    right: 10px;
 }
+
 .topic-hot {
-    position: absolute;
-    right: 12px;
+    /*position: absolute;
+    right: 12px;*/
 }
+
 .topic-pagination {
     margin: 25px 0px 15px 0px;
     text-align: right;
@@ -564,7 +559,7 @@ app
 }
 
 .reply-list .el-card__body {
-    padding: 5px !important;
+    padding: 15px !important;
 }
 
 .content-topic-base .el-card__header {
@@ -615,7 +610,7 @@ app
     margin-left: 13px;
     margin-top: 10px;
     color: #606266;
-    font-size:13px;
+    font-size: 13px;
 }
 
 .go-home {
@@ -638,6 +633,7 @@ app
     padding: 0px;
     margin: 0px;
 }
+
 .reply-now {
     /*border-top: 1px solid #DCDFE6;*/
 }
@@ -698,10 +694,12 @@ app .el-dialog__wrapper .el-dialog .is-fullscreen .el-dialog__body {
 .content-newtopic {
     /*margin-left: 10px;*/
 }
+
 .content-reply-base {
     /*border-bottom: 1px solid #EBEEF5;*/
     padding: 10px 0px 10px 0px;
 }
+
 .account-header {
     height: 120px;
     background: #409EFF;

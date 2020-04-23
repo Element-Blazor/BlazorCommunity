@@ -39,7 +39,11 @@ namespace Blazui.Community.App.Components
         /// </summary>
         [Parameter]
         public EventCallback<MouseEventArgs> OnEditStatusChanging { get; set; }
-
+        /// <summary>
+        /// 关闭帖子
+        /// </summary>
+        [Parameter]
+        public EventCallback<MouseEventArgs> CloseTopic { get; set; }
         /// <summary>
         /// 主贴收藏/取消收藏状态改变事件
         /// </summary>
@@ -63,6 +67,14 @@ namespace Blazui.Community.App.Components
             }
         }
 
+        protected async Task CloseMyTopic(MouseEventArgs args)
+        {
+            if (CloseTopic.HasDelegate)
+            {
+                await CloseTopic.InvokeAsync(args);
+                StateHasChanged();
+            }
+        }
         /// <summary>
         ///
         /// </summary>

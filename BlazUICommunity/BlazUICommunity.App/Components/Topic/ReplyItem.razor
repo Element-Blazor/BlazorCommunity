@@ -23,10 +23,10 @@
             <div class="content-flex-col">
                 <div class="reply-user-name">@ReplyModel.NickName</div>
                 <div class="content-time">
-                   发布时间： @ReplyModel?.LastModifyDate.ToString("yyyy-MM-dd")
+                    发布时间： @ReplyModel?.LastModifyDate.ToString("yyyy-MM-dd")
                 </div>
             </div>
-            @if (ReplyModel.IsMySelf)
+            @if (ReplyModel.IsMySelf && !IsTopicEnd)
             {
                 var buttonedit = "color:#909399;font-size:20px;";
                 var buttonsave = "color:#909399;font-size:20px;";
@@ -37,6 +37,7 @@
                     </BButtonGroup>
                 </div>
             }
+
         </div>
         @*</Header>
         <Body>*@
@@ -48,6 +49,12 @@
         {
             <BMarkdown Text="@ReplyModel.Content"></BMarkdown>
         }
+        @*@if (!IsTopicEnd)
+        {
+            <div style="text-align:right;">
+                <BButton Type="ButtonType.Text" Style="color:#909399;font-size:20px; margin-left: 10px;" IsPlain="true" Size="ButtonSize.Default" Icon="el-icon-chat-line-round" OnClick="ReferenceReply"></BButton>
+            </div>
+        }*@
         <UserSignature Signature="@ReplyModel.Signature" />
         <div class="el-divider el-divider--horizontal" style="margin:10px 0"></div>
         @*</Body>

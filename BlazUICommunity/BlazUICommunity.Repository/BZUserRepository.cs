@@ -65,11 +65,25 @@ namespace Blazui.Community.Repository
             var group = actives.GroupBy(p => p.UserId);
             IEnumerable<UserActiveDto> dtos = new List<UserActiveDto>();
             dtos = group.Select(p => new UserActiveDto() { Count = p.Sum(c => c.Count), Name = p.FirstOrDefault()?.Name, UserId = p.Key });
-            //foreach ( var item in group )
-            //{
-            //    dtos.Add(new UserActiveDto() { UserId = item.Key , Name = item.FirstOrDefault()?.Name , Count = item.Sum(d => d.Count) });
-            //}
+       
             return dtos;
+        }
+
+
+
+        public async Task<IEnumerable<HotUserDto>> QueryHotUsers(int MonStart,int MonEnd)
+        {
+            string sql = $"select t1.id,t1.username,t1.nickname,t1.lastlogindate,t2.ctopic as TopicCount,t3.creply as ReplyCount from bzuser t1 left join (select CreatorId,count(id) as ctopic from bztopic GROUP BY CreatorId)  t2 on t1.Id=t2.CreatorId left join (select CreatorId,count(id) as creply from bzreply GROUP BY CreatorId)  t3 on t1.Id=t3.CreatorId where   DATE_FORMAT(lastlogindate,'%Y%m') BETWEEN '{MonStart}' and '{MonEnd}' limit 0,10 ";
+
+           return await QueryDataFromSql<HotUserDto>(sql);
+        }
+
+
+        public async Task<HotUserDto> QueryTopicUser(string UserId)
+        {
+            string sql = $"select t1.id,t1.username,t1.nickname,t1.lastlogindate,t2.ctopic as TopicCount,t3.creply as ReplyCount from bzuser t1 left join (select CreatorId,count(id) as ctopic from bztopic GROUP BY CreatorId)  t2 on t1.Id=t2.CreatorId left join (select CreatorId,count(id) as creply from bzreply GROUP BY CreatorId)  t3 on t1.Id=t3.CreatorId where   t1.id='{UserId}'";
+
+            return (await QueryDataFromSql<HotUserDto>(sql))?.FirstOrDefault();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
@@ -7,7 +8,7 @@ namespace Blazui.Community.UnitOfWork.Collections
 {
     public static class EntityMapNameExtensions
     {
-        private static readonly Dictionary<string, string> EntityTableNames = new Dictionary<string, string>();
+        private static readonly ConcurrentDictionary<string, string> EntityTableNames = new ConcurrentDictionary<string, string>();
 
         public static string GetTableName<Entity>(this Type entity) where Entity : class
         {
@@ -17,7 +18,7 @@ namespace Blazui.Community.UnitOfWork.Collections
             else
             {
                 var tableName = type.IsDefined(typeof(TableAttribute), true) ? type.GetCustomAttribute<TableAttribute>().Name : type.Name;
-                EntityTableNames.Add(type.FullName, tableName);
+                EntityTableNames.TryAdd(type.FullName, tableName);
                 return tableName;
             }
         }

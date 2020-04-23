@@ -13,6 +13,10 @@ namespace Blazui.Community.App.Components
 
         [Parameter]
         public EventCallback OnDeleted { get; set; }
+        [Parameter]
+        public EventCallback ReferenceReply { get; set; }
+        [Parameter]
+        public bool IsTopicEnd { get; set; }
 
         [Parameter]
         public EventCallback OnEdit { get; set; }

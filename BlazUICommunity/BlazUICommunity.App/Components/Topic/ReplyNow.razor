@@ -3,21 +3,20 @@
     @*<BCard EnableAlwaysRender="true">
         <Header>*@
             <div class="content-flex-row custome-button-hover">
-                <div style="margin:25px;font-weight:800;">发表回复</div>
-                <div style="margin:25px;position: absolute;right: 10px; ">
+                <div style="margin:25px 0px;font-weight:800;">发表回复</div>
+                <div style="margin:15px;position: absolute;right: 1px; ">
                     <button type="button" style="color:#909399;font-size:16px;" class="el-button el-button--text"
                             @onclick="e=>FullScreen()">
                         <span style="font-size:12px;">全屏模式</span>
                         <i class="el-icon-full-screen"></i>
                     </button>
-
                 </div>
             </div>
         @*</Header>
         <Body>*@
             <BForm Inline="false" @ref="form" Value="Model" LabelAlign="@LabelAlign.Left" EnableAlwaysRender="true">
-                <BFormItem TValue="string" IsRequired="false" Name="@nameof(NewReplyModel.Content)" EnableAlwaysRender="true" @ref="formItem">
-                    <BMarkdownEditor @ref="bMarkdownEditor" UploadUrl="@(UploadUrl+ UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="300" ImageMaxSize="300" EnableAlwaysRender="true"></BMarkdownEditor>
+                <BFormItem TValue="string" IsRequired="false"  Name="@nameof(NewReplyModel.Content)" EnableAlwaysRender="true" @ref="formItem">
+                    <BMarkdownEditor @ref="bMarkdownEditor"  UploadUrl="@(UploadUrl+ UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="300" ImageMaxSize="300" EnableAlwaysRender="true"></BMarkdownEditor>
                     <div>
                         <span class="el-tag el-tag--warning el-tag--light" style="width:100%">温馨提示：上传图片，单张图片最大只允许300k</span>
                     </div>

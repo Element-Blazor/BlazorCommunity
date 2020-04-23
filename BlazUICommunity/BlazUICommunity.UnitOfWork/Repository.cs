@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Common;
@@ -953,7 +954,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
 
         #region FromSql
 
-        private static readonly Dictionary<Type, PropertyInfo[]> TempEntityPropertiesDic = new Dictionary<Type, PropertyInfo[]>();
+        private static readonly ConcurrentDictionary<Type, PropertyInfo[]> TempEntityPropertiesDic = new ConcurrentDictionary<Type, PropertyInfo[]>();
 
         /// <summary>
         /// Read entity list by reader
@@ -974,7 +975,7 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
             if (!TempEntityPropertiesDic.TryGetValue(typeof(T), out PropertyInfo[] propertyInfos))
             {
                 propertyInfos = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(p => !p.IsDefined(typeof(NotMappedAttribute), false)).ToArray();
-                TempEntityPropertiesDic.Add(typeof(T), propertyInfos);
+                TempEntityPropertiesDic.TryAdd(typeof(T), propertyInfos);
             }
 
             while (await reader.ReadAsync())

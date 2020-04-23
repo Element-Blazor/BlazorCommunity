@@ -57,5 +57,10 @@ namespace Blazui.Community.DTO.Admin
         public int ReplyCount { get; set; }
 
         public string CreatorId { get; set; }
+
+        public string RoleId { get; set; }
+        [NotMapped]
+        [AutoNotMap]
+        public string RoleName { get; set; }
     }
 }

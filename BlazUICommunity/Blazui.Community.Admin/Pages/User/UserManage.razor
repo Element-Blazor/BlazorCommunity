@@ -34,11 +34,11 @@
         <BTableColumn Width="100" Property="@nameof(UserDisplayDto.NickName)" Text="昵称" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="50" Property="@nameof(UserDisplayDto.SexDisplay)" Text="性别" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="50" Property="@nameof(UserDisplayDto.StatusDisplay)" Text="状态" Style="text-align:center;color:red;"></BTableColumn>
-        @*<BTableColumn Width="200" Property="@nameof(UserDisplayDto.Signature)" Text="签名" Style="text-align:center;"></BTableColumn>*@
+        <BTableColumn Width="200" Property="@nameof(UserDisplayDto.RoleName)" Text="角色" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="100" Property="@nameof(UserDisplayDto.CreateDate)" Format="yyyy-MM-dd" Text="注册日期" Style="text-align:center;"></BTableColumn>
         <BTableTemplateColumn Text="操作" Width="150">
             <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Detail(context))">查看</BButton>
-
+            <BButton Type="@ButtonType.Success" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> SetRole(context))">角色</BButton>
             <BDropDown Style="cursor:pointer;">
                 <Trigger>
                     <BButton Type="@ButtonType.Default" Size="@ButtonSize.Small" IsPlain="true">操作</BButton>
@@ -54,6 +54,7 @@
                             <BDropDownItem OnClick="@(e => Resume(context))">恢复</BDropDownItem>
                         }
                     <BDropDownItem OnClick="@(e=> ResetPassword(context))">重置密码</BDropDownItem>
+
                 </Items>
             </BDropDown>
         </BTableTemplateColumn>

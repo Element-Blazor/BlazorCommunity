@@ -1,6 +1,7 @@
 ﻿using Blazui.Community.Response;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -12,8 +13,8 @@ namespace Blazui.Community.HttpClientExtensions
 {
     public static class HttpClientExtension
     {
-        private static readonly Dictionary<string, string> EtagCaches = new Dictionary<string, string>();
-        private static Dictionary<string, PropertyInfo[]> QuaryParams = new Dictionary<string, PropertyInfo[]>();
+        private static readonly ConcurrentDictionary<string, string> EtagCaches = new ConcurrentDictionary<string, string>();
+        private static ConcurrentDictionary<string, PropertyInfo[]> QuaryParams = new ConcurrentDictionary<string, PropertyInfo[]>();
         private static readonly string IfNoMatch = "If-None-Match";
 
         public static async Task<BaseResponse<T>> GetWithJsonResultAsync<T>
@@ -158,8 +159,8 @@ namespace Blazui.Community.HttpClientExtensions
         private static void CreateOrResetEtagCache(string ETag, string ETagCacheKey)
         {
             if (EtagCaches.ContainsKey(ETagCacheKey))
-                EtagCaches.Remove(ETagCacheKey);
-            EtagCaches.Add(ETagCacheKey, ETag);
+                EtagCaches.TryRemove(ETagCacheKey,out _);
+            EtagCaches.TryAdd(ETagCacheKey, ETag);
         }
 
         /// <summary>
@@ -230,7 +231,7 @@ namespace Blazui.Community.HttpClientExtensions
             if (!QuaryParams.TryGetValue(queryKey, out PropertyInfo[] props))
             {
                 props = t.GetType().GetProperties();
-                QuaryParams.Add(queryKey, props);
+                QuaryParams.TryAdd(queryKey, props);
             }
             props = props.Where(p => p.GetValue(t) != null).ToArray();
             if (props.Any())

@@ -43,7 +43,6 @@ namespace Blazui.Community.App.Features.Account.Pages
             }
             await WithFullScreenLoading(async () =>
             {
-                await Task.Delay(new Random().Next(3000));
                 var registerAccountModel = registerForm.GetValue<RegisterAccountDto>();
                 if (ContainsChineseCharacters(registerAccountModel.UserAccount))
                 {
@@ -73,8 +72,8 @@ namespace Blazui.Community.App.Features.Account.Pages
                 }
                 else
                 {
-                    ToastSuccess("注册成功，5秒后自动登陆...");
-                    await Task.Delay(5000);
+                    ToastSuccess("注册成功，即将自动登录...");
+                    await Task.Delay(1000);
                     await AutoLogin(registerAccountModel.UserAccount);
                 }
             });

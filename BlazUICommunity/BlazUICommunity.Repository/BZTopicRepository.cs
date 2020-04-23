@@ -1,10 +1,12 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
+using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.Repository
@@ -64,6 +66,16 @@ namespace Blazui.Community.Repository
             MySqlParameter mySqlParameter = new MySqlParameter("topicId", topicId);
 
             return await QueryDataFromSql<BZTopicDto>(sql, mySqlParameter);
+        }
+
+        public async Task<List<BZTopicModel>> QueryHotTopics(int Category)
+        {
+
+            IPagedList<BZTopicModel> PageTopics = await GetPagedListAsync(p => p.Status != -1 && p.Category == Category, o => o.OrderByDescending(o => o.Hot).ThenByDescending(o => o.ReplyCount), null, 0, 10);
+            if (PageTopics is null || PageTopics.TotalCount == 0)
+                return new List<BZTopicModel>();
+            return PageTopics.Items.ToList();
+         
         }
     }
 }

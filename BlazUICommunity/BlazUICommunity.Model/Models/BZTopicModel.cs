@@ -48,5 +48,7 @@ namespace Blazui.Community.Model.Models
 
         [Column("VersionId", TypeName = "varchar(36)")]
         public string VersionId { get; set; } = "";
+
+        public string RoleId { get; set; }
     }
 }

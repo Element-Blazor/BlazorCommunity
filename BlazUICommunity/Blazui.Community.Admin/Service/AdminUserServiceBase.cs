@@ -1,4 +1,5 @@
-﻿using BlazAdmin.Abstract;
+﻿using Blazui.Admin;
+using Blazui.Admin.Abstract;
 using Blazui.Component;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -14,38 +15,15 @@ namespace Blazui.Community.Admin.Service
         where TUser : IdentityUser
         where TRole : IdentityRole
     {
+
         protected readonly SignInManager<TUser> SignInManager;
         protected readonly RoleManager<TRole> RoleManager;
-
-        protected string GetResultMessage(IdentityResult identity)
-        {
-            if (identity.Succeeded)
-            {
-                return string.Empty;
-            }
-            foreach (var item in identity.Errors)
-            {
-                return item.Description;
-            }
-            return string.Empty;
-        }
-
-        public AdminUserServiceBase(SignInManager<TUser> signInManager, RoleManager<TRole> roleManager)
+        public AdminUserServiceBase(SignInManager<TUser> signInManager, RoleManager<TRole> roleManager, DbContext dbContext)
         {
             SignInManager = signInManager;
             RoleManager = roleManager;
+            DbContext = dbContext;
         }
-
-        public async Task<bool> HasUserAsync()
-        {
-            return await SignInManager.UserManager.Users.AnyAsync();
-        }
-
-        public async Task<TUser> FindUserByNameAsync(string username)
-        {
-            return await SignInManager.UserManager.FindByNameAsync(username);
-        }
-
         public async Task<string> ChangePasswordAsync(string username, string oldPassword, string newPassword)
         {
             var user = await FindUserByNameAsync(username);
@@ -73,9 +51,47 @@ namespace Blazui.Community.Admin.Service
             return "修改成功";
         }
 
-        public abstract Task<string> CreateUserAsync(string username, string password);
 
-        public abstract Task<string> CreateRoleAsync(string roleName, string id);
+
+
+
+        public async ValueTask<bool> IsRequireInitilizeAsync()
+        {
+            return (await SignInManager.UserManager.Users.CountAsync() < 2);
+        }
+
+        protected DbContext DbContext { get; }
+
+        protected string GetResultMessage(IdentityResult identity)
+        {
+            if (identity.Succeeded)
+            {
+                return string.Empty;
+            }
+            foreach (var item in identity.Errors)
+            {
+                return item.Description;
+            }
+            return string.Empty;
+        }
+
+
+
+        public async Task<bool> HasUserAsync()
+        {
+            return await SignInManager.UserManager.Users.AnyAsync();
+        }
+
+        public async Task<TUser> FindUserByNameAsync(string username)
+        {
+            return await SignInManager.UserManager.FindByNameAsync(username);
+        }
+
+
+
+        public abstract Task<string> CreateUserAsync(UserModel user);
+
+        public abstract Task<string> CreateRoleAsync(RoleModel role);
 
         public async Task<string> AddToRoleAsync(string username, params string[] roles)
         {
@@ -106,9 +122,15 @@ namespace Blazui.Community.Admin.Service
             return string.Empty;
         }
 
-        public async Task<List<object>> GetUsersAsync()
+        public async Task<List<UserModel>> GetUsersAsync()
         {
-            return (await SignInManager.UserManager.Users.ToListAsync()).Cast<object>().ToList();
+            return (await Task.WhenAll((await SignInManager.UserManager.Users.ToListAsync()).Select(async x => new UserModel()
+            {
+                Email = x.Email,
+                Id = x.Id,
+                Username = x.UserName,
+                Roles = await SignInManager.UserManager.GetRolesAsync(x)
+            }))).ToList();
         }
 
         public async Task<string> CreateSuperUserAsync(string username, string password)
@@ -116,17 +138,25 @@ namespace Blazui.Community.Admin.Service
             string err = string.Empty;
             using (var scope = new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled))
             {
-                err = await CreateUserAsync(username, password);
+                err = await CreateUserAsync(new UserModel()
+                {
+                    Password = password,
+                    Username = username
+                });
                 if (!string.IsNullOrWhiteSpace(err))
                 {
                     return err;
                 }
-                err = await CreateRoleAsync("管理员", "admin");
+                var roleModel = new RoleModel()
+                {
+                    Name = "超级管理员"
+                };
+                err = await CreateRoleAsync(roleModel);
                 if (!string.IsNullOrWhiteSpace(err))
                 {
                     return err;
                 }
-                err = await AddToRoleAsync(username, "管理员");
+                err = await AddToRoleAsync(username, "超级管理员");
                 if (!string.IsNullOrWhiteSpace(err))
                 {
                     return err;
@@ -163,6 +193,7 @@ namespace Blazui.Community.Admin.Service
                 {
                     return "当前用户需要两步验证";
                 }
+                return "用户名或密码错误，登录失败";
             }
             return string.Empty;
         }
@@ -178,26 +209,100 @@ namespace Blazui.Community.Admin.Service
             return string.Empty;
         }
 
-        public abstract Task<string> DeleteUsersAsync(params object[] users);
+
+        public abstract Task<string> DeleteUsersAsync(params string[] users);
 
         public async ValueTask SubmitLogoutAsync(BForm form, string callbackUri)
         {
             await form.SubmitAsync("/api/logout?callback=" + callbackUri);
         }
-
         public async ValueTask SubmitLoginAsync(BForm form, string callbackUri)
         {
             await form.SubmitAsync("/api/login?callback=" + callbackUri);
         }
 
-        public async ValueTask<bool> IsRequireInitilizeAsync()
-        {
-            return (await SignInManager.UserManager.Users.CountAsync() < 2);
-        }
+
 
         public async ValueTask<string> ExecuteLoginAsync(Func<ValueTask<string>> action)
         {
             return await action();
+        }
+
+
+        public abstract Task<string> UpdateUserAsync(UserModel userModel);
+
+        public async Task<string> UpdateRoleAsync(RoleModel roleModel)
+        {
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var role = await RoleManager.FindByIdAsync(roleModel.Id);
+                if (role == null)
+                {
+                    return "当前角色不存在";
+                }
+                role.Name = roleModel.Name;
+                var result = await RoleManager.UpdateAsync(role);
+                if (!result.Succeeded)
+                {
+                    return GetResultMessage(result);
+                }
+                var roleResources = DbContext.Set<RoleResource>();
+                var deletings = roleResources.Where(x => x.RoleId == roleModel.Id);
+                roleResources.RemoveRange(deletings);
+                roleResources.AddRange(roleModel.Resources.Select(x => new RoleResource()
+                {
+                    ResourceId = x,
+                    RoleId = roleModel.Id
+                }));
+                await DbContext.SaveChangesAsync();
+                scope.Complete();
+            }
+            return string.Empty;
+        }
+
+        public abstract List<RoleModel> GetRoles();
+
+        public abstract string GetRolesWithResources(params string[] resources);
+
+        public abstract ValueTask<string> DeleteRolesAsync(params string[] ids);
+
+
+        public async ValueTask<string> ResetPasswordAsync(string id, string password)
+        {
+            var user = await SignInManager.UserManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return "该用户不存在";
+            }
+            var token = await SignInManager.UserManager.GeneratePasswordResetTokenAsync(user);
+            var result = await SignInManager.UserManager.ResetPasswordAsync(user, token, password);
+            return GetResultMessage(result);
+        }
+
+        public async Task<UserModel> GetUserAsync(string userId)
+        {
+            var user = await SignInManager.UserManager.FindByIdAsync(userId);
+            return new UserModel()
+            {
+                Email = user.Email,
+                Id = user.Id,
+                Roles = (await SignInManager.UserManager.GetRolesAsync(user)).ToList(),
+                Username = user.UserName
+            };
+        }
+
+        public async Task<List<RoleModel>> GetRolesAsync(string userId)
+        {
+            var user = await SignInManager.UserManager.FindByIdAsync(userId);
+            var roleNames = await SignInManager.UserManager.GetRolesAsync(user);
+            var roles = await RoleManager.Roles.Where(x => roleNames.Contains(x.Name)).ToListAsync();
+            return roles.Select(x => new RoleModel()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Resources = DbContext.Set<RoleResource>().Where(x => roles.Select(y => y.Id).Contains(x.RoleId))
+                .Select(x => x.ResourceId).ToList()
+            }).ToList();
         }
     }
 }

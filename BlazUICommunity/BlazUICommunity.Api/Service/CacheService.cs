@@ -1,5 +1,8 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
+using AutoMapper;
+using Blazui.Community.DTO;
 using Blazui.Community.Model.Models;
+using Blazui.Community.Repository;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
@@ -12,12 +15,18 @@ namespace Blazui.Community.Api.Service
     public class CacheService : ICacheService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper mapper;
+        private readonly BZTopicRepository bZTopicRepository;
+        private readonly BZUserRepository bZUserRepository;
         private readonly IMemoryCache _memoryCache;
 
-        public CacheService(IMemoryCache memoryCache, IUnitOfWork unitOfWork)
+        public CacheService(IMemoryCache memoryCache, IUnitOfWork unitOfWork, IMapper mapper, BZTopicRepository bZTopicRepository,BZUserRepository bZUserRepository)
         {
             _memoryCache = memoryCache;
             _unitOfWork = unitOfWork;
+            this.mapper = mapper;
+            this.bZTopicRepository = bZTopicRepository;
+            this.bZUserRepository = bZUserRepository;
         }
 
         public async Task<IList<BZAddressModel>> GetAddressAsync(Expression<Func<BZAddressModel, bool>> condition)
@@ -78,6 +87,54 @@ namespace Blazui.Community.Api.Service
         {
             if (_memoryCache.TryGetValue(Key, out object _))
                 _memoryCache.Remove(Key);
+        }
+
+        public async Task<IList<HotUserDto>> GetHotUsersAsync()
+        {
+            return await _memoryCache.GetOrCreateAsync("HotUsers", async p =>
+            {
+                p.SetSlidingExpiration(TimeSpan.FromSeconds(new Random(DateTime.Now.Second).Next(30, 100)));
+                var now = DateTime.Now;
+                var dateStart = Convert.ToInt32(now.AddMonths(-1).ToString("yyyyMM"));
+                var dateEnd = Convert.ToInt32(now.ToString("yyyyMM"));
+                var hotusers = await bZUserRepository.QueryHotUsers(dateStart, dateEnd);
+
+                if (hotusers != null)
+                {
+                    hotusers = hotusers.OrderByDescending(p => p.ReplyCount + p.TopicCount * 2).ThenByDescending(p => p.LastLoginDate);
+                }
+                else
+                {
+                    hotusers = new List<HotUserDto>();
+                }
+
+                return hotusers.ToList();
+
+            });
+        }
+
+        public async Task<IList<HotTopicDto>> GetShareHotsAsync()
+        {
+            return  await  _memoryCache.GetOrCreateAsync("HotShares", async p =>
+            {
+                p.SetSlidingExpiration(TimeSpan.FromSeconds(new Random(DateTime.Now.Second).Next(30, 100)));
+                var Topics = await bZTopicRepository.QueryHotTopics(1);
+                var ResultDtos = mapper.Map<List<HotTopicDto>>(Topics);
+                return ResultDtos;
+
+            });
+        }
+
+        public async Task<IList<HotTopicDto>> GetAskHotsAsync()
+        {
+            return await _memoryCache.GetOrCreateAsync("HotAsks", async p =>
+            {
+                p.SetSlidingExpiration(TimeSpan.FromSeconds(new Random(DateTime.Now.Second).Next(30, 100)));
+                var Topics = await bZTopicRepository.QueryHotTopics(1);
+                var ResultDtos = mapper.Map<List<HotTopicDto>>(Topics);
+                return ResultDtos;
+
+            });
         }
     }
 }

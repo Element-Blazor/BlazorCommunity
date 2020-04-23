@@ -1,13 +1,11 @@
 ﻿@using Blazui.Community.Admin.Pages
 @inherits LayoutComponentBase
-<BAdmin Menus="Menus" NavigationTitle="Blazui社区后台管理" EnablePermissionMenus="false">
-    <CreatePage>
-        <AdminCreatePage></AdminCreatePage>
-    </CreatePage>
-    <LoginPage>
-        <AdminBLogin></AdminBLogin>
-    </LoginPage>
+<BAdmin Menus="Menus" NavigationTitle="Blazui社区后台管理" EnablePermissionMenus="false" LoginPage="typeof(AdminBLogin)" CreatePage="typeof(AdminCreatePage)">
+    @*<AdminCreatePage></AdminCreatePage>
+    <AdminBLogin></AdminBLogin>*@
 </BAdmin>
+
+
 
 @code{
 
@@ -28,6 +26,15 @@
             Name = "User",
             Title = "用户管理",
             Route = "/manage/user"
+        }); 
+        Menus.Add(new MenuModel()
+        {
+            Label = "角色管理",
+            Icon = "el-icon-cherry",
+            Flex = true,
+            Name = "Role",
+            Title = "角色管理",
+            Route = "/manage/role"
         });
         Menus.Add(new MenuModel()
         {
@@ -65,5 +72,6 @@
             Title = "Banner管理",
             Route = "/manage/banner"
         });
+
     }
 }

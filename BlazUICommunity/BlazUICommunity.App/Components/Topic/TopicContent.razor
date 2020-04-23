@@ -70,10 +70,17 @@
                             @if (IsMySelf)
                             {
                                 var buttonedit = "color:#909399;margin-left: 12px;font-size: 20px; margin-top: 4px;";
-                                var buttonsave = "color:#909399;margin-left: 12px;font-size: 20px; margin-top: 4px;";
 
-                                <BButton Icon=@(IsEditing?"el-icon-finished":"el-icon-edit") Style=@(IsEditing?buttonedit:buttonsave) Type="ButtonType.Text" IsPlain="true" Size="ButtonSize.Medium" OnClick="ToggleEditStatus">
-                                </BButton>
+                                @if (TopicModel.Status != 1)
+                                {
+
+                                    <BButton Icon=@(IsEditing?"el-icon-finished":"el-icon-edit") Style=@buttonedit Type="ButtonType.Text" IsPlain="true" Size="ButtonSize.Medium" OnClick="ToggleEditStatus">
+                                    </BButton>
+                                    <div title="关闭帖子">
+                                        <BButton Icon="el-icon-lock" Style=@buttonedit Type="ButtonType.Text" IsPlain="true" Size="ButtonSize.Medium" OnClick="CloseMyTopic">
+                                        </BButton>
+                                    </div>
+                                }
                             }
                             @if (TopicModel.ReplyCount > 0)
                             {

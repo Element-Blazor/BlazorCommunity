@@ -32,13 +32,16 @@ namespace Blazui.Community.App.Features.Account.Pages
                 return;
             await WithFullScreenLoading(async () =>
             {
-                await Task.Delay(new Random().Next(3000));
                 var signInModel = signInForm.GetValue<SignInModel>();
                 var user = await userManager.FindByNameAsync(signInModel.UserAccount);
                 if (user == null)
                 {
-                    ToastError("账号不存在，请先注册");
-                    return;
+                    user = await userManager.FindByEmailAsync(signInModel.UserAccount);
+                    if(user==null)
+                    {
+                        ToastError("账号不存在，请先注册");
+                        return;
+                    }
                 }
                 if (user.Status != 0)
                 {

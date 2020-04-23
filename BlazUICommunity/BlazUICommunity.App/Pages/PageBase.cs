@@ -39,6 +39,7 @@ namespace Blazui.Community.App.Pages
 
         [Inject]
         public UserManager<BZUserModel> userManager { get; set; }
+       
 
         [Inject]
         public NavigationManager navigationManager { get; set; }

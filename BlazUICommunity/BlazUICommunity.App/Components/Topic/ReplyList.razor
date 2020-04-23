@@ -1,40 +1,45 @@
 ﻿@inherits ReplyListBase
-<div class="reply-list">
-@if (Replys.Count > 0)
-{
-    foreach (var reply in Replys)
-    {
-        Console.WriteLine(reply.Content);
-        <ReplyItem ReplyModel="reply" EnableAlwaysRender="true" OnDeleted="e=>DeleteRep(reply.Id)" OnEdit="e=>EditReply(reply)"> </ReplyItem>
-    }
-    <div class="el-table__column-resize-proxy" style="display: none;"></div>
-    @if (Math.Ceiling((float)Total / PageSize) > 1 || !NoPaginationOnSinglePage)
-    {
-        <div class="topic-pagination">
-            <BPagination Total="Total" ShowPageCount="ShowPageCount" PageSize="PageSize" CurrentPageChanged="CurrentPageChangedAsync"></BPagination>
-        </div>
-    }
-}
-else
-{
-    <div class="el-table__empty-block" style="height:60px;">
-        <span class="el-table__empty-text">
-            消灭零回复
-        </span>
+    <div class="reply-list">
+        @if (Replys.Count > 0)
+        {
+            foreach (var reply in Replys)
+            {
+                <ReplyItem IsTopicEnd="@IsEnd" ReplyModel="reply" EnableAlwaysRender="true" OnDeleted="e=>DeleteRep(reply.Id)" OnEdit="e=>EditReply(reply)" ReferenceReply="e=>ReferenceRep(reply)"> </ReplyItem>
+            }
+            <div class="el-table__column-resize-proxy" style="display: none;"></div>
+            @if (Math.Ceiling((float)Total / PageSize) > 1 || !NoPaginationOnSinglePage)
+            {
+                <div class="topic-pagination">
+                    <BPagination Total="Total" ShowPageCount="ShowPageCount" PageSize="PageSize" CurrentPageChanged="CurrentPageChangedAsync"></BPagination>
+                </div>
+            }
+        }
+        else
+        {
+            @if (!IsEnd)
+            {
+                <div class="el-table__empty-block" style="height:60px;">
+                    <span class="el-table__empty-text">
+                        消灭零回复
+                    </span>
+                </div>
+            }
+        }
+        @if (!IsEnd)
+        {
+            @if (User is null)
+            {
+                <div style="height:100px; display:flex;margin-top:10px; justify-items:center;justify-content:center;" role="alert" class="el-alert el-alert--warning is-center is-light">
+                    <i class="el-alert__icon el-icon-warning"></i>
+                    <div class="el-alert__content">
+                        <span class="el-alert__title" style="font-size:15px;margin-right:10px;">请登录后再开始你的表演</span>
+                    </div>
+                    <BButton OnClick="NavigateToLoginPage" Type="ButtonType.Text">登录/注册</BButton>
+                </div>
+            }
+            else
+            {
+                <ReplyNow EnableAlwaysRender="true" TopicId="@TopicId" OnReplySuccess="OnReplySuccess"   Model="@MBZReplyDto" ></ReplyNow>
+            }
+        }
     </div>
-}
-@if (User is null)
-{
-    <div style="height:100px; display:flex;margin-top:10px; justify-items:center;justify-content:center;" role="alert" class="el-alert el-alert--warning is-center is-light">
-        <i class="el-alert__icon el-icon-warning"></i>
-        <div class="el-alert__content">
-            <span class="el-alert__title" style="font-size:15px;margin-right:10px;">抱歉请登录后再开始你的表演</span>
-        </div>
-        <BButton OnClick="NavigateToLoginPage" Type="ButtonType.Text">登录/注册</BButton>
-    </div>
-}
-else
-{
-    <ReplyNow EnableAlwaysRender="true" TopicId="@TopicId" OnReplySuccess="OnReplySuccess"></ReplyNow>
-}
-</div>

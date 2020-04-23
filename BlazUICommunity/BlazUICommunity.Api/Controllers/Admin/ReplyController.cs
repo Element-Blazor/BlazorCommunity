@@ -122,13 +122,16 @@ namespace Blazui.Community.Api.Controllers
                 {
                     var user = users.FirstOrDefault(p => p.Id == replyDto.CreatorId);
                     var topic = topics.FirstOrDefault(p => p.Id == replyDto.TopicId);
-                    var topicuser = (await _cacheService.GetUsersAsync(p => true)).FirstOrDefault(p => p.Id == topic.CreatorId);
-                    if (user != null)
+                    if (topic != null)
                     {
-                        replyDto.NickName = user?.NickName;
-                        replyDto.Author = topicuser?.NickName;
-                        replyDto.UserId = user.Id;
-                        replyDto.Title = topic?.Title;
+                        var topicuser = (await _cacheService.GetUsersAsync(p => true)).FirstOrDefault(p => p.Id == topic.CreatorId);
+                        if (user != null)
+                        {
+                            replyDto.NickName = user?.NickName;
+                            replyDto.Author = topicuser?.NickName;
+                            replyDto.UserId = user.Id;
+                            replyDto.Title = topic?.Title;
+                        }
                     }
                 }
                 return Ok(pagedatas);

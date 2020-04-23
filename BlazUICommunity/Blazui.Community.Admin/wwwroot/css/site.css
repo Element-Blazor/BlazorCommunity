@@ -198,3 +198,7 @@ app > .el-dialog__wrapper .el-form-item {
 .el-table__body-wrapper .cell {
     text-align: center !important;
 }
+
+.blaz-layout > .blaz-layout-container {
+    border: none !important;
+}

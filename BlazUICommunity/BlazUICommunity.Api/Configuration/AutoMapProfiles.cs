@@ -52,11 +52,7 @@ namespace Blazui.Community.Api
             CreateMap<BZAddressModel, BZAddressDto>().IngoreNotMapped();
             CreateMap<BZAddressDto, BZAddressModel>();
 
-            CreateMap<SysLogModel, SysLogDto>().IngoreNotMapped();
-            CreateMap<SysLogDto, SysLogModel>();
-
-            CreateMap<SysUserModel, SysUserDto>().IngoreNotMapped();
-            CreateMap<SysUserDto, SysUserModel>();
+        
 
             CreateMap<BZIDCardModel, BZIDCardDto>().IngoreNotMapped();
             CreateMap<BZIDCardDto, BZIDCardModel>();

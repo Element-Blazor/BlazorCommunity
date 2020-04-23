@@ -1,0 +1,10 @@
+﻿
+@inherits HotItemBase
+@if (Hot != null && !string.IsNullOrWhiteSpace(Hot.Title))
+{
+    <div class="hot-item" @onclick="OnClick" title="@Title">
+        <a href="#" class="el-link el-link--default is-underline">
+            <span class="el-link--inner">@Hot.Title</span><!---->
+        </a>
+    </div>
+}
