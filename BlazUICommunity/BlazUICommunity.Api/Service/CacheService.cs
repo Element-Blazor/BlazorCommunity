@@ -130,7 +130,7 @@ namespace Blazui.Community.Api.Service
             return await _memoryCache.GetOrCreateAsync("HotAsks", async p =>
             {
                 p.SetSlidingExpiration(TimeSpan.FromSeconds(new Random(DateTime.Now.Second).Next(30, 100)));
-                var Topics = await bZTopicRepository.QueryHotTopics(1);
+                var Topics = await bZTopicRepository.QueryHotTopics(0);
                 var ResultDtos = mapper.Map<List<HotTopicDto>>(Topics);
                 return ResultDtos;
 
