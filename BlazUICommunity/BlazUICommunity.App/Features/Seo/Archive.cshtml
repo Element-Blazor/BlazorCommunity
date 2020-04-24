@@ -1,0 +1,10 @@
+﻿@page "/archive"
+@model Blazui.Community.App.Features.Seo.ArchiveModel
+@{
+    <div>
+        @foreach (var topic in Model.Topics)
+        {
+            <a href="https://www.blazor.group/topic/@topic.Id">@topic.Title</a>
+        }
+    </div>
+}
