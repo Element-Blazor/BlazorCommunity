@@ -2,7 +2,6 @@ using Arch.EntityFrameworkCore.UnitOfWork;
 using Autofac;
 using AutoMapper;
 using Blazui.Community.Api.Jwt;
-using Blazui.Community.Api.Middleware;
 using Blazui.Community.Api.Options;
 using Blazui.Community.Api.Service;
 using Blazui.Community.AutofacModules;
@@ -41,8 +40,7 @@ namespace Blazui.Community.Api
             services.AddHttpContextAccessor();
 
 
-            services.AddTransient<LoggerMiddleware>();
-            services.AddTransient<SeoMiddleware>();
+            //services.AddTransient<LoggerMiddleware>();
             services.AddDbContext<BlazUICommunityContext>(opt =>
             opt.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>();
             services.AddCustomAddControllers();

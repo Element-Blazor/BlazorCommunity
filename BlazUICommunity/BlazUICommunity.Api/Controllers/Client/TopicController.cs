@@ -155,8 +155,11 @@ namespace Blazui.Community.Api.Controllers.Client
                 var topic = topics.FirstOrDefault();
                 if(topic.Status==-1)
                     return NoContent();
-                topic.Hot++;
-                _bZTopicRepository.Update(topic);
+                if (topic.Status == 0)//已结帖不再更新浏览量
+                {
+                    topic.Hot++;
+                    _bZTopicRepository.Update(topic);
+                }
                 var topicDto = _mapper.Map<BZTopicDto>(topic);
                 var user = (await _cacheService.GetUsersAsync(p => p.Id == topic.CreatorId)).FirstOrDefault();
                 var version = (await _cacheService.GetVersionsAsync(p => p.Id == topic.Id)).FirstOrDefault();

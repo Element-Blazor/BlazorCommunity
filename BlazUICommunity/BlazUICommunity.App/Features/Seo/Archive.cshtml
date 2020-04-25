@@ -1,4 +1,4 @@
-﻿@model System.Collections.Generic.List<Blazui.Community.Model.Models.BZTopicModel>
+﻿@model Arch.EntityFrameworkCore.UnitOfWork.Collections.IPagedList<Blazui.Community.Model.Models.BZTopicModel>
 <html>
 <head>
     <title>归档</title>
@@ -7,11 +7,18 @@
 </head>
 <body>
     <div>
-        @*@foreach (var topic in Model)
+        @foreach (var topic in Model.Items)
         {
             <a href="https://www.blazor.group/topic/@{Write(topic.Id);}">@topic.Title</a>
-        }*@
+        }
     </div>
+    <div>
+        @for (int i = 0; i < Model.TotalPages; i++)
+        {
+            <a href="https://www.blazor.group/archive/@(i)/10">@(i+1)</a>
+        }
+    </div>
+
 </body>
 </html>
 

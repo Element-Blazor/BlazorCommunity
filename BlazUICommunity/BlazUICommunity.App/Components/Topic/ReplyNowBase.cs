@@ -15,7 +15,7 @@ namespace Blazui.Community.App.Components
     public class ReplyNowBase : PageBase
     {
         [Parameter]
-        public string TopicId { get; set; }
+        public BZTopicDto Topic { get; set; }
 
         internal BForm form;
         internal BFormItem<string> formItem;
@@ -72,26 +72,22 @@ namespace Blazui.Community.App.Components
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(TopicId))
+            if (Topic is null)
             {
+                ToastError($"主贴不存在或已被删除");
                 navigationManager.NavigateTo("/");
                 return;
             }
-            var topicResult = await NetService.QueryTopicById(TopicId);
-            if (!topicResult.IsSuccess)
-            {
-                ToastError($"主贴已被删除");
-                return;
-            }
+          
             BZReplyDto bZReplyDto = new BZReplyDto()
             {
                 Content = model.Content,
-                UserId = topicResult.Data?.CreatorId,
+                UserId =    Topic.CreatorId,
                 Favor = 0,
                 CreateDate = DateTime.Now,
                 LastModifyDate = DateTime.Now,
                 Status = 0,
-                TopicId = TopicId,
+                TopicId = Topic.Id,
                 CreatorId = userModel.Id
             };
 

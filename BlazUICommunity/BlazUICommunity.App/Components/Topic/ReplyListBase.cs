@@ -16,7 +16,7 @@ namespace Blazui.Community.App.Components
         internal IList<BZReplyDto> Replys { get; set; } = new List<BZReplyDto>();
 
         [Parameter]
-        public string TopicId { get; set; }
+        public BZTopicDto TopicModel { get; set; } = new BZTopicDto();
         protected bool IsEnd = false;
 
         protected int PageSize { get; set; } = 10;
@@ -71,19 +71,17 @@ namespace Blazui.Community.App.Components
 
         private async Task LoadData()
         {
-            if (string.IsNullOrWhiteSpace(TopicId))
+            if (TopicModel==null)
             {
                 ToastError("主贴不存在或已删除");
                 await Task.Delay(500);
                 navigationManager.NavigateTo("/");
             }
 
-            var topicResult = await NetService.QueryTopicById(TopicId);
-            IsEnd = (topicResult.IsSuccess && topicResult.Data != null && topicResult.Data.Status == 1);
+            IsEnd = TopicModel.Status == 1;
             Total = 0;
             Replys = new List<BZReplyDto>();
-            //await Task.Delay(1000);
-            var result = await NetService.QueryReplysByTopicId(TopicId, currentPage, PageSize);
+            var result = await NetService.QueryReplysByTopicId(TopicModel.Id, currentPage, PageSize);
             if (result.IsSuccess)
                 HandData(result);
 
