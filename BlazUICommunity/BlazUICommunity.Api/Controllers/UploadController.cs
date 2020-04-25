@@ -1,4 +1,5 @@
-﻿using Blazui.Community.Enums;
+﻿using Blazui.Community.Api.Service;
+using Blazui.Community.Enums;
 using Blazui.Community.FileExtensions;
 using Blazui.Community.MvcCore;
 using Microsoft.AspNetCore.Cors;
@@ -20,10 +21,18 @@ namespace Blazui.Community.Api.Controllers
     public class UploadController : ControllerBase
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly ImgCompressService imgCompressService;
 
-        public UploadController(IWebHostEnvironment webHostEnvironment)
+        public UploadController(IWebHostEnvironment webHostEnvironment,ImgCompressService imgCompressService)
         {
             _hostingEnvironment = webHostEnvironment;
+            this.imgCompressService = imgCompressService;
+        }
+
+        [HttpGet("test")]
+        public async Task<IActionResult> Test()
+        {
+            return Ok();
         }
 
         [HttpPost(nameof(UploadPath.Avator))]
@@ -61,12 +70,19 @@ namespace Blazui.Community.Api.Controllers
 
                 ExistsFile(fileContent, FileSaveFullFolder, out string ExistsFileName);
                 if (!string.IsNullOrWhiteSpace(ExistsFileName))
+                {
                     return Success(Upload, ExistsFileName);
+                }
+                  
 
                 string FileName = Guid.NewGuid().ToString() + Path.GetExtension(fileContent.FileName);
                 var SavePath = Path.Combine(FileSaveFullFolder, FileName);
-                using var stream = new FileStream(SavePath, FileMode.Create);
-                await fileContent.CopyToAsync(stream);
+                using (var stream = new FileStream(SavePath, FileMode.Create))
+                {
+                    await fileContent.CopyToAsync(stream);
+                }
+                //压缩
+                imgCompressService.Compress(SavePath, FileName);
                 return Success(Upload, FileName);
             }
             catch (Exception ex)

@@ -51,6 +51,8 @@
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="5.3.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0007" />
+    <PackageReference Include="SixLabors.Shapes.Text" Version="1.0.0-beta0008" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,7 +74,6 @@
 
   <ItemGroup>
     <Folder Include="Extensions\" />
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="http://json.schemastore.org/mta" appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

@@ -877,6 +877,13 @@
             <param name="TopicRoute"></param>
             <returns></returns>
         </member>
+        <member name="M:Blazui.Community.Api.Service.ImgCompressService.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="iconfiguration"></param>
+            <param name="webHostEnvironment"></param>
+        </member>
         <member name="M:Blazui.Community.Api.Service.ISmtpClientService.SendAsync(System.String,System.String,System.String)">
             <summary>
             发送邮件

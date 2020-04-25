@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Features\Seo\Archive.cshtml" />
     <None Include="nlog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

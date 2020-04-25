@@ -60,7 +60,7 @@ namespace Blazui.Community.Api
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<ICodeService, CodeService>();
             services.AddScoped<ISmtpClientService, SmtpClientService>();
-
+            services.AddTransient<ImgCompressService>();
             services.Configure<EmailStmpOptions>(Configuration.GetSection("EmailSetting"));
 
 
