@@ -1,5 +1,6 @@
 using Arch.EntityFrameworkCore.UnitOfWork;
 using Autofac;
+using Blazui.Community.App.Middleware;
 using Blazui.Community.App.Model;
 using Blazui.Community.App.Service;
 using Blazui.Community.AutofacModules;
@@ -35,6 +36,7 @@ namespace Blazui.Community.App
         public async void ConfigureServices(IServiceCollection services)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            services.AddMvc();
             services.AddDbContext<BlazUICommunityContext>(options =>
             options.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>();
             services.AddHttpClient("BlazuiCommunitiyApp",
@@ -48,7 +50,7 @@ namespace Blazui.Community.App
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                 options.SlidingExpiration = true;
             });
-
+            services.AddTransient<SeoMiddleware>();
             services.AddMemoryCache();
             services.AddRazorPages();
             services.AddControllers();
@@ -78,6 +80,7 @@ namespace Blazui.Community.App
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<SeoMiddleware>();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -99,7 +102,7 @@ namespace Blazui.Community.App
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });

@@ -21,7 +21,7 @@
     <PackageReference Include="NLog" Version="4.7.0" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.6.2" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0-preview.2.20160.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0-preview.3.20215.2" />
   </ItemGroup>
 
   <ItemGroup>

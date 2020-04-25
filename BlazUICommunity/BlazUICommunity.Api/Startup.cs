@@ -2,6 +2,7 @@ using Arch.EntityFrameworkCore.UnitOfWork;
 using Autofac;
 using AutoMapper;
 using Blazui.Community.Api.Jwt;
+using Blazui.Community.Api.Middleware;
 using Blazui.Community.Api.Options;
 using Blazui.Community.Api.Service;
 using Blazui.Community.AutofacModules;
@@ -18,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog.LayoutRenderers;
+using Org.BouncyCastle.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,9 +39,10 @@ namespace Blazui.Community.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
-           
+
 
             services.AddTransient<LoggerMiddleware>();
+            services.AddTransient<SeoMiddleware>();
             services.AddDbContext<BlazUICommunityContext>(opt =>
             opt.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>();
             services.AddCustomAddControllers();
@@ -53,7 +56,7 @@ namespace Blazui.Community.Api
             services.AddMemoryCache(p => p.ExpirationScanFrequency = TimeSpan.FromSeconds(100));
 
             services.AddScoped<ICacheService, CacheService>();
-           
+
             services.AddScoped<JwtService>();
             services.AddJwtConfiguration(Configuration);
 
@@ -73,7 +76,7 @@ namespace Blazui.Community.Api
             {
                 var AllowOrigins = new List<string>();
                 Configuration.GetSection("AllowOrigins").Bind(AllowOrigins);
-                return AllowOrigins.ToArray() ;
+                return AllowOrigins.ToArray();
             }
         }
 
@@ -109,6 +112,7 @@ namespace Blazui.Community.Api
             //ª∫¥Ê
             //app.UseResponseCaching();
             //app.UseHttpCacheHeaders();
+
 
             app.UseRouting();
             //»œ÷§

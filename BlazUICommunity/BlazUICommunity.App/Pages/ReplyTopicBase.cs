@@ -2,17 +2,27 @@
 using Blazui.Community.Model.Models;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Pages
 {
     public class ReplyTopicBase : PageBase
     {
+        [Inject]
+        public IHttpClientFactory HttpClientFactory { get; set; }
+        [Inject]
+        public IHttpContextAccessor HttpContextAccessor { get; set; }
         [Parameter]
         public string TopicId { get; set; }
 
@@ -60,7 +70,7 @@ namespace Blazui.Community.App.Pages
         private async Task LoadTopic()
         {
             var result = await NetService.QueryTopicById(TopicId);
-            
+
             if (result.IsSuccess && result.Data != null)
             {
                 if (!string.IsNullOrWhiteSpace(result.Data.RoleId))
@@ -72,13 +82,13 @@ namespace Blazui.Community.App.Pages
                         navigationManager.NavigateTo("/");
                         return;
                     }
-                    var role = roleManager.Roles.FirstOrDefault(p => p.Id== result.Data.RoleId);
+                    var role = roleManager.Roles.FirstOrDefault(p => p.Id == result.Data.RoleId);
                     var userroles = await userManager.GetRolesAsync(User);
                     var isInRole = userroles.Contains(role.Name);
 
                     if (!isInRole)
                     {
-                       ToastWarning("抱歉，您当前没有权限查看该主题,请联系管理员");
+                        ToastWarning("抱歉，您当前没有权限查看该主题,请联系管理员");
                         await Task.Delay(1000);
                         navigationManager.NavigateTo("/");
                         return;
@@ -100,7 +110,6 @@ namespace Blazui.Community.App.Pages
             }
         }
 
-       
 
         protected async Task<List<BZVersionDto>> QueryVersions()
         {
