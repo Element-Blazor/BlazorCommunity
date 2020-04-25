@@ -80,6 +80,7 @@ namespace Blazui.Community.App
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<SeoMiddleware>();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -105,7 +106,6 @@ namespace Blazui.Community.App
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
-            app.UseMiddleware<SeoMiddleware>();
         }
     }
 }

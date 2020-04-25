@@ -37,7 +37,7 @@ namespace Blazui.Community.App.Middleware
         {
             HttpRequest request = context.Request;
             request.Headers.TryGetValue("User-Agent", out var userAgent);
-            if (userAgent.ToString().Contains("AppleWebKit"))
+            if (userAgent.ToString().Contains("Baiduspider"))
             {
                 //当前是百度访问，不再继续渲染，跳转至百度专用页面
                 //为了不让百度真的跳转，内部用HttpClient进行一次访问，访问百度专用页面
@@ -48,7 +48,7 @@ namespace Blazui.Community.App.Middleware
                         return;
                     }
                 }
-                var paths = request.Path.Value.Split('/').Where(x => !string.IsNullOrWhiteSpace("/")).ToArray();
+                var paths = request.Path.Value.Split('/').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
                 if (paths.Length <= 2)
                 {
                     return;
