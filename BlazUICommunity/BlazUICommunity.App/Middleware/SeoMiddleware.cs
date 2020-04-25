@@ -49,7 +49,7 @@ namespace Blazui.Community.App.Middleware
                     }
                 }
                 var paths = request.Path.Value.Split('/').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-                if (paths.Length <= 2)
+                if (paths.Length < 2)
                 {
                     return;
                 }
