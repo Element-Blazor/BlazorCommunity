@@ -20,7 +20,7 @@ namespace Blazui.Community.Admin.QueryCondition
         public int? Good { get; set; } = null;
 
         /// <summary>
-        /// 主题帖类型 0：提问，1：分享，2：讨论，3：建议，4：公告
+        /// 主题帖类型 0：提问，1：分享，2：讨论，3：建议，4：公告，5：每日一问
         /// </summary>
         public TopicCategory? Category { get; set; }
 

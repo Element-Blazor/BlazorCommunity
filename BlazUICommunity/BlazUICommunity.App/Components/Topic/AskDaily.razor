@@ -1,0 +1,28 @@
+﻿@if (Ask != null && !string.IsNullOrWhiteSpace(Ask.Title))
+{
+    <div class="flex-centor">
+        <BCard>
+            <Header><span style="color:#409EFF">每日一问</span></Header>
+            <Body>
+                <div class="hot-item" style="margin:10px auto" @onclick="OnClick" title="@Ask.Title">
+                    <a href="#" class="el-link el-link--default ">
+                        <span class="el-link--inner">@Ask.Title</span><!--is-underline-->
+                    </a>
+                </div>
+
+            </Body>
+        </BCard>
+    </div>
+}
+@code {
+
+    public HotTopicDto Ask { get; set; }
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        Ask = new HotTopicDto() { Title = "为什么我的Blazor组件不刷新？" };
+    }
+}
