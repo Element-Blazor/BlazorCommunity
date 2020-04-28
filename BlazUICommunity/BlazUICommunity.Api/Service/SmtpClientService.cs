@@ -31,7 +31,7 @@ namespace Blazui.Community.Api.Service
         /// <param name="Content"></param>
         /// <param name="Subject"></param>
         /// <returns></returns>
-        public async Task SendAsync(string ToEmail, string Content, string Subject)
+        public async Task<bool> SendAsync(string ToEmail, string Content, string Subject)
         {
             try
             {
@@ -52,11 +52,13 @@ namespace Blazui.Community.Api.Service
                 await client.AuthenticateAsync(emailConfig.Account, emailConfig.Auth);
                 await client.SendAsync(message);
                 await client.DisconnectAsync(true);
+                return true;
             }
             catch (Exception ex)
             {
                 _logger.LogDebug(ex.Message);
                 _logger.LogDebug(ex.StackTrace);
+                return false;
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
+using Blazui.Community.Api.Options;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
 using Blazui.Community.LinqExtensions;
@@ -9,6 +10,7 @@ using Blazui.Community.Repository;
 using Blazui.Community.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
@@ -30,6 +32,8 @@ namespace Blazui.Community.Api.Controllers.Client
         private readonly BZReplyRepository _replyRepository;
         private readonly IMapper _mapper;
         private readonly ICacheService _cacheService;
+        private readonly IMessageService messageService;
+        private readonly IOptions<BaseDomainOptions> domainOption;
 
         /// <summary>
         ///
@@ -38,13 +42,17 @@ namespace Blazui.Community.Api.Controllers.Client
         /// <param name="bZReplyRepository"></param>
         /// <param name="mapper"></param>
         /// <param name="cacheService"></param>
+        /// <param name="messageService"></param>
+        /// <param name="EmailNoticeOptions"></param>
         public ReplyController(IUnitOfWork unitOfWork, BZReplyRepository bZReplyRepository,
-            IMapper mapper, ICacheService cacheService)
+            IMapper mapper, ICacheService cacheService, IMessageService messageService, IOptions<BaseDomainOptions> domainOption)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _replyRepository = bZReplyRepository;
             _cacheService = cacheService;
+            this.messageService = messageService;
+            this.domainOption = domainOption;
         }
 
         /// <summary>
@@ -58,6 +66,7 @@ namespace Blazui.Community.Api.Controllers.Client
             var reply = _mapper.Map<BZReplyModel>(dto);
             var topicRepostory = _unitOfWork.GetRepository<BZTopicModel>(true);
             var replyRepository = _unitOfWork.GetRepository<BZReplyModel>();
+            var userRepository = _unitOfWork.GetRepository<BZUserModel>();
             var topic = topicRepostory.GetFirstOrDefault(p => p.Id == dto.TopicId);
             if (topic != null)
             {
@@ -70,10 +79,16 @@ namespace Blazui.Community.Api.Controllers.Client
                         topic.ReplyCount++;
                         topicRepostory.Update(topic);
                         _cacheService.Remove(nameof(BZTopicModel));
+
                     }
                 });
                 if (addResult)
+                {
+                    var user = await userRepository.FindAsync(topic.CreatorId);
+                    var content = $"您的帖子—{topic.Title}，有新的回复，查看链接：{domainOption.Value.BaseDomain}topic/{topic.Id}";
+                    messageService.SendEmailToTopicCreatorAsync(user?.Email, content);
                     return Ok();
+                }
                 return new BadRequestResponse("回复帖子失败");
             }
             return new BadRequestResponse("帖子不存在");

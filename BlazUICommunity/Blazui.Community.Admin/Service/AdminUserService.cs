@@ -54,12 +54,12 @@ namespace Blazui.Community.Admin.Service
             {
                 return GetResultMessage(result);
             }
-            var roles = RoleManager.Roles.Where(x => userModel.Roles.Contains(x.Id)).Select(x => x.Name).ToArray();
-            result = await SignInManager.UserManager.AddToRolesAsync(user, roles);
-            if (!string.IsNullOrWhiteSpace(GetResultMessage(result)))
-            {
-                return GetResultMessage(result);
-            }
+            //var roles = RoleManager.Roles.Where(x => userModel.RoleIds.Contains(x.Id)).Select(x => x.Name).ToArray();
+            //result = await SignInManager.UserManager.AddToRolesAsync(user, roles);
+            //if (!string.IsNullOrWhiteSpace(GetResultMessage(result)))
+            //{
+            //    return GetResultMessage(result);
+            //}
             return string.Empty;
         }
 
@@ -131,7 +131,7 @@ namespace Blazui.Community.Admin.Service
                 {
                     return GetResultMessage(result);
                 }
-                var newRoles = RoleManager.Roles.Where(x => userModel.Roles.Contains(x.Id)).Select(x => x.Name).ToArray();
+                var newRoles = RoleManager.Roles.Where(x => userModel.RoleIds.Contains(x.Id)).Select(x => x.Name).ToArray();
                 result = await SignInManager.UserManager.AddToRolesAsync(user, newRoles);
                 if (!result.Succeeded)
                 {
@@ -149,10 +149,11 @@ namespace Blazui.Community.Admin.Service
 
         public async Task<bool> IsSupperAdmin()
         {
-            return (await _userManager.GetRolesAsync(
-                         await _userManager.GetUserAsync(
-                        (await _AuthenticationStateProvider.GetAuthenticationStateAsync()).User))
-                ).Any(p => p == "管理员");
+            var state = await _AuthenticationStateProvider.GetAuthenticationStateAsync();
+            return state.User is null ? false : state.User.IsInRole("超级管理员");
         }
+
+
+
     }
 }

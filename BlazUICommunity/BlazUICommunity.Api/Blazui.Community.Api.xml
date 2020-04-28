@@ -399,7 +399,7 @@
             回帖相关
             </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.ReplyController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,Blazui.Community.Repository.BZReplyRepository,AutoMapper.IMapper,Blazui.Community.Api.Service.ICacheService)">
+        <member name="M:Blazui.Community.Api.Controllers.Client.ReplyController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,Blazui.Community.Repository.BZReplyRepository,AutoMapper.IMapper,Blazui.Community.Api.Service.ICacheService,Blazui.Community.Api.Service.IMessageService,Microsoft.Extensions.Options.IOptions{Blazui.Community.Api.Options.BaseDomainOptions})">
              <summary>
             
              </summary>
@@ -407,6 +407,8 @@
              <param name="bZReplyRepository"></param>
              <param name="mapper"></param>
              <param name="cacheService"></param>
+             <param name="messageService"></param>
+             <param name="EmailNoticeOptions"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.ReplyController.Add(Blazui.Community.DTO.BZReplyDto)">
             <summary>
@@ -437,7 +439,7 @@
             主题帖相关
             </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZTopicRepository,Blazui.Community.Api.Service.ICacheService,Blazui.Community.Api.Service.IMessageService)">
+        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZTopicRepository,Blazui.Community.Api.Service.ICacheService,Blazui.Community.Api.Service.IMessageService,Microsoft.Extensions.Options.IOptions{Blazui.Community.Api.Options.BaseDomainOptions})">
             <summary>
             
             </summary>
@@ -446,6 +448,7 @@
             <param name="bZTopicRepository"></param>
             <param name="cacheService"></param>
             <param name="messageService"></param>
+            <param name="DomainOption"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.Add(Blazui.Community.DTO.BZTopicDto,System.Int32)">
             <summary>
@@ -852,29 +855,51 @@
             
              </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Service.IMessageService.SendMessageAsync(System.String,System.String,Blazui.Community.Enums.VerifyCodeType)">
+        <member name="M:Blazui.Community.Api.Service.IMessageService.SendVerifyCodeForLoginWithEmailAsync(System.String,System.String)">
             <summary>
-            发送短信验证码
-            </summary>
-            <param name="Mobile"></param>
-            <param name="code"></param>
-            <param name="verifyCodeType"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Blazui.Community.Api.Service.IMessageService.SendEmailAsync(System.String,System.String,Blazui.Community.Enums.VerifyCodeType)">
-            <summary>
-            发送邮箱验证码
+            邮箱登录-发送验证码
             </summary>
             <param name="Email"></param>
-            <param name="code"></param>
-            <param name="verifyCodeType"></param>
+            <param name="Content"></param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Service.IMessageService.EmailNoticeForNewAskOrReplyAsync(System.String)">
+        <member name="M:Blazui.Community.Api.Service.IMessageService.SendVerifyCodeForBindEmailAsync(System.String,System.String)">
             <summary>
-            新的提问发邮件通知
+            绑定邮箱-发送验证码
             </summary>
-            <param name="TopicRoute"></param>
+            <param name="Email"></param>
+            <param name="Content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Service.IMessageService.SendVerifyCodeForRetrievePasswordAsync(System.String,System.String)">
+            <summary>
+            找回密码 -发送验证码
+            </summary>
+            <param name="Email"></param>
+            <param name="Content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Service.IMessageService.SendVerifyCodeForChangePasswordAsync(System.String,System.String)">
+            <summary>
+            修改密码 -发送验证码
+            </summary>
+            <param name="Email"></param>
+            <param name="Content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Service.IMessageService.SendEmailToManagerForAnswerAsync(System.String)">
+            <summary>
+            发送通知给管理员，回答社区提问
+            </summary>
+            <param name="Content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Service.IMessageService.SendEmailToTopicCreatorAsync(System.String,System.String)">
+            <summary>
+            发送通知给主贴发帖人，有新的回复
+            </summary>
+            <param name="Email"></param>
+            <param name="Content"></param>
             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Service.ImgCompressService.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">

@@ -42,6 +42,7 @@ namespace Blazui.Community.App.Middleware
 
             if (userAgent.ToString().Contains("Baiduspider"))
             {
+                _logger.LogInformation("baidu正在访问");
                 //当前是百度访问，不再继续渲染，跳转至百度专用页面
                 //为了不让百度真的跳转，内部用HttpClient进行一次访问，访问百度专用页面
                 if (!Debugger.IsAttached)

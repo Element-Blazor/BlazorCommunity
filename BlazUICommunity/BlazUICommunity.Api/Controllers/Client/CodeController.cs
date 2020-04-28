@@ -46,10 +46,10 @@ namespace Blazui.Community.Api.Controllers.Client
         [HttpGet("SendVerifyCode/{VerifyCodeType}/{userId}/{target}")]
         public async Task<IActionResult> SendVerifyCode(int VerifyCodeType, string userId, string target)
         {
-            return await SendVerifyCode((VerifyCodeType)VerifyCodeType, userId, target);
+            return await SendVerifyCode((EmailType)VerifyCodeType, userId, target);
         }
 
-        private async Task<IActionResult> SendVerifyCode(VerifyCodeType verifyCodeType, string userId, string Target)
+        private async Task<IActionResult> SendVerifyCode(EmailType verifyCodeType, string userId, string Target)
         {
             var code = _codeService.GenerateNumberCode(4);
 
@@ -70,23 +70,23 @@ namespace Blazui.Community.Api.Controllers.Client
                 return new BadRequestResponse("生成验证码失败");
         }
 
-        private async Task<bool> Send(VerifyCodeType verifyCodeType, string Target, string code)
+        private async Task<bool> Send(EmailType verifyCodeType, string Target, string code)
         {
             bool sendResult;
             switch (verifyCodeType)
             {
-                case VerifyCodeType.EmailLogin:
-                case VerifyCodeType.EmailChangePassword:
-                case VerifyCodeType.EmailRetrievePassword:
-                case VerifyCodeType.EmailBind:
-                    sendResult = await _messageService.SendEmailAsync(Target, code, verifyCodeType);
+                case EmailType.EmailLogin:
+                case EmailType.EmailChangePassword:
+                case EmailType.EmailRetrievePassword:
+                case EmailType.EmailBind:
+                    sendResult = await _messageService.SendVerifyCodeForBindEmailAsync(Target, code);
                     break;
 
-                case VerifyCodeType.MobileLogin:
-                case VerifyCodeType.MobileBind:
-                case VerifyCodeType.MobileRetrievePassword:
-                case VerifyCodeType.MobileChangePassword:
-                    sendResult = await _messageService.SendEmailAsync(Target, code, verifyCodeType);
+                case EmailType.MobileLogin:
+                case EmailType.MobileBind:
+                case EmailType.MobileRetrievePassword:
+                case EmailType.MobileChangePassword:
+                    sendResult = await _messageService.SendVerifyCodeForChangePasswordAsync(Target, code);
                     break;
 
                 default:
@@ -96,7 +96,7 @@ namespace Blazui.Community.Api.Controllers.Client
             return sendResult;
         }
 
-        private static BzVerifyCodeModel CreateModel(VerifyCodeType verifyCodeType, string userId, string code)
+        private static BzVerifyCodeModel CreateModel(EmailType verifyCodeType, string userId, string code)
         {
             return new BzVerifyCodeModel()
             {

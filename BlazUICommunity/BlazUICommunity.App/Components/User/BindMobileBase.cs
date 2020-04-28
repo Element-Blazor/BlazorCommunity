@@ -48,7 +48,7 @@ namespace Blazui.Community.App.Components
                 ToastError("手机号码错误");
                 return;
             }
-            var response = await NetService.SendVerifyCode(User.Id, VerifyCodeType.MobileBind, model.Mobile);
+            var response = await NetService.SendVerifyCode(User.Id, EmailType.MobileBind, model.Mobile);
             await Watting(response);
         }
 
@@ -99,7 +99,7 @@ namespace Blazui.Community.App.Components
 
         private async Task SetPhoneNumberAsync(PasswordModel model)
         {
-            var response = await NetService.ValidateVerifyCode(User.Id, VerifyCodeType.MobileBind, VerifyCode);
+            var response = await NetService.ValidateVerifyCode(User.Id, EmailType.MobileBind, VerifyCode);
             if (response.IsSuccess)
             {
                 var bindMobile = await userManager.SetPhoneNumberAsync(User, model.Mobile);

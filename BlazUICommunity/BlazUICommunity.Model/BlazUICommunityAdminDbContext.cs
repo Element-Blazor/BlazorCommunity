@@ -17,8 +17,6 @@ namespace Blazui.Community.Model.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
-            //optionsBuilder.UseMySql("server=192.168.205.92;database=blazuiadmin;port=3306;uid=root;password=P@ssw0rd;character set=utf8mb4;");
             optionsBuilder.UseLoggerFactory(new CustomEFCoreLoggerFactory());
         }
 

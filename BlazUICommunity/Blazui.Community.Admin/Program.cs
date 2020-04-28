@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using AspectCore.Extensions.DependencyInjection;
 
 namespace Blazui.Community.Admin
 {
@@ -12,6 +13,7 @@ namespace Blazui.Community.Admin
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+             //.UseServiceProviderFactory(new DynamicProxyServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

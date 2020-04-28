@@ -32,7 +32,7 @@ namespace Blazui.Community.Admin.Service
                 return "当前用户名不存在";
             }
             var role = await SignInManager.UserManager.GetRolesAsync(user);
-            if (!role.Contains("管理员"))
+            if (!role.Contains("超级管理员"))
             {
                 return "当前用户不允许修改密码";
             }
@@ -129,7 +129,7 @@ namespace Blazui.Community.Admin.Service
                 Email = x.Email,
                 Id = x.Id,
                 Username = x.UserName,
-                Roles = await SignInManager.UserManager.GetRolesAsync(x)
+                RoleIds = await SignInManager.UserManager.GetRolesAsync(x)
             }))).ToList();
         }
 
@@ -286,7 +286,7 @@ namespace Blazui.Community.Admin.Service
             {
                 Email = user.Email,
                 Id = user.Id,
-                Roles = (await SignInManager.UserManager.GetRolesAsync(user)).ToList(),
+                RoleIds = (await SignInManager.UserManager.GetRolesAsync(user)).ToList(),
                 Username = user.UserName
             };
         }

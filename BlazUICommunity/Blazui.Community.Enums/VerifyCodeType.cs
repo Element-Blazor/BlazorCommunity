@@ -1,6 +1,6 @@
 ﻿namespace Blazui.Community.Enums
 {
-    public enum VerifyCodeType
+    public enum EmailType
     {
         /// <summary>
         /// 邮箱验证码登录
@@ -40,6 +40,14 @@
         /// <summary>
         /// 通过手机修改密码
         /// </summary>
-        MobileChangePassword
+        MobileChangePassword,
+        /// <summary>
+        /// 社区有新提问
+        /// </summary>
+        NoticeManager,
+        /// <summary>
+        /// 有新回复
+        /// </summary>
+        NoticeTopicCreator
     }
 }

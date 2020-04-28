@@ -1,5 +1,10 @@
+
+using AspectCore.Configuration;
+using AspectCore.Extensions.DependencyInjection;
+using Blazui.Admin.ServerRender;
 using Blazui.Community.Admin.Service;
 using Blazui.Community.Model.Models;
+using Blazui.Component;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -8,8 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using Blazui.Component;
-using Blazui.Admin.ServerRender;
+using System.Threading.Tasks;
 
 namespace Blazui.Community.Admin
 {
@@ -22,39 +26,38 @@ namespace Blazui.Community.Admin
 
         public IConfiguration Configuration { get; }
 
-     
-        public async void ConfigureServices(IServiceCollection services)
+
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddDbContext<BlazUICommunityAdminDbContext>(options => options.UseMySql(Configuration.GetConnectionString("DbConnectionString")));
-            services.AddHttpClient("BlazuiCommunitiyAdmin", client =>
-           {
-               client.BaseAddress = new Uri(Configuration["ServerUrl"] ?? throw new ArgumentNullException("ServerUrl"));
-               client.DefaultRequestHeaders.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue()
-               {
-                   NoCache = false,
-                   NoStore = false,
-                   MaxAge = TimeSpan.FromSeconds(0),
-                   MustRevalidate = false,
-                   Public = false,
-               };
-           });
-            await services.AddBlazuiServicesAsync();
+            services.AddDbContext<BlazUICommunityAdminDbContext>(
+                options => options.UseMySql(Configuration.GetConnectionString("DbConnectionString")));
+            services.AddHttpClient("BlazuiCommunitiyAdmin",
+                client => client.BaseAddress = new Uri(Configuration["ServerUrl"]));
+            services.AddBlazuiServicesAsync().Wait();
+
             services.AddScoped<DbContext, BlazUICommunityAdminDbContext>();
             services.AddAdmin<IdentityUser, AdminUserService, BlazUICommunityAdminDbContext>(null);
+            services.AddTransient<ConfirmService>();
             services.AddScoped<AdminUserService>();
             services.ConfigureApplicationCookie(options =>
             {
-                // Cookie settings
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 options.SlidingExpiration = true;
             });
             services.AddScoped<NetworkService>();
-            services.AddTransient<ConfirmService>();
-            //services.AddAutoMapper(typeof(AutoMapConfiguration));
+         
+            //根据属性注入来配置全局拦截器
+            //services.ConfigureDynamicProxy(config =>
+            //{
+            //    config.Interceptors.AddTyped<SuperAdminAuthorizeAttribute>();//CustomInterceptorAttribute这个是需要全局拦截的拦截器
+            //});
+            //services.ConfigureDynamicProxy();
+            //services.BuildDynamicProxyProvider();
         }
+
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -65,7 +68,6 @@ namespace Blazui.Community.Admin
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

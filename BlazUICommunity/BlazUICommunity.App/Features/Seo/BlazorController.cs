@@ -20,7 +20,7 @@ namespace Blazui.Community.App.Features.Seo
         [HttpGet("/archive/{pageIndex}/{pageSize}")]
         public  async Task<IActionResult> Index(int pageIndex=0,int pageSize=10)
         {
-            var result = await _bZTopicRepository.GetPagedListAsync(pageIndex, pageSize);
+            var result = await _bZTopicRepository.GetPagedListAsync(p=>p.Status!=-1,null,null, pageIndex, pageSize);
             return View("/Features/Seo/Archive.cshtml", result);
         }
 

@@ -1,6 +1,7 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
+using Blazui.Community.Api.Options;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
 using Blazui.Community.LinqExtensions;
@@ -10,6 +11,7 @@ using Blazui.Community.Request;
 using Blazui.Community.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
@@ -34,6 +36,7 @@ namespace Blazui.Community.Api.Controllers.Client
         private readonly IRepository<BZReplyModel> _bZReplyRepository;
         private readonly ICacheService _cacheService;
         private readonly IMessageService messageService;
+        private readonly IOptions<BaseDomainOptions> domainOption;
 
 
         /// <summary>
@@ -44,11 +47,12 @@ namespace Blazui.Community.Api.Controllers.Client
         /// <param name="bZTopicRepository"></param>
         /// <param name="cacheService"></param>
         /// <param name="messageService"></param>
+        /// <param name="DomainOption"></param>
         public TopicController(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             BZTopicRepository bZTopicRepository,
-            ICacheService cacheService, IMessageService messageService)
+            ICacheService cacheService, IMessageService messageService, IOptions<BaseDomainOptions> DomainOption)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -57,6 +61,7 @@ namespace Blazui.Community.Api.Controllers.Client
             _bZReplyRepository = unitOfWork.GetRepository<BZReplyModel>();
             _cacheService = cacheService;
             this.messageService = messageService;
+            domainOption = DomainOption;
         }
 
 
@@ -72,8 +77,11 @@ namespace Blazui.Community.Api.Controllers.Client
             var topicModel = _mapper.Map<BZTopicModel>(dto);
             var model = await _bZTopicRepository.InsertAsync(topicModel);
             _cacheService.Remove(nameof(BZTopicModel));
-            if (dto.Category != 4 || Notice == 1)
-                await messageService.EmailNoticeForNewAskOrReplyAsync($"topic/{model.Entity.Id}");
+            if (dto.Category ==0 || Notice == 1)
+            {
+                var content = $"社区有新的提问，还请尽快回复一下，谢谢，链接地址：{domainOption.Value.BaseDomain}topic/{model.Entity.Id}";
+                await messageService.SendEmailToManagerForAnswerAsync(content);
+            }
             return Ok(model.Entity.Id);
         }
 

@@ -21,12 +21,12 @@ namespace Blazui.Community.Api.Controllers
     public class UploadController : ControllerBase
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly ImgCompressService imgCompressService;
+        private readonly ImgCompressService CompressService;
 
         public UploadController(IWebHostEnvironment webHostEnvironment,ImgCompressService imgCompressService)
         {
             _hostingEnvironment = webHostEnvironment;
-            this.imgCompressService = imgCompressService;
+            this.CompressService = imgCompressService;
         }
 
         [HttpGet("test")]
@@ -81,8 +81,8 @@ namespace Blazui.Community.Api.Controllers
                 {
                     await fileContent.CopyToAsync(stream);
                 }
-                //压缩
-                imgCompressService.Compress(SavePath, FileName);
+                //水印以及压缩
+                CompressService.AddWaterMarkAndCompress(SavePath, FileName, Upload);
                 return Success(Upload, FileName);
             }
             catch (Exception ex)

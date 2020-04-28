@@ -2,7 +2,7 @@
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
 
-namespace BlazAdmin
+namespace Blazui.Community.Admin.Pages
 {
     public class AdminLoginBase : BAdminPageBase
     {

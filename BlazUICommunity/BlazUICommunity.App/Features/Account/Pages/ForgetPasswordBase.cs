@@ -33,7 +33,7 @@ namespace Blazui.Community.App.Features.Account.Pages
             }
             else
             {
-                var response = await NetService.ValidateVerifyCode(UserId, VerifyCodeType.EmailRetrievePassword, model.Code);
+                var response = await NetService.ValidateVerifyCode(UserId, EmailType.EmailRetrievePassword, model.Code);
                 if (response.IsSuccess)
                     navigationManager.NavigateTo($"/account/reset/{UserId}", true);
                 else
@@ -64,7 +64,7 @@ namespace Blazui.Community.App.Features.Account.Pages
             {
                 UserId = user.Id;
                 await WithFullScreenLoading(
-                    async () => await NetService.SendVerifyCode(user.Id, VerifyCodeType.EmailRetrievePassword, model.Email),
+                    async () => await NetService.SendVerifyCode(user.Id, EmailType.EmailRetrievePassword, model.Email),
                     response =>
                     {
                         if (response.IsSuccess)

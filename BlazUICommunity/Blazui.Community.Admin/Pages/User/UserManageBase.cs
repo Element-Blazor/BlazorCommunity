@@ -1,7 +1,9 @@
 ﻿using Blazui.Community.Admin.QueryCondition;
+using Blazui.Community.Admin.Service;
 using Blazui.Community.DictionaryExtensions;
 using Blazui.Community.DTO.Admin;
 using Blazui.Component;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,9 +12,12 @@ namespace Blazui.Community.Admin.Pages.User
 {
     public class UserManageBase : ManagePageBase<UserDisplayDto>
     {
+        [Inject]
+        public NetworkService test { get; set; }
         protected override async Task LoadDatas(bool MustRefresh = false)
         {
-            var datas = await NetService.QueryUsers(BuildCondition<QueryUserCondition>(), MustRefresh);
+            //test.Show();
+            var datas = await test.QueryUsers(BuildCondition<QueryUserCondition>(), MustRefresh);
             //是否可以做一个判断 如果返回的相同数据，就重新渲染了??
             if (datas.IsSuccess)
                 SetData(datas.Data.Items, datas.Data.TotalCount);

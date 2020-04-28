@@ -43,7 +43,7 @@ namespace Blazui.Community.App.Components.User
             else
             {
                 await WithFullScreenLoading(
-                    async () => await NetService.SendVerifyCode(User.Id, VerifyCodeType.EmailRetrievePassword, model.Email),
+                    async () => await NetService.SendVerifyCode(User.Id, EmailType.EmailRetrievePassword, model.Email),
                     response =>
                     {
                         if (response.IsSuccess)
@@ -81,7 +81,7 @@ namespace Blazui.Community.App.Components.User
             }
             else
             {
-                var response = await NetService.ValidateVerifyCode(User.Id, VerifyCodeType.EmailRetrievePassword, model.Code);
+                var response = await NetService.ValidateVerifyCode(User.Id, EmailType.EmailRetrievePassword, model.Code);
                 if (response.IsSuccess)
                 {
                     NewPasswordFormShow = true;

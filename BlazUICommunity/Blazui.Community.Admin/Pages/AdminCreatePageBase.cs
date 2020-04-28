@@ -1,5 +1,4 @@
-﻿using BlazAdmin;
-using Blazui.Admin;
+﻿using Blazui.Admin;
 using Blazui.Community.Admin.ViewModel;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
@@ -18,7 +17,7 @@ namespace Blazui.Community.Admin.Pages
         [Inject]
         private RoleManager<IdentityRole> RoleManager { get; set; }
 
-        internal bool IsAdminDisable = true;
+        //internal bool IsAdminDisable = true;
 
         protected override bool ShouldRender() => true;
 
@@ -31,7 +30,7 @@ namespace Blazui.Community.Admin.Pages
             await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
             {
-                IsAdminDisable = await RoleManager.RoleExistsAsync("管理员");
+                //IsAdminDisable = await RoleManager.RoleExistsAsync("管理员");
                 form.MarkAsRequireRender();
                 MarkAsRequireRender();
                 StateHasChanged();
@@ -45,7 +44,7 @@ namespace Blazui.Community.Admin.Pages
                 return;
             }
             var model = form.GetValue<AdminLoginInfoModel>();
-            var result = IsAdminDisable ?
+            var result = IsAdmin ?
                     await UserService.CreateUserAsync(new UserModel {  Username=model.Username,Password=model.Password }) :
                     await UserService.CreateSuperUserAsync(model.Username, model.Password);
             if (string.IsNullOrWhiteSpace(result))

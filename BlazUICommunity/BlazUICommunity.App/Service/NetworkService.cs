@@ -53,7 +53,7 @@ namespace Blazui.Community.App.Service
         /// <param name="CodeType"></param>
         /// <param name="target"></param>
         /// <returns></returns>
-        public async Task<BaseResponse> SendVerifyCode(string UserId, VerifyCodeType CodeType, string target)
+        public async Task<BaseResponse> SendVerifyCode(string UserId, EmailType CodeType, string target)
         {
             return await httpClient.GetWithJsonResultAsync($"api/client/code/SendVerifyCode/{(int)CodeType}/{UserId}/{target}");
         }
@@ -65,7 +65,7 @@ namespace Blazui.Community.App.Service
         /// <param name="CodeType"></param>
         /// <param name="Code"></param>
         /// <returns></returns>
-        public async Task<BaseResponse> ValidateVerifyCode(string UserId, VerifyCodeType CodeType, string Code)
+        public async Task<BaseResponse> ValidateVerifyCode(string UserId, EmailType CodeType, string Code)
         {
             return await httpClient.GetWithJsonResultAsync($"api/client/code/VerifyCode/{UserId}/{(int)CodeType}/{Code}");
         }

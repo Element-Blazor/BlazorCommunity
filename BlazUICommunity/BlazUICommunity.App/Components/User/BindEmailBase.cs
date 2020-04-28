@@ -49,7 +49,7 @@ namespace Blazui.Community.App.Components
                 ToastError("邮箱号码错误");
                 return;
             }
-            await Wating(await NetService.SendVerifyCode(User.Id, VerifyCodeType.EmailBind, model.Email));
+            await Wating(await NetService.SendVerifyCode(User.Id, EmailType.EmailBind, model.Email));
         }
 
         private async Task Wating(BaseResponse result)
@@ -86,7 +86,7 @@ namespace Blazui.Community.App.Components
                 ToastError("验证码无效");
                 return;
             }
-            var result = await NetService.ValidateVerifyCode(User.Id, VerifyCodeType.EmailBind, VerifyCode);
+            var result = await NetService.ValidateVerifyCode(User.Id, EmailType.EmailBind, VerifyCode);
             await SetEmailAsync(model, result);
         }
 
