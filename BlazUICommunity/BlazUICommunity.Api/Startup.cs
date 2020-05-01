@@ -13,6 +13,7 @@ using Blazui.Community.MvcCore;
 using Blazui.Community.SwaggerExtensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,7 @@ using NLog.LayoutRenderers;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using static Blazui.Community.Api.Configuration.ConstantConfiguration;
 
 namespace Blazui.Community.Api
@@ -36,39 +38,33 @@ namespace Blazui.Community.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpContextAccessor();
-
-
-            //services.AddTransient<LoggerMiddleware>();
             services.AddDbContext<BlazUICommunityContext>(opt =>
-            opt.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>();
-            services.AddCustomAddControllers();
-            services.AddCustomCors(GetAllowOrigins(), PolicyName);
-            services.AddCustomSwagger();
+            opt.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>()
+                .AddCustomAddControllers()
+                .AddCustomCors(GetAllowOrigins(), PolicyName)
+                .AddCustomSwagger()
+                .AddHttpContextAccessor()
+                .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
+                .AddMemoryCache(p => p.ExpirationScanFrequency = TimeSpan.FromSeconds(100))
+                .AddCustomAspIdenitty<BZUserModel, BlazUICommunityContext>();
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddScoped<JwtService>()
+                    .AddJwtConfiguration(Configuration);
 
-            services.AddCustomAspIdenitty<BZUserModel, BlazUICommunityContext>();
-
-            services.AddMemoryCache(p => p.ExpirationScanFrequency = TimeSpan.FromSeconds(100));
-
-            services.AddScoped<ICacheService, CacheService>();
-
-            services.AddScoped<JwtService>();
-            services.AddJwtConfiguration(Configuration);
-
-            services.AddScoped<IMessageService, MessageService>();
-            services.AddScoped<ICodeService, CodeService>();
-            services.AddScoped<ISmtpClientService, SmtpClientService>();
-            services.AddTransient<ImgCompressService>();
-            services.Configure<EmailStmpOptions>(Configuration.GetSection("EmailSetting"));
-
-
-            services.Configure<EmailNoticeOptions>(Configuration);
-            services.Configure<BaseDomainOptions>(Configuration);
+            services.AddScoped<ICacheService, CacheService>()
+                    .AddScoped<IMessageService, MessageService>()
+                    .AddScoped<ICodeService, CodeService>()
+                    .AddScoped<ISmtpClientService, SmtpClientService>()
+                    .AddTransient<ImgCompressService>()
+                    .Configure<EmailStmpOptions>(Configuration.GetSection("EmailSetting"))
+                    .Configure<EmailNoticeOptions>(Configuration)
+                    .Configure<BaseDomainOptions>(Configuration);
             //services.AddOptions<EmailNoticeOptions>().Configure(option => Configuration.Bind(option));
 
-
+            services.AddResponseCompression(opts => {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
+            });
             string[] GetAllowOrigins()
             {
                 var AllowOrigins = new List<string>();

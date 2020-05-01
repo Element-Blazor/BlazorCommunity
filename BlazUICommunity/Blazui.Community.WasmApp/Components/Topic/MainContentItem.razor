@@ -1,0 +1,23 @@
+﻿<BLayout EnableAlwaysRender="true">
+    <Center>
+        <div class="margin-top-10 margin-left-0">
+            <BLayout NorthHeight="0" EnableAlwaysRender="true">
+                <Center>
+                    <div style="height:10px;background:#EBEEF5;margin:2px auto;"></div>
+                    <div class="content-card">
+                        <BCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true">
+                            <Body>
+                                <ContentCenter TopicType="@TopicType" EnableAlwaysRender="true"></ContentCenter>
+                            </Body>
+                        </BCard>
+                    </div>
+                </Center>
+            </BLayout>
+        </div>
+    </Center>
+</BLayout>
+
+@code{
+    [Parameter]
+    public int TopicType { get; set; }
+}

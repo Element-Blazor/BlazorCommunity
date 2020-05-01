@@ -5,7 +5,7 @@
         <div class="search-topic-item">
             <div style="margin:15px;display:flex;">
                 <span style="color:#000">标题：</span>
-                <a href="#" class="el-link el-link--default is-underline" @onclick="e=>ItemClick(topic.Id)">
+                <a  class="el-link el-link--default is-underline" @onclick="e=>ItemClick(topic.Id)">
                     <span class="el-link--inner">@topic.Title</span><!---->
                 </a>
             </div>
@@ -17,7 +17,7 @@
 <div class="el-table__empty-block" style="height:60px;">
     <span class="el-table__empty-text" style="font-size:15px;display:inline-flex">
         @(string.IsNullOrWhiteSpace(EmptyMessage) ? "抱歉，没有找到你的问题，或许您可以尝试 " : EmptyMessage)
-        <a href="#" class="el-link el-link--primary" style="margin-left:10px;" @onclick="AskQuestion">
+        <a class="el-link el-link--primary" style="margin-left:10px;" @onclick="AskQuestion">
             <span class="el-link--inner">发帖提问</span><!---->
         </a>
     </span>

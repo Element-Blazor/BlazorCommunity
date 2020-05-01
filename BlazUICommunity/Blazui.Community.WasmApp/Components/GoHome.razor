@@ -1,0 +1,12 @@
+﻿<div class="go-home custome-button-hover" style="float:@Float">
+    <BButton Type="@ButtonType.Text" Icon="el-icon-back" Size="@ButtonSize.Medium" Style="color:#909399"></BButton>
+    <BButton Type="@ButtonType.Text" OnClick="@(e=>navigationManager.NavigateTo("/"))" IsPlain="true" Size="@ButtonSize.Medium" Style="color:#909399">Go Back</BButton>
+</div>
+
+@code {
+
+    [Parameter]
+    public string Float { get; set; } = "left;";
+    [Inject]
+    NavigationManager navigationManager { get; set; }
+}

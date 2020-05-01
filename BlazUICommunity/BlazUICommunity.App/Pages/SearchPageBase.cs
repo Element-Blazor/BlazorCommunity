@@ -21,7 +21,7 @@ namespace Blazui.Community.App.Pages
         {
             if (string.IsNullOrWhiteSpace(Text))
             {
-                navigationManager.NavigateTo($"/");
+                NavigationManager.NavigateTo($"/");
             }
         }
 
@@ -39,10 +39,10 @@ namespace Blazui.Community.App.Pages
             }
         }
 
-        internal void OnItemClick(string Id) => navigationManager.NavigateTo($"/topic/{Id}");
+        internal void OnItemClick(string Id) => NavigationManager.NavigateTo($"/topic/{Id}");
 
         protected override bool ShouldRender() => true;
 
-        internal void Ask() => navigationManager.NavigateTo($"/topic/new");
+        internal void Ask() => NavigationManager.NavigateTo($"/topic/new");
     }
 }

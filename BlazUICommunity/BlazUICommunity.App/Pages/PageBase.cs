@@ -41,8 +41,6 @@ namespace Blazui.Community.App.Pages
         public UserManager<BZUserModel> userManager { get; set; }
        
 
-        [Inject]
-        public NavigationManager navigationManager { get; set; }
 
         public string UploadUrl { get; protected set; }
 
@@ -55,7 +53,6 @@ namespace Blazui.Community.App.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            //await base.OnAfterRenderAsync(firstRender);
             if (!firstRender)
             {
                 return;
@@ -68,7 +65,6 @@ namespace Blazui.Community.App.Pages
             }
             catch (Exception ex)
             {
-                LoadingService.CloseFullScreenLoading();
                 ToastError(ex.Message);
                 _logger.LogError($"OnAfterRenderAsync----->>{ex.StackTrace}");
             }
@@ -78,6 +74,7 @@ namespace Blazui.Community.App.Pages
 
         private static readonly SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
+        protected BZUserModel User { get; set; }
         protected virtual async Task<BZUserModel> GetUser()
         {
             await semaphoreSlim.WaitAsync();

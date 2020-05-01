@@ -1,4 +1,5 @@
 ﻿using Blazui.Community.App.Pages;
+using Blazui.Community.Common;
 using Blazui.Community.DTO;
 using Blazui.Community.Repository;
 using Blazui.Component;
@@ -25,8 +26,7 @@ namespace Blazui.Community.App.Features.Account.Pages
 
         protected BForm registerForm;
         internal RegisterAccountDto Value;
-        private readonly string CheckChinaPattern = @"[\u4e00-\u9fa5]";//检查汉字的正则表达式
-
+      
         protected InputType passwordType { get; set; } = InputType.Password;
 
         internal void TogglePassword() => passwordType = passwordType == InputType.Text ? InputType.Password : InputType.Text;
@@ -44,7 +44,7 @@ namespace Blazui.Community.App.Features.Account.Pages
             await WithFullScreenLoading(async () =>
             {
                 var registerAccountModel = registerForm.GetValue<RegisterAccountDto>();
-                if (ContainsChineseCharacters(registerAccountModel.UserAccount))
+                if (RegexHelper.ContainsChineseCharacters(registerAccountModel.UserAccount))
                 {
                     ToastError("不支持中文账号");
                     return;
@@ -61,7 +61,9 @@ namespace Blazui.Community.App.Features.Account.Pages
                     ToastError("用户账号已存在");
                     return;
                 }
-                var identityResult = await BZUserRepository.CreateUserAsync(registerAccountModel.UserAccount, registerAccountModel.Password);
+
+                bool AccountIsEmail = RegexHelper.IsEmail(registerAccountModel.UserAccount);
+                var identityResult = await BZUserRepository.CreateUserAsync(registerAccountModel.UserAccount, registerAccountModel.Password,"", AccountIsEmail? registerAccountModel.UserAccount:"");
                 if (!identityResult.Succeeded)
                 {
                     foreach (var identityError in identityResult.Errors)
@@ -79,10 +81,7 @@ namespace Blazui.Community.App.Features.Account.Pages
             });
         }
 
-        private bool ContainsChineseCharacters(string input)
-        {
-            return Regex.Matches(input, CheckChinaPattern)?.Count > 0;
-        }
+       
 
         private async Task AutoLogin(string UserAccount)
         {
@@ -90,7 +89,7 @@ namespace Blazui.Community.App.Features.Account.Pages
             var token = await userManager.GenerateUserTokenAsync(user, TokenOptions.DefaultProvider, "SignIn");
             var data = $"{user.Id}|{token}";
 
-            var parsedQuery = System.Web.HttpUtility.ParseQueryString(new Uri(navigationManager.Uri).Query);
+            var parsedQuery = System.Web.HttpUtility.ParseQueryString(new Uri(NavigationManager.Uri).Query);
 
             var returnUrl = parsedQuery["returnUrl"];
 
@@ -104,7 +103,7 @@ namespace Blazui.Community.App.Features.Account.Pages
             await userManager.UpdateAsync(user);
             var protector = dataProtectionProvider.CreateProtector("SignIn");
             var pdata = protector.Protect(data);
-            navigationManager.NavigateTo("/account/signinactual?t=" + pdata, forceLoad: true);
+            NavigationManager.NavigateTo("/account/signinactual?t=" + pdata, forceLoad: true);
         }
 
         protected override void OnParametersSet()

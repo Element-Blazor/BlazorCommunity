@@ -75,7 +75,7 @@ namespace Blazui.Community.App.Components
             if (Topic is null)
             {
                 ToastError($"主贴不存在或已被删除");
-                navigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo("/");
                 return;
             }
           
@@ -96,18 +96,7 @@ namespace Blazui.Community.App.Components
                 var addResult = await NetService.AddReply(bZReplyDto);
                 if (addResult.IsSuccess)
                 {
-                    //article = new ReplyModel() { Content = "" };
-                    //form.Reset();
-                    ////bMarkdownEditor?.Refresh();
-                    ////RequireRender = true;
-                    ////StateHasChanged();
-                    //ToastSuccess("回复成功");
-                    ////await Task.Delay(500);
-                    //if (OnReplySuccess.HasDelegate)
-                    //{
-                    //    await OnReplySuccess.InvokeAsync("");
-                    //}
-                    navigationManager.NavigateTo(navigationManager.Uri, true);//跳转到+"&golast=1"
+                    NavigationManager.NavigateTo(NavigationManager.Uri, true);//跳转到+"&golast=1"
                 }
                 else
                 {

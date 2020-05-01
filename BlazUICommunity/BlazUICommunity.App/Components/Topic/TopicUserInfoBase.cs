@@ -15,7 +15,7 @@ namespace Blazui.Community.App.Components.Topic
 
         protected async override Task InitilizePageDataAsync()
         {
-            var TopicId = navigationManager.Uri.Split("/").LastOrDefault();
+            var TopicId = NavigationManager.Uri.Split("/").LastOrDefault();
             User = await NetService.QueryTopicUser(TopicId);
         }
     }

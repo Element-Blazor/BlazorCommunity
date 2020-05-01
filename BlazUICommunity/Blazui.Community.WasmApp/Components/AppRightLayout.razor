@@ -1,0 +1,64 @@
+﻿
+<div class="margin-top-5 content-east" style="@Style">
+    <BLayout NorthHeight="30" EnableAlwaysRender="true">
+        <North>
+            <div class="newtopic">
+                <AppTop></AppTop>
+            </div>
+        </North>
+        <Center>
+
+            @if (IsTopicDetailPage)
+            {
+                <div class="content-card" style="margin-top:14px;">
+                    <BCard Shadow="@ShadowShowType.Never">
+                        <Body>
+                            <TopicUserInfo></TopicUserInfo>
+                        </Body>
+                    </BCard>
+                </div>
+            }
+            @*<div class="content-card" style="margin-top:14px;">
+                <BCard Shadow="@ShadowShowType.Never" Style="height:100px;">
+                    <Body>
+                        <AskDaily></AskDaily>
+                    </Body>
+                </BCard>
+            </div>*@
+            <div class="content-card" style="margin-top:14px;">
+                <BCard Shadow="@ShadowShowType.Never">
+                    <Body>
+                        <AppRightTop></AppRightTop>
+                    </Body>
+                </BCard>
+            </div>
+            <div class="content-card margin-top-10">
+                <BCard Shadow="@ShadowShowType.Never">
+                    <Body>
+                        <AppRightCenter></AppRightCenter>
+                    </Body>
+                </BCard>
+            </div>
+            <div class="content-card margin-top-10">
+                <BCard Shadow="@ShadowShowType.Never">
+                    <Body>
+                        <AppRightBottom></AppRightBottom>
+                    </Body>
+                </BCard>
+            </div>
+        </Center>
+    </BLayout>
+</div>
+
+@code{
+    [Parameter]
+    public string Style { get; set; } = "";
+
+    protected bool IsTopicDetailPage = false;
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
+    protected override void OnInitialized()
+    {
+        IsTopicDetailPage = NavigationManager.Uri.ToLower().Contains("/topic/");
+    }
+}

@@ -72,28 +72,28 @@ namespace Blazui.Community.Api.Controllers.Client
 
         private async Task<bool> Send(EmailType verifyCodeType, string Target, string code)
         {
-            bool sendResult;
             switch (verifyCodeType)
             {
                 case EmailType.EmailLogin:
+                    return await _messageService.SendVerifyCodeForLoginWithEmailAsync(Target, code);
                 case EmailType.EmailChangePassword:
+                    return await _messageService.SendVerifyCodeForChangePasswordAsync(Target, code);
                 case EmailType.EmailRetrievePassword:
+                    return await _messageService.SendVerifyCodeForRetrievePasswordAsync(Target, code);
                 case EmailType.EmailBind:
-                    sendResult = await _messageService.SendVerifyCodeForBindEmailAsync(Target, code);
-                    break;
+                    return await _messageService.SendVerifyCodeForBindEmailAsync(Target, code);
+                case EmailType.EmailUnBind:
+                    return await _messageService.SendVerifyCodeForUnBindEmailAsync(Target, code);
 
                 case EmailType.MobileLogin:
                 case EmailType.MobileBind:
                 case EmailType.MobileRetrievePassword:
                 case EmailType.MobileChangePassword:
-                    sendResult = await _messageService.SendVerifyCodeForChangePasswordAsync(Target, code);
-                    break;
+                    return await _messageService.SendVerifyCodeForChangePasswordAsync(Target, code);
 
                 default:
                     throw new NotSupportedException();
             }
-
-            return sendResult;
         }
 
         private static BzVerifyCodeModel CreateModel(EmailType verifyCodeType, string userId, string code)

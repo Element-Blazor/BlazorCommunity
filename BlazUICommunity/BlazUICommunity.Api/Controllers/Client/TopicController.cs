@@ -78,10 +78,7 @@ namespace Blazui.Community.Api.Controllers.Client
             var model = await _bZTopicRepository.InsertAsync(topicModel);
             _cacheService.Remove(nameof(BZTopicModel));
             if (dto.Category ==0 || Notice == 1)
-            {
-                var content = $"社区有新的提问，还请尽快回复一下，谢谢，链接地址：{domainOption.Value.BaseDomain}topic/{model.Entity.Id}";
-                await messageService.SendEmailToManagerForAnswerAsync(content);
-            }
+                messageService.SendEmailToManagerForAnswerAsync(dto.Id);
             return Ok(model.Entity.Id);
         }
 

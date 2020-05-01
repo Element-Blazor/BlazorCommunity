@@ -1,0 +1,31 @@
+﻿@page "/account/signin"
+@inherits SignInBase
+
+<div class="login-container">
+
+    <BForm Value="signInModel" @ref="signInForm" EnableAlwaysRender="true">
+        <div class="title-container">
+            <h3 class="title">
+                Blazor社区登录
+            </h3>
+        </div>
+        <BFormItem IsRequired="true" TValue="string" RequiredMessage="请输入账号或邮箱" Name="@nameof(SignInModel.UserAccount)">
+            <BInput PrefixIcon="el-icon-user-solid" TValue="string" Placeholder="请输入账号或邮箱"></BInput>
+        </BFormItem>
+        <BFormItem IsRequired="true" TValue="string" RequiredMessage="请输入密码" Name="@nameof(SignInModel.Password)" EnableAlwaysRender="true">
+            <BInput PrefixIcon="el-icon-lock" SuffixIcon="el-icon-view" Type="@passwordType" TValue="string" Placeholder="请输入密码" OnSuffixIconClick="e=>TogglePassword()"></BInput>
+        </BFormItem>
+        <BFormActionItem>
+            <BButton Type="@ButtonType.Default" IsPlain="true" Style="width:100%;" OnClick="Login">登录</BButton>
+        </BFormActionItem>
+        <BFormActionItem Style="background-color:#fff;">
+            @*<BButtonGroup>
+                    <BButton Type="@ButtonType.Default" Style="border:none;" Cls="icon iconfont icon-weixin" IsPlain="true" OnClick="SSOWX"></BButton>
+                    <BButton Type="@ButtonType.Default" Style="border:none;" Cls="icon iconfont icon-QQ" IsPlain="true" OnClick="SSOQQ"></BButton>
+                    <BButton Type="@ButtonType.Default" Style="border:none;" Cls="icon iconfont icon-github" IsPlain="true" OnClick="SSOGithub"></BButton>
+                </BButtonGroup>*@
+            <BButton Type="@ButtonType.Text" Style="float:right;margin-left:15px; " OnClick="ForgetPwd">忘记密码？</BButton>
+            <BButton Type="@ButtonType.Text" Style="float:right; " OnClick="Regist">立即注册</BButton>
+        </BFormActionItem>
+    </BForm>
+</div>

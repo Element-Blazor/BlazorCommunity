@@ -1,0 +1,20 @@
+﻿@layout PersonalCenterLayout
+@page "/user/avator"
+@inherits PersonalAvatorBase
+<BTab Type="@TabType.Card" EnableAlwaysRender="true">
+    <BTabPanel Title="@tabTitle" EnableAlwaysRender="true">
+        <BForm Style="width:400px;" @ref="bForm" Value="value" EnableAlwaysRender="true">
+
+            <BFormItem TValue="IFileModel[]" Label="" Name="@nameof(UploadActivity.Previews)" EnableAlwaysRender="true">
+                <UploadAvator Url="@(UploadUrl+ UploadPath.Avator.Description())"
+                              UploadType="UploadType.Image"
+                              EnablePasteUpload="true" Limit="1"
+                              AllowExtensions="@(new string[] { " .jpg",".png"})" EnableAlwaysRender="true">
+                </UploadAvator>
+            </BFormItem>
+            <BFormActionItem>
+                <BButton Type="@ButtonType.Primary" Style="width:178px;" OnClick="e=>Submit()" IsPlain="true">保  存</BButton>
+            </BFormActionItem>
+        </BForm>
+    </BTabPanel>
+</BTab>

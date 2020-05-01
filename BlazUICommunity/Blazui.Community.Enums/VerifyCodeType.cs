@@ -21,6 +21,10 @@
         /// 绑定邮箱
         /// </summary>
         EmailBind,
+        /// <summary>
+        /// 取消邮箱绑定
+        /// </summary>
+        EmailUnBind,
 
         /// <summary>
         /// 通过邮箱找回密码

@@ -561,12 +561,15 @@
             
              </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.UserController.#ctor(Blazui.Community.Repository.BZUserRepository,Blazui.Community.Api.Service.ICacheService)">
+        <member name="M:Blazui.Community.Api.Controllers.Client.UserController.#ctor(Blazui.Community.Repository.BZUserRepository,Blazui.Community.Api.Service.ICacheService,Microsoft.AspNetCore.Identity.UserManager{Blazui.Community.Model.Models.BZUserModel},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole{System.String}},AutoMapper.IMapper)">
              <summary>
             
              </summary>
              <param name="bZUserRepository"></param>
              <param name="cacheService"></param>
+             <param name="userManager"></param>
+             <param name="roleManager"></param>
+             <param name="mapper"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.UserController.Active(System.Int32)">
             <summary>
@@ -623,7 +626,7 @@
              <param name="jwtService"></param>
              <param name="userManager"></param>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.TokenController.Post(Blazui.Community.Api.Controllers.LoginInModel)">
+        <member name="M:Blazui.Community.Api.Controllers.TokenController.Post(Blazui.Community.Shared.LoginModel)">
             <summary>
             登录，获取后原来RefreshToken将失效。
             AccessToken有效时间30分钟
@@ -860,7 +863,7 @@
             邮箱登录-发送验证码
             </summary>
             <param name="Email"></param>
-            <param name="Content"></param>
+            <param name="Code"></param>
             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Service.IMessageService.SendVerifyCodeForBindEmailAsync(System.String,System.String)">
@@ -868,7 +871,7 @@
             绑定邮箱-发送验证码
             </summary>
             <param name="Email"></param>
-            <param name="Content"></param>
+            <param name="Code"></param>
             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Service.IMessageService.SendVerifyCodeForRetrievePasswordAsync(System.String,System.String)">
@@ -876,7 +879,7 @@
             找回密码 -发送验证码
             </summary>
             <param name="Email"></param>
-            <param name="Content"></param>
+            <param name="Code"></param>
             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Service.IMessageService.SendVerifyCodeForChangePasswordAsync(System.String,System.String)">
@@ -884,22 +887,31 @@
             修改密码 -发送验证码
             </summary>
             <param name="Email"></param>
-            <param name="Content"></param>
+            <param name="Code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Service.IMessageService.SendVerifyCodeForUnBindEmailAsync(System.String,System.String)">
+            <summary>
+            取消绑定邮箱 -发送验证码
+            </summary>
+            <param name="Email"></param>
+            <param name="Code"></param>
             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Service.IMessageService.SendEmailToManagerForAnswerAsync(System.String)">
             <summary>
             发送通知给管理员，回答社区提问
             </summary>
-            <param name="Content"></param>
+            <param name="TopicId"></param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Service.IMessageService.SendEmailToTopicCreatorAsync(System.String,System.String)">
+        <member name="M:Blazui.Community.Api.Service.IMessageService.SendEmailToTopicCreatorAsync(System.String,System.String,System.String)">
             <summary>
             发送通知给主贴发帖人，有新的回复
             </summary>
             <param name="Email"></param>
-            <param name="Content"></param>
+            <param name="TopicTitle"></param>
+            <param name="TopicId"></param>
             <returns></returns>
         </member>
         <member name="M:Blazui.Community.Api.Service.ImgCompressService.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">

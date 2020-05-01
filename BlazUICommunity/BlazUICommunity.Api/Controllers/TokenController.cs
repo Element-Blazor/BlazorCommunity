@@ -1,6 +1,7 @@
 ﻿using Blazui.Community.Api.Jwt;
 using Blazui.Community.DateTimeExtensions;
 using Blazui.Community.Model.Models;
+using Blazui.Community.Shared;
 using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -53,7 +54,7 @@ namespace Blazui.Community.Api.Controllers
         /// <returns></returns>
         [Route("token")]
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]LoginInModel model)
+        public async Task<IActionResult> Post([FromBody]LoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
             if (user is null)
@@ -133,9 +134,5 @@ namespace Blazui.Community.Api.Controllers
         }
     }
 
-    public class LoginInModel
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-    }
+   
 }

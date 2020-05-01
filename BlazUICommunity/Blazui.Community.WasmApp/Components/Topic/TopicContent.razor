@@ -1,0 +1,112 @@
+﻿@inherits TopicContentBase
+@if (!string.IsNullOrWhiteSpace(TopicModel.Id))
+{
+    <div class="content-topic-base">
+        <BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
+            <Header>
+                <div class="content-topic-head">
+                    <div class="content-info">
+                        <div class="content-user">
+                            <div class="content-user-avator">
+                                <img class="content-topic-img" src="@TopicModel.Avator" />
+                            </div>
+                            <div class="content-user-name">@TopicModel.NickName</div>
+                        </div>
+                    </div>
+                    <div class="content-flex-col">
+                        <div class="content-info-title">
+
+                            @if (TopicModel.Status == 1)
+                            {
+                                <div class="content-tag">
+                                    <span class="el-tag el-tag--info el-tag--small  el-tag--light">已结帖</span>
+                                </div>
+                            }
+                            else
+                            {
+                                @if (!string.IsNullOrWhiteSpace(TopicModel.CategoryDisplay))
+                                {
+                                    <div class="content-tag">
+                                        <span class="el-tag el-tag--success el-tag--small  el-tag--light">@TopicModel.CategoryDisplay</span>
+                                    </div>
+                                }
+                            }
+                            <div class="content-title">
+                                <div class="el-badge item" style="margin-top: -5px;">
+                                    <div>
+                                        @if (IsEditing)
+                                        {
+                                            <BInput TValue="string" Type="InputType.Text" @bind-Value="TopicModel.Title" Style="width: 500px;" Size="InputSize.Medium"></BInput>
+                                        }
+                                        else
+                                        {
+                                            <span> @TopicModel.Title</span>
+                                        }
+                                    </div>
+                                    @if (TopicModel.Good == 1 && !IsEditing)
+                                    {
+                                        <sup class="el-badge__content el-badge__content--undefined is-fixed" style=" font-size:12px;">精</sup>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-time">   发布时间：   @TopicModel?.LastModifyDate.ToString("yyyy-MM-dd")</div>
+                    </div>
+
+                    <div class="content-good">
+                        <div style="padding-bottom:10px;">
+                            @if (!string.IsNullOrEmpty(TopicModel.VerName))
+                            {
+                                <span class="el-tag el-tag--success el-tag--light el-tag--mini ">
+                                    @TopicModel.VerName
+                                </span>
+                            }
+                        </div>
+
+                        <div class="content-reply custome-button-hover">
+                            <div class="content-star" @onclick="ToggleStarStatus">
+                                <i class="@(IsFollow?"el-icon-star-on":"el-icon-star-off")"></i>
+                            </div>
+                            @if (IsMySelf)
+                            {
+                                var buttonedit = "color:#909399;margin-left: 12px;font-size: 20px; margin-top: 4px;";
+
+                                @if (TopicModel.Status != 1)
+                                {
+
+                                    <BButton Icon=@(IsEditing?"el-icon-finished":"el-icon-edit") Style=@buttonedit Type="ButtonType.Text" IsPlain="true" Size="ButtonSize.Medium" OnClick="ToggleEditStatus">
+                                    </BButton>
+                                    <div title="关闭帖子">
+                                        <BButton Icon="el-icon-lock" Style=@buttonedit Type="ButtonType.Text" IsPlain="true" Size="ButtonSize.Medium" OnClick="CloseMyTopic">
+                                        </BButton>
+                                    </div>
+                                }
+                            }
+                            @if (TopicModel.ReplyCount > 0)
+                            {
+
+                                <div class="el-badge item" style="margin-top: 15px;margin-left: 10px">
+                                    <i class="el-icon-chat-dot-round" style="color: #909399;font-size: 20px;"></i>
+                                    <sup class="el-badge__content el-badge__content--undefined is-fixed">@TopicModel?.ReplyCount</sup>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </Header>
+            <Body>
+                @if (IsEditing)
+                {
+                    <BMarkdownEditor @bind-Value="@TopicModel.Content" UploadUrl="@UploadUrl" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="300" Height="300"></BMarkdownEditor>
+                }
+                else
+                {
+                    <BMarkdown Text="@TopicModel.Content"></BMarkdown>
+                }
+                    <UserSignature Signature="@TopicModel.Signature"/>
+            </Body>
+        </BCard>
+    </div>
+}
+@code {
+}

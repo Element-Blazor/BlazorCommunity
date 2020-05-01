@@ -1,0 +1,25 @@
+﻿@inherits MainLayoutBase
+
+<BPopup></BPopup>
+<BLayout EnableAlwaysRender="true" @ref="Blayout" NorthHeight="80">
+    <North>
+        <AppHeader EnableAlwaysRender="true" @ref="Appheader"></AppHeader>
+    </North>
+    <Center>
+        <div class="main-layout-center">
+            <BCard Shadow="@ShadowShowType.Never" @ref="Bcard" Style="border:none;" EnableAlwaysRender="true">
+                <Body>
+                    @Body
+                </Body>
+            </BCard>
+        </div>
+    </Center>
+
+    <South>
+        <AppFooter></AppFooter>
+    </South>
+</BLayout>
+<CascadingValue Value="@this">
+    @ChildContent
+</CascadingValue>
+

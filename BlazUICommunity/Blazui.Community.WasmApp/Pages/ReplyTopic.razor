@@ -1,0 +1,36 @@
+﻿@page "/topic/{TopicId}"
+@page "/topic/hot/{TopicId}"
+@inherits ReplyTopicBase
+
+<div class="container">
+    @if (!string.IsNullOrWhiteSpace(TopicModel.Content))
+    {
+        <BLayout EastWidth="350" EnableAlwaysRender="true">
+            <Center>
+                <BTab TabPosition="@TabPosition.Top" EnableAlwaysRender="true" Style="margin-top:-4px;">
+                    <GoHome />
+                    <BTabPanel Title="" Style="margin-top:-5px;">
+                        <TopicContent EnableAlwaysRender="true" TopicModel="@TopicModel" IsFollow="@IsFollow" IsMySelf="@IsMySelf" IsEditing="@IsEditing" OnFollowStatusChanging="@ToggleFollow" OnEditStatusChanging="ToggleEditing" CloseTopic="EndTopic">
+                        </TopicContent>
+                        <div class="margin-top-5"></div>
+                        <BCard EnableAlwaysRender="true">
+                            <Header>
+                                <div class="el-divider el-divider--horizontal">
+                                    <div class="el-divider__text is-center">
+                                        回帖
+                                    </div>
+                                </div>
+                            </Header>
+                            <Body>
+                                <ReplyList EnableAlwaysRender="true" TopicModel="@TopicModel" OnItemDeleted="OnReplyDelete" OnNewReply="OnReplySuccess"></ReplyList> @*  OnNewReply="OnReplySuccess"*@
+                            </Body>
+                        </BCard>
+                    </BTabPanel>
+                </BTab>
+            </Center>
+            <East>
+                <AppRightLayout Style="margin-top:9px !important;"></AppRightLayout>
+            </East>
+        </BLayout>
+    }
+</div>

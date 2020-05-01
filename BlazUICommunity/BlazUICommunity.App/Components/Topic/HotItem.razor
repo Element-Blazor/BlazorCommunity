@@ -3,7 +3,7 @@
 @if (Hot != null && !string.IsNullOrWhiteSpace(Hot.Title))
 {
     <div class="hot-item" @onclick="OnClick" title="@Hot.Title">
-        <a href="#" class="el-link el-link--default ">
+        <a  class="el-link el-link--default ">
             <span class="el-link--inner">@Hot.Title</span><!--is-underline-->
         </a>
     </div>

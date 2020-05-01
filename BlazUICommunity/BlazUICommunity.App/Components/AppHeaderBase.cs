@@ -27,12 +27,12 @@ namespace Blazui.Community.App.Shared
         }
 
         protected void Personal()
-        => navigationManager.NavigateTo("/user/base", forceLoad: true);
+        => NavigationManager.NavigateTo("/user/base", forceLoad: true);
 
         protected void Login()
-        => navigationManager.NavigateTo("/account/signin?returnUrl=" + WebUtility.UrlEncode(new Uri(navigationManager.Uri).PathAndQuery));
-
+        => NavigationManager.NavigateTo("/account/signin?returnUrl=" + WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery));
+        protected void Regist() => NavigationManager.NavigateTo("/account/register", true);
         protected void LoginOut()
-        => navigationManager.NavigateTo("/account/signout2?returnUrl=" + WebUtility.UrlEncode(new Uri(navigationManager.Uri).PathAndQuery), true);
+        => NavigationManager.NavigateTo("/account/signout2?returnUrl=" + WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery), true);
     }
 }

@@ -79,7 +79,7 @@ namespace Blazui.Community.App.Components
 
             user.NickName = model.NickName;
             user.Sex = model.Sex;
-            user.Signature = model.Signature;
+            user.Signature = model.Signature ??="";
             //user.Email = model.Email;
             //user.Avatar = model.Avatar;
             //user.Mobile = model.Mobile;
@@ -89,7 +89,7 @@ namespace Blazui.Community.App.Components
             if (result.Succeeded)
             {
                 //CurrentUser= await userManager.GetUserAsync((await authenticationStateTask).User);
-                //navigationManager.NavigateTo("/user/base",true);
+                //NavigationManager.NavigateTo("/user/base",true);
 
                 await navigationToUpdateUserUI("/user/base");
             }

@@ -85,8 +85,7 @@ namespace Blazui.Community.Api.Controllers.Client
                 if (addResult)
                 {
                     var user = await userRepository.FindAsync(topic.CreatorId);
-                    var content = $"您的帖子—{topic.Title}，有新的回复，查看链接：{domainOption.Value.BaseDomain}topic/{topic.Id}";
-                    messageService.SendEmailToTopicCreatorAsync(user?.Email, content);
+                    messageService.SendEmailToTopicCreatorAsync(user?.Email, topic.Title,topic.Id);
                     return Ok();
                 }
                 return new BadRequestResponse("回复帖子失败");

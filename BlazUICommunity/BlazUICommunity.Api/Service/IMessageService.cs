@@ -12,44 +12,52 @@ namespace Blazui.Community.Api.Service
         /// 邮箱登录-发送验证码
         /// </summary>
         /// <param name="Email"></param>
-        /// <param name="Content"></param>
+        /// <param name="Code"></param>
         /// <returns></returns>
-        Task<bool> SendVerifyCodeForLoginWithEmailAsync(string Email, string Content);
+        Task<bool> SendVerifyCodeForLoginWithEmailAsync(string Email, string Code);
         /// <summary>
         /// 绑定邮箱-发送验证码
         /// </summary>
         /// <param name="Email"></param>
-        /// <param name="Content"></param>
+        /// <param name="Code"></param>
         /// <returns></returns>
-        Task<bool> SendVerifyCodeForBindEmailAsync(string Email, string Content);
+        Task<bool> SendVerifyCodeForBindEmailAsync(string Email, string Code);
         /// <summary>
         /// 找回密码 -发送验证码
         /// </summary>
         /// <param name="Email"></param>
-        /// <param name="Content"></param>
+        /// <param name="Code"></param>
         /// <returns></returns>
-        Task<bool> SendVerifyCodeForRetrievePasswordAsync(string Email, string Content);
+        Task<bool> SendVerifyCodeForRetrievePasswordAsync(string Email, string Code);
         /// <summary>
         /// 修改密码 -发送验证码
         /// </summary>
         /// <param name="Email"></param>
-        /// <param name="Content"></param>
+        /// <param name="Code"></param>
         /// <returns></returns>
-        Task<bool> SendVerifyCodeForChangePasswordAsync(string Email, string Content);
+        Task<bool> SendVerifyCodeForChangePasswordAsync(string Email, string Code);
+        /// <summary>
+        /// 取消绑定邮箱 -发送验证码
+        /// </summary>
+        /// <param name="Email"></param>
+        /// <param name="Code"></param>
+        /// <returns></returns>
+        Task<bool> SendVerifyCodeForUnBindEmailAsync(string Email, string Code);
         /// <summary>
         /// 发送通知给管理员，回答社区提问
         /// </summary>
-        /// <param name="Content"></param>
+        /// <param name="TopicId"></param>
         /// <returns></returns>
-        Task<bool> SendEmailToManagerForAnswerAsync(string Content);
+        Task<bool> SendEmailToManagerForAnswerAsync(string TopicId);
 
         /// <summary>
         /// 发送通知给主贴发帖人，有新的回复
         /// </summary>
         /// <param name="Email"></param>
-        /// <param name="Content"></param>
+        /// <param name="TopicTitle"></param>
+        /// <param name="TopicId"></param>
         /// <returns></returns>
-        Task<bool> SendEmailToTopicCreatorAsync(string Email, string Content);
+        Task<bool> SendEmailToTopicCreatorAsync(string Email, string TopicTitle,string TopicId);
 
 
     }

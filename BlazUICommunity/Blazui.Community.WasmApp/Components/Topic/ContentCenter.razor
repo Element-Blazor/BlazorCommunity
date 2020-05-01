@@ -1,0 +1,21 @@
+﻿@inherits ContentCenterBase
+<div class="content-center">
+
+    <BTab EnableAlwaysRender="true" @ref="tab" OnActiveTabChanged="ActiveTabChanged">
+        <BTabPanel Title="综合" EnableAlwaysRender="true" @ref="tabPanel_Comprehensive">
+            <TopicTabItem OrderType="0" TopicType="@TopicType" EnableAlwaysRender="true"></TopicTabItem>
+        </BTabPanel>
+        <BTabPanel Title="人气" EnableAlwaysRender="true" @ref="tabPanel_Hot">
+            <TopicTabItem OrderType="1" TopicType="@TopicType" EnableAlwaysRender="true"></TopicTabItem>
+        </BTabPanel>
+        <BTabPanel Title="精华" EnableAlwaysRender="true" @ref="tabPanel_Best">
+            <TopicTabItem OrderType="2" TopicType="@TopicType" EnableAlwaysRender="true"></TopicTabItem>
+        </BTabPanel>
+        <BTabPanel Title="已结" EnableAlwaysRender="true" @ref="tabPanel_End">
+            <TopicTabItem OrderType="3" TopicType="@TopicType" EnableAlwaysRender="true"></TopicTabItem>
+        </BTabPanel>
+    </BTab>
+</div>
+@code {
+
+}

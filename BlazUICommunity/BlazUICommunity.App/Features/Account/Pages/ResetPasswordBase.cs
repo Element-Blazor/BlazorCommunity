@@ -21,7 +21,7 @@ namespace Blazui.Community.App.Features.Account.Pages
             if (string.IsNullOrWhiteSpace(UserId))
                 return;
             if (!Guid.TryParse(UserId, out Guid guid))
-                navigationManager.NavigateTo(PreviousRoute, true);
+                NavigationManager.NavigateTo(PreviousRoute, true);
             if (!form.IsValid())
                 return;
             var model = form.GetValue<PasswordModel>();
@@ -44,7 +44,7 @@ namespace Blazui.Community.App.Features.Account.Pages
                 {
                     ToastSuccess("密码重置成功，请稍后使用新密码登录");
                     await WithFullScreenLoading(async () => await Task.Delay(1500));
-                    navigationManager.NavigateTo("/account/signin", true);
+                    NavigationManager.NavigateTo("/account/signin", true);
                 }
                 else
                 {

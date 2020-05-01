@@ -1,5 +1,6 @@
 ﻿using Blazui.Community.App.Model;
 using Blazui.Community.App.Pages;
+using Blazui.Community.Common;
 using Blazui.Community.Enums;
 using Blazui.Community.Model.Models;
 using Blazui.Component;
@@ -26,7 +27,7 @@ namespace Blazui.Community.App.Components.User
             if (!form.IsValid())
                 return;
             var model = form.GetValue<PasswordModel>();
-            if (!Regex.Match(model.Email, "^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$").Success)
+            if (!RegexHelper.IsEmail(model.Email))
             {
                 ToastError("邮箱号码错误");
                 return;

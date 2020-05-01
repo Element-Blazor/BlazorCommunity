@@ -1,0 +1,10 @@
+﻿@inherits ContentBannerBase
+
+<div class="content-ad">
+    <div class="ad-container">
+        @if (Banners.Count > 0)
+        {
+            <img src="@Banners?.FirstOrDefault()?.BannerImg" class="content-banner-img" />
+        }
+    </div>
+</div>

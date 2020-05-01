@@ -1,0 +1,26 @@
+﻿@inherits HotUserBase
+<BCard Style="height:100%;border:none;" Shadow="ShadowShowType.Never" EnableAlwaysRender="true">
+    <Header>@Title</Header>
+    <Body>
+        
+        @foreach (var user in Datas)
+        {
+                <span  class="el-tag el-popover__reference  @(TagClasses[new Random().Next(0,5)])" aria-describedby="@user.Id" 
+                @onmouseover="e=>user.Show=true" @onmouseout="e => user.Show=false" style="cursor:pointer;width:100px;margin-bottom:5px;">@user.UserName</span>
+
+            var index = (Datas.IndexOf(user) + 1) %3;
+            var left = index!=1? 80:0;
+            
+                <div role="tooltip" id="@user.Id"  class="el-popover el-popper el-popover--plain" tabindex="0" style="width: 200px; transform-origin: center bottom;z-index: 2035;left: @(left+"px"); display:@(user.Show?"block":"none")" aria-hidden="@user.Show">
+                    <p>@($"{user.NickName}")</p>
+                    <p>@($"  主贴：{user.TopicCount}  回帖：{user.ReplyCount}")</p>
+                    <p>@($"最后活跃时间：{user.LastLoginDate.ToString("yyyy-MM-dd")}")</p>
+                    
+                </div>
+
+        }
+
+       
+    </Body>
+</BCard>
+

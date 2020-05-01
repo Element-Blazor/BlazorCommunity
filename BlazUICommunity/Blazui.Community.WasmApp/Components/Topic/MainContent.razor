@@ -1,0 +1,58 @@
+﻿@inherits MainContentBase
+<BTabPanel Title="@Title" EnableAlwaysRender="true">
+    <BLayout WestWidth="0" NorthHeight="0" EnableAlwaysRender="true">
+        <Center>
+            @if (TopicType == -1)
+            {
+                <BLayout EnableAlwaysRender="true" NorthHeight="150">
+                    <North>
+                        <ContentBanner></ContentBanner>
+                    </North>
+                    <Center>
+                        <div class="margin-top-10 margin-left-0">
+                            <BLayout>
+                                <Center>
+                                    <div class="content-card">
+                                        <BCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true">
+                                            <Body>
+                                                <ContentTop EnableAlwaysRender="true"></ContentTop>
+                                            </Body>
+                                        </BCard>
+                                    </div>
+                                    <div style="height:10px;background:#EBEEF5;margin:2px auto;"></div>
+                                    <div class="content-card">
+                                        <BCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true">
+                                            <Body>
+                                                <ContentCenter TopicType="TopicType" EnableAlwaysRender="true"> </ContentCenter>
+                                            </Body>
+                                        </BCard>
+                                    </div>
+                                </Center>
+                            </BLayout>
+                        </div>
+                    </Center>
+                </BLayout>
+            }
+            else if (TopicType == (int)TopicCategory.Ask)
+            {
+                <MainContentItem TopicType="TopicType"></MainContentItem>
+            }
+            else if (TopicType == (int)TopicCategory.Share)
+            {
+                <MainContentItem TopicType="TopicType"></MainContentItem>
+            }
+            else if (TopicType == (int)TopicCategory.Discuss)
+            {
+                <MainContentItem TopicType="TopicType"></MainContentItem>
+            }
+            else if (TopicType == (int)TopicCategory.Suggest)
+            {
+                <MainContentItem TopicType="TopicType"></MainContentItem>
+            }
+            else if (TopicType == (int)TopicCategory.Notice)
+            {
+                <MainContentItem TopicType="TopicType"></MainContentItem>
+            }
+        </Center>
+    </BLayout>
+</BTabPanel>

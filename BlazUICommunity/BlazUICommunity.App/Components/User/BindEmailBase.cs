@@ -1,10 +1,12 @@
 ﻿using Blazui.Community.App.Model;
 using Blazui.Community.App.Pages;
+using Blazui.Community.Common;
 using Blazui.Community.Enums;
 using Blazui.Community.Model.Models;
 using Blazui.Community.Response;
 using Blazui.Component;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -18,7 +20,10 @@ namespace Blazui.Community.App.Components
         internal PasswordModel value { get; set; }
         protected bool showInput { get; set; } = false;
         protected BCard bCard { get; set; }
-        internal bool IsDisabled { get; set; } = false;
+        protected bool BtnBindEmailDisabled  = false;
+        protected bool SendCanCelEmailBindCodeSuccess = false;
+        protected bool BtnCancelDisabled = false;
+        protected bool BtnConfirmDisabled = false;
         internal int TimeOut { get; set; } = CountDownTime;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -34,6 +39,43 @@ namespace Blazui.Community.App.Components
             bCard?.Refresh();
         }
 
+        protected async Task CanCelBind()
+        {
+            BtnCancelDisabled = true;
+           var result= await NetService.SendVerifyCode(User.Id, EmailType.EmailUnBind, User.Email);
+            BtnCancelDisabled = false;
+
+            SendCanCelEmailBindCodeSuccess = result.IsSuccess;
+            VerifyCode = result.IsSuccess ? result.Data.ToString() : "";
+            UpdateUI();
+            
+        }
+
+        protected async Task CanCelBindConfirm()
+        {
+            var model = bForm.GetValue<PasswordModel>();
+
+            var result = await NetService.ValidateVerifyCode(User.Id, EmailType.EmailUnBind, model.Code);
+            if (result.IsSuccess)
+            {
+                User.Email = "";
+                User.NormalizedEmail = "";
+                var UplodateResult = await userManager.UpdateAsync(User);
+                if (UplodateResult.Succeeded)
+                {
+                    ToastSuccess("邮箱已解绑");
+                    TimeOut = 0;
+                    await LoadData();
+                    BtnBindEmailDisabled = false;
+                    SendCanCelEmailBindCodeSuccess = false;
+                    UpdateUI();
+                }
+                else
+                    ToastError(JsonConvert.SerializeObject(UplodateResult.Errors));
+            }
+            else
+                ToastError("验证失败");
+        }
         protected override bool ShouldRender() => true;
 
         protected string VerifyCode = "";
@@ -43,7 +85,7 @@ namespace Blazui.Community.App.Components
             if (!bForm.IsValid())
                 return;
             var model = bForm.GetValue<PasswordModel>();
-            var mobileValid = Regex.Match(model.Email, "^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$").Success;
+            var mobileValid = RegexHelper.IsEmail(model.Email);
             if (!mobileValid)
             {
                 ToastError("邮箱号码错误");
@@ -58,13 +100,13 @@ namespace Blazui.Community.App.Components
             {
                 ToastSuccess("验证码发送成功，2分钟内有效，请前往邮箱查收");
                 VerifyCode = result.Data.ToString();
-                IsDisabled = true;
+                BtnBindEmailDisabled = true;
                 showInput = true;
                 while (TimeOut > 0)
                 {
                     if (TimeOut == 1)
                     {
-                        IsDisabled = false;
+                        BtnBindEmailDisabled = false;
                     }
                     TimeOut--;
                     UpdateUI();

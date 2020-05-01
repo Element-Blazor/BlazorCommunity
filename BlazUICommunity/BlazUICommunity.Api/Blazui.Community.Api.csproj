@@ -57,12 +57,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Blazui.Community.AutofacModules\Blazui.Community.AutofacModules.csproj" />
+    <ProjectReference Include="..\Blazui.Community.Common\Blazui.Community.Common.csproj" />
     <ProjectReference Include="..\Blazui.Community.FileExtensions\Blazui.Community.FileExtensions.csproj" />
     <ProjectReference Include="..\Blazui.Community.IdentityExtensions\Blazui.Community.IdentityExtensions.csproj" />
     <ProjectReference Include="..\Blazui.Community.JWTServiceCollectionExtensions\Blazui.Community.JWTServiceCollectionExtensions.csproj" />
     <ProjectReference Include="..\Blazui.Community.LinqExtensions\Blazui.Community.LinqExtensions.csproj" />
     <ProjectReference Include="..\Blazui.Community.MvcCore\Blazui.Community.MvcCore.csproj" />
     <ProjectReference Include="..\Blazui.Community.Response\Blazui.Community.Response.csproj" />
+    <ProjectReference Include="..\Blazui.Community.Shared\Blazui.Community.Shared.csproj" />
     <ProjectReference Include="..\Blazui.Community.StringExtensions\Blazui.Community.StringExtensions.csproj" />
     <ProjectReference Include="..\Blazui.Community.SwaggerExtensions\Blazui.Community.SwaggerExtensions.csproj" />
     <ProjectReference Include="..\BlazUICommunity.DTO\Blazui.Community.DTO.csproj" />

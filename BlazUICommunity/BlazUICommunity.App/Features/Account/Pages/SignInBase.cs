@@ -56,7 +56,7 @@ namespace Blazui.Community.App.Features.Account.Pages
 
                     var data = $"{user.Id}|{token}";
 
-                    var parsedQuery = System.Web.HttpUtility.ParseQueryString(new Uri(navigationManager.Uri).Query);
+                    var parsedQuery = System.Web.HttpUtility.ParseQueryString(new Uri(NavigationManager.Uri).Query);
 
                     var returnUrl = parsedQuery["returnUrl"];
 
@@ -70,7 +70,7 @@ namespace Blazui.Community.App.Features.Account.Pages
                     await userManager.UpdateAsync(user);
                     var protector = dataProtectionProvider.CreateProtector("SignIn");
                     var pdata = protector.Protect(data);
-                    navigationManager.NavigateTo("/account/signinactual?t=" + pdata, forceLoad: true);
+                    NavigationManager.NavigateTo("/account/signinactual?t=" + pdata, forceLoad: true);
                 }
                 else
                 {
@@ -82,24 +82,11 @@ namespace Blazui.Community.App.Features.Account.Pages
 
         internal void TogglePassword() => passwordType = passwordType == InputType.Text ? InputType.Password : InputType.Text;
 
-        protected void Regist() => navigationManager.NavigateTo("/account/register", true);
+        protected void Regist() => NavigationManager.NavigateTo("/account/register", true);
 
-        protected void ForgetPwd() => navigationManager.NavigateTo("/account/forget", true);
+        protected void ForgetPwd() => NavigationManager.NavigateTo("/account/forget", true);
 
-        protected void SSOWX()
-        {
-            ToastInfo("尚未实现");
-        }
-
-        protected void SSOQQ()
-        {
-            ToastInfo("尚未实现");
-        }
-
-        protected void SSOGithub()
-        {
-            ToastInfo("尚未实现");
-        }
+      
 
         protected override Task InitilizePageDataAsync()
         {

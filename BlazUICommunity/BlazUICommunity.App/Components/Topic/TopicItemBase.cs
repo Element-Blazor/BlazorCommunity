@@ -24,7 +24,7 @@ namespace Blazui.Community.App.Components
             //}
             if (topicId == null || string.IsNullOrWhiteSpace(topicId))
                 return;
-            navigationManager.NavigateTo($"/topic/{topicId}");
+            NavigationManager.NavigateTo($"/topic/{topicId}");
         }
     }
 }

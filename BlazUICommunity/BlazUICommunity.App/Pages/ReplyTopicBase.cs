@@ -2,36 +2,29 @@
 using Blazui.Community.Model.Models;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.App.Pages
 {
     public class ReplyTopicBase : PageBase
     {
-        [Inject]
-        public IHttpClientFactory HttpClientFactory { get; set; }
-        [Inject]
-        public IHttpContextAccessor HttpContextAccessor { get; set; }
         [Parameter]
         public string TopicId { get; set; }
-
         protected BZTopicDto TopicModel { get; set; } = new BZTopicDto();
         protected BZFollowDto FollowModel { get; set; } = new BZFollowDto();
 
         private string TopicContent;
         private string TopicTitle;
 
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+        }
         /// <summary>
         /// 是否已收藏该帖子
         /// </summary>
@@ -55,7 +48,7 @@ namespace Blazui.Community.App.Pages
             if (string.IsNullOrWhiteSpace(TopicId))
             {
                 ToastError("帖子不存在或已删除");
-                navigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo("/");
                 return;
             }
 
@@ -79,7 +72,7 @@ namespace Blazui.Community.App.Pages
                     {
                         ToastWarning("抱歉，该主题设置了权限，请登录后再试");
                         await Task.Delay(1000);
-                        navigationManager.NavigateTo("/");
+                        NavigationManager.NavigateTo("/");
                         return;
                     }
                     var role = roleManager.Roles.FirstOrDefault(p => p.Id == result.Data.RoleId);
@@ -90,7 +83,7 @@ namespace Blazui.Community.App.Pages
                     {
                         ToastWarning("抱歉，您当前没有权限查看该主题,请联系管理员");
                         await Task.Delay(1000);
-                        navigationManager.NavigateTo("/");
+                        NavigationManager.NavigateTo("/");
                         return;
                     }
                 }
@@ -105,7 +98,7 @@ namespace Blazui.Community.App.Pages
             else
             {
                 ToastError("帖子不存在或已删除");
-                navigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo("/");
                 return;
             }
         }
@@ -218,6 +211,6 @@ namespace Blazui.Community.App.Pages
             await NetService.EndTopic(TopicModel.Id);
         }
 
-        internal void GoHome() => navigationManager.NavigateTo("/");
+        internal void GoHome() => NavigationManager.NavigateTo("/");
     }
 }

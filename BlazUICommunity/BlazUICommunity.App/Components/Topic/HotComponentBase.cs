@@ -21,7 +21,7 @@ namespace Blazui.Community.App.Components.Topic
 
         protected void NavigateToTopic(string TopicId)
         {
-            NavigationManager.NavigateTo($"/topic/{TopicId}");
+            NavigationManager.NavigateTo($"/topic/{TopicId}",true);
         }
 
         protected override bool ShouldRender() => true;

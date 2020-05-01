@@ -25,11 +25,11 @@ namespace Blazui.Community.Api.Jwt
         public string GetAccessToken(SessionUser user)
         {
             var claims = new[]
-            {
-            new Claim(JwtClaimTypes.Id, user.Id.ToString()),
-            new Claim(JwtClaimTypes.Name, user.Name),
-            new Claim(JwtClaimTypes.Role, user.Role)
-        };
+            { 
+                new Claim(JwtClaimTypes.Id, user.Id.ToString()),
+                new Claim(JwtClaimTypes.Name, user.Name),
+                new Claim(JwtClaimTypes.Role, user.Role)
+            };
 
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_configuration["Authentication:JwtBearer:SecurityKey"]));

@@ -1,0 +1,14 @@
+﻿@if (!string.IsNullOrWhiteSpace(Signature))
+{
+    <div class="el-divider el-divider--horizontal">
+        <div class="el-divider__text is-left">签名</div>
+    </div>
+    <div class="user-signature">
+        <BMarkdown Text="@Signature"></BMarkdown>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string Signature { get; set; }
+}

@@ -12,91 +12,62 @@ namespace Blazui.Community.Api.Service
     {
         private readonly ISmtpClientService _smtpClientService;
         private readonly IOptions<EmailNoticeOptions> emailNoticeOptions;
+        private readonly IOptions<BaseDomainOptions> domainOption;
 
-        public MessageService(ISmtpClientService smtpClientService, IOptions<EmailNoticeOptions> EmailNoticeOptions)
+        public MessageService(ISmtpClientService smtpClientService, IOptions<EmailNoticeOptions> EmailNoticeOptions, IOptions<BaseDomainOptions> domainOption)
         {
             _smtpClientService = smtpClientService;
             emailNoticeOptions = EmailNoticeOptions;
+            this.domainOption = domainOption;
         }
 
-    
-
-        
-
-        public Task<bool> SendEmailToManagerForAnswerAsync(string Content)
+        public Task<bool> SendEmailToManagerForAnswerAsync(string TopicId)
         {
-            return SendEmailAsync(RandomAnEmail()?.Email, Content, EmailType.NoticeManager);
+            var content = $"社区有新的提问，还请尽快回复一下，谢谢，链接地址：{domainOption.Value.BaseDomain}topic/{TopicId}";
+            return SendEmailAsync(RandomAnEmail()?.Email, content, "Blazor-Blazui社区消息");
         }
 
-        public Task<bool> SendEmailToTopicCreatorAsync(string Email, string Content)
+        public Task<bool> SendEmailToTopicCreatorAsync(string Email, string TopicTitle, string TopicId)
         {
-            return SendEmailAsync(Email, Content, EmailType.NoticeTopicCreator);
+            var content = $"您的帖子—{TopicTitle}，有新的回复，查看链接：{domainOption.Value.BaseDomain}topic/{TopicId}";
+            return SendEmailAsync(Email, content, "Blazor-Blazui社区消息");
         }
 
-       
-
-        public Task<bool> SendVerifyCodeForBindEmailAsync(string Email, string Content)
+        public Task<bool> SendVerifyCodeForBindEmailAsync(string Email, string Code)
         {
-
-            return SendEmailAsync(Email, Content, EmailType.EmailBind);
+            var Subject = "绑定邮箱";
+            var Content = $"您正在为账户绑定邮箱，验证码为：{Code}，2分钟内有效";
+            return SendEmailAsync(Email, Content, Subject);
         }
 
-        public Task<bool> SendVerifyCodeForChangePasswordAsync(string Email, string Content)
+        public Task<bool> SendVerifyCodeForChangePasswordAsync(string Email, string Code)
         {
-
-            return SendEmailAsync(Email, Content, EmailType.EmailChangePassword);
+            var Subject = "修改密码";
+            var Content = $"您正在通过邮箱验证修改密码，验证码为：{Code}，2分钟内有效";
+            return SendEmailAsync(Email, Content, Subject);
         }
 
-        public Task<bool> SendVerifyCodeForLoginWithEmailAsync(string Email, string Content)
+        public Task<bool> SendVerifyCodeForLoginWithEmailAsync(string Email, string Code)
         {
-            return SendEmailAsync(Email, Content, EmailType.EmailLogin);
+            var Subject = "登录验证";
+            var Content = $"您正在通过邮箱验证码登录，验证码为：{Code}，2分钟内有效";
+            return SendEmailAsync(Email, Content, Subject);
         }
 
-        public Task<bool> SendVerifyCodeForRetrievePasswordAsync(string Email, string Content)
+        public Task<bool> SendVerifyCodeForRetrievePasswordAsync(string Email, string Code)
         {
-
-            return SendEmailAsync(Email, Content, EmailType.EmailRetrievePassword);
+            var Subject = "找回密码";
+            var Content = $"您正在通过邮箱验证找回密码，验证码为：{Code}，2分钟内有效";
+            return SendEmailAsync(Email, Content, Subject);
         }
-        async Task<bool> SendEmailAsync(string Email, string content, EmailType verifyCodeType)
+        public Task<bool> SendVerifyCodeForUnBindEmailAsync(string Email, string Code)
         {
-
-            if (string.IsNullOrWhiteSpace(Email))
-                return false;
-            if (string.IsNullOrWhiteSpace(content))
-                return false;
-            string Subject;
-            string Content;
-            switch (verifyCodeType)
-            {
-                case EmailType.EmailLogin:
-                    Subject = "邮箱验证登录";
-                    Content = $"您正在通过邮箱验证码登录，验证码为：{content}，一分钟内有效";
-                    break;
-
-                case EmailType.EmailBind:
-                    Subject = "绑定邮箱";
-                    Content = $"您正在为账户绑定邮箱，验证码为：{content}，一分钟内有效";
-                    break;
-
-                case EmailType.EmailRetrievePassword:
-                    Subject = "邮箱验证找回密码";
-                    Content = $"您正在通过邮箱验证找回密码，验证码为：{content}，一分钟内有效";
-                    break;
-
-                case EmailType.EmailChangePassword:
-                    Subject = "邮箱验证修改密码";
-                    Content = $"您正在通过邮箱验证修改密码，验证码为：{content}，一分钟内有效";
-                    break;
-
-                case EmailType.NoticeManager:
-                case EmailType.NoticeTopicCreator:
-                    Subject = "Blazor-Blazui社区消息";
-                    Content = content;
-                    break;
-
-                default:
-                    throw new NotSupportedException();
-            }
+            var Subject = "邮箱解绑";
+            var Content = $"您正在解绑邮箱，验证码为：{Code}，2分钟内有效";
+            return SendEmailAsync(Email, Content, Subject);
+        }
+        async Task<bool> SendEmailAsync(string Email, string Content, string Subject)
+        {
             if (string.IsNullOrWhiteSpace(Content))
                 return false;
             if (string.IsNullOrWhiteSpace(Subject))
@@ -104,6 +75,7 @@ namespace Blazui.Community.Api.Service
             return await _smtpClientService.SendAsync(Email, Content, Subject);
 
         }
+
         private EmailNoticeModel RandomAnEmail()
         {
             if (emailNoticeOptions.Value.EmailNotices is null)
@@ -122,5 +94,7 @@ namespace Blazui.Community.Api.Service
             int index = new Random().Next(0, total);//左边闭区间  右边开区间
             return emailNoticeModels[index];
         }
+
+       
     }
 }

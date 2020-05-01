@@ -1,0 +1,15 @@
+﻿@inherits TopicUserInfoBase
+<div class="flex-centor">
+    <BCard Style="height:100%;border:none;" Shadow="ShadowShowType.Never" EnableAlwaysRender="true">
+        <Header>作者简介</Header>
+        <Body>
+            @if (User!=null&&!string.IsNullOrWhiteSpace(User.NickName))
+            {
+                <p>@($"昵称：{User.NickName}")</p>
+                <p>@($"主贴：{User.TopicCount}  回帖：{User.ReplyCount}")</p>
+                <p>@($"最后活跃时间：{User.LastLoginDate.ToString("yyyy-MM-dd")}")</p>
+            }
+        </Body>
+    </BCard>
+</div>
+

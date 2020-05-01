@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Blazui.Community.Model.Models;
+﻿using System.Threading.Tasks;
 using Blazui.Community.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Blazui.Community.App.Features.Seo
 {

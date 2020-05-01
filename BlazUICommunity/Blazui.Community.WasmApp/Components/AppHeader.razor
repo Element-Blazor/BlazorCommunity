@@ -1,0 +1,58 @@
+﻿@inherits AppHeaderBase
+<div class="nav">
+    <div class="container app-header-dropdown">
+        <img src="img/logo.svg" width="146" height="38" />
+        <div class="fill"></div>
+        @if (headerMenus.Any())
+        {
+            <ul role="menubar" class="el-menu--horizontal el-menu" style="overflow:auto;">
+
+                @foreach (var menu in headerMenus)
+                {
+                    <li role="menuitem" tabindex="0" class="el-menu-item is-active" style="background-color:transparent;color:#fff; border-bottom-color:#fff;">
+                        @{
+                            var target = @menu.URL == "/" ? "_self" : "_blank";
+                            <a href="@menu.URL" target=@target>
+                                <i class="@menu.Icon"></i>
+                                @menu.Title
+                            </a>
+                        }
+
+                    </li>
+                }
+            </ul>
+
+        }
+    <div class="fill">
+    </div>
+        <div style="flex:1;">
+            <AuthorizeView>
+                <Authorized>
+                    <BDropDown EnableAlwaysRender="true">
+                        <Trigger>
+                            <BButton Style="border:none;background:transparent;padding:0px;">
+                                <div style="display:flex;">
+                                    <img src="@User?.Avator" class="app-nav-avatar-img" />
+                                    <span class="el-dropdown-link" style="margin:auto;color:#fff;">
+                                        @User?.NickName  <i class="el-icon-arrow-down el-icon--right" style="color:#fff;"></i>
+                                    </span>
+                                </div>
+                            </BButton>
+                        </Trigger>
+                        <Items>
+                            <BDropDownItem OnClick="e=>Personal()">个人中心</BDropDownItem>
+                            <BDropDownItem OnClick="e=>LoginOut()">退出登录</BDropDownItem>
+
+                        </Items>
+                    </BDropDown>
+                </Authorized>
+                <NotAuthorized>
+                    <div style="display:flex;">
+                        <BButton Type="@ButtonType.Primary" OnClick="e=>Login()" Style="padding:12px 5px;">登录</BButton>
+                        <BButton Type="@ButtonType.Primary" OnClick="e=>Regist()" Style="padding:12px 5px;margin-left:0px !important">注册</BButton>
+                    </div>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+    </div>
+</div>

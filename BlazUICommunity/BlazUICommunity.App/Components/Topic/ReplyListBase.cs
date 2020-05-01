@@ -75,7 +75,7 @@ namespace Blazui.Community.App.Components
             {
                 ToastError("主贴不存在或已删除");
                 await Task.Delay(500);
-                navigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo("/");
             }
 
             IsEnd = TopicModel.Status == 1;
@@ -140,7 +140,7 @@ namespace Blazui.Community.App.Components
                     ////var deleteReply = Replys.FirstOrDefault(p => p.Id == replyId);
                     ////Replys.Remove(deleteReply);
                     //await Task.Delay(500);
-                    navigationManager.NavigateTo(navigationManager.Uri, true);
+                    NavigationManager.NavigateTo(NavigationManager.Uri, true);
                     //MarkAsRequireRender();
                     //StateHasChanged();
                 }
@@ -190,6 +190,6 @@ namespace Blazui.Community.App.Components
             await LoadData();
         }
 
-        internal void NavigateToLoginPage()=> navigationManager.NavigateTo("/account/signin?returnUrl=" + System.Net.WebUtility.UrlEncode(new Uri(navigationManager.Uri).PathAndQuery));
+        internal void NavigateToLoginPage()=> NavigationManager.NavigateTo("/account/signin?returnUrl=" + System.Net.WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery));
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Blazui.Community.App.Model;
 using Blazui.Community.App.Pages;
+using Blazui.Community.Common;
 using Blazui.Community.Enums;
 using Blazui.Component;
 using System.Text.RegularExpressions;
@@ -35,7 +36,7 @@ namespace Blazui.Community.App.Features.Account.Pages
             {
                 var response = await NetService.ValidateVerifyCode(UserId, EmailType.EmailRetrievePassword, model.Code);
                 if (response.IsSuccess)
-                    navigationManager.NavigateTo($"/account/reset/{UserId}", true);
+                    NavigationManager.NavigateTo($"/account/reset/{UserId}", true);
                 else
                     ToastError(response.Message);
             }
@@ -50,7 +51,7 @@ namespace Blazui.Community.App.Features.Account.Pages
                 return;
 
             var model = form.GetValue<PasswordModel>();
-            if (!Regex.Match(model.Email, "^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$").Success)
+            if (!RegexHelper.IsEmail(model.Email))
             {
                 ToastError("邮箱号码错误");
                 return;
@@ -77,8 +78,7 @@ namespace Blazui.Community.App.Features.Account.Pages
                         else
                             ToastError($"发送失败，{response.Message}");
                     }
-
-            );
+                );
                 while (TimeOut > 0)
                 {
                     if (TimeOut == 1) btnSendIsDisabled = false;

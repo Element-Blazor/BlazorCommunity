@@ -24,7 +24,7 @@ namespace Blazui.Community.App.Components
         {
             ToastSuccess("更新成功");
             await Task.Delay(200);
-            navigationManager.NavigateTo(Uri, true);
+            NavigationManager.NavigateTo(Uri, true);
         }
     }
 }

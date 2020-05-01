@@ -1,39 +1,22 @@
-﻿using Blazui.Community.App.Model.Condition;
+﻿using Blazui.Community.DTO;
+using Blazui.Community.App.Model.Condition;
 using Blazui.Community.App.Pages;
-using Blazui.Community.DTO;
-using Blazui.Community.Enums;
-using Blazui.Community.Model.Models;
 using Blazui.Component;
-using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blazui.Community.App.Components
+namespace Blazui.Community.App.Components.User
 {
-    [Authorize]
-    public class PersonalTopicTableBase : PageBase
+    public abstract class PersonalTopicTableBase<T>:PageBase
     {
-        protected int pageSize = 6;
         protected int currentPage = 1;
-        protected TopicCategory? Category;
-        internal bool requireRender = false;
-        protected IList<PersonalTopicDisplayDto> Datas = new List<PersonalTopicDisplayDto>();
-        protected int DataCount = 5;
+        protected int pageSize = 7;
+        protected int DataCount = 0;
+        protected IList<T> Datas = new List<T>();
         protected BTable table;
         protected BForm searchForm;
-        protected BZUserModel User;
-
-        private SearchPersonalTopicCondition Condition
-        {
-            get
-            {
-                var condition = searchForm.GetValue<SearchPersonalTopicCondition>();
-                condition.PageIndex = currentPage;
-                condition.PageSize = pageSize;
-                return condition;
-            }
-        }
 
         internal int CurrentPage
         {
@@ -44,110 +27,39 @@ namespace Blazui.Community.App.Components
             set
             {
                 currentPage = value;
-                requireRender = true;
-                SearchData();
+                LoadDatas();
             }
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected async Task SearchData()
         {
-            await base.OnAfterRenderAsync(firstRender);
-            if (!firstRender)
-                return;
-            await LoadDatas();
+            currentPage = 1;
+            await table.WithLoadingAsync(async () => await LoadDatas());
         }
 
-        private async Task LoadDatas(SearchPersonalTopicCondition condition = null)
+        protected abstract Task LoadDatas();
+
+        protected void SetData(IList<T> datas = null, int? Total = 0)
         {
-            if (table == null)
-            {
-                Console.WriteLine("table is null");
-            }
-            await table?.WithLoadingAsync(async () =>
-            {
-                await QueryTopics(condition);
-            });
+            datas ??= new List<T>();
+            Datas = datas;
+            DataCount = Total ?? 0;
+            searchForm?.MarkAsRequireRender();
+            table?.MarkAsRequireRender();
+            StateHasChanged();
         }
 
-        /// <summary>
-        /// 删除纪录
-        /// </summary>
-        /// <param name="topic"></param>
-        public async Task Del(object topic)
-        {
-            MessageBoxResult Confirm = await MessageBox.ConfirmAsync("确定要删除？");
-            if (Confirm == MessageBoxResult.Ok)
-                if (topic is PersonalTopicDisplayDto topicModel)
-                {
-                    var result = await NetService.DeleteTopic(topicModel.Id);
-                    if (result.IsSuccess)
-                    {
-                        await LoadDatas();
-                        ToastSuccess("删除成功");
-                    }
-                }
-        }
 
-        protected void LinktoTopic(object topic)
-        {
-            if (topic is PersonalTopicDisplayDto topicModel)
-                navigationManager.NavigateTo($"/topic/{topicModel.Id}");
+        protected override async Task InitilizePageDataAsync() {
+
+            User =await GetUser();
+            await SearchData();
         }
 
         protected override bool ShouldRender() => true;
 
-        /// <summary>
-        /// 调用webapi接口获取数据，转换数据，加载界面
-        /// </summary>
-        /// <param name="condition"></param>
-        /// <returns></returns>
-        protected async Task QueryTopics(SearchPersonalTopicCondition condition = null)
-        {
-            User = await GetUser();
-            condition = CreateCondition(condition);
-            var result = await NetService.QueryPersonalTopics(condition);
-            if (result.IsSuccess && result.Data != null && result.Data.TotalCount > 0)
-            {
-                Datas = result.Data.Items;
-                DataCount = result.Data.TotalCount;
-                UpdateUI();
-            }
-            else
-            {
-                if (result.Code == 204)
-                {
-                    Datas = new List<PersonalTopicDisplayDto>();
-                    DataCount = 0;
-                    UpdateUI();
-                }
-            }
-        }
+        protected void LinktoTopic(string topicId) => NavigationManager.NavigateTo($"/topic/{topicId}");
 
-        private SearchPersonalTopicCondition CreateCondition(SearchPersonalTopicCondition condition)
-        {
-            condition ??= new SearchPersonalTopicCondition();
-            condition.CreatorId = User.Id;
-            condition.PageIndex = currentPage;
-            condition.PageSize = pageSize;
-            return condition;
-        }
 
-        /// <summary>
-        /// 搜索
-        /// </summary>
-        /// <returns></returns>
-        protected async Task SearchData()
-        {
-            await LoadDatas(Condition);
-        }
-
-        private void UpdateUI()
-        {
-            requireRender = true;
-            searchForm?.MarkAsRequireRender();
-            table?.MarkAsRequireRender();
-            table?.Refresh();
-            StateHasChanged();
-        }
     }
 }

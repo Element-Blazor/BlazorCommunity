@@ -28,6 +28,7 @@
     <ProjectReference Include="..\..\..\Blazui\src\Components\Blazui.Component.csproj" />
     <ProjectReference Include="..\..\..\Blazui\src\Markdown\Blazui.Markdown.csproj" />
     <ProjectReference Include="..\Blazui.Community.AutofacModules\Blazui.Community.AutofacModules.csproj" />
+    <ProjectReference Include="..\Blazui.Community.Common\Blazui.Community.Common.csproj" />
     <ProjectReference Include="..\Blazui.Community.FileExtensions\Blazui.Community.FileExtensions.csproj" />
     <ProjectReference Include="..\Blazui.Community.HttpClientExtensions\Blazui.Community.HttpClientExtensions.csproj" />
     <ProjectReference Include="..\Blazui.Community.IdentityExtensions\Blazui.Community.IdentityExtensions.csproj" />
@@ -44,6 +45,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Components\User\PersonalTopic.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Components\User\PersonalTopicFollowed.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Components\User\PersonalTopicPublished.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Components\User\PersonalTopicReplied.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
     <Content Update="wwwroot\lang\en-US.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -57,4 +70,16 @@
       <UserProperties properties_4launchsettings_1json__JsonSchema="" />
     </VisualStudio>
   </ProjectExtensions>
+
+  <ItemGroup>
+    <Watch Remove="Components\User\PersonalReplyContent.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\User\PersonalReplyContent.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\User\PersonalReplyContent.razor" />
+  </ItemGroup>
 </Project>

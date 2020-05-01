@@ -10,16 +10,16 @@
 
                 @foreach (var menu in headerMenus)
                 {
-                <li role="menuitem" tabindex="0" class="el-menu-item is-active" style="background-color:transparent;color:#fff; border-bottom-color:#fff;">
-                    @{
-                        var target = @menu.URL=="/"? "_self" : "_blank";
-                        <a href="@menu.URL" target=@target>
-                            <i class="@menu.Icon"></i>
-                            @menu.Title
-                        </a>
-                    }
+                    <li role="menuitem" tabindex="0" class="el-menu-item is-active" style="background-color:transparent;color:#fff; border-bottom-color:#fff;">
+                        @{
+                            var target = @menu.URL == "/" ? "_self" : "_blank";
+                            <a href="@menu.URL" target=@target>
+                                <i class="@menu.Icon"></i>
+                                @menu.Title
+                            </a>
+                        }
 
-                </li>
+                    </li>
                 }
             </ul>
 
@@ -40,16 +40,17 @@
                         </BButton>
                     </Trigger>
                     <Items>
-                            <BDropDownItem OnClick="e=>Personal()">个人中心</BDropDownItem>
-                            <BDropDownItem OnClick="e=>LoginOut()">退出</BDropDownItem>
-                      
+                        <BDropDownItem OnClick="e=>Personal()">个人中心</BDropDownItem>
+                        <BDropDownItem OnClick="e=>LoginOut()">退出登录</BDropDownItem>
+
                     </Items>
                 </BDropDown>
             }
             else
             {
-                <div>
-                    <BButton Type="@ButtonType.Text" OnClick="e=>Login()" Style="color:#fff;">登录/注册</BButton>
+                <div style="display:flex;">
+                    <BButton Type="@ButtonType.Primary" OnClick="e=>Login()" Style="padding:12px 5px;">登录</BButton>
+                    <BButton Type="@ButtonType.Primary" OnClick="e=>Regist()" Style="padding:12px 5px;margin-left:0px !important">注册</BButton>
                 </div>
             }
         </div>

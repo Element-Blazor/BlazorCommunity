@@ -75,7 +75,7 @@ namespace Blazui.Community.App.Pages
                 {
                     ToastSuccess("发布成功");
                     await Task.Delay(100);
-                    navigationManager.NavigateTo($"/topic/{result.Data}");
+                    NavigationManager.NavigateTo($"/topic/{result.Data}");
                 }
                 else
                 {
