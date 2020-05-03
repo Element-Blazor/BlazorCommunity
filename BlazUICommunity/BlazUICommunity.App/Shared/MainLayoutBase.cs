@@ -1,4 +1,5 @@
 ﻿using Blazui.Community.App.Components;
+using Blazui.Community.App.Service;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -11,7 +12,8 @@ namespace Blazui.Community.App.Shared
         protected BLayout Blayout { get; set; }
         protected AppHeader Appheader { get; set; }
         protected BCard Bcard { get; set; }
-
+        [Inject]
+        internal BrowerService browerService { get; set; }
         [Parameter]
         public RenderFragment ChildContent { get; set; }
 

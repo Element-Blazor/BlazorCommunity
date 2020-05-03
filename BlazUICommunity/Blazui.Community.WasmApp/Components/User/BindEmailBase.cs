@@ -39,6 +39,8 @@ namespace Blazui.Community.WasmApp.Components
            var result= await NetService.SendVerifyCode(User.Id, EmailType.EmailUnBind, User.Email);
             BtnCancelDisabled = false;
 
+            if (!result.IsSuccess)
+                ToastError(result.Message);
             SendCanCelEmailBindCodeSuccess = result.IsSuccess;
             VerifyCode = result.IsSuccess ? result.Data.ToString() : "";
             UpdateUI();

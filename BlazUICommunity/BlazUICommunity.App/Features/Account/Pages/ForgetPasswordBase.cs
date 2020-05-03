@@ -66,29 +66,29 @@ namespace Blazui.Community.App.Features.Account.Pages
                 UserId = user.Id;
                 await WithFullScreenLoading(
                     async () => await NetService.SendVerifyCode(user.Id, EmailType.EmailRetrievePassword, model.Email),
-                    response =>
+                   async response =>
                     {
                         if (response.IsSuccess)
                         {
                             verifyCode = response.Data.ToString();
                             ToastSuccess("验证码发送成功，2分钟内有效，请前往邮箱查收");
                             btnSendIsDisabled = true;
+                            while (TimeOut > 0)
+                            {
+                                if (TimeOut == 1) btnSendIsDisabled = false;
+                                TimeOut--;
+                                BtnText = (TimeOut > 0 && TimeOut < CountDownTime) ? $"请等待{TimeOut}s后重试" : "发送验证码";
+                                StateHasChanged();
+                            };
+                            await Task.Delay(1000);
+                            TimeOut = CountDownTime;
                             StateHasChanged();
                         }
                         else
                             ToastError($"发送失败，{response.Message}");
                     }
                 );
-                while (TimeOut > 0)
-                {
-                    if (TimeOut == 1) btnSendIsDisabled = false;
-                    TimeOut--;
-                    BtnText = (TimeOut > 0 && TimeOut < CountDownTime) ? $"请等待{TimeOut}s后重试" : "发送验证码";
-                    StateHasChanged();
-                    await Task.Delay(1000);
-                };
-                TimeOut = CountDownTime;
-                StateHasChanged();
+                
             }
         }
     }

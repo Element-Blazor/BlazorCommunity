@@ -1,9 +1,8 @@
-﻿using Blazui.Community.Model.Logger;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Blazui.Community.Model.Models
+namespace Blazui.Community.AdminDbContext
 {
     public class BlazUICommunityAdminDbContext : IdentityDbContext
     {

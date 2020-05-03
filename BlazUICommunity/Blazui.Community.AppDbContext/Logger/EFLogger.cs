@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 
-namespace Blazui.Community.Model.Logger
+namespace Blazui.Community.AppDbContext
 {
     public class EFLogger : ILogger
     {

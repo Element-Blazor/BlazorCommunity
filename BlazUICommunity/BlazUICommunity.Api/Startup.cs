@@ -1,6 +1,7 @@
 using Arch.EntityFrameworkCore.UnitOfWork;
 using Autofac;
 using AutoMapper;
+using Blazui.Community.Api.Extensions;
 using Blazui.Community.Api.Jwt;
 using Blazui.Community.Api.Options;
 using Blazui.Community.Api.Service;
@@ -36,47 +37,19 @@ namespace Blazui.Community.Api
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContext<BlazUICommunityContext>(opt =>
-            opt.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>()
-                .AddCustomAddControllers()
-                .AddCustomCors(GetAllowOrigins(), PolicyName)
-                .AddCustomSwagger()
-                .AddHttpContextAccessor()
-                .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
-                .AddMemoryCache(p => p.ExpirationScanFrequency = TimeSpan.FromSeconds(100))
-                .AddCustomAspIdenitty<BZUserModel, BlazUICommunityContext>();
-
-            services.AddScoped<JwtService>()
-                    .AddJwtConfiguration(Configuration);
-
-            services.AddScoped<ICacheService, CacheService>()
-                    .AddScoped<IMessageService, MessageService>()
-                    .AddScoped<ICodeService, CodeService>()
-                    .AddScoped<ISmtpClientService, SmtpClientService>()
-                    .AddTransient<ImgCompressService>()
-                    .Configure<EmailStmpOptions>(Configuration.GetSection("EmailSetting"))
-                    .Configure<EmailNoticeOptions>(Configuration)
-                    .Configure<BaseDomainOptions>(Configuration);
-            //services.AddOptions<EmailNoticeOptions>().Configure(option => Configuration.Bind(option));
-
-            services.AddResponseCompression(opts => {
-                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-                    new[] { "application/octet-stream" });
-            });
-            string[] GetAllowOrigins()
-            {
-                var AllowOrigins = new List<string>();
-                Configuration.GetSection("AllowOrigins").Bind(AllowOrigins);
-                return AllowOrigins.ToArray();
-            }
-        }
-
         /// <summary>
         ///
         /// </summary>
         public IContainer AutofacContainer;
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddCustomDbService(Configuration);
+            services.AddCustomWebApi(Configuration);
+            services.AddCustomServices();
+            services.AddCustomConfigure(Configuration);
+
+        }
 
         /// <summary>
         /// 系统调用
@@ -112,21 +85,16 @@ namespace Blazui.Community.Api
             app.UseAuthentication();
             //授权
             app.UseAuthorization();
+
             app.UseCors(PolicyName);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            foreach (UploadPath path in Enum.GetValues(typeof(UploadPath)))
-            {
-                var physicsPath = Path.Combine(env.WebRootPath, UploadRootPath, path.Description());
-                if (!Directory.Exists(physicsPath))
-                    Directory.CreateDirectory(physicsPath);
-            }
-
-            //程序停止调用autofac函数
-            appLitetime.ApplicationStopped.Register(() => { if (AutofacContainer != null) AutofacContainer.Dispose(); });
+            env.CreateUplodFolder();
+            appLitetime.DisposeAutofacContainerWhenAppStopped(AutofacContainer);
         }
+
     }
 }

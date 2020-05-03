@@ -46,6 +46,8 @@ namespace Blazui.Community.App.Components
             BtnCancelDisabled = false;
 
             SendCanCelEmailBindCodeSuccess = result.IsSuccess;
+            if (!result.IsSuccess)
+                ToastError(result.Message);
             VerifyCode = result.IsSuccess ? result.Data.ToString() : "";
             UpdateUI();
             

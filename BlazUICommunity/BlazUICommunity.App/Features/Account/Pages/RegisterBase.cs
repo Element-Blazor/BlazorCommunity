@@ -1,7 +1,7 @@
 ﻿using Blazui.Community.App.Pages;
 using Blazui.Community.Common;
 using Blazui.Community.DTO;
-using Blazui.Community.Repository;
+using Blazui.Community.Model.Models;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.DataProtection;
@@ -16,7 +16,7 @@ namespace Blazui.Community.App.Features.Account.Pages
     public class RegisterBase : PageBase
     {
         [Inject]
-        private BZUserIdentityRepository BZUserRepository { get; set; }
+        UserManager<BZUserModel> userManager { get; set; }
 
         [Inject]
         private IHttpContextAccessor httpContextAccessor { get; set; }
@@ -25,8 +25,8 @@ namespace Blazui.Community.App.Features.Account.Pages
         private IDataProtectionProvider dataProtectionProvider { get; set; }
 
         protected BForm registerForm;
-        internal RegisterAccountDto Value;
-      
+        internal RegisterAccountDto Value = new RegisterAccountDto();
+
         protected InputType passwordType { get; set; } = InputType.Password;
 
         internal void TogglePassword() => passwordType = passwordType == InputType.Text ? InputType.Password : InputType.Text;
@@ -63,7 +63,7 @@ namespace Blazui.Community.App.Features.Account.Pages
                 }
 
                 bool AccountIsEmail = RegexHelper.IsEmail(registerAccountModel.UserAccount);
-                var identityResult = await BZUserRepository.CreateUserAsync(registerAccountModel.UserAccount, registerAccountModel.Password,"", AccountIsEmail? registerAccountModel.UserAccount:"");
+                var identityResult = await CreateUserAsync(registerAccountModel.UserAccount, registerAccountModel.Password, "", AccountIsEmail ? registerAccountModel.UserAccount : "");
                 if (!identityResult.Succeeded)
                 {
                     foreach (var identityError in identityResult.Errors)
@@ -81,7 +81,7 @@ namespace Blazui.Community.App.Features.Account.Pages
             });
         }
 
-       
+
 
         private async Task AutoLogin(string UserAccount)
         {
@@ -106,15 +106,35 @@ namespace Blazui.Community.App.Features.Account.Pages
             NavigationManager.NavigateTo("/account/signinactual?t=" + pdata, forceLoad: true);
         }
 
-        protected override void OnParametersSet()
-        {
-            Value = new RegisterAccountDto();
-            base.OnParametersSet();
-        }
 
-        protected override Task InitilizePageDataAsync()
+
+        public async Task<IdentityResult> CreateUserAsync(string userAccount, string Password, string Mobile = null, string Email = null, string NickName = null, int Sex = 0, string CreatorId = null)
         {
-            return Task.CompletedTask;
+            if (string.IsNullOrEmpty(userAccount))
+            {
+                throw new ArgumentException("message", nameof(userAccount));
+            }
+
+            if (string.IsNullOrEmpty(Password))
+            {
+                throw new ArgumentException("message", nameof(Password));
+            }
+            return await userManager.CreateAsync(
+                   new BZUserModel
+                   {
+                       UserName = userAccount,
+                       NickName = NickName ?? userAccount,
+                       Email = Email ?? "",
+                       EmailConfirmed = false,
+                       NormalizedUserName = userAccount,
+                       CreateDate = DateTime.Now,
+                       LastLoginDate = DateTime.Now,
+                       CreatorId = CreatorId ?? Guid.Empty.ToString(),
+                       Sex = Sex,
+                       Status = 0,
+                       Avator = "/img/defaultAct.png",
+                       PhoneNumber = Mobile ?? ""
+                   }, Password);
         }
     }
 }

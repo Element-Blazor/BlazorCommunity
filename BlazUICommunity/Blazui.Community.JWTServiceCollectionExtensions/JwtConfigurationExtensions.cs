@@ -8,7 +8,7 @@ namespace Blazui.Community.JWTServiceCollectionExtensions
 {
     public static class JwtConfigurationExtensions
     {
-        public static void AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             if (bool.Parse(configuration["Authentication:JwtBearer:IsEnabled"]))
             {
@@ -43,6 +43,7 @@ namespace Blazui.Community.JWTServiceCollectionExtensions
                     };
                 });
             }
+            return services;
         }
     }
 }

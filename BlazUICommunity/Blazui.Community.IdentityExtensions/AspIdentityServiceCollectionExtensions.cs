@@ -35,6 +35,14 @@ namespace Blazui.Community.IdentityExtensions
             }).AddErrorDescriber<CustomIdentityErrorDescriber>()
               .AddEntityFrameworkStores<TDbContext>()
               .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.SlidingExpiration = true;
+            });
         }
     }
 }

@@ -44,31 +44,30 @@ namespace Blazui.Community.App.Components.User
             else
             {
                 await WithFullScreenLoading(
-                    async () => await NetService.SendVerifyCode(User.Id, EmailType.EmailRetrievePassword, model.Email),
-                    response =>
-                    {
-                        if (response.IsSuccess)
-                        {
-                            verifyCode = response.Data.ToString();
-                            ToastSuccess("验证码发送成功，2分钟内有效，请前往邮箱查收");
-                            btnInputDisabled = true;
-                            StateHasChanged();
-                        }
-                        else
-                            ToastError($"发送失败，{response.Message}");
-                    }
+                  async () => await NetService.SendVerifyCode(User.Id, EmailType.EmailRetrievePassword, model.Email),
+                 async response =>
+                  {
+                      if (response.IsSuccess)
+                      {
+                          verifyCode = response.Data.ToString();
+                          ToastSuccess("验证码发送成功，2分钟内有效，请前往邮箱查收");
+                          btnInputDisabled = true;
+                          while (TimeOut > 0)
+                          {
+                              if (TimeOut == 1) btnInputDisabled = false;
+                              TimeOut--;
+                              BtnText = (TimeOut > 0 && TimeOut < CountDownTime) ? $"请等待{TimeOut}s后重试" : "发送验证码";
+                              StateHasChanged();
+                          };
+                          TimeOut = CountDownTime;
+                          await Task.Delay(1000);
+                          StateHasChanged();
+                      }
+                      else
+                          ToastError($"{response.Message}");
+                  }
 
-            );
-                while (TimeOut > 0)
-                {
-                    if (TimeOut == 1) btnInputDisabled = false;
-                    TimeOut--;
-                    BtnText = (TimeOut > 0 && TimeOut < CountDownTime) ? $"请等待{TimeOut}s后重试" : "发送验证码";
-                    StateHasChanged();
-                    await Task.Delay(1000);
-                };
-                TimeOut = CountDownTime;
-                StateHasChanged();
+          );
             }
         }
 

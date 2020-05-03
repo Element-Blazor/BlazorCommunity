@@ -32,6 +32,8 @@
 <body>
     <app>
         @(await Html.RenderComponentAsync<App>(RenderMode.Server))
+
+         @*<component type="typeof(App)" render-mode="ServerPrerendered" param-UserAgent="@Model.UserAgent" param-IPAddress="@Model.IPAddress" />*@
     </app>
 
     <script src="_content/Blazui.Component/js/dom.js"></script>

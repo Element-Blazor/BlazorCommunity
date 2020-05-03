@@ -1,9 +1,9 @@
-﻿using Blazui.Community.Model.Logger;
+﻿using Blazui.Community.Model.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Blazui.Community.Model.Models
+namespace Blazui.Community.AppDbContext
 {
     public partial class BlazUICommunityContext : IdentityDbContext<BZUserModel, IdentityRole<string>, string>
     {

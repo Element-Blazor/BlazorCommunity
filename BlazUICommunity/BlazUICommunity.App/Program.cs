@@ -28,6 +28,8 @@ namespace Blazui.Community.App
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                }).UseServiceProviderFactory(new AutofacServiceProviderFactory()).UseNLog();
+                }).UseNLog();
+
+        //.UseServiceProviderFactory(new AutofacServiceProviderFactory())
     }
 }

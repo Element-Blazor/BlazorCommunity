@@ -77,7 +77,7 @@ namespace Blazui.Community.Api.Controllers.Client
             var topicModel = _mapper.Map<BZTopicModel>(dto);
             var model = await _bZTopicRepository.InsertAsync(topicModel);
             _cacheService.Remove(nameof(BZTopicModel));
-            if (dto.Category ==0 || Notice == 1)
+            if (dto.Category == 0 || Notice == 1)
                 messageService.SendEmailToManagerForAnswerAsync(dto.Id);
             return Ok(model.Entity.Id);
         }
@@ -158,7 +158,7 @@ namespace Blazui.Community.Api.Controllers.Client
             if (topics.Any())
             {
                 var topic = topics.FirstOrDefault();
-                if(topic.Status==-1)
+                if (topic.Status == -1)
                     return NoContent();
                 if (topic.Status == 0)//已结帖不再更新浏览量
                 {
@@ -268,7 +268,7 @@ namespace Blazui.Community.Api.Controllers.Client
                 var topic = await _bZTopicRepository.GetFirstOrDefaultAsync(p => p.Id == topicId);
                 var pagedatas = pagedList.From(res => _mapper.Map<List<BZReplyDto>>(res));
                 var users = await _cacheService.GetUsersAsync(p => pagedList.Items.Select(d => d.CreatorId).Contains(p.Id));
-               
+
                 foreach (var replyDto in pagedatas.Items)
                 {
                     var user = users.FirstOrDefault(p => p.Id == replyDto.CreatorId);
@@ -304,7 +304,7 @@ namespace Blazui.Community.Api.Controllers.Client
             var topicRepo = _unitOfWork.GetRepository<BZTopicModel>(true);
             var replyRepo = _unitOfWork.GetRepository<BZReplyModel>(true);
             var reply = await replyRepo.FindAsync(replyId);
-            if (reply is null ||reply.Status!=0)
+            if (reply is null || reply.Status != 0)
                 return NoContent();
             var topic = await topicRepo.FindAsync(reply.TopicId);
             if (topic is null)
@@ -384,6 +384,12 @@ namespace Blazui.Community.Api.Controllers.Client
             return Ok(pagedatas);
         }
 
+
+        public async Task<IActionResult> QueryByPage(int pageIndex, int pageSize)
+        {
+            var result = await _bZTopicRepository.GetPagedListAsync(pageIndex, pageSize);
+            return Ok(result);
+        }
         /// <summary>
         /// 查询精华帖子
         /// </summary>
@@ -443,7 +449,7 @@ namespace Blazui.Community.Api.Controllers.Client
         [HttpGet("ShareHot")]
         public async Task<IActionResult> ShareHot()
         {
-         
+
             return Ok(await _cacheService.GetShareHotsAsync());
         }
         /// <summary>
@@ -456,7 +462,7 @@ namespace Blazui.Community.Api.Controllers.Client
             return Ok(await _cacheService.GetAskHotsAsync());
         }
 
-      
+
         /// <summary>
         /// 结贴
         /// </summary>

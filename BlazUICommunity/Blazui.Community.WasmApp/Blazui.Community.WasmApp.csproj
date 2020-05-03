@@ -18,12 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Blazui\src\Components\Blazui.Component.csproj" />
     <ProjectReference Include="..\..\..\Blazui\src\Markdown\Blazui.Markdown.csproj" />
     <ProjectReference Include="..\Blazui.Community.HttpClientExtensions\Blazui.Community.HttpClientExtensions.csproj" />
-    <ProjectReference Include="..\Blazui.Community.Response\Blazui.Community.Response.csproj" />
     <ProjectReference Include="..\Blazui.Community.Shared\Blazui.Community.Shared.csproj" />
-    <ProjectReference Include="..\BlazUICommunity.Repository\Blazui.Community.Repository.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.DTO\Blazui.Community.DTO.csproj" />
+    <ProjectReference Include="..\BlazUICommunity.Model\Blazui.Community.Model.csproj" />
     <ProjectReference Include="..\BlazUICommunity.Request\Blazui.Community.Request.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +40,10 @@
     </Content>
     <Content Update="wwwroot\appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\css\site.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Update="wwwroot\js\localstorextension.js">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

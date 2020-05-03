@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Blazui.Community.Model.Logger
+namespace Blazui.Community.AdminDbContext
 {
     public class CustomEFCoreLoggerFactory : ILoggerFactory
     {

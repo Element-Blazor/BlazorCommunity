@@ -1,6 +1,8 @@
-﻿using Blazui.Community.SwaggerExtensions;
+﻿using Blazui.Community.Api.Service;
+using Blazui.Community.SwaggerExtensions;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace Blazui.Community.Api.Controllers
 {
@@ -12,6 +14,21 @@ namespace Blazui.Community.Api.Controllers
     //[HttpCacheValidation(MustRevalidate = true)]
     public class TestController : ControllerBase
     {
+        private readonly ISmtpClientService smtpClientService;
+
+        public TestController(ISmtpClientService smtpClientService)
+        {
+            this.smtpClientService = smtpClientService;
+        }
+        [HttpGet("SendATestEmail")]
+        public async Task<IActionResult> SendATestEmail(string email)
+        {
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                return Ok(await smtpClientService.SendAsync(email, "这是一封测试邮件", "邮件测试"));
+            }
+            return BadRequest();
+        }
         [HttpGet("Time")]
         public IActionResult Time(string a)
         {

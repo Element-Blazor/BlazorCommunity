@@ -38,6 +38,7 @@ namespace Blazui.Community.Api.Controllers.Client
             _messageService = messageService;
             _bZVerifyCodeRepository = bZVerifyCodeRepository;
         }
+      
 
         /// <summary>
         /// 发送验证码

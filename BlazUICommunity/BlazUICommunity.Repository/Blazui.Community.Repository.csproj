@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.0.20" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blazui.Community.AppDbContext\Blazui.Community.AppDbContext.csproj" />
     <ProjectReference Include="..\BlazUICommunity.DTO\Blazui.Community.DTO.csproj" />
     <ProjectReference Include="..\BlazUICommunity.Model\Blazui.Community.Model.csproj" />
     <ProjectReference Include="..\BlazUICommunity.UnitOfWork\Blazui.Community.UnitOfWork.csproj" />

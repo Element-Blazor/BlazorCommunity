@@ -67,15 +67,8 @@
     <ProjectReference Include="..\Blazui.Community.Shared\Blazui.Community.Shared.csproj" />
     <ProjectReference Include="..\Blazui.Community.StringExtensions\Blazui.Community.StringExtensions.csproj" />
     <ProjectReference Include="..\Blazui.Community.SwaggerExtensions\Blazui.Community.SwaggerExtensions.csproj" />
-    <ProjectReference Include="..\BlazUICommunity.DTO\Blazui.Community.DTO.csproj" />
-    <ProjectReference Include="..\BlazUICommunity.Model\Blazui.Community.Model.csproj" />
     <ProjectReference Include="..\BlazUICommunity.Repository\Blazui.Community.Repository.csproj" />
     <ProjectReference Include="..\BlazUICommunity.Request\Blazui.Community.Request.csproj" />
-    <ProjectReference Include="..\BlazUICommunity.UnitOfWork\Blazui.Community.UnitOfWork.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="http://json.schemastore.org/mta" appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

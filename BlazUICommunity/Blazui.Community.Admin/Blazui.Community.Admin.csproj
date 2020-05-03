@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Blazui\src\Admin\Admin.ServerRender\Blazui.Admin.ServerRender.csproj" />
     <ProjectReference Include="..\..\..\Blazui\src\Markdown\Blazui.Markdown.csproj" />
+    <ProjectReference Include="..\Blazui.Community.AdminDbContext\Blazui.Community.AdminDbContext.csproj" />
     <ProjectReference Include="..\Blazui.Community.DictionaryExtensions\Blazui.Community.DictionaryExtensions.csproj" />
     <ProjectReference Include="..\Blazui.Community.HttpClientExtensions\Blazui.Community.HttpClientExtensions.csproj" />
     <ProjectReference Include="..\BlazUICommunity.DTO\Blazui.Community.DTO.csproj" />

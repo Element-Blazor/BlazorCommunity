@@ -722,27 +722,27 @@
             权重
             </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Options.EmailStmpOptions.Account">
+        <member name="P:Blazui.Community.Api.Options.EmailStmpConfig.Account">
              <summary>
             
              </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Options.EmailStmpOptions.Auth">
+        <member name="P:Blazui.Community.Api.Options.EmailStmpConfig.Auth">
              <summary>
             
              </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Options.EmailStmpOptions.StmpHost">
+        <member name="P:Blazui.Community.Api.Options.EmailStmpConfig.StmpHost">
              <summary>
             
              </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Options.EmailStmpOptions.StmpPort">
+        <member name="P:Blazui.Community.Api.Options.EmailStmpConfig.StmpPort">
              <summary>
             
              </summary>
         </member>
-        <member name="P:Blazui.Community.Api.Options.EmailStmpOptions.FromName">
+        <member name="P:Blazui.Community.Api.Options.EmailStmpConfig.FromName">
              <summary>
             
              </summary>
@@ -930,7 +930,7 @@
             <param name="Subject"></param>
             <returns></returns>
         </member>
-        <member name="M:Blazui.Community.Api.Service.SmtpClientService.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Blazui.Community.Api.Options.EmailStmpOptions},Microsoft.Extensions.Logging.ILogger{Blazui.Community.Api.Service.SmtpClientService})">
+        <member name="M:Blazui.Community.Api.Service.SmtpClientService.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Blazui.Community.Api.Options.EmailStmpOption},Microsoft.Extensions.Logging.ILogger{Blazui.Community.Api.Service.SmtpClientService})">
              <summary>
             
              </summary>

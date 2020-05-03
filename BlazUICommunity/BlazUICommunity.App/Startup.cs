@@ -1,14 +1,11 @@
-using Arch.EntityFrameworkCore.UnitOfWork;
 using Autofac;
+using Blazui.Community.App.Extensions;
 using Blazui.Community.App.Middleware;
 using Blazui.Community.App.Model;
-using Blazui.Community.App.Service;
+using Blazui.Community.AppDbContext;
 using Blazui.Community.AutofacModules;
 using Blazui.Community.IdentityExtensions;
 using Blazui.Community.Model.Models;
-using Blazui.Community.Repository;
-using Blazui.Component;
-using Blazui.Markdown;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +14,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog.LayoutRenderers;
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Blazui.Community.App
@@ -36,48 +32,46 @@ namespace Blazui.Community.App
         public async void ConfigureServices(IServiceCollection services)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            services.AddMvc();
             services.AddDbContext<BlazUICommunityContext>(options =>
-            options.UseMySql(Configuration.GetConnectionString("DbConnectionString"))).AddUnitOfWork<BlazUICommunityContext>();
-            services.AddHttpClient("BlazuiCommunitiyApp",
-                client => client.BaseAddress = new Uri(Configuration["ServerUrl"] ?? throw new ArgumentNullException("ServerUrl")));
-            services.AddCustomAspIdenitty<BZUserModel, BlazUICommunityContext>();
+            options.UseMySql(Configuration.GetConnectionString("DbConnectionString")));
+                services.AddCustomAspIdenitty<BZUserModel, BlazUICommunityContext>();
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                options.SlidingExpiration = true;
-            });
-            //services.AddTransient<SeoMiddleware>();
+            services.AddHttpContextAccessor();
+            services.AddHttpClient("BlazuiCommunitiyApp",
+              client => client.BaseAddress = new Uri(Configuration["ServerUrl"]));
+
+          
             services.AddMemoryCache();
             services.AddRazorPages();
+            services.AddMvc();
             services.AddControllers();
             services.AddServerSideBlazor();
-            await services.AddBlazuiServicesAsync();
-            services.AddMarkdown();
-            services.AddCustomRepository<BZUserModel, BZUserIdentityRepository>();
-            services.AddScoped<NetworkService>();
-            services.AddScoped<TokenService>();
-            services.AddOptions<List<TopNaviHeaderMenuModel>>().Configure(options => Configuration.GetSection("HeaderMenus").Bind(options));
+
+            await services.AddBlazui();
+            services.AddCustomService();
+          
+          
+            services.Configure<TopNavMenuOption>(Configuration);
+
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public IContainer AutofacContainer;
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //public IContainer AutofacContainer;
 
-        /// <summary>
-        /// 系统调用
-        /// </summary>
-        /// <param name="builder"></param>
-        public void ConfigureContainer(ContainerBuilder builder)
-        {
-            builder.RegisterModule<CustomAutofacModule>();
-        }
+        ///// <summary>
+        ///// 系统调用
+        ///// </summary>
+        ///// <param name="builder"></param>
+        //public void ConfigureContainer(ContainerBuilder builder)
+        //{
+        //    builder.RegisterModule<CustomAutofacModule>();
+        //}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
     
