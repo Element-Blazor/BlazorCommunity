@@ -71,9 +71,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Common", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.Shared", "Blazui.Community.Shared\Blazui.Community.Shared.csproj", "{943DCD69-6725-41BB-B698-3C0CFEF4F206}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.AppDbContext", "Blazui.Community.AppDbContext\Blazui.Community.AppDbContext.csproj", "{0C2AC5D7-158E-41CB-B103-A6CB8F0B8EEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.AppDbContext", "Blazui.Community.AppDbContext\Blazui.Community.AppDbContext.csproj", "{0C2AC5D7-158E-41CB-B103-A6CB8F0B8EEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazui.Community.AdminDbContext", "Blazui.Community.AdminDbContext\Blazui.Community.AdminDbContext.csproj", "{39C29C4C-1461-430B-81AA-65ED81C04822}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazui.Community.AdminDbContext", "Blazui.Community.AdminDbContext\Blazui.Community.AdminDbContext.csproj", "{39C29C4C-1461-430B-81AA-65ED81C04822}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -546,6 +546,7 @@ app .blaz-layout > .blaz-layout-container > .blaz-layout-center::-webkit-scrollb
 .content-user-name {
     text-align: center;
     margin-top: -10px;
+    overflow: hidden;
 }
 
 .content-good {
@@ -922,4 +923,12 @@ el-center {
 
 span {
     user-select: text !important;
+}
+
+.el-tag {
+    overflow: hidden !important;
+}
+
+.blaz-layout-south.blaz-layout-card {
+    line-height: unset !important;
 }

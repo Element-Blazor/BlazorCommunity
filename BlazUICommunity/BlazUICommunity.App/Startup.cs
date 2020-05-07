@@ -6,6 +6,7 @@ using Blazui.Community.AppDbContext;
 using Blazui.Community.AutofacModules;
 using Blazui.Community.IdentityExtensions;
 using Blazui.Community.Model.Models;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -49,8 +50,9 @@ namespace Blazui.Community.App
 
             await services.AddBlazui();
             services.AddCustomService();
-          
-          
+
+            //services.Configure<OpenIdConnectOptions>(option => {
+            //});
             services.Configure<TopNavMenuOption>(Configuration);
 
         }

@@ -1,6 +1,5 @@
 ﻿using Blazui.Community.App.Service;
 using Blazui.Community.DTO;
-using Blazui.Community.Model.Models;
 using Blazui.Component;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
@@ -10,9 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blazui.Community.App.Pages
+namespace Blazui.Community.App.Pages.Mobile
 {
-    public class ReplyTopicBase : PageBase
+
+
+    public class TopicDetailBase : PageBase
     {
         [Parameter]
         public string TopicId { get; set; }
@@ -21,15 +22,8 @@ namespace Blazui.Community.App.Pages
 
         private string TopicContent;
         private string TopicTitle;
-        [Inject]
-        private BrowerService browerService { get; set; }
-        protected override void OnInitialized()
-        {
-            if (browerService.IsMobile())
-            {
-                NavigationManager.NavigateTo($"m/topic/{TopicId}",true);
-            }
-        }
+
+      
         /// <summary>
         /// 是否已收藏该帖子
         /// </summary>
@@ -44,12 +38,17 @@ namespace Blazui.Community.App.Pages
         /// 是否正在编辑
         /// </summary>
         protected bool IsEditing { get; set; } = false;
-
-        private BZUserModel User;
+        [Inject]
+        private BrowerService browerService { get; set; }
+    
         [Inject]
         public RoleManager<IdentityRole<string>> roleManager { get; set; }
         protected override async Task InitilizePageDataAsync()
         {
+            if (!browerService.IsMobile())
+            {
+                NavigationManager.NavigateTo($"topic/{TopicId}",true);
+            }
             if (string.IsNullOrWhiteSpace(TopicId))
             {
                 ToastError("帖子不存在或已删除");

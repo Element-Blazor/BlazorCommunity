@@ -1,0 +1,304 @@
+﻿html, body {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    margin: 0px;
+    padding: 0px;
+}
+
+    html::-webkit-scrollbar, body::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+    }
+
+body {
+    margin: 0;
+}
+
+.mobile-header {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    background-color: #409EFF;
+}
+
+.mobile-logo {
+}
+
+.mobile-search {
+}
+
+.mobile-login {
+}
+
+.mobile-nav {
+}
+
+.mobile-user {
+    display: inline-flex;
+    color: white;
+    font-size: 14px;
+}
+
+.mobile-nav .el-button--text {
+    color: #606266 !important;
+}
+
+.mobile-nav.el-button.is-plain:focus {
+    background: #FFF !important;
+    border: none !important;
+}
+
+.mobile-nav .el-button.is-plain:hover {
+    background: #FFF !important;
+    border: none !important;
+}
+
+.mobile-nav .el-button.is-plain:active {
+    background: #FFF !important;
+    border: none !important;
+}
+
+.el-popper {
+    width: 100% !important;
+    left: 0px !important;
+    top: 37px !important;
+}
+
+.header-item {
+    display: flex;
+}
+
+.nav-item {
+    margin: 0 1px;
+}
+
+.header-item:last-child {
+    margin-right: 5px;
+    margin-left: auto;
+}
+
+.header-item:first-child {
+    margin-left: 0px;
+    margin-right: auto;
+}
+
+.iconfont {
+    font-size: 25px !important;
+}
+
+.icon-navicon {
+    margin-right: 30px !important;
+}
+
+.popper__arrow {
+    display: none !important;
+}
+
+.mobile-logo img {
+    width: 60px;
+    height: 70px;
+    margin-left: -10px;
+}
+
+.blaz-layout-north.blaz-layout-card {
+    height: 50px !important;
+    line-height: 50px !important;
+}
+
+app > .blaz-layout > .blaz-layout-container {
+    height: 95% !important;
+}
+
+.mobile-topic-avator {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+    .mobile-topic-avator .el-tag {
+        border-radius: 50% !important;
+    }
+
+.mobile-topic {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-topic-title {
+    font-size: 14px !important;
+    font-weight: 800;
+    word-break: break-all;
+    white-space: nowrap;
+    margin-right: 10px;
+    width: 300px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #303133;
+}
+
+.mobile-topic-content {
+    font-size: 13px !important;
+    word-break: break-all;
+    color: #606266;
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    margin-right: 10px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.mobile-topic-date {
+    font-size: 12px;
+}
+
+.el-card {
+    border: none !important;
+}
+
+.el-card__body {
+    padding: 0px !important;
+}
+
+.el-card__header {
+    padding: 10px 5px;
+    border-bottom: none !important;
+}
+
+.mobile-topic-content-info {
+    display: flex;
+}
+
+    .mobile-topic-content-info:first-child {
+        margin-left: 0px;
+        margin-right: 10px;
+    }
+
+.mobile-topic-content-data {
+    width: 100%;
+}
+
+.mobile-topic-content-state {
+    margin-right: 10px;
+}
+
+    .mobile-topic-content-state > span {
+        font-size: 10px !important;
+    }
+
+.mobile-topic-content-back {
+    padding-left: 10px;
+    padding-right: 15px;
+}
+
+.mobile-topic-content-firstline {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.mobile-topic-content-secondline {
+    display: flex;
+    align-content: space-between;
+}
+
+.mobile-topic-content-title {
+    margin-top: 5px;
+    font-size: 16px !important;
+    font-weight: 800;
+    word-break: break-all;
+    margin-right: 10px;
+    width: 300px;
+    text-overflow: ellipsis !important;
+    white-space: normal !important;
+    overflow: hidden;
+    color: #303133;
+    margin-left: 10px;
+}
+
+.mobile-topic-content-thirdline {
+    font-size: 12px;
+    display: flex;
+    width: 100%;
+    margin-top: 5px;
+}
+
+    .mobile-topic-content-thirdline i {
+        font-size: 16px !important;
+    }
+
+.mobile-topic-content-version {
+    margin-right: -5px;
+    margin-left: 0px;
+}
+
+.mobile-topic-content-thirdline .el-badge {
+    vertical-align: unset !important;
+}
+
+.third-item {
+    margin-right: 5px;
+    flex: 1;
+    display: flex;
+}
+
+    .third-item:last-child {
+        justify-content: flex-end;
+    }
+
+    .third-item > span {
+        margin: 0 5px;
+    }
+
+.markdown-body {
+    margin: 0px 10px;
+}
+
+    .markdown-body > img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+.CodeMirror.cm-s-default.CodeMirror-wrap {
+    width: 100% !important;
+}
+
+.editormd-preview {
+    display: none !important;
+}
+
+iframe {
+    width: unset !important;
+}
+
+.mobile-replynow-button {
+    margin-top: -20px;
+    text-align: right;
+    margin-right: 20px;
+}
+
+
+pre::-webkit-scrollbar { /*滚动条整体样式*/
+    width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+
+pre::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #535353;
+}
+
+pre::-webkit-scrollbar-track { /*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    background: #EDEDED;
+}
+h1,h2,h3,h4{
+    font-size:16px !important;
+    font-weight:bold !important;
+}

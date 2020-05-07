@@ -1,0 +1,19 @@
+﻿@inherits ReplyNowBase
+    <div class="reply-now">
+        <div class="el-divider el-divider--horizontal">
+            <div class="el-divider__text is-center">发表回复</div>
+        </div>
+        <BForm Inline="false" @ref="form" Value="Model" LabelAlign="@LabelAlign.Left" EnableAlwaysRender="true">
+            <BFormItem TValue="string" IsRequired="false" Name="@nameof(NewReplyModel.Content)" EnableAlwaysRender="true" @ref="formItem">
+                <div class="reply-now-textarea">
+                    <BInput Type="InputType.Textarea" TValue="string" Placeholder="期待你的精彩回复" ></BInput>
+                </div>
+            </BFormItem>
+            <BFormItem TValue="object" >
+                <div class="mobile-replynow-button">
+                    <BButton Type="@ButtonType.Success" OnClick="e=>ReplyNow()" IsPlain="true">提交回复</BButton>
+                </div>
+               
+            </BFormItem>
+        </BForm>
+    </div>

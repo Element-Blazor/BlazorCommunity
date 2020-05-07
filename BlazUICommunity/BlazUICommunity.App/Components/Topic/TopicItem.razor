@@ -24,13 +24,13 @@
                             <div class="topic-type">
                                 @if (Topic.Status == 1)
                                 {
-                                    <span class="el-tag el-tag--info el-tag--mini el-tag--light">已结帖</span>
+                                    <span class="el-tag el-tag--info el-tag--mini">已结帖</span>
                                 }
                                 else
                                 {
                                     @if (!string.IsNullOrWhiteSpace(Topic.CategoryDisplay))
                                     {
-                                        <span class="el-tag el-tag--success el-tag--mini el-tag--light">@Topic.CategoryDisplay</span>
+                                        <span class="el-tag @tagClass el-tag--mini">@Topic.CategoryDisplay </span>
                                     }
                                 }
                             </div>

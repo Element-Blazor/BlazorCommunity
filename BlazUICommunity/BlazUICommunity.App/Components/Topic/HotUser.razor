@@ -5,7 +5,7 @@
         
         @foreach (var user in Datas)
         {
-                <span  class="el-tag el-popover__reference  @(TagClasses[new Random().Next(0,5)])" aria-describedby="@user.Id" 
+                <span  class="el-tag el-popover__reference  @(ConstConfig.TagClasses[new Random().Next(0,5)])" aria-describedby="@user.Id" 
                 @onmouseover="e=>user.Show=true" @onmouseout="e => user.Show=false" style="cursor:pointer;width:100px;margin-bottom:5px;">@user.UserName</span>
 
             var index = (Datas.IndexOf(user) + 1) %3;

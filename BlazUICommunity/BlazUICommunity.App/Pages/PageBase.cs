@@ -107,7 +107,7 @@ namespace Blazui.Community.App.Pages
             else return null;
         }
 
-        protected virtual Task InitilizePageDataAsync() => Task.CompletedTask;
+        protected virtual async Task InitilizePageDataAsync() =>await Task.CompletedTask;
 
         protected void ToastError(string message = "操作失败")
         {

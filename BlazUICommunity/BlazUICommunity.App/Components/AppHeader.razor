@@ -26,33 +26,33 @@
         }
         <div class="fill"></div>
         <div style="flex:1;">
-            @if (CurrentUser != null)
-            {
-                <BDropDown EnableAlwaysRender="true">
-                    <Trigger>
-                        <BButton Style="border:none;background:transparent;padding:0px;">
-                            <div style="display:flex;">
-                                <img src="@CurrentUser?.Avator" class="app-nav-avatar-img" />
-                                <span class="el-dropdown-link" style="margin:auto;color:#fff;">
-                                    @CurrentUser?.NickName  <i class="el-icon-arrow-down el-icon--right" style="color:#fff;"></i>
-                                </span>
-                            </div>
-                        </BButton>
-                    </Trigger>
-                    <Items>
-                        <BDropDownItem OnClick="e=>Personal()">个人中心</BDropDownItem>
-                        <BDropDownItem OnClick="e=>LoginOut()">退出登录</BDropDownItem>
+            <AuthorizeView>
+                <Authorized>
+                    <BDropDown EnableAlwaysRender="true">
+                        <Trigger>
+                            <BButton Style="border:none;background:transparent;padding:0px;">
+                                <div style="display:flex;">
+                                    <img src="@User?.Avator" class="app-nav-avatar-img" />
+                                    <span class="el-dropdown-link" style="margin:auto;color:#fff;">
+                                        @User?.NickName  <i class="el-icon-arrow-down el-icon--right" style="color:#fff;"></i>
+                                    </span>
+                                </div>
+                            </BButton>
+                        </Trigger>
+                        <Items>
+                            <BDropDownItem OnClick="e=>Personal()">个人中心</BDropDownItem>
+                            <BDropDownItem OnClick="e=>LoginOut()">退出登录</BDropDownItem>
 
-                    </Items>
-                </BDropDown>
-            }
-            else
-            {
-                <div style="display:flex;">
-                    <BButton Type="@ButtonType.Primary" OnClick="e=>Login()" Style="padding:12px 5px;">登录</BButton>
-                    <BButton Type="@ButtonType.Primary" OnClick="e=>Regist()" Style="padding:12px 5px;margin-left:0px !important">注册</BButton>
-                </div>
-            }
+                        </Items>
+                    </BDropDown>
+                </Authorized>
+                <NotAuthorized>
+                    <div style="display:flex;">
+                        <BButton Type="@ButtonType.Primary" OnClick="e=>Login()" Style="padding:12px 5px;">登录</BButton>
+                        <BButton Type="@ButtonType.Primary" OnClick="e=>Regist()" Style="padding:12px 5px;margin-left:0px !important">注册</BButton>
+                    </div>
+                </NotAuthorized>
+            </AuthorizeView>
         </div>
     </div>
 </div>

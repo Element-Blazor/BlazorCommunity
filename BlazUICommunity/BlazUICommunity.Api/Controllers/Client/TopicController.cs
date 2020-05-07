@@ -78,7 +78,7 @@ namespace Blazui.Community.Api.Controllers.Client
             var model = await _bZTopicRepository.InsertAsync(topicModel);
             _cacheService.Remove(nameof(BZTopicModel));
             if (dto.Category == 0 || Notice == 1)
-                messageService.SendEmailToManagerForAnswerAsync(dto.Id);
+                messageService.SendEmailToManagerForAnswerAsync(model.Entity.Id);
             return Ok(model.Entity.Id);
         }
 

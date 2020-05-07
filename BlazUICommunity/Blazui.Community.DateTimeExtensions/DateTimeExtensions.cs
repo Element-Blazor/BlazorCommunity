@@ -21,7 +21,25 @@ namespace Blazui.Community.DateTimeExtensions
             string timeString;
             if (day > 0)
             {
-                timeString = $"{day}天前";
+                if (day > 30)
+                {
+                    if (day > 365)
+                    {
+                        if(day>365*3)
+                        {
+                            timeString = $"久远前";
+                        }else
+                            timeString = $"{Convert.ToInt32(day / 365)}年前";
+                    }
+                    else
+                    {
+                        timeString = $"{day % 30}个月前";
+                    }
+                }
+                else
+                {
+                    timeString = $"{day}天前";
+                }
             }
             else
             {

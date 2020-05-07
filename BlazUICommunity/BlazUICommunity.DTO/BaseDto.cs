@@ -48,6 +48,6 @@ namespace Blazui.Community.DTO
         /// </summary>
         [NotMapped]
         [AutoNotMap]
-        public string LastModifyDateDisplay => CreateDate.ConvertToDateDiffStr();
+        public string LastModifyDateDisplay => LastModifyDate.ConvertToDateDiffStr();
     }
 }

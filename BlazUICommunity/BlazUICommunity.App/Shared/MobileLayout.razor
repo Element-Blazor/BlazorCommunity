@@ -1,0 +1,33 @@
+﻿@inherits LayoutComponentBase
+<BPopup></BPopup>
+<BLayout EnableAlwaysRender="true" NorthHeight="80">
+    <North>
+        <MobileAppHeader></MobileAppHeader>
+    </North>
+    <Center>
+        <div class="main-layout-center" style="height:@(ConstConfig.height)px; width:@(ConstConfig.width)px">
+            @Body
+        </div>
+    </Center>
+</BLayout>
+<CascadingValue Value="@this">
+    @ChildContent
+</CascadingValue>
+@code
+ {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            ConstConfig.width = await JSRuntime.InvokeAsync<int>("getClientWidth", null);
+            ConstConfig.height = await JSRuntime.InvokeAsync<int>("getClientHeight", null);
+            StateHasChanged();
+        }
+    }
+}

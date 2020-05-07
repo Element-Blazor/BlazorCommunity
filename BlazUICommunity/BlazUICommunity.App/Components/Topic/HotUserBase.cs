@@ -17,7 +17,7 @@ namespace Blazui.Community.App.Components.Topic
         protected  List<HotUserDto> Datas { get; set; } = new List<HotUserDto>();
         [Inject]
          NetworkService Service { get; set; }
-        public static string[] TagClasses =   { "","el-tag--success", "el-tag--info", "el-tag--warning", "el-tag--danger" };
+      
         protected override bool ShouldRender() => true;
 
         protected async override Task OnAfterRenderAsync(bool firstRender)

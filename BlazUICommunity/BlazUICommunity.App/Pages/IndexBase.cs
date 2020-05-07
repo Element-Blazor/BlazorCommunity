@@ -32,9 +32,7 @@ namespace Blazui.Community.App.Pages
         protected override async Task OnInitializedAsync()
         {
             if (browerService.IsMobile())
-            {
                 NavigationManager.NavigateTo("m/index/");
-            }
 
             Tabs.Add(new TabItem() { Title = "首页", Category = -1 });
             Tabs.Add(new TabItem() { Title = "提问", Category = (int)TopicCategory.Ask });
