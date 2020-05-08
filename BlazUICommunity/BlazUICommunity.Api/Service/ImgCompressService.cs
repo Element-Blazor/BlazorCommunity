@@ -38,7 +38,7 @@ namespace Blazui.Community.Api.Service
         {
             try
             {
-                if(uploadPath !=UploadPath.Avator)//如果是上传头像，不加水印
+                if(uploadPath !=UploadPath.Avator&&uploadPath!=UploadPath.Banner)//如果是上传头像，不加水印
                 AddWatermark(filePath);
                 if(!CheckFileLength(filePath))//小于100k的图片不压缩--节约tinyapi次数
                 await TinyPngCompress(filePath, filename);
