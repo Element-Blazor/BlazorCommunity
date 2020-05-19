@@ -1,8 +1,10 @@
 ﻿using Blazui.Community.Admin.Enum;
 using Blazui.Community.Admin.QueryCondition;
+using Blazui.Community.Admin.Service;
 using Blazui.Community.DictionaryExtensions;
 using Blazui.Community.DTO.Admin;
 using Blazui.Component;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,6 +13,8 @@ namespace Blazui.Community.Admin.Pages.Banner
 {
     public class BannerManageBase : ManagePageBase<BannerDisplayDto>
     {
+        [Inject]
+        AdminUserService adminUserService { get; set; }
         protected override async Task OnInitializedAsync()
         {
             pageSize = 5;
@@ -28,6 +32,11 @@ namespace Blazui.Community.Admin.Pages.Banner
 
         protected async Task Modify(object obj)
         {
+            if(!await adminUserService.IsSupperAdmin())
+            {
+                await MessageBox.AlertAsync("没有权限操作");
+                return;
+            }
             if (obj is BannerDisplayDto banner)
             {
                 var model = banner.ObjectToDictionary("model");
@@ -40,6 +49,11 @@ namespace Blazui.Community.Admin.Pages.Banner
 
         protected async Task New()
         {
+            if (!await adminUserService.IsSupperAdmin())
+            {
+                await MessageBox.AlertAsync("没有权限操作");
+                return;
+            }
             var model = new Dictionary<string, object>
             {
                 { "EntryOperation", EntryOperation.Add }

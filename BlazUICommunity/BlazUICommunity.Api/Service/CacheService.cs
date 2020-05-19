@@ -136,5 +136,17 @@ namespace Blazui.Community.Api.Service
 
             });
         }
+
+        public async Task<IList<HotTopicDto>> GetTopicsByAuthor(string TopicId)
+        {
+            return await _memoryCache.GetOrCreateAsync($"GetTopicsByAuthor-{TopicId}", async p =>
+            {
+                p.SetSlidingExpiration(TimeSpan.FromSeconds(new Random(DateTime.Now.Second).Next(30, 100)));
+                var Topics = await bZTopicRepository.GetTopicsByAuthor(TopicId);
+                var ResultDtos = mapper.Map<List<HotTopicDto>>(Topics);
+                return ResultDtos;
+
+            });
+        }
     }
 }

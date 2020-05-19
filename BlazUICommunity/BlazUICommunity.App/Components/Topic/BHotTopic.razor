@@ -2,9 +2,14 @@
 <BCard Style="height:100%;border:none;" Shadow="ShadowShowType.Never" EnableAlwaysRender="true">
     <Header>@Title</Header>
     <Body>
-        @foreach (var hot in Datas)
+        @if (Datas != null&& Datas.Count>0)
+            foreach (var hot in Datas)
+            {
+                <HotItem Hot="@hot" OnClick="e => ItemClick(hot.Id)" EnableAlwaysRender="true"></HotItem>
+            }
+        else
         {
-            <HotItem Hot="@hot"  OnClick="e=>ItemClick(hot.Id)" EnableAlwaysRender="true"></HotItem>
+            <div>暂无数据</div>
         }
     </Body>
 </BCard>

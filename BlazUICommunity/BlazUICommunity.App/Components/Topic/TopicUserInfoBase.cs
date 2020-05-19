@@ -11,12 +11,12 @@ namespace Blazui.Community.App.Components.Topic
 {
     public class TopicUserInfoBase:PageBase
     {
-        public HotUserDto User { get; set; } = new HotUserDto();
+        public HotUserDto TopicUser { get; set; } = new HotUserDto();
 
         protected async override Task InitilizePageDataAsync()
         {
             var TopicId = NavigationManager.Uri.Split("/").LastOrDefault();
-            User = await NetService.QueryTopicUser(TopicId);
+            TopicUser = await NetService.QueryTopicUser(TopicId);
         }
     }
 }

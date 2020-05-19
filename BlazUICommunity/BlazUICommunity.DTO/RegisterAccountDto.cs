@@ -19,5 +19,9 @@ namespace Blazui.Community.DTO
         [Required]
         [Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
+
+        public string QQ { get; set; }
+
+        public string Email { get; set; }
     }
 }

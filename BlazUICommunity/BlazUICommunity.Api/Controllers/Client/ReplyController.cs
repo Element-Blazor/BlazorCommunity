@@ -33,7 +33,7 @@ namespace Blazui.Community.Api.Controllers.Client
         private readonly IMapper _mapper;
         private readonly ICacheService _cacheService;
         private readonly IMessageService messageService;
-        private readonly IOptions<BaseDomainOptions> domainOption;
+        private readonly CQService cQService;
 
         /// <summary>
         ///
@@ -43,16 +43,16 @@ namespace Blazui.Community.Api.Controllers.Client
         /// <param name="mapper"></param>
         /// <param name="cacheService"></param>
         /// <param name="messageService"></param>
-        /// <param name="EmailNoticeOptions"></param>
+        /// <param name="cQService"></param>
         public ReplyController(IUnitOfWork unitOfWork, BZReplyRepository bZReplyRepository,
-            IMapper mapper, ICacheService cacheService, IMessageService messageService, IOptions<BaseDomainOptions> domainOption)
+            IMapper mapper, ICacheService cacheService, IMessageService messageService, CQService cQService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _replyRepository = bZReplyRepository;
             _cacheService = cacheService;
             this.messageService = messageService;
-            this.domainOption = domainOption;
+            this.cQService = cQService;
         }
 
         /// <summary>
@@ -79,16 +79,22 @@ namespace Blazui.Community.Api.Controllers.Client
                         topic.ReplyCount++;
                         topicRepostory.Update(topic);
                         _cacheService.Remove(nameof(BZTopicModel));
-
                     }
                 });
                 if (addResult)
                 {
-                    var user = await userRepository.FindAsync(topic.CreatorId);
-                    messageService.SendEmailToTopicCreatorAsync(user?.Email, topic.Title,topic.Id);
-                    return Ok();
+                        var Topicuser = await userRepository.FindAsync(topic.CreatorId);
+                    if(Topicuser!=null&&!string.IsNullOrWhiteSpace(Topicuser.Email))
+                         messageService.SendEmailToTopicCreatorAsync(Topicuser?.Email, topic.Title, topic.Id);
+                    var ReplyUser = await userRepository.FindAsync(reply.CreatorId);
+                    if (ReplyUser != null && (!string.IsNullOrWhiteSpace(ReplyUser.QQ)||!string.IsNullOrWhiteSpace(Topicuser.QQ)))
+                    {
+                        if(ReplyUser.QQ!=Topicuser.QQ)//自己回复自己的，不通知
+                        cQService.SendGroupMessageToUser(topic.Id, topic.Title, Topicuser.QQ, ReplyUser.QQ);
+                    }
+                   
                 }
-                return new BadRequestResponse("回复帖子失败");
+                return Ok();
             }
             return new BadRequestResponse("帖子不存在");
         }

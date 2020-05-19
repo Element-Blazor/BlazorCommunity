@@ -16,7 +16,7 @@ namespace Blazui.Community.App.Features.Seo
         public async Task<IActionResult> Index(int pageIndex = 0, int pageSize = 10)
         {
             var result = await networkService.QueryTopicsWithPage(pageIndex, pageSize);
-            return View("/Features/Seo/Archive.cshtml", result);
+            return View("/Features/Seo/Archive.cshtml", result.Data);
         }
 
         [Route("/topic_seo/{id}")]

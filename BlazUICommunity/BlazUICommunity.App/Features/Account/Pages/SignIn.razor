@@ -3,10 +3,10 @@
 
 <div class="login-container">
 
-    <BForm Value="signInModel" @ref="signInForm" EnableAlwaysRender="true">
+    <BForm Value="signInModel" @ref="signInForm" EnableAlwaysRender="true" LabelAlign="LabelAlign.Left">
         <div class="title-container">
             <h3 class="title">
-                Blazor社区登录
+                Blazui-Blazor社区登录
             </h3>
         </div>
         <BFormItem IsRequired="true" TValue="string" RequiredMessage="请输入账号或邮箱" Name="@nameof(SignInModel.UserAccount)">

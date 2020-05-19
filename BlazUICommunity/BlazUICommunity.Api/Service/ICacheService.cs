@@ -72,7 +72,11 @@ namespace Blazui.Community.Api.Service
         /// </summary>
         /// <returns></returns>
         Task<IList<HotTopicDto>> GetAskHotsAsync();
-
+        /// <summary>
+        /// 获取作者其他文章
+        /// </summary>
+        /// <returns></returns>
+        Task<IList<HotTopicDto>> GetTopicsByAuthor(string TopicId);
         /// <summary>
         /// 移除缓存
         /// </summary>

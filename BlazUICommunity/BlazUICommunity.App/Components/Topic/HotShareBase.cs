@@ -12,7 +12,7 @@ namespace Blazui.Community.App.Components.Topic
         protected async override Task<BaseResponse<List<HotTopicDto>>> InitDatas()
         {
             Title = "热点分享";
-          return await Service.QueryShareHot();
+            return await Service.QueryShareHot();
         }
 
     }

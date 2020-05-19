@@ -98,7 +98,7 @@ namespace Blazui.Community.App.Pages.Mobile
 
         private async Task AppendDatas()
         {
-            var Response = await NetService.QueryTopicsByOrder(1, -1, currentPage, PageSize);
+            var Response = await NetService.MobileQuery(currentPage, PageSize);
             if (Response.IsSuccess && Response.Data != null
                 && Response.Data.Items != null && Response.Data.Items.Any())
             {

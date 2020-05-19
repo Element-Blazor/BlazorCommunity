@@ -9,29 +9,42 @@ namespace Blazui.Community.App.Components
 {
     public class ContentBannerBase : BComponentBase
     {
-        internal List<BzBannerDto> Banners { get; set; } = new List<BzBannerDto>();
+        internal static List<BzBannerDto> Banners { get; set; } = new List<BzBannerDto>();
 
         [Inject]
         public NetworkService NetService { get; set; }
 
+        protected int ActiveIndex=0;
+
+        protected override bool ShouldRender() => true;
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
             if (!firstRender)
                 return;
-            var ResultData = await NetService.QueryBanners();
-
-            if (ResultData.IsSuccess)
+            if(Banners.Count==0)
             {
-                Banners = ResultData.Data ??= new List<BzBannerDto>();
-                RequireRender = true;
-                StateHasChanged();
+                var ResultData = await NetService.QueryBanners();
+                if (ResultData.IsSuccess)
+                {
+                    Banners = ResultData.Data ??= new List<BzBannerDto>();
+                }
+                else if (ResultData.Code == 204)
+                {
+                    Banners = new List<BzBannerDto>();
+                    RequireRender = true;
+                }
             }
-            else if (ResultData.Code == 204)
+
+            if(Banners.Count>0)
+            while (true)
             {
-                Banners = new List<BzBannerDto>();
-                RequireRender = true;
                 StateHasChanged();
+                await Task.Delay(3000);
+                if (ActiveIndex == Banners.Count - 1)
+                    ActiveIndex = 0;
+                else
+                    ActiveIndex++;
             }
         }
     }

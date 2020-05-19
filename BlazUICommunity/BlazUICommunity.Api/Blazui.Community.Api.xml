@@ -399,7 +399,7 @@
             回帖相关
             </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.ReplyController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,Blazui.Community.Repository.BZReplyRepository,AutoMapper.IMapper,Blazui.Community.Api.Service.ICacheService,Blazui.Community.Api.Service.IMessageService,Microsoft.Extensions.Options.IOptions{Blazui.Community.Api.Options.BaseDomainOptions})">
+        <member name="M:Blazui.Community.Api.Controllers.Client.ReplyController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,Blazui.Community.Repository.BZReplyRepository,AutoMapper.IMapper,Blazui.Community.Api.Service.ICacheService,Blazui.Community.Api.Service.IMessageService,Blazui.Community.Api.Service.CQService)">
              <summary>
             
              </summary>
@@ -408,7 +408,7 @@
              <param name="mapper"></param>
              <param name="cacheService"></param>
              <param name="messageService"></param>
-             <param name="EmailNoticeOptions"></param>
+             <param name="cQService"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.ReplyController.Add(Blazui.Community.DTO.BZReplyDto)">
             <summary>
@@ -439,7 +439,7 @@
             主题帖相关
             </summary>
         </member>
-        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZTopicRepository,Blazui.Community.Api.Service.ICacheService,Blazui.Community.Api.Service.IMessageService,Microsoft.Extensions.Options.IOptions{Blazui.Community.Api.Options.BaseDomainOptions})">
+        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,Blazui.Community.Repository.BZTopicRepository,Blazui.Community.Api.Service.ICacheService,Blazui.Community.Api.Service.CQService,Blazui.Community.Api.Service.IMessageService)">
             <summary>
             
             </summary>
@@ -447,8 +447,8 @@
             <param name="mapper"></param>
             <param name="bZTopicRepository"></param>
             <param name="cacheService"></param>
+            <param name="cQService"></param>
             <param name="messageService"></param>
-            <param name="DomainOption"></param>
         </member>
         <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.Add(Blazui.Community.DTO.BZTopicDto,System.Int32)">
             <summary>
@@ -546,6 +546,12 @@
         <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.AskHot">
             <summary>
             查询热门问题前10条
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Controllers.Client.TopicController.QueryTopicByAuthor(System.String)">
+            <summary>
+            查询当前主题作者其他的文章-（分享）
             </summary>
             <returns></returns>
         </member>
@@ -766,6 +772,11 @@
             </summary>
             <param name="Key"></param>
         </member>
+        <member name="F:Blazui.Community.Api.Service.CQApiList.SendGroup">
+            <summary>
+            发送群消息
+            </summary>
+        </member>
         <member name="M:Blazui.Community.Api.Service.ICacheService.GetUsersAsync(System.Linq.Expressions.Expression{System.Func{Blazui.Community.Model.Models.BZUserModel,System.Boolean}})">
             <summary>
             用户缓存数据
@@ -830,6 +841,12 @@
         <member name="M:Blazui.Community.Api.Service.ICacheService.GetAskHotsAsync">
             <summary>
             缓存热点问题主题
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazui.Community.Api.Service.ICacheService.GetTopicsByAuthor(System.String)">
+            <summary>
+            获取作者其他文章
             </summary>
             <returns></returns>
         </member>

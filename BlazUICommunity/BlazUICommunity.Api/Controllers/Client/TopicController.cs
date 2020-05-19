@@ -11,6 +11,7 @@ using Blazui.Community.Request;
 using Blazui.Community.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -35,9 +36,9 @@ namespace Blazui.Community.Api.Controllers.Client
         private readonly IRepository<BZFollowModel> _bZFollowRepository;
         private readonly IRepository<BZReplyModel> _bZReplyRepository;
         private readonly ICacheService _cacheService;
+        private readonly CQService cQService;
         private readonly IMessageService messageService;
-        private readonly IOptions<BaseDomainOptions> domainOption;
-
+     
 
         /// <summary>
         /// 
@@ -46,13 +47,13 @@ namespace Blazui.Community.Api.Controllers.Client
         /// <param name="mapper"></param>
         /// <param name="bZTopicRepository"></param>
         /// <param name="cacheService"></param>
+        /// <param name="cQService"></param>
         /// <param name="messageService"></param>
-        /// <param name="DomainOption"></param>
         public TopicController(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             BZTopicRepository bZTopicRepository,
-            ICacheService cacheService, IMessageService messageService, IOptions<BaseDomainOptions> DomainOption)
+            ICacheService cacheService, CQService cQService, IMessageService messageService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -60,8 +61,8 @@ namespace Blazui.Community.Api.Controllers.Client
             _bZFollowRepository = unitOfWork.GetRepository<BZFollowModel>();
             _bZReplyRepository = unitOfWork.GetRepository<BZReplyModel>();
             _cacheService = cacheService;
+            this.cQService = cQService;
             this.messageService = messageService;
-            domainOption = DomainOption;
         }
 
 
@@ -78,7 +79,11 @@ namespace Blazui.Community.Api.Controllers.Client
             var model = await _bZTopicRepository.InsertAsync(topicModel);
             _cacheService.Remove(nameof(BZTopicModel));
             if (dto.Category == 0 || Notice == 1)
-                messageService.SendEmailToManagerForAnswerAsync(model.Entity.Id);
+            {
+                 messageService.SendEmailToManagerForAnswerAsync(model.Entity.Id);
+
+                 cQService.SendGroupMessageToManager(model.Entity.Id, model.Entity.Title) ;
+            }
             return Ok(model.Entity.Id);
         }
 
@@ -384,10 +389,18 @@ namespace Blazui.Community.Api.Controllers.Client
             return Ok(pagedatas);
         }
 
-
+        [HttpGet("QueryByPage/{pageSize}/{pageIndex}")]
         public async Task<IActionResult> QueryByPage(int pageIndex, int pageSize)
         {
             var result = await _bZTopicRepository.GetPagedListAsync(pageIndex, pageSize);
+            return Ok(result);
+        }
+
+
+        [HttpGet("MobileQuery/{pageSize}/{pageIndex}")]
+        public async Task<IActionResult> MobileQuery(int pageIndex, int pageSize)
+        {
+            var result = await _bZTopicRepository.GetPagedListAsync(p => p.Status != -1, order => order.OrderByDescending(p => p.LastModifyDate), null, pageIndex, pageSize);
             return Ok(result);
         }
         /// <summary>
@@ -461,8 +474,16 @@ namespace Blazui.Community.Api.Controllers.Client
         {
             return Ok(await _cacheService.GetAskHotsAsync());
         }
-
-
+        /// <summary>
+        /// 查询当前主题作者其他的文章-（分享）
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("QueryTopicByAuthor/{TopicId}")]
+        public async Task<IActionResult> QueryTopicByAuthor(string TopicId)
+        {
+            return Ok(await _cacheService.GetTopicsByAuthor(TopicId));
+        }
+        
         /// <summary>
         /// 结贴
         /// </summary>

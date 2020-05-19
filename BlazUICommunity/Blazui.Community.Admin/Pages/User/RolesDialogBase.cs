@@ -25,7 +25,8 @@ namespace Blazui.Community.Admin.Pages.User
         public ObservableCollection<RoleDisplayDto> SelectedValues { get; set; } = new ObservableCollection<RoleDisplayDto>();
         [Inject]
         public NetworkService NetService { get; set; }
-
+        [Inject]
+        public MessageService MessageService { get; set; }
         protected  async override Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
@@ -58,6 +59,7 @@ namespace Blazui.Community.Admin.Pages.User
         {
 
             var SetRoleResult = await NetService.SetUserRoles(new UserRoleDto { UserId=model.Id, RoleIds= SelectedValues.Select(p=>p.Id).ToList() });
+            MessageService.Show(SetRoleResult.IsSuccess ? "Success" : SetRoleResult.Message, SetRoleResult.IsSuccess ? MessageType.Success : MessageType.Error);
             await CloseAsync(SetRoleResult.IsSuccess);
         }
 

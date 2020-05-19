@@ -78,5 +78,16 @@ namespace Blazui.Community.Repository
             return PageTopics.Items.ToList();
          
         }
+        public async Task<IEnumerable<BZTopicModel>> GetTopicsByAuthor(string TopicId)
+        {
+
+            var sql = $"select t1.* from bztopic t1  LEFT JOIN bztopic t2 on t1.CreatorId=t2.CreatorId where t2.Id=@topicId and t1.`Status`=0 and t1.Category=1 order by t1.CreateDate desc limit 10 ";
+
+            MySqlParameter mySqlParameter = new MySqlParameter("topicId", TopicId);
+
+            return await QueryDataFromSql<BZTopicModel>(sql, mySqlParameter);
+        }
+
+        
     }
 }

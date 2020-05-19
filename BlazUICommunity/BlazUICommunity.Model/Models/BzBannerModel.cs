@@ -14,6 +14,10 @@ namespace Blazui.Community.Model.Models
         /// bannerImg
         /// </summary>
         public string BannerImg { get; set; }
+        /// <summary>
+        /// 链接
+        /// </summary>
+        public string Link { get; set; }
 
         /// <summary>
         /// 是否显示

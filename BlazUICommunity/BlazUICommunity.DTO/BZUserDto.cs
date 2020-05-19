@@ -24,6 +24,8 @@ namespace Blazui.Community.DTO
 
         public string Avator { get; set; } = "";
 
+        public string QQ { get; set; }
+
         /// <summary>
         /// 性别0 男，1女，2呃...
         /// </summary>

@@ -32,10 +32,13 @@ namespace Blazui.Community.Api.Extensions
                   .AddScoped<IMessageService, MessageService>()
                   .AddScoped<ICodeService, CodeService>()
                   .AddScoped<ISmtpClientService, SmtpClientService>()
-                  .AddScoped<ImgCompressService>();
+                  .AddScoped<ImgCompressService>()
+                  .AddScoped<CQService>();
         }
         public static IServiceCollection AddCustomWebApi(this IServiceCollection services, IConfiguration Configuration)
         {
+            services.AddHttpClient("CQService",
+              client => client.BaseAddress = new Uri(Configuration.GetSection("CQHTTP").GetSection("ApiUrl").Value));
             return services.AddCustomAddControllers()
                     .AddCustomSwagger()
                      .AddCustomCors(Configuration, PolicyName)
@@ -49,7 +52,8 @@ namespace Blazui.Community.Api.Extensions
             return services.AddJwtConfiguration(Configuration)
                      .Configure<EmailStmpOption>(Configuration)
                      .Configure<EmailNoticeOptions>(Configuration)
-                     .Configure<BaseDomainOptions>(Configuration);
+                     .Configure<BaseDomainOptions>(Configuration)
+                     .Configure<CQHttpOptions>(Configuration.GetSection("CQHTTP"));
         }
 
         public static IServiceCollection AddCustomDbService(this IServiceCollection services, IConfiguration Configuration)

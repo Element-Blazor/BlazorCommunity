@@ -62,8 +62,14 @@ namespace Blazui.Community.App.Features.Account.Pages
                     return;
                 }
 
-                bool AccountIsEmail = RegexHelper.IsEmail(registerAccountModel.UserAccount);
-                var identityResult = await CreateUserAsync(registerAccountModel.UserAccount, registerAccountModel.Password, "", AccountIsEmail ? registerAccountModel.UserAccount : "");
+                bool AccountIsEmail =!string.IsNullOrWhiteSpace(registerAccountModel.Email)&& RegexHelper.IsEmail(registerAccountModel.Email);
+
+                var identityResult = await CreateUserAsync(
+                    registerAccountModel.UserAccount,
+                    registerAccountModel.Password,
+                    AccountIsEmail ? registerAccountModel.Email : null,
+                    registerAccountModel.QQ);
+
                 if (!identityResult.Succeeded)
                 {
                     foreach (var identityError in identityResult.Errors)
@@ -108,7 +114,7 @@ namespace Blazui.Community.App.Features.Account.Pages
 
 
 
-        public async Task<IdentityResult> CreateUserAsync(string userAccount, string Password, string Mobile = null, string Email = null, string NickName = null, int Sex = 0, string CreatorId = null)
+        public async Task<IdentityResult> CreateUserAsync(string userAccount, string Password, string Email = null, string QQ = null)
         {
             if (string.IsNullOrEmpty(userAccount))
             {
@@ -123,17 +129,18 @@ namespace Blazui.Community.App.Features.Account.Pages
                    new BZUserModel
                    {
                        UserName = userAccount,
-                       NickName = NickName ?? userAccount,
+                       NickName = userAccount,
                        Email = Email ?? "",
                        EmailConfirmed = false,
                        NormalizedUserName = userAccount,
                        CreateDate = DateTime.Now,
                        LastLoginDate = DateTime.Now,
-                       CreatorId = CreatorId ?? Guid.Empty.ToString(),
-                       Sex = Sex,
+                       CreatorId = Guid.Empty.ToString(),
+                       Sex = 0,
                        Status = 0,
-                       Avator = "/img/defaultAct.png",
-                       PhoneNumber = Mobile ?? ""
+                       Avator = "",
+                       PhoneNumber = "",
+                       QQ = QQ ?? ""
                    }, Password);
         }
     }

@@ -20,7 +20,8 @@ namespace Blazui.Community.Admin.Pages.Version
 
         [Inject]
         public NetworkService NetService { get; set; }
-
+        [Inject]
+        private MessageService MessageService { get; set; }
         internal async Task Save()
         {
             if (!versionForm.IsValid())
@@ -31,11 +32,15 @@ namespace Blazui.Community.Admin.Pages.Version
             {
                 version.CreateDate = DateTime.Now;
                 var newResult = await NetService.NewVersion(version);
+                if (!newResult.IsSuccess)
+                    MessageService.Show(newResult.Message, MessageType.Error);
                 await CloseAsync(newResult.IsSuccess);
             }
             else
             {
                 var newResult = await NetService.UpdateVersion(version);
+                if (!newResult.IsSuccess)
+                    MessageService.Show(newResult.Message, MessageType.Error);
                 await CloseAsync(newResult.IsSuccess);
             }
         }

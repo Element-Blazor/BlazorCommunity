@@ -89,5 +89,9 @@ namespace Blazui.Community.Model.Models
         /// </summary>
         [Column("LastModifierId", TypeName = "varchar(36)")]
         public string? LastModifierId { get; set; }
+        /// <summary>
+        /// QQ
+        /// </summary>
+        public string QQ { get; set; }
     }
 }

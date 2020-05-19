@@ -7,12 +7,14 @@ namespace Blazui.Community.Test
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("Hello World! Start");
+            //Console.WriteLine("Hello World! Start");
 
-            //string s = "12421 231312";
-            //var s1 = s.Trim();
-            string myString = "  this\n is\r a \ttest   ";
-            Console.WriteLine(Regex.Replace(myString, @"\s", ""));
+            ////string s = "12421 231312";
+            ////var s1 = s.Trim();
+            //string myString = "  this\n is\r a \ttest   ";
+            //Console.WriteLine(Regex.Replace(myString, @"\s", ""));
+
+            //var ss = new TestDbContext();
             //using (BlazUICommunityAdminDbContext communityContext = new BlazUICommunityAdminDbContext())
             //{
             //    communityContext.Database.EnsureDeleted();

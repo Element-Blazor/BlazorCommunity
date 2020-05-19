@@ -12,6 +12,8 @@
         /// </summary>
         public string BannerImg { get; set; }
 
+        public string Link { get; set; }
+
         /// <summary>
         /// 是否显示
         /// </summary>

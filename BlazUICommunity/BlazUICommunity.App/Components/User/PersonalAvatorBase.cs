@@ -22,7 +22,7 @@ namespace Blazui.Community.App.Components
               {
                      new UploadModel(){
                         FileName  = User?.Avator,
-                        Url  = User?.Avator
+                        Url  = string.IsNullOrWhiteSpace(User.Avator)?"/img/defaultact.png":User.Avator
                     }
                }
             };

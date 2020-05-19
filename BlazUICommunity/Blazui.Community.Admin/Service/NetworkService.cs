@@ -4,6 +4,7 @@ using Blazui.Community.DTO;
 using Blazui.Community.DTO.Admin;
 using Blazui.Community.HttpClientExtensions;
 using Blazui.Community.Response;
+using Blazui.Component;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -16,8 +17,9 @@ namespace Blazui.Community.Admin.Service
         private readonly HttpClient httpClient;
         private readonly BaseResponse Unauthorized= 
             new BaseResponse(403, "Unauthorized ，对不起您没有权限进行该操作 ", null);
+        private readonly MessageService messageService;
         private bool isSupper = false;
-        public NetworkService(IHttpClientFactory httpClientFactory, AdminUserService adminUserService)
+        public NetworkService(IHttpClientFactory httpClientFactory, AdminUserService adminUserService, MessageService messageService)
         {
             this.httpClient = httpClientFactory.CreateClient("BlazuiCommunitiyAdmin");
             httpClient.DefaultRequestHeaders.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue()
@@ -29,6 +31,7 @@ namespace Blazui.Community.Admin.Service
                 Public = false,
             };
             isSupper = adminUserService.IsSupperAdmin().Result;
+            this.messageService = messageService;
         }
 
         #region User
@@ -59,7 +62,10 @@ namespace Blazui.Community.Admin.Service
         internal async Task<BaseResponse> SetUserRoles(UserRoleDto userRoleDto)
         {
             if (!isSupper)
+            {
+                //messageService.Show("Unauthorized");
                 return Unauthorized;
+            }
             return await httpClient.PostWithJsonResultAsync("api/user/AddRolesToUser", userRoleDto.BuildHttpContent());
         }
 

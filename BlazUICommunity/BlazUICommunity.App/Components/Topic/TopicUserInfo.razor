@@ -3,11 +3,11 @@
     <BCard Style="height:100%;border:none;" Shadow="ShadowShowType.Never" EnableAlwaysRender="true">
         <Header>作者简介</Header>
         <Body>
-            @if (User!=null&&!string.IsNullOrWhiteSpace(User.NickName))
+            @if (TopicUser != null&&!string.IsNullOrWhiteSpace(TopicUser.NickName))
             {
-                <p>@($"昵称：{User.NickName}")</p>
-                <p>@($"主贴：{User.TopicCount}  回帖：{User.ReplyCount}")</p>
-                <p>@($"最后活跃时间：{User.LastLoginDate.ToString("yyyy-MM-dd")}")</p>
+                <p>@($"昵称：{TopicUser.NickName}")</p>
+                <p>@($"主贴：{TopicUser.TopicCount}  回帖：{TopicUser.ReplyCount}")</p>
+                <p>@($"最后活跃时间：{TopicUser.LastLoginDate.ToString("yyyy-MM-dd")}")</p>
             }
         </Body>
     </BCard>

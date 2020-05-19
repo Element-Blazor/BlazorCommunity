@@ -80,6 +80,7 @@ namespace Blazui.Community.App.Components
             user.NickName = model.NickName;
             user.Sex = model.Sex;
             user.Signature = model.Signature ??="";
+            user.QQ = model.QQ;
             //user.Email = model.Email;
             //user.Avatar = model.Avatar;
             //user.Mobile = model.Mobile;
