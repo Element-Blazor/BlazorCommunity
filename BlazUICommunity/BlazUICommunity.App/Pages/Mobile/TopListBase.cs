@@ -35,21 +35,20 @@ namespace Blazui.Community.App.Pages.Mobile
             EndX = args.ChangedTouches[0].ClientX;
             EndY = args.ChangedTouches[0].ClientY;
 
+            if (StartX == EndX && StartY == EndY)
+            {
+                Console.WriteLine("点击事件");
+                return;//点击事件
+            }
             var ScrollResult = await JSRuntime.InvokeAsync<ScrollResult>("isScrollToBottom", ElementReference);
             if (ScrollResult.isScrollToBottom)
             {
+             
                 await LoadPage(ScrollResult);
             }
             else
             {
-                if (StartX == EndX && StartY == EndY)
-                {
-                    return;//点击事件
-                }
-                else
-                {
-                    await DropDownRefresh();
-                }
+               await DropDownRefresh();
             }
         }
 
@@ -118,6 +117,7 @@ namespace Blazui.Community.App.Pages.Mobile
             Datas.Clear();
             await AppendDatas();
         }
+      
 
 
     }

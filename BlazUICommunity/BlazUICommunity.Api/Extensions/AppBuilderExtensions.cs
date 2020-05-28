@@ -19,6 +19,9 @@ using System.IO;
 using Microsoft.Extensions.Hosting;
 using Autofac;
 using Blazui.Community.AppDbContext;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.ResponseCompression;
+using System.Linq;
 
 namespace Blazui.Community.Api.Extensions
 {
@@ -39,9 +42,14 @@ namespace Blazui.Community.Api.Extensions
         {
             services.AddHttpClient("CQService",
               client => client.BaseAddress = new Uri(Configuration.GetSection("CQHTTP").GetSection("ApiUrl").Value));
+            services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
+            });
             return services.AddCustomAddControllers()
-                    .AddCustomSwagger()
-                     .AddCustomCors(Configuration, PolicyName)
+                   .AddCustomSwagger()
+                   .AddCustomCors(Configuration, PolicyName)
                    .AddHttpContextAccessor()
                    .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
                    .AddMemoryCache();

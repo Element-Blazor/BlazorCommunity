@@ -97,7 +97,7 @@
             <Body>
                 @if (IsEditing)
                 {
-                    <BMarkdownEditor @bind-Value="@TopicModel.Content" UploadUrl="@UploadUrl" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="300" Height="300"></BMarkdownEditor>
+                    <BMarkdownEditor @bind-Value="@TopicModel.Content" UploadUrl="@UploadUrl" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="ConstConfig.MaxUploadFileSize" Height="300"></BMarkdownEditor>
                 }
                 else
                 {

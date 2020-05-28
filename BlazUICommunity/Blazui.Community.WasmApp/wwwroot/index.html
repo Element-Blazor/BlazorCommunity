@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="referrer" content="no-referrer" />
     <meta name=”Description” Content=”blazor,netcore,dotnet,webassembly”>
-    <title>Blazui-Blazor开发者社区</title>
+    <title>Blazor Developer Community</title>
     <base href="/" />
     <link href="/css/site.css" rel="stylesheet" />
     <link href="/_content/Blazui.Markdown/css/editormd.min.css" rel="stylesheet" />
@@ -15,6 +15,7 @@
     <link href="https://cdn.bootcss.com/codemirror/5.52.0/codemirror.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/_content/Blazui.Component/css/index.css" />
     <link rel="stylesheet" href="/_content/Blazui.Component/css/fix.css" />
+
     <script>
         var _hmt = _hmt || [];
         (function () {
@@ -23,26 +24,139 @@
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
         })();
+
+
     </script>
 </head>
 <body>
 
-    <app>Loading...</app>
+    <app>
+        <style>
+            .loader {
+                position: relative;
+                width: 2.5em;
+                height: 2.5em;
+                transform: rotate(165deg);
+            }
 
-    <script src="_content/Blazui.Component/js/dom.js"></script>
+                .loader:before, .loader:after {
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    display: block;
+                    width: 0.5em;
+                    height: 0.5em;
+                    border-radius: 0.25em;
+                    transform: translate(-50%, -50%);
+                }
+
+                .loader:before {
+                    animation: before 2s infinite;
+                }
+
+                .loader:after {
+                    animation: after 2s infinite;
+                }
+
+            @keyframes before {
+                0% {
+                    width: 0.5em;
+                    box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+                }
+
+                35% {
+                    width: 2.5em;
+                    box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75), 0 0.5em rgba(111, 202, 220, 0.75);
+                }
+
+                70% {
+                    width: 0.5em;
+                    box-shadow: -1em -0.5em rgba(225, 20, 98, 0.75), 1em 0.5em rgba(111, 202, 220, 0.75);
+                }
+
+                100% {
+                    box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+                }
+            }
+
+            @keyframes after {
+                0% {
+                    height: 0.5em;
+                    box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+                }
+
+                35% {
+                    height: 2.5em;
+                    box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75), -0.5em 0 rgba(233, 169, 32, 0.75);
+                }
+
+                70% {
+                    height: 0.5em;
+                    box-shadow: 0.5em -1em rgba(61, 184, 143, 0.75), -0.5em 1em rgba(233, 169, 32, 0.75);
+                }
+
+                100% {
+                    box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+                }
+            }
+            /**
+ * Attempt to center the whole thing!
+ */
+            html,
+            body {
+                height: 100%;
+            }
+
+            .loader {
+                position: absolute;
+                top: calc(50% - 1.25em);
+                left: calc(50% - 1.25em);
+            }
+
+        </style>
+        <div class='loader'>
+         
+        </div>
+
+    </app>
+
+    <script src="/_content/Blazui.Component/js/dom.js"></script>
     <script src="/_content/Blazui.Markdown/js/dom.js"></script>
     <script src="https://cdn.bootcss.com/codemirror/5.52.0/codemirror.min.js"></script>
     <script src="/_content/Blazui.Markdown/js/addons.min.js"></script>
     <script src="/_content/Blazui.Markdown/js/continuelist.js"></script>
     <script src="/_content/Blazui.Markdown/js/modes.min.js"></script>
-
+    <script src="js/app.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
-    <script>navigator.serviceWorker.register('service-worker.js');</script>
-    <script src="/js/localstorextension.js"></script>
     <div class="footer-tongji">
         <a href="https://www.blazor.group/archive">blazor,blazui,admin,blazui.admin,社区,快速,解决问题</a>
         <script type="text/javascript" src="https://s9.cnzz.com/z_stat.php?id=1278753513&web_id=1278753513"></script>
+
     </div>
+    <script>
+
+        var ismobile = isMobile();
+        if (ismobile) {
+            loadjscssfile("css/mobile.css", "css");
+            loadjscssfile("css/iconfont/iconfont.css", "css");
+        }
+        function loadjscssfile(filename, filetype) {
+            if (filetype == "js") {
+                var fileref = document.createElement('script');
+                fileref.setAttribute("type", "text/javascript");
+                fileref.setAttribute("src", filename);
+            } else if (filetype == "css") {
+
+                var fileref = document.createElement('link');
+                fileref.setAttribute("rel", "stylesheet");
+                fileref.setAttribute("type", "text/css");
+                fileref.setAttribute("href", filename);
+            }
+            if (typeof fileref != "undefined") {
+                document.getElementsByTagName("head")[0].appendChild(fileref);
+            }
+        }
+    </script>
 </body>
 </html>
-

@@ -401,7 +401,22 @@ namespace Blazui.Community.Api.Controllers.Client
         public async Task<IActionResult> MobileQuery(int pageIndex, int pageSize)
         {
             var result = await _bZTopicRepository.GetPagedListAsync(p => p.Status != -1, order => order.OrderByDescending(p => p.LastModifyDate), null, pageIndex, pageSize);
-            return Ok(result);
+            if (result is null || result.TotalCount == 0)
+                return NoContent();
+            var pagedatas = result.From(res => _mapper.Map<List<BZTopicDto>>(res));
+            var userRepository = _unitOfWork.GetRepository<BZUserModel>();
+            var users = await _cacheService.GetUsersAsync(p => result.Items.Select(d => d.CreatorId).Contains(p.Id));
+            foreach (BZTopicDto topic in pagedatas.Items)
+            {
+                var user = users.FirstOrDefault(p => p.Id == topic.CreatorId);
+                topic.UserName = user?.UserName;
+                topic.Avator = user?.Avator;
+                topic.NickName = user?.NickName;
+                topic.Signature = user?.Signature;
+            }
+            if (pagedatas is null || pagedatas.TotalCount == 0)
+                return NoContent();
+            return Ok(pagedatas);
         }
         /// <summary>
         /// 查询精华帖子

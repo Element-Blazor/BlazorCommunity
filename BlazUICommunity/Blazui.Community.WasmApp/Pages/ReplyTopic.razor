@@ -1,36 +1,41 @@
 ﻿@page "/topic/{TopicId}"
 @page "/topic/hot/{TopicId}"
-@inherits ReplyTopicBase
+@inherits PageBase
 
 <div class="container">
     @if (!string.IsNullOrWhiteSpace(TopicModel.Content))
     {
         <BLayout EastWidth="350" EnableAlwaysRender="true">
             <Center>
-                <BTab TabPosition="@TabPosition.Top" EnableAlwaysRender="true" Style="margin-top:-4px;">
+                <div style="display:flex;padding-bottom:10px;">
                     <GoHome />
-                    <BTabPanel Title="" Style="margin-top:-5px;">
-                        <TopicContent EnableAlwaysRender="true" TopicModel="@TopicModel" IsFollow="@IsFollow" IsMySelf="@IsMySelf" IsEditing="@IsEditing" OnFollowStatusChanging="@ToggleFollow" OnEditStatusChanging="ToggleEditing" CloseTopic="EndTopic">
-                        </TopicContent>
-                        <div class="margin-top-5"></div>
-                        <BCard EnableAlwaysRender="true">
-                            <Header>
-                                <div class="el-divider el-divider--horizontal">
-                                    <div class="el-divider__text is-center">
-                                        回帖
-                                    </div>
-                                </div>
-                            </Header>
-                            <Body>
-                                <ReplyList EnableAlwaysRender="true" TopicModel="@TopicModel" OnItemDeleted="OnReplyDelete" OnNewReply="OnReplySuccess"></ReplyList> @*  OnNewReply="OnReplySuccess"*@
-                            </Body>
-                        </BCard>
-                    </BTabPanel>
-                </BTab>
+                    <BButton Type="@ButtonType.Success" OnClick="@(e=>NavigationManager.NavigateTo("/topic/new"))" IsPlain="true" Size="@ButtonSize.Small" Style="margin-right:0px;margin-left:auto;"> 发表新帖 </BButton>
+                </div>
+
+                <TopicContent @ref="mTopicContent" EnableAlwaysRender="true" TopicModel="@TopicModel" IsFollow="@IsFollow" IsMySelf="@IsMySelf" IsEditing="@IsEditing" OnFollowStatusChanging="@ToggleFollow" OnEditStatusChanging="ToggleEditing" CloseTopic="EndTopic">
+                </TopicContent>
+                <div class="margin-top-5"></div>
+                <BCard EnableAlwaysRender="true" Shadow="ShadowShowType.Never">
+                    <Header>
+                        <div class="el-divider el-divider--horizontal">
+                            <div class="el-divider__text is-center">
+                                回帖
+                            </div>
+                        </div>
+                    </Header>
+                    <Body>
+                        <ReplyList EnableAlwaysRender="true" TopicModel="@TopicModel" OnItemDeleted="OnReplyDelete" OnNewReply="OnReplySuccess"></ReplyList> @*  OnNewReply="OnReplySuccess"*@
+                    </Body>
+                </BCard>
+                @*<BTab TabPosition="@TabPosition.Top" EnableAlwaysRender="true" Style="margin-top:-4px;">
+            <BTabPanel Title="" Style="margin-top:-5px;">
+
+            </BTabPanel>
+        </BTab>*@
             </Center>
-            <East>
-                <AppRightLayout Style="margin-top:9px !important;"></AppRightLayout>
-            </East>
+            @*<East>
+                    <AppRightLayout Style="margin-top:9px !important;"></AppRightLayout>
+                </East>*@
         </BLayout>
     }
 </div>

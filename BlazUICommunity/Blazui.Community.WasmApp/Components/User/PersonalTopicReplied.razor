@@ -1,4 +1,4 @@
-﻿@inherits PersonalTopicRepliedBase
+﻿@inherits PersonalTopicTableBase<PersonalReplyDisplayDto>
 <BForm Inline="true" @ref="searchForm">
     <BFormItem TValue="string" Label="标题" Name="@nameof(SearchPersonalReplyCondition.Title)" IsRequired="false">
         <BInput IsClearable="true" TValue="string" Placeholder="输入帖子标题" Style="width:300px;"></BInput>

@@ -12,15 +12,14 @@ namespace Blazui.Community.App.Components
 {
     public class AppHeaderBase : PageBase
     {
-
         protected List<TopNaviHeaderMenuModel> headerMenus = new List<TopNaviHeaderMenuModel>();
         [Inject]
         IOptionsMonitor<TopNavMenuOption> Options { get; set; }
-       
+
         protected override async Task InitilizePageDataAsync()
         {
             User = await GetUser();
-            if (User!=null&&string.IsNullOrWhiteSpace(User.Avator))
+            if (User != null && string.IsNullOrWhiteSpace(User.Avator))
                 User.Avator = "/img/defaultact.png";
             headerMenus = Options.CurrentValue.HeaderMenus;
             Options.OnChange(menus => headerMenus = Options.CurrentValue.HeaderMenus);

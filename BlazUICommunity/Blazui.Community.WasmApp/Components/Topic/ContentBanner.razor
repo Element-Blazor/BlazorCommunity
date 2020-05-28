@@ -1,10 +1,68 @@
-﻿@inherits ContentBannerBase
+﻿@inherits BComponentBase
 
-<div class="content-ad">
-    <div class="ad-container">
-        @if (Banners.Count > 0)
-        {
-            <img src="@Banners?.FirstOrDefault()?.BannerImg" class="content-banner-img" />
-        }
+    <div class="content-ad">
+        <div class="ad-container">
+            @if (Banners.Count > 0)
+            {
+                <div class="el-carousel el-carousel--horizontal" style="height:150px;">
+                    <div class="el-carousel__container">
+
+                        @for (int i = 0; i < Banners.Count; i++)
+                        {
+                            if (i == ActiveIndex)
+                            {
+                                <div class="el-carousel__item is-active is-animating">
+                                    <a href="@(Banners[i]?.Link??"")">
+                                        <img src="@Banners[i]?.BannerImg" class="content-banner-img" />
+                                        @*  style="transform: translateX(@(i*400)px) scale(1);" *@
+                                    </a>
+                                </div>
+                            }
+                            @*else
+                            {
+                                if (i > ActiveIndex)
+                                {
+                                    <div class="el-carousel__item ">
+                                        <a href="@(Banners[i]?.Link??"")">
+                                            <img src="@Banners[i]?.BannerImg" class="content-banner-img"
+                                                 style="transform: translateX(@(-(i+1)*400)px) scale(1);" />
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="el-carousel__item is-animating">
+                                        <a href="@(Banners[i]?.Link??"")">
+                                            <img src="@Banners[i]?.BannerImg" class="content-banner-img"
+                                                 style="transform: translateX(@(-(i+1)*400)px) scale(1);" />
+                                        </a>
+                                    </div>
+                                }
+                            }*@
+                        }
+
+                    </div>
+                    <ul class="el-carousel__indicators el-carousel__indicators--horizontal">
+                        @for (int i = 0; i < Banners.Count; i++)
+                        {
+                            if (i == ActiveIndex)
+                            {
+                                <li class="el-carousel__indicator el-carousel__indicator--horizontal is-active">
+                                    <button class="el-carousel__button"></button>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="el-carousel__indicator el-carousel__indicator--horizontal">
+                                    <button class="el-carousel__button"></button>
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </div>
+
+
+            }
+        </div>
     </div>
-</div>

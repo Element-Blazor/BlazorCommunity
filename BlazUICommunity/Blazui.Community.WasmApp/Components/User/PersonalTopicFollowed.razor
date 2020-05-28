@@ -1,4 +1,4 @@
-﻿@inherits PersonalTopicFollowedBase
+﻿@inherits PersonalTopicTableBase<PersonalFollowDisplayDto>
 
 <BForm Inline="true" @ref="searchForm">
     <BFormItem TValue="string" Label="标题" Name="@nameof(SearchPersonalFollowCondition.TopicTitle)" IsRequired="false">

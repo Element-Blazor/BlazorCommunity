@@ -1,4 +1,4 @@
-﻿@inherits ReplyItemBase
+﻿@inherits BComponentBase
 @if (ReplyModel != null)
 {
     <div class="content-reply-base custome-button-hover">
@@ -42,7 +42,7 @@
         <Body>*@
         @if (ReplyModel.ShoudEdit)
         {
-            <BMarkdownEditor @bind-Value="@ReplyModel.Content" EnableAlwaysRender="true" UploadUrl="@UploadUrl" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="300" Height="300"></BMarkdownEditor>
+            <BMarkdownEditor @bind-Value="@ReplyModel.Content" EnableAlwaysRender="true" UploadUrl="@UploadUrl" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="ConstConfig.MaxUploadFileSize" Height="300"></BMarkdownEditor>
         }
         else
         {

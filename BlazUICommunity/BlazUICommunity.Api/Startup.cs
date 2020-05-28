@@ -48,7 +48,7 @@ namespace Blazui.Community.Api
             services.AddCustomWebApi(Configuration);
             services.AddCustomServices();
             services.AddCustomConfigure(Configuration);
-
+            services.AddRazorPages();
         }
 
         /// <summary>
@@ -66,12 +66,13 @@ namespace Blazui.Community.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseResponseCompression();
             app.UseLogMiddleware();//必须放在UseResponseCaching，UseHttpCacheHeaders 前面，否则Etag不生成，原因未知
 
             //app.UseHsts();
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseBlazorFrameworkFiles();
             LayoutRenderer.Register("basedir", p => env.ContentRootPath);
             app.UseCustomSwaggerUI(p => p.Title = "Blazui 社区 WebApi Docs");
 
@@ -89,7 +90,9 @@ namespace Blazui.Community.Api
             app.UseCors(PolicyName);
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
                 endpoints.MapControllers();
+                endpoints.MapFallbackToFile("index.html");
             });
 
             env.CreateUplodFolder();

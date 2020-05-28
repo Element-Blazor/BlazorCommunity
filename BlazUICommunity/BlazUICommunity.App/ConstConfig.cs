@@ -15,5 +15,6 @@ namespace Blazui.Community.App
 
         public static int width;
         public static int height;
+        public static int MaxUploadFileSize = 1024;
     }
 }

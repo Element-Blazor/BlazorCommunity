@@ -1,0 +1,66 @@
+﻿@inherits BComponentBase
+@if (!string.IsNullOrWhiteSpace(TopicModel.Id))
+{
+    <BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
+        <Header>
+            <div class="mobile-topic-content-info">
+                <div class="mobile-topic-content-data">
+                    <div class="mobile-topic-content-secondline">
+                        <div class="mobile-topic-content-title">
+                            <span> @TopicModel.Title</span>
+                        </div>
+                    </div>
+                    <div class="mobile-topic-content-thirdline">
+
+
+                        <div class="third-item">
+                            <div class="mobile-topic-content-state">
+                                @{
+                                    if (TopicModel.Status == 1)
+                                    {
+                                        <span class="el-tag el-tag--info el-tag--mini">已结帖</span>
+                                    }
+                                    else
+                                    {
+                                        @if (!string.IsNullOrWhiteSpace(TopicModel.CategoryDisplay))
+                                        {
+                                            <span class="el-tag @tagClass el-tag--mini">@TopicModel.CategoryDisplay</span>
+                                        }
+                                    }
+                                }
+
+                            </div>
+                            @if (!string.IsNullOrEmpty(TopicModel.VerName))
+                            {
+                                <div class="mobile-topic-content-version">
+                                    <span class="el-tag  el-tag--light el-tag--mini ">
+                                        @TopicModel.VerName
+                                    </span>
+                                </div>
+                            }
+                        </div>
+                        <div class="third-item">
+
+                            <span> @TopicModel?.LastModifyDate.ToString("yyyy-MM-dd")</span>
+                            <span @onclick="ToggleStarStatus">
+                                <i class="@(IsFollow?"el-icon-star-on":"el-icon-star-off")"></i>
+                            </span>
+                            @if (TopicModel.ReplyCount > 0)
+                            {
+                                <span class="el-badge">
+                                    <i class="el-icon-chat-dot-round" style="color: #909399;font-size: 20px;"></i>
+                                    <sup class="el-badge__content el-badge__content--undefined is-fixed">@TopicModel?.ReplyCount</sup>
+                                </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Header>
+        <Body>
+            <div class="el-divider el-divider--horizontal" style="margin:10px 0px 15px 0px;"> <div class="el-divider__text is-center">帖子内容</div></div>
+            <BMarkdown Text="@TopicModel.Content"></BMarkdown>
+            <UserSignature Signature="@TopicModel.Signature" />
+        </Body>
+    </BCard>
+}

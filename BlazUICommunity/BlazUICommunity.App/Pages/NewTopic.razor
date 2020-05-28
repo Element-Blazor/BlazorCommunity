@@ -1,61 +1,63 @@
 ﻿@page   "/topic/new"
 @inherits NewTopicBase
 
-<div class="content-newtopic">
-    <BTab EnableAlwaysRender="true">
-        <BTabPanel Title="发表新帖">
-            <BForm Inline="false" @ref="form" Value="article" LabelAlign="@LabelAlign.Left">
+    <div class="content-newtopic">
+        <BTab EnableAlwaysRender="true">
+            <BTabPanel Title="发表新帖">
 
-                <div class="form-inline">
-                    <BFormItem TValue="string" Style="width:400px" RequiredMessage="请填写标题" Label="帖子标题" Name="@nameof(NewTopicModel.Title)" IsRequired="true">
-                        <BInput TValue="string"  Placeholder="请输入标题"></BInput>
-                    </BFormItem>
-                    <BFormItem TValue="TopicCategory" Label="类型" IsRequired="true" Name="@nameof(NewTopicModel.Category)">
-                        <div class="el-form-item-custom">
-                            <BSelect Value="TopicCategory.Ask">
-                            </BSelect>
-                        </div>
-                    </BFormItem>
-                    <BFormItem TValue="ProjectType" Label="项目" RequiredMessage="请选择项目" IsRequired="true" Name="@nameof(NewTopicModel.projectType)">
-                        <div class="el-form-item-custom">
-                            <BSelect TValue="ProjectType" Value="ProjectType.Blazui" ValueChanged="e=>OnChange(e)">
-                            </BSelect>
-                        </div>
-                    </BFormItem>
-                    <BFormItem TValue="string" Label="版本" IsRequired="true" RequiredMessage="请选择版本" Name="@nameof(NewTopicModel.VerNo)" >
-                        <div class="el-form-item-custom">
-                            <BSelect TValue="string" @ref="bverNoSelect">
-                                @if (bZVersions != null && bZVersions.Any())
+                <BForm Inline="false" @ref="form" Value="article" LabelAlign="@LabelAlign.Left">
+
+                    <div class="form-inline">
+                        <BFormItem TValue="string" Style="width:500px;" RequiredMessage="请填写标题" Label="标题" Name="@nameof(NewTopicModel.Title)" IsRequired="true">
+                            <BInput TValue="string" Placeholder="标题，如果是提问，请描述清楚问题的主题"></BInput>
+                        </BFormItem>
+                        <BFormItem TValue="TopicCategory" Label="类型" Style="margin-left:20px;" IsRequired="true" Name="@nameof(NewTopicModel.Category)">
+                            <div class="el-form-item-custom">
+                                <BSelect Value="TopicCategory.Ask">
+                                </BSelect>
+                            </div>
+                        </BFormItem>
+                        @*<BFormItem TValue="ProjectType" Label="项目" RequiredMessage="请选择项目" IsRequired="false" Name="@nameof(NewTopicModel.projectType)">
+                    <div class="el-form-item-custom">
+                        <BSelect TValue="ProjectType" ValueChanged="e=>OnChange(e)">
+                        </BSelect>
+                    </div>
+                </BFormItem>
+                <BFormItem TValue="string" Label="版本" IsRequired="true" RequiredMessage="请选择版本" Name="@nameof(NewTopicModel.VerNo)" >
+                    <div class="el-form-item-custom">
+                        <BSelect TValue="string" @ref="bverNoSelect">
+                            @if (bZVersions != null && bZVersions.Any())
+                            {
+                                foreach (var ver in bZVersions)
                                 {
-                                    foreach (var ver in bZVersions)
-                                    {
-                                        <BSelectOption Value="@ver.Id" Text="@ver.VerNo"></BSelectOption>
-                                    }
+                                    <BSelectOption Value="@ver.Id" Text="@ver.VerNo"></BSelectOption>
                                 }
-                            </BSelect>
-                        </div>
-                    </BFormItem>
-                    <BFormItem TValue="bool" Label="通知管理员" IsRequired="true" 
-                               Name="@nameof(NewTopicModel.Notice)" >
-                        <BSwitch TValue="bool" ActiveValue="true" InactiveValue="false"></BSwitch>
-                    </BFormItem>
-                </div>
+                            }
+                        </BSelect>
+                    </div>
+                </BFormItem>*@
+                        <BFormItem TValue="bool" Label="通知管理员" IsRequired="false" Style="margin-left:20px;"
+                                   Name="@nameof(NewTopicModel.Notice)">
+                            <BSwitch TValue="bool" ActiveValue="true" InactiveValue="false"></BSwitch>
+                        </BFormItem>
+                    </div>
 
-                <BFormItem TValue="string" IsRequired="true" Name="@nameof(NewTopicModel.Content)">
-                    <div style="width:99%;">
-                        <BMarkdownEditor @ref="bMarkdownEditor" UploadUrl="@(UploadUrl+ UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="480" FileMaxSize="300" ImageMaxSize="300"></BMarkdownEditor>
-                        <div>
-                            <span class="el-tag el-tag--success el-tag--light" style="width:100%">温馨提示：上传图片，单张图片最大只允许300k，绑定QQ后可以及时收到回复通知</span>
+                    <BFormItem TValue="string" IsRequired="true" Name="@nameof(NewTopicModel.Content)" RequiredMessage="">
+                        <div style="width:99%;">
+                            <BMarkdownEditor @ref="bMarkdownEditor" UploadUrl="@(UploadUrl+ UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="480" FileMaxSize="300" ImageMaxSize="ConstConfig.MaxUploadFileSize"></BMarkdownEditor>
+                            <div>
+                                <span class="el-tag el-tag--success el-tag--light" style="width:100%">温馨提示：上传图片，单张图片最大只允许@(ConstConfig.MaxUploadFileSize)k，绑定QQ后可以及时收到回复通知</span>
+                            </div>
                         </div>
-                    </div>
-                </BFormItem>
-                <BFormItem TValue="object">
-                    <div style="margin-right: 20px;text-align: right;">
-                        <BButton Type="@ButtonType.Success" OnClick="e=>Submit()" IsPlain="true" Style="float: left; ">立即发布</BButton>
-                        <GoHome Float="@("right")"></GoHome>
-                    </div>
-                </BFormItem>
-            </BForm>
-        </BTabPanel>
-    </BTab>
-</div>
+                    </BFormItem>
+                    <BFormItem TValue="object">
+                        <div style="margin-right: 20px;text-align: right;">
+                            <BButton Type="@ButtonType.Success" OnClick="e=>Submit()" IsPlain="true" Style="float: left; ">立即发布</BButton>
+                            <GoHome Float="@("right")"></GoHome>
+                        </div>
+                    </BFormItem>
+                </BForm>
+            </BTabPanel>
+        </BTab>
+
+    </div>

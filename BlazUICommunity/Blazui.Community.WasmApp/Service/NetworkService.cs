@@ -17,6 +17,9 @@ namespace Blazui.Community.WasmApp.Service
     public class NetworkService
     {
         private readonly HttpClient httpClient;
+
+      
+
         private readonly ILocalStorageService localStorageService;
 
         public NetworkService(IHttpClientFactory httpClientFactory, ILocalStorageService localStorageService)
@@ -91,6 +94,7 @@ namespace Blazui.Community.WasmApp.Service
             else return true;
         }
 
+       
         /// <summary>
         /// 修改密码
         /// </summary>
@@ -271,6 +275,23 @@ namespace Blazui.Community.WasmApp.Service
         internal async Task<BaseResponse<List<HotTopicDto>>> QueryAskHot()
         {
             return await httpClient.GetWithJsonResultAsync<List<HotTopicDto>>($"api/client/topic/AskHot");
+        }
+
+        /// <summary>
+        /// 移动端分页查询
+        /// </summary>
+        /// <param name="orderBy"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<BaseResponse<PageDatas<BZTopicDto>>> MobileQuery(int pageIndex, int pageSize)
+        {
+            return await httpClient.GetWithJsonResultAsync<PageDatas<BZTopicDto>>($"api/client/topic/MobileQuery/{pageSize}/{pageIndex}");
+        }
+
+        internal async Task<BaseResponse<List<HotTopicDto>>> QueryTopicByAuthor(string topicId)
+        {
+            return await httpClient.GetWithJsonResultAsync<List<HotTopicDto>>($"api/client/topic/QueryTopicByAuthor/{topicId}");
         }
         #endregion Topic
 

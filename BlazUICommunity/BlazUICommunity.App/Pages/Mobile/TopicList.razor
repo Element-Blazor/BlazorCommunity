@@ -6,7 +6,7 @@
     {
         <div style="display:flex;margin:10px auto;">
             <div class="mobile-topic-avator">
-                <span class="el-tag el-tag--light">@topic.Avator?.Substring(0, 1).ToUpper()</span>
+                <span class="el-tag el-tag--light">@topic.UserName?.Substring(0, 1).ToUpper()</span>
             </div>
             <div class="mobile-topic" @onclick="@(e=>NavigationManager.NavigateTo($"/m/topic/{topic.Id}"))">
                 <div class="mobile-topic-title">

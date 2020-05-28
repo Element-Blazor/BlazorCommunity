@@ -46,12 +46,17 @@ namespace Blazui.Community.App.Middleware
                 //当前是百度访问，不再继续渲染，跳转至百度专用页面
                 //为了不让百度真的跳转，内部用HttpClient进行一次访问，访问百度专用页面
 
-                if (request.Path.Value.Contains("/_blazor"))
+                if (request.Path.Value == "/")
                 {
                     var responseResult = await httpClient.GetAsync($"{request.Scheme}://{request.Host}/archive");
                     await responseResult.Content.CopyToAsync(context.Response.Body);
                     return;
                 }
+                if (request.Path.Value.Contains("/_blazor"))
+                {
+                    return;
+                }
+
                 //// 获取Response.Body内容
                 var paths = request.Path.Value.Split('/').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
                

@@ -40,6 +40,7 @@ namespace Blazui.Community.App.Pages
             Tabs.Add(new TabItem() { Title = "讨论", Category = (int)TopicCategory.Discuss });
             Tabs.Add(new TabItem() { Title = "建议", Category = (int)TopicCategory.Suggest });
             Tabs.Add(new TabItem() { Title = "公告", Category = (int)TopicCategory.Notice });
+            Tabs.Add(new TabItem() { Title = "教程", Category = (int)TopicCategory.Doc });
         }
 
         public class TabItem

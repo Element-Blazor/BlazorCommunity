@@ -6,9 +6,4 @@
   <PropertyGroup>
     <ActiveDebugProfile>Blazui.Community.WasmApp</ActiveDebugProfile>
   </PropertyGroup>
-  <ItemGroup>
-    <Content Update="wwwroot\js\localstorextension.js">
-      <SubType>Code</SubType>
-    </Content>
-  </ItemGroup>
 </Project>

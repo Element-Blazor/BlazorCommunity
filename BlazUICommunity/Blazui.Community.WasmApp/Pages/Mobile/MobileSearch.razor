@@ -1,0 +1,5 @@
+﻿@inherits PageBase
+@page "/m/search/{Text}"
+
+<SeachTopicContainer Datas="Datas" Total="@Total" currentPage="currentPage" PageSize="PageSize" OnItemClick="OnItemClick" CurrentPageChanged="LoadDatas" EnableAlwaysRender="true" AskQuestion="e=>Ask()">
+</SeachTopicContainer>

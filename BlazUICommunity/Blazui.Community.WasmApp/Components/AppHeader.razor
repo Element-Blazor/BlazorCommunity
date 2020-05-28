@@ -1,7 +1,7 @@
-﻿@inherits AppHeaderBase
+﻿@inherits PageBase
 <div class="nav">
     <div class="container app-header-dropdown">
-        <img src="img/logo.svg" width="146" height="38" />
+        <img src="img/logo.png" style="width:80px;height:64px;margin-top:0px !important;" @onclick="@(e=>NavigationManager.NavigateTo("/"))"/>
         <div class="fill"></div>
         @if (headerMenus.Any())
         {

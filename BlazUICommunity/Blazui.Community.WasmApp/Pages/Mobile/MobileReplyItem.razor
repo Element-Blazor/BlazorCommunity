@@ -1,0 +1,12 @@
+﻿@inherits BComponentBase
+@if (ReplyModel != null)
+{
+    <div class="el-divider el-divider--horizontal">
+        <div class="el-divider__text is-left">@ReplyModel.NickName</div>
+        <div class="el-divider__text is-right">@ReplyModel?.LastModifyDate.ToString("yyyy-MM-dd")</div>
+    </div>
+    <BMarkdown Text="@ReplyModel.Content"></BMarkdown>
+    <div class="el-divider el-divider--horizontal" style="margin:10px 0"></div>
+
+
+}

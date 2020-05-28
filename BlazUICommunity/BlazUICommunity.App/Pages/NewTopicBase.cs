@@ -57,7 +57,7 @@ namespace Blazui.Community.App.Pages
                 Title = newTopicModel.Title,
                 Category = (int)newTopicModel.Category,
                 CreatorId = User.Id,
-                VersionId = bZVersions.FirstOrDefault(p => p.VerNo == newTopicModel.VerNo)?.Id,
+                //VersionId = bZVersions.FirstOrDefault(p => p.VerNo == newTopicModel.VerNo)?.Id,
                 LastModifyDate = DateTime.Now,
                 CreateDate = DateTime.Now,
                 Good = 0,
@@ -84,20 +84,20 @@ namespace Blazui.Community.App.Pages
             });
         }
 
-        protected async Task OnChange(ProjectType value)
-        {
-            await LoadProjects(value);
-            form?.Refresh();
-            RequireRender = true;
-            bverNoSelect?.Refresh();
-            MarkAsRequireRender();
-            StateHasChanged();
-        }
+        //protected async Task OnChange(ProjectType value)
+        //{
+        //    await LoadProjects(value);
+        //    form?.Refresh();
+        //    RequireRender = true;
+        //    bverNoSelect?.Refresh();
+        //    MarkAsRequireRender();
+        //    StateHasChanged();
+        //}
 
         protected override async Task InitilizePageDataAsync()
         {
             article = new NewTopicModel() { Title = "", Content = "" };
-            await LoadProjects(ProjectType.Blazui);
+            //await LoadProjects(ProjectType.Blazui);
         }
 
         private async Task LoadProjects(ProjectType type)

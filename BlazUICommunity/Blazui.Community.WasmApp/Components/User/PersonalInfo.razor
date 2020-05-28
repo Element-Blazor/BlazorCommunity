@@ -1,6 +1,6 @@
 ﻿@layout PersonalCenterLayout
 @page "/user/base"
-@inherits PersonalInfoBase
+@inherits PersonalPageBase
 <BTab Type="@TabType.Card" EnableAlwaysRender="true">
     <BTabPanel Title="@tabTitle" EnableAlwaysRender="true">
         @if (User != null)
@@ -81,7 +81,7 @@
                         }
                         else
                         {
-                            <BMarkdownEditor @bind-Value="@User.Signature" UploadUrl="@(UploadUrl+ UploadPath.Avator.Description())" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="100" Height="300"></BMarkdownEditor>
+                            <BMarkdownEditor @bind-Value="@User.Signature" UploadUrl="@(UploadUrl+ UploadPath.Avator.Description())" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="ConstConfig.MaxUploadFileSize" Height="300"></BMarkdownEditor>
                         }
                     </div>
                     </BFormItem>

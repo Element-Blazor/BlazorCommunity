@@ -16,9 +16,9 @@
         <Body>*@
             <BForm Inline="false" @ref="form" Value="Model" LabelAlign="@LabelAlign.Left" EnableAlwaysRender="true">
                 <BFormItem TValue="string" IsRequired="false"  Name="@nameof(NewReplyModel.Content)" EnableAlwaysRender="true" @ref="formItem">
-                    <BMarkdownEditor @ref="bMarkdownEditor"  UploadUrl="@(UploadUrl+ UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="300" ImageMaxSize="300" EnableAlwaysRender="true"></BMarkdownEditor>
+                    <BMarkdownEditor @ref="bMarkdownEditor"  UploadUrl="@(UploadUrl+ UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="300" ImageMaxSize="ConstConfig.MaxUploadFileSize" EnableAlwaysRender="true"></BMarkdownEditor>
                     <div>
-                        <span class="el-tag el-tag--warning el-tag--light" style="width:100%">温馨提示：上传图片，单张图片最大只允许300k</span>
+                        <span class="el-tag el-tag--warning el-tag--light" style="width:100%">温馨提示：上传图片，单张图片最大只允许@(ConstConfig.MaxUploadFileSize)k</span>
                     </div>
                 </BFormItem>
                 <BFormItem TValue="object" Style="text-align:left">

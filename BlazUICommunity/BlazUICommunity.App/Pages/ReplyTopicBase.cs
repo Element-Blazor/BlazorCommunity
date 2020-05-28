@@ -56,13 +56,20 @@ namespace Blazui.Community.App.Pages
                 NavigationManager.NavigateTo("/");
                 return;
             }
-
+            NavigationManager.LocationChanged -= NavigationManager_LocationChanged;
+            NavigationManager.LocationChanged += NavigationManager_LocationChanged;
             await WithFullScreenLoading(async () =>
             {
                 User = await GetUser();
                 await LoadTopic();
                 await LoadFollow();
             });
+        }
+
+        protected override bool ShouldRender() => true;
+        private void NavigationManager_LocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+        {
+            NavigationManager.NavigateTo(NavigationManager.Uri, true);
         }
 
         private async Task LoadTopic()

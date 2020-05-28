@@ -44,6 +44,11 @@ namespace Blazui.Community.Enums
         /// 4：公告
         /// </summary>
         [Description("公告")]
-        Notice
+        Notice,
+        /// <summary>
+        /// 5：教程
+        /// </summary>
+        [Description("教程")]
+        Doc
     }
 }

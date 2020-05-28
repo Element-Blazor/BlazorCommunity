@@ -1,4 +1,4 @@
-﻿@inherits ReplyListBase
+﻿@inherits PageBase
     <div class="reply-list">
         @if (Replys.Count > 0)
         {
@@ -39,7 +39,15 @@
             }
             else
             {
-                <ReplyNow EnableAlwaysRender="true" Topic="@TopicModel" OnReplySuccess="OnReplySuccess"   Model="@MBZReplyDto" ></ReplyNow>
+                <ReplyNow EnableAlwaysRender="true" Topic="@TopicModel" OnReplySuccess="OnReplySuccess" Model="@MBZReplyDto"></ReplyNow>
             }
+        }
+        else
+        {
+            <div class="el-table__empty-block" style="height:60px;">
+                <span class="el-table__empty-text">
+                    此贴已关闭
+                </span>
+            </div>
         }
     </div>

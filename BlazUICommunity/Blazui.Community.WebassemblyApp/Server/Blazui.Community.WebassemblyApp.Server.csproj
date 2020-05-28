@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BlazUICommunity.Model\Blazui.Community.Model.csproj" />
+    <ProjectReference Include="..\Client\Blazui.Community.WebassemblyApp.Client.csproj" />
+    <ProjectReference Include="..\..\Blazui.Community.AutofacModules\Blazui.Community.AutofacModules.csproj" />
+    <ProjectReference Include="..\..\Blazui.Community.Common\Blazui.Community.Common.csproj" />
+    <ProjectReference Include="..\..\Blazui.Community.FileExtensions\Blazui.Community.FileExtensions.csproj" />
+    <ProjectReference Include="..\..\Blazui.Community.IdentityExtensions\Blazui.Community.IdentityExtensions.csproj" />
+    <ProjectReference Include="..\..\Blazui.Community.JWTServiceCollectionExtensions\Blazui.Community.JWTServiceCollectionExtensions.csproj" />
+    <ProjectReference Include="..\..\Blazui.Community.LinqExtensions\Blazui.Community.LinqExtensions.csproj" />
+    <ProjectReference Include="..\..\Blazui.Community.MvcCore\Blazui.Community.MvcCore.csproj" />
+    <ProjectReference Include="..\..\Blazui.Community.Response\Blazui.Community.Response.csproj" />
+    <ProjectReference Include="..\..\Blazui.Community.Shared\Blazui.Community.Shared.csproj" />
+    <ProjectReference Include="..\..\Blazui.Community.StringExtensions\Blazui.Community.StringExtensions.csproj" />
+    <ProjectReference Include="..\..\Blazui.Community.SwaggerExtensions\Blazui.Community.SwaggerExtensions.csproj" />
+    <ProjectReference Include="..\..\BlazUICommunity.Repository\Blazui.Community.Repository.csproj" />
+    <ProjectReference Include="..\..\BlazUICommunity.Request\Blazui.Community.Request.csproj" />
+  </ItemGroup>
+
+
+</Project>

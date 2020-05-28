@@ -1,0 +1,23 @@
+﻿@page "/m/topic/{TopicId}"
+@inherits PageBase
+
+@if (TopicModel != null && !string.IsNullOrWhiteSpace(TopicModel.Content))
+{
+    <div>
+        <MobileTopicContent EnableAlwaysRender="true" TopicModel="@TopicModel" IsFollow="@IsFollow" OnFollowStatusChanging="@ToggleFollow">
+        </MobileTopicContent>
+        <div class="margin-top-5"></div>
+        <BCard EnableAlwaysRender="true">
+            <Header>
+                <div class="el-divider el-divider--horizontal" style="margin:10px auto">
+                    <div class="el-divider__text is-center">
+                        回帖
+                    </div>
+                </div>
+            </Header>
+            <Body>
+                <MobileReplyList EnableAlwaysRender="true" TopicModel="@TopicModel" OnItemDeleted="OnReplyDelete" OnNewReply="OnReplySuccess"></MobileReplyList>
+            </Body>
+        </BCard>
+    </div>
+}

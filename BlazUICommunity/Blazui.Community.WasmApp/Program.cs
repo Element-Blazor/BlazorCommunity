@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Blazui.Community.WasmApp.Features.Identity;
 using Blazui.Community.WasmApp.Model;
 using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Builder;
+using Blazui.Community.WasmApp.Middleware;
 
 namespace Blazui.Community.WasmApp
 {
@@ -20,25 +22,25 @@ namespace Blazui.Community.WasmApp
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
-
             var services = builder.Services;
             var Configuration = builder.Configuration;
             builder.RootComponents.Add<App>("app");
 
-            services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            services.AddHttpClient("BlazuiCommunitiyApp", client =>
-             client.BaseAddress = new Uri(Configuration["ServerUrl"]));
+            services.AddHttpClient("BlazuiCommunitiyApp", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)); 
+
             services.AddBlazoredLocalStorage();
             services.AddAuthorizationCore();
-            services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<AuthenticationStateProvider,ApiAuthenticationStateProvider>();
+            services.AddScoped<IAuthenticationService,AuthenticationService>();
             services.AddScoped<NetworkService>();
-            //services.AddTransient<SeoMiddleware>();
+            services.AddSingleton<BrowerService>();
             await services.AddBlazuiServicesAsync();
             services.AddMarkdown();
-            services.AddOptions<List<TopNaviHeaderMenuModel>>().Configure(options => Configuration.GetSection("HeaderMenus").Bind(options));
-
+            services.Configure<TopNavMenuOption>(Configuration);
+           
             await builder.Build().RunAsync();
         }
+
+       
     }
 }

@@ -1,0 +1,27 @@
+﻿@page "/m/index"
+@inherits PageBase
+
+<div @ontouchend="OnTouchEnd" @ontouchstart="OnTouchStart">
+    @foreach (var topic in Datas)
+    {
+        <div style="display:flex;margin:10px auto;">
+            <div class="mobile-topic-avator">
+                <span class="el-tag el-tag--light">@topic.UserName?.Substring(0, 1).ToUpper()</span>
+            </div>
+            <div class="mobile-topic">
+                <div class="mobile-topic-title">
+                    <a @onclick="@(e=>NavigateToTopic(topic.Id))">@topic.Title</a>
+                </div>
+                <div style="display:flex;margin-top:10px;">
+                    <span class="mobile-topic-content">@topic.Content</span>
+                    @*<span class="mobile-topic-date">@topic.LastModifyDateDisplay</span>*@
+                </div>
+            </div>
+        </div>
+        <div class="el-divider el-divider--horizontal" style="margin:15px auto !important"><!----></div>
+    }
+    @if (IsBottom)
+    {
+        <div class="el-divider el-divider--horizontal"><div class="el-divider__text is-center">@BottomMessage</div></div>
+    }
+</div>
