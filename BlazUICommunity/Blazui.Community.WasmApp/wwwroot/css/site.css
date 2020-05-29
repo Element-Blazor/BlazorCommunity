@@ -960,3 +960,6 @@ span {
 .markdown-body h6 {
     margin-left: 125px;
 }
+.app-header-dropdown img {
+    cursor: pointer;
+}

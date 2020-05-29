@@ -38,9 +38,9 @@ namespace Blazui.Community.Api.Service
         {
             try
             {
-                if(uploadPath !=UploadPath.Avator&&uploadPath!=UploadPath.Banner)//如果是上传头像，不加水印
-                AddWatermark(filePath);
-                if(!CheckFileLength(filePath))//小于100k的图片不压缩--节约tinyapi次数
+                if(uploadPath !=UploadPath.Avator&&uploadPath!=UploadPath.Banner)
+                    AddWatermark(filePath);
+                if(!CheckFileLength(filePath))//小于50k的图片不压缩
                 await TinyPngCompress(filePath, filename);
             }
             catch (Exception ex)
@@ -53,7 +53,7 @@ namespace Blazui.Community.Api.Service
         private bool CheckFileLength(string filePath)
         {
             using var file = new FileStream(filePath, FileMode.Open);
-            return (file.Length > 100 * 1024);
+            return (file.Length > 50 * 1024);
         }
 
         private async Task TinyPngCompress(string filePath, string filename)

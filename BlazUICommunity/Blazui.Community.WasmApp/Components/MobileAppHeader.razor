@@ -1,7 +1,7 @@
 ﻿@inherits PageBase
 <div class="mobile-header">
     <div class="header-item mobile-logo" @onclick="@(e=>NavigationManager.NavigateTo("/",true))">
-        <img src="img/logo.svg" />
+        <img src="img/logo.png" style="width:80px;height:64px;margin-top:0px !important;" />
     </div>
     <div class="header-item mobile-search">
         <BInput Type="InputType.Text" TValue="string" Size="@InputSize.Small" Style="display:inline-block;" EnableAlwaysRender="true" EnableClearButton="true" Placeholder="输入您要搜索的内容" @bind-Value="@SearchText"> </BInput>

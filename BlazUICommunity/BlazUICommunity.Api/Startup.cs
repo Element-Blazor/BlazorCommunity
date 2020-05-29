@@ -67,6 +67,7 @@ namespace Blazui.Community.Api
                 app.UseDeveloperExceptionPage();
             }
             app.UseResponseCompression();
+            app.UseMiddleware<SeoMiddleware>();
             app.UseLogMiddleware();//必须放在UseResponseCaching，UseHttpCacheHeaders 前面，否则Etag不生成，原因未知
 
             //app.UseHsts();

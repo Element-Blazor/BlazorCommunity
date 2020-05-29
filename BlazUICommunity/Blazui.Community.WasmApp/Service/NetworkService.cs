@@ -180,7 +180,17 @@ namespace Blazui.Community.WasmApp.Service
             var notice = Notice ? 1 : 0;
             return await HttpRequestWithValidate($"api/client/Topic/Add/{notice}", HttpMethod.Post, httpContent);
         }
-
+        /// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <param name="orderBy"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public async Task<BaseResponse<PageDatas<BZTopicDto>>> QueryTopicsWithPage(int pageIndex, int pageSize)
+        {
+            return await httpClient.GetWithJsonResultAsync<PageDatas<BZTopicDto>>($"api/client/topic/QueryByPage/{pageSize}/{pageIndex}");
+        }
         /// <summary>
         /// 获取我发表的帖子
         /// </summary>

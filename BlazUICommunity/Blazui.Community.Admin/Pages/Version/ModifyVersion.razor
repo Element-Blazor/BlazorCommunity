@@ -2,14 +2,14 @@
 @inherits ModifyVersionBase
 
 <BForm Style="width:660px;" @ref="versionForm" Value="model" LabelAlign="@LabelAlign.Right">
-    <BFormItem TValue="ProjectType?" Label="项目" Name="@nameof(VersionDisplayDto.Project)" IsRequired="true">
-        <BSelect TValue="ProjectType?" Value="ProjectType.Blazui">
+    @*<BFormItem TValue="int" Label="项目" Name="@nameof(VersionDisplayDto.Project)" IsRequired="true">
+        <BSelect TValue="int?" Value="0">
         </BSelect>
-    </BFormItem>
-    <BFormItem TValue="string" Label="版本名称" Name="@nameof(VersionDisplayDto.VerName)" IsRequired="true">
+    </BFormItem>*@
+    @*<BFormItem TValue="string" Label="版本名称" Name="@nameof(VersionDisplayDto.VerName)" IsRequired="true">
         <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="string" Label="版本编号" Name="@nameof(VersionDisplayDto.VerNo)" IsRequired="true">
+    </BFormItem>*@
+    <BFormItem TValue="string" Label="版本名称" Name="@nameof(VersionDisplayDto.VerNo)" IsRequired="true">
         <BInput IsClearable="true" TValue="string"></BInput>
     </BFormItem>
     <BFormItem TValue="string" Label="Nuget包" Name="@nameof(VersionDisplayDto.VerNuget)" IsRequired="false">

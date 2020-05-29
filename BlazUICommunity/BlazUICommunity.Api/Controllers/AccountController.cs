@@ -102,5 +102,13 @@ namespace Blazui.Community.Api.Controllers
                 return Ok(new RegisterResult { Successful = false, Errors = identityResult.Errors.Select(x => x.Description) });
             }
         }
+
+        [Authorize]
+        [HttpPost("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Ok();
+        }
     }
 }

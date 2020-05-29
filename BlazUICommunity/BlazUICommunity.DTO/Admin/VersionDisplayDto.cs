@@ -11,7 +11,7 @@ namespace Blazui.Community.DTO.Admin
         /// <summary>
         /// 0：blazui，1：bAdmin，2：BMarkdown
         /// </summary>
-        public ProjectType Project { get; set; }
+        public int Project { get; set; }
 
         /// <summary>
         /// 版本号
@@ -61,7 +61,7 @@ namespace Blazui.Community.DTO.Admin
         [AutoNotMap]
         public string StatusDisplay => ((DelStatus)Status).Description();
 
-        [AutoNotMap]
-        public string ProjectDisplay => Project.Description();
+        //[AutoNotMap]
+        //public string ProjectDisplay => Project.Description();
     }
 }

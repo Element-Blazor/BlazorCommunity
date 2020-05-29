@@ -9,9 +9,9 @@
 
                     <div class="form-inline">
                         <BFormItem TValue="string" Style="width:500px;" RequiredMessage="请填写标题" Label="标题" Name="@nameof(NewTopicModel.Title)" IsRequired="true">
-                            <BInput TValue="string" Placeholder="标题，如果是提问，请描述清楚问题的主题"></BInput>
+                            <BInput Style="margin-left:-40px !important;" TValue="string" Placeholder="标题，如果是提问，请描述清楚问题的主题"></BInput>
                         </BFormItem>
-                        <BFormItem TValue="TopicCategory" Label="类型" Style="margin-left:20px;" IsRequired="true" Name="@nameof(NewTopicModel.Category)">
+                        <BFormItem TValue="TopicCategory" Label="类型" IsRequired="true" Name="@nameof(NewTopicModel.Category)">
                             <div class="el-form-item-custom">
                                 <BSelect Value="TopicCategory.Ask">
                                 </BSelect>

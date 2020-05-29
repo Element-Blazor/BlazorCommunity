@@ -9,11 +9,11 @@
 
                 <div class="form-inline">
                     <BFormItem TValue="string" Style="width:500px;" RequiredMessage="请填写标题" Label="标题" Name="@nameof(NewTopicModel.Title)" IsRequired="true">
-                        <BInput TValue="string" Placeholder="标题，如果是提问，请描述清楚问题的主题"></BInput>
+                        <BInput Style="margin-left:-40px !important;" TValue="string" Placeholder="标题，如果是提问，请描述清楚问题的主题"></BInput>
                     </BFormItem>
-                    <BFormItem TValue="TopicCategory" Label="类型" Style="margin-left:20px;" IsRequired="true" Name="@nameof(NewTopicModel.Category)">
-                        <div class="el-form-item-custom">
-                            <BSelect Value="TopicCategory.Ask">
+                    <BFormItem TValue="TopicCategory" Style="margin-left:-20px;"  Label="类型" IsRequired="true" Name="@nameof(NewTopicModel.Category)">
+                        <div class="el-form-item-custom" >
+                            <BSelect Value="TopicCategory.Ask" >
                             </BSelect>
                         </div>
                     </BFormItem>
@@ -23,7 +23,7 @@
                                 </BSelect>
                             </div>
                         </BFormItem>*@
-                        <BFormItem TValue="string" Label="项目" IsRequired="true" RequiredMessage="选择项目" Name="@nameof(NewTopicModel.VerNo)" >
+                        <BFormItem TValue="string" Label="项目" IsRequired="true" Style="margin-left:20px;" RequiredMessage="选择项目" Name="@nameof(NewTopicModel.VerNo)" >
                             <div class="el-form-item-custom">
                                 <BSelect TValue="string" @ref="bverNoSelect" @bind-Value="SelectValue">
                                     @if (bZVersions != null && bZVersions.Any())

@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Content Remove="nlog.config" />
+    <Content Remove="wwwroot\favicon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +31,7 @@
     <None Include="nlog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="wwwroot\favicon.ico" />
   </ItemGroup>
 
   <ItemGroup>

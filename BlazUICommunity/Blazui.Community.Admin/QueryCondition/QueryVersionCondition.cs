@@ -4,6 +4,6 @@ namespace Blazui.Community.Admin.QueryCondition
 {
     public class QueryVersionCondition : BaseQueryCondition
     {
-        public ProjectType? ProjectId { get; set; }
+        //public ProjectType? ProjectId { get; set; }
     }
 }

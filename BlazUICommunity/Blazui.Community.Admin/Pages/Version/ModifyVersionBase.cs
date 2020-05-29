@@ -27,6 +27,7 @@ namespace Blazui.Community.Admin.Pages.Version
             if (!versionForm.IsValid())
                 return;
             var version = versionForm.GetValue<VersionDisplayDto>();
+            version.VerName = version.VerNo;
             version.LastModifyDate = DateTime.Now;
             if (EntryOperation == EntryOperation.Add)
             {

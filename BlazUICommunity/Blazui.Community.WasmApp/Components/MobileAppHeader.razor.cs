@@ -17,7 +17,8 @@ namespace Blazui.Community.WasmApp.Components
         protected List<TopNaviHeaderMenuModel> headerMenus = new List<TopNaviHeaderMenuModel>();
         [Inject]
         IOptionsMonitor<TopNavMenuOption> Options { get; set; }
-
+        [Inject]
+        IAuthenticationService authenticationService { get; set; }
         protected override async Task InitilizePageDataAsync()
         {
             User = await GetUser();
@@ -32,9 +33,7 @@ namespace Blazui.Community.WasmApp.Components
         protected void Login()
         => NavigationManager.NavigateTo("/account/signin?returnUrl=" + WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery));
         protected void Regist() => NavigationManager.NavigateTo("/account/register", true);
-        protected void LoginOut()
-        => NavigationManager.NavigateTo("/account/signout2?returnUrl=" + WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery), true);
-
+        protected void LoginOut() => authenticationService.Logout();
 
         internal string SearchText { get; set; }
         internal string SpecialCharacter = "@_~$%^*+#￥&=";

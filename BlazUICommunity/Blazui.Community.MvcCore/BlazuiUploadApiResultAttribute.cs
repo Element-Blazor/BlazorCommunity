@@ -2,7 +2,7 @@
 
 namespace Blazui.Community.MvcCore
 {
-    public class BlazuiUploadApiResultAttribute : ActionFilterAttribute
+    public class IgnoreApiResultAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {

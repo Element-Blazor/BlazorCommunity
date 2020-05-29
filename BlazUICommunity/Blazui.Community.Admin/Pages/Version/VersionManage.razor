@@ -4,10 +4,10 @@
 @inherits VersionManageBase
 
 <BForm Inline="true" @ref="searchForm">
-    <BFormItem TValue="ProjectType?" Label="项目" Name="@nameof(QueryVersionCondition.ProjectId)" IsRequired="false">
+    @*<BFormItem TValue="ProjectType?" Label="项目" Name="@nameof(QueryVersionCondition.ProjectId)" IsRequired="false">
         <BSelect TValue="ProjectType?">
         </BSelect>
-    </BFormItem>
+    </BFormItem>*@
     <BFormActionItem>
         <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
     </BFormActionItem>
@@ -18,7 +18,7 @@
 
 <BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
     <BTableColumns>
-        <BTableColumn Width="100" Property="@nameof(VersionDisplayDto.ProjectDisplay)" Text="所属项目" Style="text-align:center;"></BTableColumn>
+        @*<BTableColumn Width="100" Property="@nameof(VersionDisplayDto.ProjectDisplay)" Text="所属项目" Style="text-align:center;"></BTableColumn>*@
         <BTableColumn Width="100" Property="@nameof(VersionDisplayDto.VerNo)" Text="版本编号" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="100" Property="@nameof(VersionDisplayDto.VerName)" Text="版本名称" Style="text-align:center;"></BTableColumn>
         <BTableColumn Width="300" Property="@nameof(VersionDisplayDto.VerDescription)" Text="说明" Style="text-align:center;"></BTableColumn>

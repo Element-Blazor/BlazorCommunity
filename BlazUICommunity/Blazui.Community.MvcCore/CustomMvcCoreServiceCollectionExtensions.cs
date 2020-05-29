@@ -13,7 +13,7 @@ namespace Blazui.Community.MvcCore
     {
         public static IServiceCollection AddCustomAddControllers(this IServiceCollection services)
         {
-            services.AddControllers(o =>
+            services.AddControllersWithViews(o =>
             {
                 o.Filters.Add<CustomApiResultAttribute>();
                 o.Filters.Add<CustomExceptionAttribute>();

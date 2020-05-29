@@ -17,7 +17,7 @@ namespace Blazui.Community.Api.Controllers
     [EnableCors(PolicyName)]
     [Route("api/[controller]")]
     [ApiController]
-    [BlazuiUploadApiResult]
+    [IgnoreApiResult]
     public class UploadController : ControllerBase
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
@@ -105,8 +105,8 @@ namespace Blazui.Community.Api.Controllers
                 code = 0,
                 //id为文件唯一标识符
                 id = FileName,
-                //最终文件访问路径
-                url = $"{ HttpContext.Request.Scheme}://{HttpContext.Request.Host}/{UploadRootPath}/{Upload.Description()}/{FileName}"
+                //最终文件访问路径{ HttpContext.Request.Scheme}:
+                url = $"//{HttpContext.Request.Host}/{UploadRootPath}/{Upload.Description()}/{FileName}"
             };
 
             return Content(JsonConvert.SerializeObject(UploadResult), "application/json");
