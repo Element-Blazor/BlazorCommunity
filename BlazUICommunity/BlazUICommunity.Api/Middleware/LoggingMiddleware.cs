@@ -47,14 +47,14 @@ namespace Blazui.Community.Api
         public async Task Invoke(HttpContext context)
         {
             _stopwatch.Restart();
-            HttpRequest request = context.Request;
-            if (request.Path.ToString().Contains("upload"))
+            var request = context.Request;
+            if (request.Path.Value.Contains("upload")||request.Path.Value.EndsWith(".dll"))
             {
                 await _next(context);
             }
             else
             {
-                HttpMiddlewareModel model = new HttpMiddlewareModel() { };
+                var model = new HttpMiddlewareModel() { };
                 model.Request = new RequestBody();
                 model.ExecuteStart = DateTimeOffset.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                 model.Request.Url = request.Path.ToString();
@@ -81,7 +81,7 @@ namespace Blazui.Community.Api
 
                     //// 获取Response.Body内容
                     var originalBodyStream = context.Response.Body;
-                    using var responseBody = new MemoryStream();
+                    await using var responseBody = new MemoryStream();
                     context.Response.Body = responseBody;
                     try
                     {

@@ -24,7 +24,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using static Blazui.Community.Api.Configuration.ConstantConfiguration;
+using Blazui.Community.Api.Middleware;
 
 namespace Blazui.Community.Api
 {
@@ -46,6 +48,7 @@ namespace Blazui.Community.Api
         {
             services.AddCustomDbService(Configuration);
             services.AddCustomWebApi(Configuration);
+            services.AddResponseCaching();
             services.AddCustomServices();
             services.AddCustomConfigure(Configuration);
             services.AddRazorPages();
@@ -66,19 +69,24 @@ namespace Blazui.Community.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            //缓存
             app.UseResponseCompression();
             app.UseMiddleware<SeoMiddleware>();
-            app.UseLogMiddleware();//必须放在UseResponseCaching，UseHttpCacheHeaders 前面，否则Etag不生成，原因未知
+            app.UseLogMiddleware();
 
             //app.UseHsts();
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseBlazorFrameworkFiles();
-            LayoutRenderer.Register("basedir", p => env.ContentRootPath);
-            app.UseCustomSwaggerUI(p => p.Title = "Blazui 社区 WebApi Docs");
 
-            //缓存
-            //app.UseResponseCaching();
+            app.UseBlazorFrameworkFiles();
+
+            app.UseResponseCaching();
+
+            //app.UsePrecompressedPrecompressedBlazor();
+            
+            LayoutRenderer.Register("basedir", p => env.ContentRootPath);
+            app.UseCustomSwaggerUI(p => p.Title = "  WebApi Docs");
+
             //app.UseHttpCacheHeaders();
 
 
