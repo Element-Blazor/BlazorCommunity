@@ -865,90 +865,90 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
 
         #region Bulk操作
 
-        public void BulkInsert(IEnumerable<TEntity> entities)
-        {
-            _dbContext.BulkInsert(entities, options =>
-           {
-               options.InsertIfNotExists = true;
-               options.BatchSize = 100;
-               options.AutoMapOutputDirection = false;
-           });
-        }
+       // public void BulkInsert(IEnumerable<TEntity> entities)
+       // {
+       //     _dbContext.BulkInsert(entities, options =>
+       //    {
+       //        options.InsertIfNotExists = true;
+       //        options.BatchSize = 100;
+       //        options.AutoMapOutputDirection = false;
+       //    });
+       // }
 
-        public async Task BulkInsertAsync(IEnumerable<TEntity> entities)
-        {
-            await _dbContext.BulkInsertAsync(entities, options =>
-       {
-           options.InsertIfNotExists = true;
-           options.BatchSize = 100;
-           options.AutoMapOutputDirection = false;
-       });
-        }
+       // public async Task BulkInsertAsync(IEnumerable<TEntity> entities)
+       // {
+       //     await _dbContext.BulkInsertAsync(entities, options =>
+       //{
+       //    options.InsertIfNotExists = true;
+       //    options.BatchSize = 100;
+       //    options.AutoMapOutputDirection = false;
+       //});
+       // }
 
-        public void BulkDelete(IEnumerable<TEntity> entities)
-        {
-            _dbContext.BulkDelete(entities, options =>
-          {
-              options.BatchSize = 1000;
-              options.AutoMapOutputDirection = false;
-          });
-        }
+       // public void BulkDelete(IEnumerable<TEntity> entities)
+       // {
+       //     _dbContext.BulkDelete(entities, options =>
+       //   {
+       //       options.BatchSize = 1000;
+       //       options.AutoMapOutputDirection = false;
+       //   });
+       // }
 
-        public async Task BulkDeleteAsync(IEnumerable<TEntity> entities)
-        {
-            await _dbContext.BulkDeleteAsync(entities, options =>
-           {
-               options.BatchSize = 1000;
-               options.AutoMapOutputDirection = false;
-           });
-        }
+       // public async Task BulkDeleteAsync(IEnumerable<TEntity> entities)
+       // {
+       //     await _dbContext.BulkDeleteAsync(entities, options =>
+       //    {
+       //        options.BatchSize = 1000;
+       //        options.AutoMapOutputDirection = false;
+       //    });
+       // }
 
-        public void BulkUpdate(IEnumerable<TEntity> entities)
-        {
-            _dbContext.BulkUpdate(entities, options =>
-           {
-               options.BatchSize = 100;
-               options.AutoMapOutputDirection = false;
-           });
-        }
+       // public void BulkUpdate(IEnumerable<TEntity> entities)
+       // {
+       //     _dbContext.BulkUpdate(entities, options =>
+       //    {
+       //        options.BatchSize = 100;
+       //        options.AutoMapOutputDirection = false;
+       //    });
+       // }
 
-        public async Task BulkUpdateAsync(IEnumerable<TEntity> entities)
-        {
-            await _dbContext.BulkUpdateAsync(entities, options =>
-           {
-               options.BatchSize = 100;
-               options.AutoMapOutputDirection = false;
-           });
-        }
+       // public async Task BulkUpdateAsync(IEnumerable<TEntity> entities)
+       // {
+       //     await _dbContext.BulkUpdateAsync(entities, options =>
+       //    {
+       //        options.BatchSize = 100;
+       //        options.AutoMapOutputDirection = false;
+       //    });
+       // }
 
-        public void BulkDelete(Expression<Func<TEntity, bool>> predicate)
-        {
-            if (predicate is null)
-            {
-                throw new ArgumentNullException($"{nameof(predicate)} is null");
-            }
+       // public void BulkDelete(Expression<Func<TEntity, bool>> predicate)
+       // {
+       //     if (predicate is null)
+       //     {
+       //         throw new ArgumentNullException($"{nameof(predicate)} is null");
+       //     }
 
-            var entities = GetAll(predicate);
-            _dbContext.BulkDelete(entities, options =>
-           {
-               options.BatchSize = 1000;
-               options.AutoMapOutputDirection = false;
-           });
-        }
+       //     var entities = GetAll(predicate);
+       //     _dbContext.BulkDelete(entities, options =>
+       //    {
+       //        options.BatchSize = 1000;
+       //        options.AutoMapOutputDirection = false;
+       //    });
+       // }
 
-        public async Task BulkDeleteAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            if (predicate is null)
-            {
-                throw new ArgumentNullException($"{nameof(predicate)} is null");
-            }
-            var entities = GetAll(predicate);
-            await _dbContext.BulkDeleteAsync(entities, options =>
-           {
-               options.BatchSize = 1000;
-               options.AutoMapOutputDirection = false;
-           });
-        }
+       // public async Task BulkDeleteAsync(Expression<Func<TEntity, bool>> predicate)
+       // {
+       //     if (predicate is null)
+       //     {
+       //         throw new ArgumentNullException($"{nameof(predicate)} is null");
+       //     }
+       //     var entities = GetAll(predicate);
+       //     await _dbContext.BulkDeleteAsync(entities, options =>
+       //    {
+       //        options.BatchSize = 1000;
+       //        options.AutoMapOutputDirection = false;
+       //    });
+       // }
 
         #endregion Bulk操作
 

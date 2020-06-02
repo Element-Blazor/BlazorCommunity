@@ -7,7 +7,7 @@ namespace Blazui.Community.DTO
 {
     public class HotUserDto
     {
-        public string Id { get; set; }
+        //public string Id { get; set; }
         public string UserName { get; set; }
         public string NickName { get; set; }
         public DateTime LastLoginDate { get; set; }

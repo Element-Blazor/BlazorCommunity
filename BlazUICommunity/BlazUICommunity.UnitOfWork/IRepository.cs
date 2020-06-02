@@ -386,21 +386,21 @@ namespace Arch.EntityFrameworkCore.UnitOfWork
 
         #region Bulk操作 Entity Framework Extensions
 
-        void BulkInsert(IEnumerable<TEntity> entities);
+        //void BulkInsert(IEnumerable<TEntity> entities);
 
-        Task BulkInsertAsync(IEnumerable<TEntity> entities);
+        //Task BulkInsertAsync(IEnumerable<TEntity> entities);
 
-        void BulkDelete(IEnumerable<TEntity> entities);
+        //void BulkDelete(IEnumerable<TEntity> entities);
 
-        Task BulkDeleteAsync(IEnumerable<TEntity> entities);
+        //Task BulkDeleteAsync(IEnumerable<TEntity> entities);
 
-        void BulkDelete(Expression<Func<TEntity, bool>> predicate);
+        //void BulkDelete(Expression<Func<TEntity, bool>> predicate);
 
-        Task BulkDeleteAsync(Expression<Func<TEntity, bool>> predicate);
+        //Task BulkDeleteAsync(Expression<Func<TEntity, bool>> predicate);
 
-        void BulkUpdate(IEnumerable<TEntity> entities);
+        //void BulkUpdate(IEnumerable<TEntity> entities);
 
-        Task BulkUpdateAsync(IEnumerable<TEntity> entities);
+        //Task BulkUpdateAsync(IEnumerable<TEntity> entities);
 
         #endregion Bulk操作 Entity Framework Extensions
 

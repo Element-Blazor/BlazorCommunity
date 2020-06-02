@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Blazui.Community.WasmApp.Components.User
 {
     [Authorize]
-    public partial  class UploadAvator : BUploadBase
+    public partial  class UploadAvator 
     {
         internal ElementReference hdnField;
 

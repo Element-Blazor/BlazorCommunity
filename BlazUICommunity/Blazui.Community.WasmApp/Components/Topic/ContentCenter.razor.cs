@@ -14,7 +14,7 @@ namespace Blazui.Community.WasmApp.Components.Topic
         [Parameter]
         public int TopicType { get; set; }
 
-        protected void ActiveTabChanged(BChangeEventArgs<BTabPanelBase> e)
+        protected void ActiveTabChanged(BChangeEventArgs<BTabPanel> e)
         {
             var title = e.NewValue.Title;
             switch (title)

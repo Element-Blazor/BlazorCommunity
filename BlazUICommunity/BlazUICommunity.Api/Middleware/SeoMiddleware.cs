@@ -45,7 +45,7 @@ namespace Blazui.Community.Api
                 _logger.LogError($"baidu正在访问 {request.Path.Value}");
                 //当前是百度访问，不再继续渲染，跳转至百度专用页面
                 //为了不让百度真的跳转，内部用HttpClient进行一次访问，访问百度专用页面
-
+                context.Response.ContentType = "text/html;charset=utf-8";
                 if (request.Path.Value=="/")
                 {
                     var responseResult = await httpClient.GetAsync($"{request.Scheme}://{request.Host}/archive");

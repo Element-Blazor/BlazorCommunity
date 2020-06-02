@@ -1,7 +1,6 @@
 ﻿using Arch.EntityFrameworkCore.UnitOfWork;
 using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
-using Blazui.Community.Api.Options;
 using Blazui.Community.Api.Service;
 using Blazui.Community.DTO;
 using Blazui.Community.LinqExtensions;
@@ -11,8 +10,6 @@ using Blazui.Community.Request;
 using Blazui.Community.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;

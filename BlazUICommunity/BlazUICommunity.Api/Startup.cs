@@ -24,9 +24,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
+using System.Threading.Tasks;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Http;
 using static Blazui.Community.Api.Configuration.ConstantConfiguration;
 using Blazui.Community.Api.Middleware;
+using Blazui.Community.WasmApp.Features.Identity;
+using Blazui.Community.WasmApp.Service;
+using Blazui.Component;
+using Blazui.Markdown;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.JSInterop;
 
 namespace Blazui.Community.Api
 {
@@ -46,12 +56,28 @@ namespace Blazui.Community.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddMvc();
+            services.AddRazorPages();
             services.AddCustomDbService(Configuration);
             services.AddCustomWebApi(Configuration);
             services.AddResponseCaching();
             services.AddCustomServices();
             services.AddCustomConfigure(Configuration);
-            services.AddRazorPages();
+
+            //services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
+
+            //services.AddHttpClient("BlazuiCommunitiyApp", client => client.BaseAddress = new Uri("http://localhost:5000/"));
+
+            //services.AddServerSideBlazor();
+            //services.AddBlazoredLocalStorage();
+            //services.AddScoped<ILocalStorageCacheService, LocalStorageCacheService>();
+            //services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
+            //services.AddScoped<IAuthenticationService, AuthenticationService>();
+            //services.AddScoped<NetworkService>();
+            //services.AddSingleton<BrowerService>();
+            //services.AddBlazuiServicesAsync().Wait();
+            //services.AddMarkdown();
+
         }
 
         /// <summary>
@@ -101,7 +127,7 @@ namespace Blazui.Community.Api
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapFallbackToFile("index.html");
+                endpoints.MapFallbackToFile("/index.html");
             });
 
             env.CreateUplodFolder();

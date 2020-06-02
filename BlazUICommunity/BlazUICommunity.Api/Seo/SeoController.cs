@@ -5,6 +5,8 @@ using Blazui.Community.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Blazui.Community.MvcCore;
+using Markdig;
+
 namespace Blazui.Community.Api.Seo
 {
     [IgnoreApiResultAttribute]
@@ -36,35 +38,15 @@ namespace Blazui.Community.Api.Seo
         {
 
             var topics = await cacheService.GetTopicsAsync(p => p.Id == id);
-            if (topics.Any())
-            {
-                var topic = topics.FirstOrDefault();
-                if (topic.Status == -1)
-                    return NoContent();
-                if (topic.Status == 0)//已结帖不再更新浏览量
-                {
-                    topic.Hot++;
-                    bZTopicRepository.Update(topic);
-                }
-                var topicDto = Mapper.Map<DTO.BZTopicDto>(topic);
-                var user = (await cacheService.GetUsersAsync(p => p.Id == topic.CreatorId)).FirstOrDefault();
-                var version = (await cacheService.GetVersionsAsync(p => p.Id == topic.Id)).FirstOrDefault();
 
-                topicDto.UserName = user?.UserName;
-                topicDto.NickName = user?.NickName;
-                topicDto.Avator = user?.Avator;
-                topicDto.VerName = version?.VerName;
-                topicDto.Signature = user.Signature;
-
-            }
-            else
-            {
-                var res = await bZTopicRepository.QueryTopById(id);
-                if (res is null)
-                    return NoContent();
-
-            }
-            return View("/Seo/Topic.cshtml", topics?.FirstOrDefault());
+            var topic = topics?.FirstOrDefault();
+            if (topic == null) return View("/Seo/Topic.cshtml");
+            var pipeline = new MarkdownPipelineBuilder()
+                .UseAdvancedExtensions().UseAutoLinks()
+                .Build();
+            topic.Content = Markdig.Markdown.ToHtml(topic.Content, pipeline);
+            return View("/Seo/Topic.cshtml", topic);
+           
         }
     }
 }

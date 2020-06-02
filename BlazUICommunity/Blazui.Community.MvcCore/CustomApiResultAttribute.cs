@@ -22,7 +22,11 @@ namespace Blazui.Community.MvcCore
             }
             else
             {
-                if (!context.Controller.GetType().IsDefined(typeof(IgnoreApiResultAttribute), true))
+                if (context.HttpContext.Request.Path.Value == "/")
+                {
+
+                }
+               else if (!context.Controller.GetType().IsDefined(typeof(IgnoreApiResultAttribute), true))
                 {
                     if (context.Result is NoContentResponse || context.Result is NoContentResult)
                     {

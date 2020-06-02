@@ -4,6 +4,7 @@ using Blazui.Component;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blazui.Community.WasmApp.Pages
 {
@@ -14,7 +15,9 @@ namespace Blazui.Community.WasmApp.Pages
         protected BLayout blayout;
         [Inject]
          BrowerService browerService { get; set; }
-        protected void ActiveTabChanged(BChangeEventArgs<BTabPanelBase> e)
+
+        
+        protected void ActiveTabChanged(BChangeEventArgs<BTabPanel> e)
         {
             blayout?.Refresh();
             btab?.Refresh();

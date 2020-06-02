@@ -7,7 +7,7 @@
 
             <BFormItem TValue="IFileModel[]" Label="" Name="@nameof(UploadActivity.Previews)" EnableAlwaysRender="true">
                 <UploadAvator Url="@(UploadUrl+ UploadPath.Avator.Description())"
-                              UploadType="UploadType.Image"
+                              UploadType="UploadType.Image" MaxSize="300"
                               EnablePasteUpload="true" Limit="1"
                               AllowExtensions="@(new string[] { " .jpg",".png"})" EnableAlwaysRender="true">
                 </UploadAvator>

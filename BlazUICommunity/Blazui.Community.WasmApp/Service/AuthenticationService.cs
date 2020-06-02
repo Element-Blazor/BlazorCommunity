@@ -13,6 +13,7 @@ using Blazui.Community.WasmApp.Features.Identity;
 using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
+using Blazui.Community.HttpClientExtensions;
 
 namespace Blazui.Community.WasmApp.Service
 {
@@ -34,7 +35,7 @@ namespace Blazui.Community.WasmApp.Service
         public async Task<RegisterResult> Register(RegisterModel registerModel)
         {
             var unKownErrors = new RegisterResult() { Successful = false, Errors = new List<string> { "注册失败，未知错误" } };
-            var result = await _httpClient.PostJsonAsync<BaseResponse<RegisterResult>>("api/Account/Regist", registerModel);
+            var result = await _httpClient.PostWithJsonResultAsync<RegisterResult>("api/Account/Regist", registerModel.BuildHttpContent());
             return result?.Data ?? unKownErrors;
         }
 

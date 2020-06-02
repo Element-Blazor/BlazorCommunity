@@ -5,11 +5,17 @@ using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blazored.LocalStorage;
+using System;
+using Blazui.Community.WasmApp.Service;
+using Blazui.Community.WasmApp.Model.Cache;
 
 namespace Blazui.Community.WasmApp.Components.Topic
 {
     public partial class TopicTabItem : PageBase
     {
+
+
         protected List<BZTopicDto> Topics = new List<BZTopicDto>();
 
         protected int PageSize { get; set; } = 15;
@@ -59,10 +65,7 @@ namespace Blazui.Community.WasmApp.Components.Topic
 
         internal int CurrentPage
         {
-            get
-            {
-                return currentPage;
-            }
+            get => currentPage;
             set
             {
                 currentPage = value;
@@ -73,19 +76,37 @@ namespace Blazui.Community.WasmApp.Components.Topic
 
         private async Task LoadData()
         {
-            var datas = await NetService.QueryTopicsByOrder(OrderType, TopicType, currentPage, PageSize);
-            if (datas != null && datas.IsSuccess && datas.Data.Items != null)
-            {
-                Topics = datas.Data.Items.ToList();
-                Total = datas.Data.TotalCount;
-                StateHasChanged();
-            }
-            else if (datas.Code == 204)
-            {
-                Topics = new List<BZTopicDto>();
-                Total = 0;
-                StateHasChanged();
-            }
+
+            var CacheDatas =
+                await localStorage.CreateOrGetCache($"{OrderType}{TopicType}{currentPage}TopicTabItem",
+                    async () =>
+                    {
+                        var datas = await NetService.QueryTopicsByOrder(OrderType, TopicType, currentPage, PageSize);
+                        if (datas != null && datas.IsSuccess && datas.Data.Items != null)
+                        {
+                            return new TopicTabItemCache
+                            {
+                                 Total=datas.Data.TotalCount,
+                                  BzTopicDtos=datas.Data.Items.ToList(),
+                                  Expire=DateTime.Now.AddMinutes(30)
+                            };
+                        }
+                        else  
+                        {
+                            return new TopicTabItemCache
+                            {
+                                Total = 0,
+                                BzTopicDtos = new List<BZTopicDto>(),
+                                Expire=null
+                            };
+
+                        }
+
+                    });
+
+            Topics = CacheDatas.BzTopicDtos;
+            Total = CacheDatas.Total;
+            StateHasChanged();
         }
 
         internal async Task CurrentPageChangedAsync(int page)
@@ -110,4 +131,7 @@ namespace Blazui.Community.WasmApp.Components.Topic
             });
         }
     }
+
+
+
 }

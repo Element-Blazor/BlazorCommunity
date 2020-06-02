@@ -5,11 +5,14 @@ using Blazui.Community.Enums;
 using Blazui.Community.HttpClientExtensions;
 using Blazui.Community.Response;
 using Blazui.Community.Shared;
+using Blazui.Community.WasmApp.Model.Cache;
 using Blazui.Community.WasmApp.Model.Condition;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Blazui.Community.WasmApp.Service
@@ -18,11 +21,11 @@ namespace Blazui.Community.WasmApp.Service
     {
         private readonly HttpClient httpClient;
 
-      
 
-        private readonly ILocalStorageService localStorageService;
 
-        public NetworkService(IHttpClientFactory httpClientFactory, ILocalStorageService localStorageService)
+        private readonly ILocalStorageCacheService localStorageService;
+
+        public NetworkService(IHttpClientFactory httpClientFactory, ILocalStorageCacheService localStorageService)
         {
             this.httpClient = httpClientFactory.CreateClient("BlazuiCommunitiyApp");
             this.localStorageService = localStorageService;
@@ -94,7 +97,7 @@ namespace Blazui.Community.WasmApp.Service
             else return true;
         }
 
-       
+
         /// <summary>
         /// 修改密码
         /// </summary>
@@ -372,7 +375,24 @@ namespace Blazui.Community.WasmApp.Service
         /// <returns></returns>
         public async Task<BaseResponse<List<BZVersionDto>>> QueryAllVersions()
         {
-            return await httpClient.GetWithJsonResultAsync<List<BZVersionDto>>($"api/client/Version/GetAll");
+
+
+            var cachedata = await localStorageService.CreateOrGetCache<VersionCache>("VersionCache", async () =>
+            {
+                var data = await httpClient.GetWithJsonResultAsync<List<BZVersionDto>>($"api/client/Version/GetAll");
+                if (data != null)
+                    return new VersionCache
+                    {
+                        Expire = DateTime.Now.AddDays(1),
+                        BzVersionDtos = data.Data.ToList()
+                    };
+                return new VersionCache { Expire = null, BzVersionDtos = new List<BZVersionDto>() };
+            });
+            return new BaseResponse<List<BZVersionDto>>
+            {
+                Code = cachedata.Expire.HasValue ? 200 : 300,
+                Data = cachedata.BzVersionDtos,
+            };
         }
 
         /// <summary>

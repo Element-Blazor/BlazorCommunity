@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Blazui.Community.DTO;
 using System.Net;
 using Blazored.LocalStorage;
+using Blazui.Community.WasmApp.Model.Cache;
 
 namespace Blazui.Community.WasmApp.Pages
 {
@@ -34,8 +35,10 @@ namespace Blazui.Community.WasmApp.Pages
 
         [CascadingParameter]
         public Task<AuthenticationState> authenticationStateTask { get; set; }
-        [Inject]
-         ILocalStorageService localStorageService { get; set; }
+        //[Inject]
+         //ILocalStorageService localStorageService { get; set; }
+         [Inject]
+       public ILocalStorageCacheService localStorage { get; set; }
 
         public string UploadUrl { get; protected set; }
 
@@ -82,13 +85,19 @@ namespace Blazui.Community.WasmApp.Pages
         {
             try
             {
-                var UserId =await localStorageService.GetItemAsync<string>("CurrentUserId");
-                if (UserId != null)
+                var UserId =await localStorage.GetItemAsync<string>("CurrentUserId");
+                if (UserId == null) return null;
+                var cacheUser = await localStorage.CreateOrGetCache<CurrentUserCache>("CurrentUser", async () =>
                 {
-                    var user= await NetService.FindUserByIdAsync(UserId);
-                    return user;
-                }
-                return null;
+                    var user = await NetService.FindUserByIdAsync(UserId);
+                    return new CurrentUserCache
+                    {
+                        Expire=DateTime.Now.AddMinutes(30), 
+                        User=user
+                    };
+
+                });
+                return  cacheUser.User;
             }
             catch (Exception ex)
             {

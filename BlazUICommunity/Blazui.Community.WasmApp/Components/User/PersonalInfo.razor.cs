@@ -63,6 +63,7 @@ namespace Blazui.Community.WasmApp.Components.User
                 return;
             }
             await UpdateUser(model);
+           await localStorage.RemoveItemAsync("CurrentUser");
         }
 
         /*

@@ -1,16 +1,28 @@
-﻿@model Blazui.Community.Model.Models.BZTopicModel
+﻿@using System.Web
+@model Blazui.Community.Model.Models.BZTopicModel
 <html>
 <head>
-    <title>@Model?.Title - 归档</title>
-    <meta name="keywords" content="@Model?.Title, blazor,blazui,admin,blazui.admin,社区,快速,解决问题" />
+    <meta charset="utf-8">
+    <title>Blazor 社区，快速解决你的疑惑</title>
+    <meta name="keywords" content="blazor,blazui,admin,blazui.admin,社区,快速,解决问题" />
+    <meta name="description" content="Blazor 社区，快速解决你的疑惑" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
     <meta name="description" content="@Model?.Title" />
+    <link href="/_content/Blazui.Markdown/css/editormd.min.css" rel="stylesheet" />
+    <!--对 editormd 的默认样式进行更改的文件 -->
+    <link href="/_content/Blazui.Markdown/css/editor.css" rel="stylesheet" />
+    <link href="https://cdn.bootcss.com/codemirror/5.52.0/addon/fold/foldgutter.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/codemirror/5.52.0/codemirror.min.css" rel="stylesheet">
 </head>
 <body>
-    主题页面
-    <h1>@Model?.Title</h1>
-    <div>
-        @Model?.Content
-    </div>
+    @if (Model != null)
+    {
+        <h3>@Model.Title</h3>
+        <div style="  margin-top: 10px; border-top: 1px solid #F5F5F5">
+            @Html.Raw(HttpUtility.HtmlDecode(Model.Content))
+        </div>
+    }
 </body>
 </html>
 

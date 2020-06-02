@@ -8,7 +8,7 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
-
+using static Blazui.Community.WasmApp.ConstConfig;
 namespace Blazui.Community.WasmApp.Features.Identity
 {
     public class ApiAuthenticationStateProvider
@@ -17,9 +17,9 @@ namespace Blazui.Community.WasmApp.Features.Identity
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService localStorage;
 
-        public ApiAuthenticationStateProvider(HttpClient httpClient, ILocalStorageService localStorage)
+        public ApiAuthenticationStateProvider(IHttpClientFactory  httpClientFactory, ILocalStorageService localStorage)
         {
-            _httpClient = httpClient;
+            _httpClient = httpClientFactory.CreateClient(HttpClientBaseName);
             this.localStorage = localStorage;
         }
         public async override Task<AuthenticationState> GetAuthenticationStateAsync()

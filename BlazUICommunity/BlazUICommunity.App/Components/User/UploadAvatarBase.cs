@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Blazui.Community.App.Components
 {
     [Authorize]
-    public class UploadAvatarBase : BUploadBase
+    public class UploadAvatarBase : BUpload
     {
         internal ElementReference hdnField;
 

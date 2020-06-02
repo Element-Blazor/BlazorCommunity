@@ -13,6 +13,8 @@ namespace Blazui.Community.WasmApp.Components.Topic
     public abstract class HotComponentBase : BComponentBase
     {
         [Inject]
+       public ILocalStorageCacheService localStorage { get; set; }
+        [Inject]
         public NetworkService Service { get; set; }
         [Parameter]
         public virtual string Title { get; set; }
@@ -33,17 +35,14 @@ namespace Blazui.Community.WasmApp.Components.Topic
             if (firstRender)
             {
                 var Result = await InitDatas();
-                if (Result.IsSuccess)
-                {
-                    Datas = Result.Data;
+                    Datas = Result;
                     MarkAsRequireRender();
                     StateHasChanged();
-                }
             }
         }
 
 
-        protected abstract Task<BaseResponse<List<HotTopicDto>>> InitDatas();
+        protected abstract Task<List<HotTopicDto>> InitDatas();
 
     }
 }
