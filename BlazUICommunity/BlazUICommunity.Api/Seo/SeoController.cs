@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Blazui.Community.MvcCore;
 using Markdig;
+using System.Web;
 
 namespace Blazui.Community.Api.Seo
 {
@@ -44,7 +45,8 @@ namespace Blazui.Community.Api.Seo
             var pipeline = new MarkdownPipelineBuilder()
                 .UseAdvancedExtensions().UseAutoLinks()
                 .Build();
-            topic.Content = Markdig.Markdown.ToHtml(topic.Content, pipeline);
+            topic.Content = HttpUtility.HtmlDecode(Markdig.Markdown.ToHtml(topic.Content, pipeline));
+            topic.Title = HttpUtility.HtmlDecode(topic.Title);
             return View("/Seo/Topic.cshtml", topic);
            
         }

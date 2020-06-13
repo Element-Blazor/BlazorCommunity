@@ -24,6 +24,7 @@ namespace Blazui.Community.WasmApp.Components
         {
             ToastSuccess("更新成功");
             await Task.Delay(200);
+            await localStorage.RemoveItemAsync("CurrentUser");
             NavigationManager.NavigateTo(Uri, true);
         }
     }
