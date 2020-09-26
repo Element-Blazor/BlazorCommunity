@@ -7,10 +7,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
+	  <PackageReference Include="Blazui.Admin" Version="0.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Blazui\src\Admin\Admin\Blazui.Admin.csproj" />
-  </ItemGroup>
+ 
 
 </Project>
