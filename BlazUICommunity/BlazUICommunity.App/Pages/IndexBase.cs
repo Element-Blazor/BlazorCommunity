@@ -18,7 +18,7 @@ namespace Blazui.Community.App.Pages
         protected List<TabItem> Tabs = new List<TabItem>();
         protected BTab btab;
         protected BLayout blayout;
-        protected void ActiveTabChanged(BChangeEventArgs<BTabPanel> e)
+        protected void ActiveTabChanged(BChangeEventArgs<BTabPanelBase> e)
         {
          
             blayout?.Refresh();
