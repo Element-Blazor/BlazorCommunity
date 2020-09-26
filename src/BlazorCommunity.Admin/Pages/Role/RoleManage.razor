@@ -1,0 +1,22 @@
+﻿@page "/manage/role"
+@using BlazorCommunity.Admin.QueryCondition
+@using BlazorCommunity.DTO.Admin;
+@inherits RoleManageBase
+
+<BForm Inline="true">
+    <BButton Type="@ButtonType.Success" Icon="el-icon-plus" OnClick="New" IsPlain="true" IsDisabled="false" Style="float:right;margin-right:100px;">新增</BButton>
+</BForm>
+
+<div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
+<BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
+    <BTableColumns>
+        <BTableColumn Property="@nameof(RoleDisplayDto.Id)" Text="Id" Style="text-align:center;"></BTableColumn>
+        <BTableColumn Property="@nameof(RoleDisplayDto.Name)" Text="名称" Style="text-align:center;"></BTableColumn>
+
+        <BTableTemplateColumn Text="操作" Width="150">
+            <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Modify(context))">编辑</BButton>
+            <BButton Type="@ButtonType.Success" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> ModifyClaims(context))">Claims</BButton>
+            <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Delete(context))">删除</BButton>
+        </BTableTemplateColumn>
+    </BTableColumns>
+</BTable>

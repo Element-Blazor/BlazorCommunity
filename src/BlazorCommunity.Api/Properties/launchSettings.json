@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "BlazorCommunity.Api": {
+      "commandName": "Project",
+      "launchUrl": "swagger",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5000"
+    }
+  }
+}

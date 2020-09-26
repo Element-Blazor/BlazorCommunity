@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorCommunity.AppDbContext\BlazorCommunity.AppDbContext.csproj" />
+    <ProjectReference Include="..\BlazorCommunity.DTO\BlazorCommunity.DTO.csproj" />
+    <ProjectReference Include="..\BlazorCommunity.Model\BlazorCommunity.Model.csproj" />
+    <ProjectReference Include="..\BlazorCommunity.UnitOfWork\BlazorCommunity.UnitOfWork.csproj" />
+  </ItemGroup>
+
+</Project>

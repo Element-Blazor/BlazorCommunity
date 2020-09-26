@@ -1,0 +1,14 @@
+﻿@inherits ChooseRolesDialogBase
+@using BlazorCommunity.DTO.Admin
+
+<div style="display:flex;flex-direction:column">
+    <div  style=" margin-top: 0px; text-align: center;">
+        <BRadioGroup @bind-SelectedValue="SelectedValue" TValue="string">
+            @foreach (var item in Values)
+            {
+                <BRadio TValue="string" Value="@item.Id">@item.Name</BRadio>
+            }
+        </BRadioGroup>
+    </div>
+    <div style=" margin-top: 25px; text-align: center;"> <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>Save()" Style="text-align:center;width:100px;">保存</BButton></div>
+</div>

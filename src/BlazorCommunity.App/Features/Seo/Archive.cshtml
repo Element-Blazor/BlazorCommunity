@@ -1,0 +1,24 @@
+﻿@model BlazorCommunity.DTO.PageDatas<BlazorCommunity.DTO.BZTopicDto>
+<html>
+<head>
+    <title>归档</title>
+    <meta name="keywords" content="blazor,blazui,admin,blazui.admin,社区,快速,解决问题" />
+    <meta name="description" content="Blazor 社区，快速解决你的疑惑" />
+</head>
+<body>
+    <div>
+        @foreach (var topic in Model.Items)
+        {
+            <a href="https://www.blazor.group/topic/@{Write(topic.Id);}">@topic.Title</a>
+        }
+    </div>
+    <div>
+        @for (int i = 0; i < Model.TotalPages; i++)
+        {
+            <a href="https://www.blazor.group/archive/@(i)/10">@(i+1)</a>
+        }
+    </div>
+
+</body>
+</html>
+

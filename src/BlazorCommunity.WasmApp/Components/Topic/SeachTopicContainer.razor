@@ -1,0 +1,41 @@
+﻿@inherits BComponentBase
+@inject BlazorCommunity.WasmApp.Service.BrowerService service
+
+@foreach (var topic in Datas)
+{
+    <div class="search-topic-item">
+        <div style="margin:15px;display:flex;">
+            @if (!ismobile)
+            {
+                <span style="color:#000;width:50px;">标题：</span>
+            }
+            <a class="el-link el-link--default is-underline" @onclick="e=>ItemClick(topic.Id)">
+                <span class="el-link--inner">@topic.Title</span><!---->
+            </a>
+        </div>
+        @if (!ismobile)
+        {
+            <span style="margin:15px;float:right;color:#909399">@topic.CreateDate.ToString("yyyy-MM-dd")</span>
+        }
+    </div>
+}
+@if (Datas.Count <= 0)
+{
+    if (!ismobile)
+    {
+        <div class="el-table__empty-block" style="height:60px;">
+            <span class="el-table__empty-text" style="font-size:15px;display:inline-flex">
+                @(string.IsNullOrWhiteSpace(EmptyMessage) ? "抱歉，没有找到你的问题，或许您可以尝试 " : EmptyMessage)
+                <a class="el-link el-link--primary" style="margin-left:10px;" @onclick="AskQuestion">
+                    <span class="el-link--inner">发帖提问</span><!---->
+                </a>
+            </span>
+        </div>
+    }
+}
+@if (Math.Ceiling((float)Total / PageSize) > 1 || !NoPaginationOnSinglePage)
+{
+    <div style="margin-top:20px;margin-bottom:20px;text-align:right;">
+        <BPagination Total="Total" ShowPageCount="ShowPageCount" PageSize="PageSize" CurrentPageChanged="CurrentPageChangedAsync"></BPagination>
+    </div>
+}

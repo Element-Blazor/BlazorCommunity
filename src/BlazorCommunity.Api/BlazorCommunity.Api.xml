@@ -1,0 +1,993 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BlazorCommunity.Api</name>
+    </assembly>
+    <members>
+        <member name="T:BlazorCommunity.Api.AutoMapProfiles">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.AutoMapProfiles.#ctor">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:BlazorCommunity.Api.Configuration.ConstantConfiguration.UploadRootPath">
+            <summary>
+            上传文件根目录
+            </summary>
+        </member>
+        <member name="F:BlazorCommunity.Api.Configuration.ConstantConfiguration.PolicyName">
+            <summary>
+            跨域
+            </summary>
+        </member>
+        <member name="T:BlazorCommunity.Api.Controllers.BannerController">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.BannerController.#ctor(BlazorCommunity.Repository.BZBannerRepository,AutoMapper.IMapper,BlazorCommunity.Api.Service.ICacheService)">
+             <summary>
+            
+             </summary>
+             <param name="bZBannerRepository"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.BannerController.Add(BlazorCommunity.DTO.BzBannerDto)">
+            <summary>
+            新增
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.BannerController.Delete(System.String)">
+            <summary>
+            删除
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.BannerController.Resume(System.String)">
+            <summary>
+            恢复
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.BannerController.Update(BlazorCommunity.DTO.BzBannerDto)">
+            <summary>
+            更新
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.BannerController.Query(BlazorCommunity.Request.BannerReuestCondition)">
+            <summary>
+            根据条件分页查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.Controllers.ReplyController">
+            <summary>
+            回帖相关
+            </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.ReplyController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,BlazorCommunity.Repository.BZReplyRepository,AutoMapper.IMapper,BlazorCommunity.Api.Service.ICacheService)">
+             <summary>
+            
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="bZReplyRepository"></param>
+             <param name="mapper"></param>
+             <param name="cacheService"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.ReplyController.Delete(System.String)">
+            <summary>
+            删除
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.ReplyController.Resume(System.String)">
+            <summary>
+            恢复
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.ReplyController.QueryReplys(BlazorCommunity.Request.ReplyRequestCondition)">
+            <summary>
+            根据条件分页查询回帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.Controllers.TopicController">
+            <summary>
+            主题帖相关
+            </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.TopicController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,BlazorCommunity.Repository.BZTopicRepository,BlazorCommunity.Api.Service.ICacheService,Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole{System.String}})">
+             <summary>
+            
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="mapper"></param>
+             <param name="bZTopicRepository"></param>
+             <param name="cacheService"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.TopicController.TopTopic(System.String)">
+            <summary>
+            置顶或取消置顶
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.TopicController.BestTopic(System.String)">
+            <summary>
+            加精或取消加精
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.TopicController.AuthorizeTopic(System.String,System.String)">
+            <summary>
+            设置帖子查看权限
+            </summary>
+            <param name="TopicId"></param>
+            <param name="RoleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.TopicController.EndTopic(System.String)">
+            <summary>
+            结贴
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.TopicController.Delete(System.String)">
+            <summary>
+            根据ID删除帖子
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.TopicController.Active(System.String)">
+            <summary>
+            恢复帖子
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.TopicController.Query(BlazorCommunity.Request.TopicRequestCondition)">
+            <summary>
+            根据条件分页查询帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.Controllers.UserController">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UserController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,BlazorCommunity.Repository.BZUserRepository,Microsoft.AspNetCore.Identity.UserManager{BlazorCommunity.Model.Models.BZUserModel},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole{System.String}},BlazorCommunity.Api.Service.ICacheService)">
+             <summary>
+            
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="mapper"></param>
+             <param name="bZUserRepository"></param>
+             <param name="userManager"></param>
+             <param name="roleManager"></param>
+             <param name="cacheService"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UserController.Delete(System.String)">
+            <summary>
+            删除
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UserController.Resume(System.String)">
+            <summary>
+            恢复
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UserController.ResetPassword(System.String)">
+            <summary>
+            重置密码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UserController.Query(BlazorCommunity.Request.UsersRequestCondition)">
+            <summary>
+            根据条件分页查询用户
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UserController.CreateRole(BlazorCommunity.DTO.Admin.NewRoleDto)">
+            <summary>
+            创建角色
+            </summary>
+            <param name="newRoleDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UserController.QueryRoles">
+            <summary>
+            查询角色
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UserController.UpdateRole(BlazorCommunity.DTO.Admin.RoleDisplayDto)">
+            <summary>
+            更新角色
+            </summary>
+            <param name="roleDisplayDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UserController.DeleteRole(System.String)">
+            <summary>
+            删除角色
+            </summary>
+            <param name="RoleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UserController.CreateRoleClaim(BlazorCommunity.DTO.Admin.RoleClaimDto)">
+            <summary>
+            添加角色声明
+            </summary>
+            <param name="roleClaimDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UserController.QueryRoleClaims(System.String)">
+            <summary>
+            根据RoleId查询Claims
+            </summary>
+            <param name="RoleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UserController.DeleteRoleClaim(BlazorCommunity.DTO.Admin.RoleClaimDto)">
+            <summary>
+            修改角色声明
+            </summary>
+            <param name="roleClaimDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UserController.AddRolesToUser(BlazorCommunity.DTO.Admin.UserRoleDto)">
+            <summary>
+            为用户指定角色
+            </summary>
+            <param name="userRoleDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UserController.QueryUserRoles(System.String)">
+            <summary>
+            根据用户ID查询角色
+            </summary>
+            <param name="UserId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.Controllers.VersionController">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.VersionController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,BlazorCommunity.Api.Service.ICacheService)">
+             <summary>
+            
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="mapper"></param>
+             <param name="cacheService"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.VersionController.Delete(System.String)">
+            <summary>
+            删除
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.VersionController.Resume(System.String)">
+            <summary>
+            恢复
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.VersionController.Add(BlazorCommunity.DTO.BZVersionDto)">
+            <summary>
+            删除
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.VersionController.Update(BlazorCommunity.DTO.BZVersionDto)">
+            <summary>
+            更新
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.VersionController.GetPageList(BlazorCommunity.Request.VersionRequestCondition)">
+            <summary>
+            获取版本数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.Controllers.Client.BannerController">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.BannerController.QueryAll(BlazorCommunity.Api.Service.ICacheService)">
+            <summary>
+            根据条件分页查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.Controllers.Client.CodeController">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:BlazorCommunity.Api.Controllers.Client.CodeController._bZVerifyCodeRepository">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.CodeController.#ctor(BlazorCommunity.Repository.BZVerifyCodeRepository,BlazorCommunity.Api.Service.ICodeService,BlazorCommunity.Api.Service.IMessageService)">
+             <summary>
+            
+             </summary>
+             <param name="bZVerifyCodeRepository"></param>
+             <param name="codeService"></param>
+             <param name="messageService"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.CodeController.SendVerifyCode(System.Int32,System.String,System.String)">
+            <summary>
+            发送验证码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.CodeController.VerifyCode(System.String,System.Int32,System.String)">
+            <summary>
+            验证短信验证码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.Controllers.Client.FollowController">
+            <summary>
+            关注
+            </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.FollowController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,BlazorCommunity.Repository.BZFollowRepository,BlazorCommunity.Api.Service.ICacheService)">
+             <summary>
+            
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="mapper"></param>
+             <param name="bZFollowRepository"></param>
+             <param name="cacheService"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.FollowController.Add(BlazorCommunity.DTO.BZFollowDto)">
+            <summary>
+            新增关注
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.FollowController.Query(BlazorCommunity.Request.FollowRequestCondition)">
+            <summary>
+            根据条件分页查询
+            </summary>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.FollowController.IsFollowed(System.String,System.String)">
+            <summary>
+            用户是否收藏了指定帖子
+            </summary>
+            <param name="UserId"></param>
+            <param name="TopicId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.FollowController.ToggleFollow(BlazorCommunity.DTO.BZFollowDto)">
+            <summary>
+            改变是否收藏状态
+            </summary>
+            <param name="Dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.FollowController.Cancel(System.String)">
+            <summary>
+            取消收藏
+            </summary>
+            <param name="FollowId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.Controllers.Client.ReplyController">
+            <summary>
+            回帖相关
+            </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.ReplyController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,BlazorCommunity.Repository.BZReplyRepository,AutoMapper.IMapper,BlazorCommunity.Api.Service.ICacheService,BlazorCommunity.Api.Service.IMessageService,BlazorCommunity.Api.Service.CQService)">
+             <summary>
+            
+             </summary>
+             <param name="unitOfWork"></param>
+             <param name="bZReplyRepository"></param>
+             <param name="mapper"></param>
+             <param name="cacheService"></param>
+             <param name="messageService"></param>
+             <param name="cQService"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.ReplyController.Add(BlazorCommunity.DTO.BZReplyDto)">
+            <summary>
+            新增回帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.ReplyController.Delete(System.String)">
+            <summary>
+            根据ID删除帖子
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.ReplyController.UpdateContent(BlazorCommunity.DTO.BZTopicDto)">
+            <summary>
+            更新回帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.ReplyController.GetByUserId(System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            根据用户查询回复帖子
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.Controllers.Client.TopicController">
+            <summary>
+            主题帖相关
+            </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork,AutoMapper.IMapper,BlazorCommunity.Repository.BZTopicRepository,BlazorCommunity.Api.Service.ICacheService,BlazorCommunity.Api.Service.CQService,BlazorCommunity.Api.Service.IMessageService)">
+            <summary>
+            
+            </summary>
+            <param name="unitOfWork"></param>
+            <param name="mapper"></param>
+            <param name="bZTopicRepository"></param>
+            <param name="cacheService"></param>
+            <param name="cQService"></param>
+            <param name="messageService"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.Add(BlazorCommunity.DTO.BZTopicDto,System.Int32)">
+            <summary>
+            新增主题帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.Delete(System.String)">
+            <summary>
+            根据ID删除帖子--假删除--前后台均调用
+            </summary>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:BlazorCommunity.Api.Controllers.Client.TopicController.Active(System.String)" -->
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.UpdateContent(BlazorCommunity.DTO.BZTopicDto)">
+            <summary>
+            更新主题帖
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.Query(System.String)">
+            <summary>
+            根据Id查询主贴
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.Query(BlazorCommunity.Request.TopicRequestCondition)">
+            <summary>
+            根据条件分页查询帖子
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.SeachTopicByTitle(System.String,System.Int32,System.Int32)">
+            <summary>
+            首页查询按钮查询
+            </summary>
+            <param name="Title"></param>
+            <param name="PageIndex"></param>
+            <param name="PageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.QueryTopicReply(System.String,System.Int32,System.Int32)">
+            <summary>
+            查询主题帖的回帖
+            </summary>
+            <param name="topicId">主题帖Id</param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.QueryReply(System.String)">
+            <summary>
+            根据回帖ID查询所属的主题帖，并定位到回帖所在主贴的页码
+            </summary>
+            <param name="replyId">回帖ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.QueryTopicsByOrder(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            根据类型，排序查询---前端
+            </summary>
+            <param name="orderType">排序类型 0：综合，1：人气，2：精华，3：已结帖</param>
+            <param name="topicType">帖子类型 0：提问，1：分享，2：讨论，3：建议，4：公告</param>
+            <param name="pageSize"></param>
+            <param name="pageIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.QueryBest(System.Int32)">
+            <summary>
+            查询精华帖子
+            </summary>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.QueryTop(System.Int32)">
+            <summary>
+            查询置顶帖子
+            </summary>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.TopHot(System.Int32)">
+            <summary>
+            帖子热度
+            </summary>
+            <param name="HotType">1：月榜，2：周榜</param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.ShareHot">
+            <summary>
+            查询热门分享前10条
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.AskHot">
+            <summary>
+            查询热门问题前10条
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.QueryTopicByAuthor(System.String)">
+            <summary>
+            查询当前主题作者其他的文章-（分享）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.TopicController.EndTopic(System.String)">
+            <summary>
+            结贴
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.Controllers.Client.UserController">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.UserController.#ctor(BlazorCommunity.Repository.BZUserRepository,BlazorCommunity.Api.Service.ICacheService,Microsoft.AspNetCore.Identity.UserManager{BlazorCommunity.Model.Models.BZUserModel},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole{System.String}},AutoMapper.IMapper)">
+             <summary>
+            
+             </summary>
+             <param name="bZUserRepository"></param>
+             <param name="cacheService"></param>
+             <param name="userManager"></param>
+             <param name="roleManager"></param>
+             <param name="mapper"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.UserController.Active(System.Int32)">
+            <summary>
+            活跃度
+            </summary>
+            <param name="ActiveType">1：月榜，2：周榜</param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.UserController.Hot">
+            <summary>
+            活跃用户前10
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.UserController.TopicUser(System.String)">
+            <summary>
+            获取主题帖的作者信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.Controllers.Client.VersionController">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.VersionController.#ctor(Arch.EntityFrameworkCore.UnitOfWork.IUnitOfWork)">
+             <summary>
+            
+             </summary>
+             <param name="unitOfWork"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.VersionController.Get(System.Int32)">
+            <summary>
+            获取版本数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.Client.VersionController.GetAll">
+            <summary>
+            获取版本数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.Controllers.TokenController">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.TokenController.#ctor(Microsoft.Extensions.Caching.Memory.IMemoryCache,BlazorCommunity.Api.Jwt.JwtService,Microsoft.AspNetCore.Identity.UserManager{BlazorCommunity.Model.Models.BZUserModel})">
+             <summary>
+            
+             </summary>
+             <param name="cache"></param>
+             <param name="jwtService"></param>
+             <param name="userManager"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.TokenController.Post(BlazorCommunity.Shared.LoginModel)">
+            <summary>
+            登录，获取后原来RefreshToken将失效。
+            AccessToken有效时间30分钟
+            RefreshToken有效时间60分钟
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.TokenController.Refresh(System.String)">
+            <summary>
+            刷新AccessToken
+            </summary>
+            <param name="token">刷新的请求 {"token": "refresh_token"}</param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UploadController.Success(BlazorCommunity.Enums.UploadPath,System.String)">
+             <summary>
+            
+             </summary>
+             <param name="Upload"></param>
+             <param name="FileName"></param>
+             <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Controllers.UploadController.ExistsFile(Microsoft.AspNetCore.Http.IFormFile,System.String,System.String@)">
+            <summary>
+            检查是否已存在文件
+            </summary>
+            <param name="formFile"></param>
+            <param name="FullFileSaveFolder"></param>
+            <param name="filePath"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Jwt.JwtService.GetAccessToken(BlazorCommunity.Api.Jwt.SessionUser)">
+            <summary>
+            通过SessionUser获取AccessToken
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.LoggerMiddleware">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:BlazorCommunity.Api.LoggerMiddleware._stopwatch">
+            <summary>
+            计时器
+            </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.LoggerMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{BlazorCommunity.Api.LoggerMiddleware})">
+             <summary>
+            
+             </summary>
+             <param name="next"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.LoggerMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            拦截请求参数打印日志
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.LoggerMiddleware.GetResponse(Microsoft.AspNetCore.Http.HttpResponse)">
+            <summary>
+            获取响应内容
+            </summary>
+            <param name="response"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.MiddlewareExtensions">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.MiddlewareExtensions.UseLogMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+             <summary>
+            
+             </summary>
+             <param name="app"></param>
+             <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.SeoMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,System.Net.Http.IHttpClientFactory,Microsoft.Extensions.Logging.ILogger{BlazorCommunity.Api.SeoMiddleware})">
+             <summary>
+            
+             </summary>
+             <param name="next"></param>
+             <param name="httpClient"></param>
+             <param name="logger"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.SeoMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            拦截请求参数打印日志
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="P:BlazorCommunity.Api.Options.EmailNoticeOptions.EmailNotices">
+            <summary>
+            字段名称必须与配置项一致
+            </summary>
+        </member>
+        <member name="P:BlazorCommunity.Api.Options.EmailNoticeModel.Email">
+            <summary>
+            通知邮箱
+            </summary>
+        </member>
+        <member name="P:BlazorCommunity.Api.Options.EmailNoticeModel.Weight">
+            <summary>
+            权重
+            </summary>
+        </member>
+        <member name="P:BlazorCommunity.Api.Options.EmailStmpConfig.Account">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:BlazorCommunity.Api.Options.EmailStmpConfig.Auth">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:BlazorCommunity.Api.Options.EmailStmpConfig.StmpHost">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:BlazorCommunity.Api.Options.EmailStmpConfig.StmpPort">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:BlazorCommunity.Api.Options.EmailStmpConfig.FromName">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Program.Main(System.String[])">
+             <summary>
+            
+             </summary>
+             <param name="args"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Program.CreateHostBuilder(System.String[])">
+             <summary>
+            
+             </summary>
+             <param name="args"></param>
+             <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.CacheService.Remove(System.String)">
+            <summary>
+            删除
+            </summary>
+            <param name="Key"></param>
+        </member>
+        <member name="F:BlazorCommunity.Api.Service.CQApiList.SendGroup">
+            <summary>
+            发送群消息
+            </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ICacheService.GetUsersAsync(System.Linq.Expressions.Expression{System.Func{BlazorCommunity.Model.Models.BZUserModel,System.Boolean}})">
+            <summary>
+            用户缓存数据
+            </summary>
+            <param name="condition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ICacheService.GetTopicsAsync(System.Linq.Expressions.Expression{System.Func{BlazorCommunity.Model.Models.BZTopicModel,System.Boolean}})">
+            <summary>
+            主贴缓存数据
+            </summary>
+            <param name="condition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ICacheService.GetBannersAsync(System.Linq.Expressions.Expression{System.Func{BlazorCommunity.Model.Models.BzBannerModel,System.Boolean}})">
+            <summary>
+            Banner缓存数据
+            </summary>
+            <param name="condition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ICacheService.GetReplysAsync(System.Linq.Expressions.Expression{System.Func{BlazorCommunity.Model.Models.BZReplyModel,System.Boolean}})">
+            <summary>
+            回帖缓存数据
+            </summary>
+            <param name="condition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ICacheService.GetAddressAsync(System.Linq.Expressions.Expression{System.Func{BlazorCommunity.Model.Models.BZAddressModel,System.Boolean}})">
+            <summary>
+            地址信息缓存数据
+            </summary>
+            <param name="condition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ICacheService.GetFollowsAsync(System.Linq.Expressions.Expression{System.Func{BlazorCommunity.Model.Models.BZFollowModel,System.Boolean}})">
+            <summary>
+            收藏帖子
+            </summary>
+            <param name="condition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ICacheService.GetVersionsAsync(System.Linq.Expressions.Expression{System.Func{BlazorCommunity.Model.Models.BZVersionModel,System.Boolean}})">
+            <summary>
+            项目版本
+            </summary>
+            <param name="condition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ICacheService.GetHotUsersAsync">
+            <summary>
+            缓存活跃用户
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ICacheService.GetShareHotsAsync">
+            <summary>
+            缓存热点分享主题
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ICacheService.GetAskHotsAsync">
+            <summary>
+            缓存热点问题主题
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ICacheService.GetTopicsByAuthor(System.String)">
+            <summary>
+            获取作者其他文章
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ICacheService.Remove(System.String)">
+            <summary>
+            移除缓存
+            </summary>
+            <param name="Key"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ICodeService.GenerateNumberCode(System.Int32)">
+            <summary>
+            产生指定长度的纯数字字符串
+            </summary>
+            <param name="length">最大8，最小4</param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ICodeService.GenerateNumberLetterCode(System.Int32)">
+            <summary>
+            产生指定长度的字母+数字的字符串
+            </summary>
+            <param name="length">最大8，最小4</param>
+            <returns></returns>
+        </member>
+        <member name="T:BlazorCommunity.Api.Service.IMessageService">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.IMessageService.SendVerifyCodeForLoginWithEmailAsync(System.String,System.String)">
+            <summary>
+            邮箱登录-发送验证码
+            </summary>
+            <param name="Email"></param>
+            <param name="Code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.IMessageService.SendVerifyCodeForBindEmailAsync(System.String,System.String)">
+            <summary>
+            绑定邮箱-发送验证码
+            </summary>
+            <param name="Email"></param>
+            <param name="Code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.IMessageService.SendVerifyCodeForRetrievePasswordAsync(System.String,System.String)">
+            <summary>
+            找回密码 -发送验证码
+            </summary>
+            <param name="Email"></param>
+            <param name="Code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.IMessageService.SendVerifyCodeForChangePasswordAsync(System.String,System.String)">
+            <summary>
+            修改密码 -发送验证码
+            </summary>
+            <param name="Email"></param>
+            <param name="Code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.IMessageService.SendVerifyCodeForUnBindEmailAsync(System.String,System.String)">
+            <summary>
+            取消绑定邮箱 -发送验证码
+            </summary>
+            <param name="Email"></param>
+            <param name="Code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.IMessageService.SendEmailToManagerForAnswerAsync(System.String)">
+            <summary>
+            发送通知给管理员，回答社区提问
+            </summary>
+            <param name="TopicId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.IMessageService.SendEmailToTopicCreatorAsync(System.String,System.String,System.String)">
+            <summary>
+            发送通知给主贴发帖人，有新的回复
+            </summary>
+            <param name="Email"></param>
+            <param name="TopicTitle"></param>
+            <param name="TopicId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ImgCompressService.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="iconfiguration"></param>
+            <param name="webHostEnvironment"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.ISmtpClientService.SendAsync(System.String,System.String,System.String)">
+            <summary>
+            发送邮件
+            </summary>
+            <param name="ToEmail"></param>
+            <param name="Content"></param>
+            <param name="Subject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.SmtpClientService.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{BlazorCommunity.Api.Options.EmailStmpOption},Microsoft.Extensions.Logging.ILogger{BlazorCommunity.Api.Service.SmtpClientService})">
+             <summary>
+            
+             </summary>
+             <param name="options"></param>
+             <param name="logger"></param>
+        </member>
+        <member name="M:BlazorCommunity.Api.Service.SmtpClientService.SendAsync(System.String,System.String,System.String)">
+             <summary>
+            
+             </summary>
+             <param name="ToEmail"></param>
+             <param name="Content"></param>
+             <param name="Subject"></param>
+             <returns></returns>
+        </member>
+        <member name="F:BlazorCommunity.Api.Startup.AutofacContainer">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:BlazorCommunity.Api.Startup.ConfigureContainer(Autofac.ContainerBuilder)">
+            <summary>
+            系统调用
+            </summary>
+            <param name="builder"></param>
+        </member>
+    </members>
+</doc>

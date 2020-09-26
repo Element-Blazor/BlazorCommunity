@@ -1,0 +1,29 @@
+﻿@using System.Web
+@model BlazorCommunity.Model.Models.BZTopicModel
+@{
+    var title = Html.Raw(Model?.Title);
+    var content = Html.Raw(Model?.Content);
+}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@title</title>
+    <meta name="keywords" content="blazor,blazui,admin,blazui.admin,社区,快速,解决问题" />
+    <meta name="description" content="@title" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <link href="/_content/Blazui.Markdown/css/editormd.min.css" rel="stylesheet" />
+    <!--对 editormd 的默认样式进行更改的文件 -->
+    <link href="/_content/Blazui.Markdown/css/editor.css" rel="stylesheet" />
+    <link href="https://cdn.bootcss.com/codemirror/5.52.0/addon/fold/foldgutter.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/codemirror/5.52.0/codemirror.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <h3>@title</h3>
+    <div style="  margin-top: 10px; border-top: 1px solid #F5F5F5">
+        @content
+    </div>
+</body>
+</html>
+
