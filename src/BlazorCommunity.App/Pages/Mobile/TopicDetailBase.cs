@@ -1,6 +1,6 @@
 ﻿using BlazorCommunity.App.Service;
 using BlazorCommunity.DTO;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;

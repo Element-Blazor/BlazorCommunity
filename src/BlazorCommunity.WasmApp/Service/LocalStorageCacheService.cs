@@ -32,19 +32,19 @@ namespace BlazorCommunity.WasmApp.Service
             }
         }
 
-        public  Task<T> GetItemAsync<T>(string key)
+        public async Task<T> GetItemAsync<T>(string key)
         {
-            return LocalStorageService.GetItemAsync<T>(key);
+            return await LocalStorageService.GetItemAsync<T>(key);
         }
 
-        public Task ClearAsync()
+        public async Task ClearAsync()
         {
-            return LocalStorageService.ClearAsync();
+             await  LocalStorageService.ClearAsync();
         }
 
-        public Task RemoveItemAsync(string key)
+        public async Task RemoveItemAsync(string key)
         {
-            return LocalStorageService.RemoveItemAsync(key);
+             await LocalStorageService. RemoveItemAsync(key);
         }
 
       

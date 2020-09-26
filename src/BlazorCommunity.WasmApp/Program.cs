@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Blazui.Component;
-using Blazui.Markdown;
+using Element;
+using Element.Markdown;
 using BlazorCommunity.WasmApp.Service;
 using Microsoft.AspNetCore.Components.Authorization;
 using BlazorCommunity.WasmApp.Features.Identity;
@@ -27,12 +27,12 @@ namespace BlazorCommunity.WasmApp
             var Configuration = builder.Configuration;
             builder.RootComponents.Add<App>("app");
 
-            services.AddHttpClient("BlazuiCommunitiyApp", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+            services.AddHttpClient("ElementCommunitiyApp", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
             services.AddBlazoredLocalStorage();
             services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ILocalStorageCacheService, LocalStorageCacheService>();
-            await services.AddBlazuiServicesAsync();
+            services.AddElementServices();
             services.AddMarkdown();
             services.AddSingleton<BrowerService>();
             services.AddSingleton<NetworkService>();

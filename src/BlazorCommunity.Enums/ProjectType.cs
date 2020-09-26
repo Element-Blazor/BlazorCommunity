@@ -4,8 +4,8 @@ namespace BlazorCommunity.Enums
 {
     public enum ProjectType
     {
-        [Description("Blazui")]
-        Blazui,
+        [Description("Element")]
+        Element,
 
         [Description("BAdmin")]
         BAdmin,

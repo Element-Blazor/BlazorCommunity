@@ -1,5 +1,5 @@
 ﻿using BlazorCommunity.App.Pages;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;

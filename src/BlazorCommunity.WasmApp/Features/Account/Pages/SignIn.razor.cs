@@ -1,7 +1,7 @@
 ﻿using BlazorCommunity.Shared;
 using BlazorCommunity.WasmApp.Pages;
 using BlazorCommunity.WasmApp.Service;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
 using System;

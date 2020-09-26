@@ -2,7 +2,7 @@
 using BlazorCommunity.App.Pages;
 using BlazorCommunity.Common;
 using BlazorCommunity.Enums;
-using Blazui.Component;
+using Element;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 

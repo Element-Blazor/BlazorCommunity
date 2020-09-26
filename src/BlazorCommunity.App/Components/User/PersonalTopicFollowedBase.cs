@@ -2,7 +2,7 @@
 using BlazorCommunity.App.Pages;
 using BlazorCommunity.DTO;
 using BlazorCommunity.Model.Models;
-using Blazui.Component;
+using Element;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

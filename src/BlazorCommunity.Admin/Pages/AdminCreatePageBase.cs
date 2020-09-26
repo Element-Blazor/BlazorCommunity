@@ -1,6 +1,6 @@
-﻿using Blazui.Admin;
+﻿using Element.Admin;
 using BlazorCommunity.Admin.ViewModel;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;

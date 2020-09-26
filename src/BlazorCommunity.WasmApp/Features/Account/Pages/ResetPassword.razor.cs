@@ -1,6 +1,6 @@
 ﻿using BlazorCommunity.WasmApp.Model;
 using BlazorCommunity.WasmApp.Pages;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
 using System;

@@ -1,6 +1,6 @@
 ﻿using BlazorCommunity.WasmApp.Service;
 using BlazorCommunity.Response;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +14,7 @@ using BlazorCommunity.WasmApp.Model.Cache;
 
 namespace BlazorCommunity.WasmApp.Pages
 {
-    public abstract class PageBase : BComponentBase
+    public abstract class PageBase : ElementComponentBase
     {
         [Inject]
         private IConfiguration Configuration { get; set; }

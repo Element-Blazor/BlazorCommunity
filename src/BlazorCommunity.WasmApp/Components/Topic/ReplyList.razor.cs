@@ -3,7 +3,7 @@ using BlazorCommunity.WasmApp.Pages;
 using BlazorCommunity.DTO;
 using BlazorCommunity.Model.Models;
 using BlazorCommunity.Response;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;

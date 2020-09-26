@@ -27,7 +27,7 @@ namespace BlazorCommunity.WasmApp.Service
             AuthenticationStateProvider authenticationStateProvider,
             ILocalStorageService localStorage)
         {
-            _httpClient = httpClientFactory.CreateClient("BlazuiCommunitiyApp");
+            _httpClient = httpClientFactory.CreateClient("ElementCommunitiyApp");
             _authenticationStateProvider = authenticationStateProvider;
             _localStorage = localStorage;
         }

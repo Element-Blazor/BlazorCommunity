@@ -1,7 +1,7 @@
 ﻿using BlazorCommunity.DTO;
 using BlazorCommunity.DTO.App;
 using BlazorCommunity.Model.Models;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using System.Threading.Tasks;

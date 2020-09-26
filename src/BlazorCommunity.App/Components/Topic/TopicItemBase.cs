@@ -1,12 +1,12 @@
 ﻿using BlazorCommunity.DTO;
 using BlazorCommunity.Enums;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
 namespace BlazorCommunity.App.Components
 {
-    public class TopicItemBase : BComponentBase
+    public class TopicItemBase : ElementComponentBase
     {
         [Parameter]
         public BZTopicDto Topic { get; set; }

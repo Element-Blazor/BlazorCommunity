@@ -1,12 +1,12 @@
 ﻿using BlazorCommunity.DTO;
 using BlazorCommunity.Enums;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Configuration;
 
 namespace BlazorCommunity.WasmApp.Components.Topic
 {
-    public partial class ReplyItem : BComponentBase
+    public partial class ReplyItem : ElementComponentBase
     {
         [Parameter]
         public BZReplyDto ReplyModel { get; set; }

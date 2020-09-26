@@ -1,6 +1,6 @@
 ﻿using BlazorCommunity.DTO.App;
 using BlazorCommunity.Model.Models;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 

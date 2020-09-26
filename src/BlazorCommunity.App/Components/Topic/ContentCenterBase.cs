@@ -1,9 +1,9 @@
-﻿using Blazui.Component;
+﻿using Element;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorCommunity.App.Components
 {
-    public class ContentCenterBase : BComponentBase
+    public class ContentCenterBase : ElementComponentBase
     {
         protected BTab tab;
         protected BTabPanel tabPanel_Comprehensive;
@@ -14,7 +14,7 @@ namespace BlazorCommunity.App.Components
         [Parameter]
         public int TopicType { get; set; }
 
-        protected void ActiveTabChanged(BChangeEventArgs<BTabPanelBase> e)
+        protected void ActiveTabChanged(BChangeEventArgs<BTabPanel> e)
         {
             var title = e.NewValue.Title;
             switch (title)

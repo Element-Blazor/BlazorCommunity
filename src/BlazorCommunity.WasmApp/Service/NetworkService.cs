@@ -27,7 +27,7 @@ namespace BlazorCommunity.WasmApp.Service
 
         public NetworkService(IHttpClientFactory httpClientFactory, ILocalStorageCacheService localStorageService)
         {
-            this.httpClient = httpClientFactory.CreateClient("BlazuiCommunitiyApp");
+            this.httpClient = httpClientFactory.CreateClient("ElementCommunitiyApp");
             this.localStorageService = localStorageService;
         }
 

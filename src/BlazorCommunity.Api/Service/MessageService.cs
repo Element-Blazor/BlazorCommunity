@@ -24,13 +24,13 @@ namespace BlazorCommunity.Api.Service
         public Task<bool> SendEmailToManagerForAnswerAsync(string TopicId)
         {
             var content = $"社区有新的提问，还请尽快回复一下，谢谢，链接地址：{domainOption.Value.BaseDomain}topic/{TopicId}";
-            return SendEmailAsync(RandomAnEmail()?.Email, content, "Blazor-Blazui社区消息");
+            return SendEmailAsync(RandomAnEmail()?.Email, content, "Blazor-Element社区消息");
         }
 
         public Task<bool> SendEmailToTopicCreatorAsync(string Email, string TopicTitle, string TopicId)
         {
             var content = $"您的帖子—{TopicTitle}，有新的回复，查看链接：{domainOption.Value.BaseDomain}topic/{TopicId}";
-            return SendEmailAsync(Email, content, "Blazor-Blazui社区消息");
+            return SendEmailAsync(Email, content, "Blazor-Element社区消息");
         }
 
         public Task<bool> SendVerifyCodeForBindEmailAsync(string Email, string Code)

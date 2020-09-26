@@ -27,7 +27,7 @@ namespace BlazorCommunity.Api
         {
             _logger = logger;
             _next = next;
-            this.httpClient = httpClientFactory.CreateClient("BlazuiCommunitiyApp");
+            this.httpClient = httpClientFactory.CreateClient("ElementCommunitiyApp");
         }
 
         /// <summary>

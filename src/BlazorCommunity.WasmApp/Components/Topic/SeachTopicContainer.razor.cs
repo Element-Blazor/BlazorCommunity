@@ -1,12 +1,12 @@
 ﻿using BlazorCommunity.DTO;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BlazorCommunity.WasmApp.Components.Topic
 {
-    public partial class SeachTopicContainer : BComponentBase, IContainerComponent
+    public partial class SeachTopicContainer : ElementComponentBase , IContainerComponent
     {
         [Parameter]
         public List<SeachTopicDto> Datas { get; set; }

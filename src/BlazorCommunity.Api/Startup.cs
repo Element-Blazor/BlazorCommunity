@@ -33,8 +33,8 @@ using static BlazorCommunity.Api.Configuration.ConstantConfiguration;
 using BlazorCommunity.Api.Middleware;
 using BlazorCommunity.WasmApp.Features.Identity;
 using BlazorCommunity.WasmApp.Service;
-using Blazui.Component;
-using Blazui.Markdown;
+using Element;
+using Element.Markdown;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 
@@ -66,7 +66,7 @@ namespace BlazorCommunity.Api
 
             //services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
 
-            //services.AddHttpClient("BlazuiCommunitiyApp", client => client.BaseAddress = new Uri("http://localhost:5000/"));
+            //services.AddHttpClient("ElementCommunitiyApp", client => client.BaseAddress = new Uri("http://localhost:5000/"));
 
             //services.AddServerSideBlazor();
             //services.AddBlazoredLocalStorage();
@@ -75,7 +75,7 @@ namespace BlazorCommunity.Api
             //services.AddScoped<IAuthenticationService, AuthenticationService>();
             //services.AddScoped<NetworkService>();
             //services.AddSingleton<BrowerService>();
-            //services.AddBlazuiServicesAsync().Wait();
+            //services.AddElementServicesAsync().Wait();
             //services.AddMarkdown();
 
         }

@@ -3,7 +3,7 @@ using BlazorCommunity.Admin.Service;
 using BlazorCommunity.DTO.Admin;
 using BlazorCommunity.Enums;
 using BlazorCommunity.Response;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Configuration;
 using System;

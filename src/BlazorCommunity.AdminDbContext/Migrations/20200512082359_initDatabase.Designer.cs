@@ -19,7 +19,7 @@ namespace BlazorCommunity.AdminDbContext.Migrations
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Blazui.Admin.RoleResource", b =>
+            modelBuilder.Entity("Element.Admin.RoleResource", b =>
                 {
                     b.Property<string>("ResourceId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");

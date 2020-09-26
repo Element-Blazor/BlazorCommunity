@@ -17,6 +17,6 @@ namespace BlazorCommunity.WasmApp
         public static int height;
         public static int MaxUploadFileSize = 1024;
 
-        public static string HttpClientBaseName = "BlazuiCommunitiyApp";
+        public static string HttpClientBaseName = "ElementCommunitiyApp";
     }
 }

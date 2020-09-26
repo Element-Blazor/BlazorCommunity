@@ -1,9 +1,9 @@
-﻿using Blazui.Component;
+﻿using Element;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorCommunity.App.Components
 {
-    public class MainContentBase : BComponentBase
+    public class MainContentBase : ElementComponentBase
     {
         [Parameter]
         public string Title { get; set; }

@@ -1,7 +1,7 @@
 ﻿using BlazorCommunity.WasmApp.Model;
 using BlazorCommunity.WasmApp.Pages;
 using BlazorCommunity.Model.Models;
-using Blazui.Component;
+using Element;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using BlazorCommunity.DTO.App;

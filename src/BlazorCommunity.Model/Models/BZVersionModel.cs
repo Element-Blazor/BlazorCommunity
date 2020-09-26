@@ -6,7 +6,7 @@ namespace BlazorCommunity.Model.Models
     public class BZVersionModel : BaseModel
     {
         /// <summary>
-        /// 0：blazui，1：bAdmin，2：BMarkdown
+        /// 0：Element，1：bAdmin，2：BMarkdown
         /// </summary>
         public int Project { get; set; }
 

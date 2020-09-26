@@ -1,5 +1,5 @@
 ﻿using BlazorCommunity.DTO;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.App.Components.Topic
 {
-    public class HotItemBase:BComponentBase
+    public class HotItemBase:ElementComponentBase
     {
         [Parameter]
         public HotTopicDto Hot { get; set; }

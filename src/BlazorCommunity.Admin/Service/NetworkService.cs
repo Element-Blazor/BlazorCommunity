@@ -4,7 +4,7 @@ using BlazorCommunity.DTO;
 using BlazorCommunity.DTO.Admin;
 using BlazorCommunity.HttpClientExtensions;
 using BlazorCommunity.Response;
-using Blazui.Component;
+using Element;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -21,7 +21,7 @@ namespace BlazorCommunity.Admin.Service
         private bool isSupper = false;
         public NetworkService(IHttpClientFactory httpClientFactory, AdminUserService adminUserService, MessageService messageService)
         {
-            this.httpClient = httpClientFactory.CreateClient("BlazuiCommunitiyAdmin");
+            this.httpClient = httpClientFactory.CreateClient("ElementCommunitiyAdmin");
             httpClient.DefaultRequestHeaders.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue()
             {
                 NoCache = false,

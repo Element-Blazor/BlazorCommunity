@@ -3,7 +3,7 @@ using BlazorCommunity.WasmApp.Model.Condition;
 using BlazorCommunity.WasmApp.Pages;
 using BlazorCommunity.DTO;
 using BlazorCommunity.Model.Models;
-using Blazui.Component;
+using Element;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

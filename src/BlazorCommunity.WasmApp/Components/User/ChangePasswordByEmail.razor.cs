@@ -2,7 +2,7 @@
 using BlazorCommunity.WasmApp.Pages;
 using BlazorCommunity.Enums;
 using BlazorCommunity.Model.Models;
-using Blazui.Component;
+using Element;
 using System.Threading.Tasks;
 using BlazorCommunity.DTO.App;
 using BlazorCommunity.DTO;

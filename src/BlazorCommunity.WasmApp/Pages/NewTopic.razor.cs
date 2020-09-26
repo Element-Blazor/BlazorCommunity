@@ -1,8 +1,8 @@
 ﻿using BlazorCommunity.WasmApp.Model;
 using BlazorCommunity.DTO;
 using BlazorCommunity.Enums;
-using Blazui.Component;
-using Blazui.Markdown;
+using Element;
+using Element.Markdown;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;

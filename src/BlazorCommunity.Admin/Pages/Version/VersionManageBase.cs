@@ -2,7 +2,7 @@
 using BlazorCommunity.Admin.QueryCondition;
 using BlazorCommunity.DictionaryExtensions;
 using BlazorCommunity.DTO.Admin;
-using Blazui.Component;
+using Element;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

@@ -1,5 +1,5 @@
-﻿using Blazui.Admin;
-using Blazui.Component;
+﻿using Element.Admin;
+using Element;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorCommunity.Admin.Pages

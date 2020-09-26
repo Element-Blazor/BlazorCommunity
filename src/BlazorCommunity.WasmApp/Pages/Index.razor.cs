@@ -1,6 +1,6 @@
 ﻿using BlazorCommunity.Enums;
 using BlazorCommunity.WasmApp.Service;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace BlazorCommunity.WasmApp.Pages
 {
-    public partial class Index : BComponentBase
+    public partial class Index : ElementComponentBase
     {
         protected List<TabItem> Tabs = new List<TabItem>();
         protected BTab btab;
@@ -17,7 +17,7 @@ namespace BlazorCommunity.WasmApp.Pages
          BrowerService browerService { get; set; }
 
         
-        protected void ActiveTabChanged(BChangeEventArgs<BTabPanelBase> e)
+        protected void ActiveTabChanged(BChangeEventArgs<BTabPanel> e)
         {
             blayout?.Refresh();
             btab?.Refresh();

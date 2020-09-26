@@ -1,11 +1,11 @@
 ﻿using BlazorCommunity.DTO;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
 namespace BlazorCommunity.WasmApp.Components.Topic
 {
-    public partial class TopicItem : BComponentBase
+    public partial class TopicItem : ElementComponentBase
     {
         [Parameter]
         public BZTopicDto Topic { get; set; }

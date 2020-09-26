@@ -1,19 +1,19 @@
-﻿using Blazui.Markdown;
+﻿using Element.Markdown;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Blazui.Component;
+using Element;
 using BlazorCommunity.App.Service;
 
 namespace BlazorCommunity.App.Extensions
 {
     public static class AppBuilderExtensions
     {
-        public static async Task<IServiceCollection> AddBlazui(this IServiceCollection services)
+        public static IServiceCollection AddElement(this IServiceCollection services)
         {
-            await services.AddBlazuiServicesAsync();
+             services.AddElementServices();
             services.AddMarkdown();
             return services;
         }

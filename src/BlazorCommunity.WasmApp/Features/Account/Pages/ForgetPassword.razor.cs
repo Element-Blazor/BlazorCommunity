@@ -1,7 +1,7 @@
 ﻿using BlazorCommunity.WasmApp.Model;
 using BlazorCommunity.WasmApp.Pages;
 using BlazorCommunity.Enums;
-using Blazui.Component;
+using Element;
 using System.Threading.Tasks;
 
 namespace BlazorCommunity.WasmApp.Features.Account.Pages

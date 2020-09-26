@@ -4,7 +4,7 @@ using BlazorCommunity.Common;
 using BlazorCommunity.Enums;
 using BlazorCommunity.Model.Models;
 using BlazorCommunity.Response;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;

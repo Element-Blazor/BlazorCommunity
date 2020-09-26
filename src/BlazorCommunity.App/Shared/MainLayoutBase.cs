@@ -1,6 +1,6 @@
 ﻿using BlazorCommunity.App.Components;
 using BlazorCommunity.App.Service;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;

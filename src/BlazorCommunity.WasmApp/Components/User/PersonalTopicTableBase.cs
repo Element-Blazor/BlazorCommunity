@@ -1,7 +1,7 @@
 ﻿using BlazorCommunity.DTO;
 using BlazorCommunity.WasmApp.Model.Condition;
 using BlazorCommunity.WasmApp.Pages;
-using Blazui.Component;
+using Element;
 using System;
 using System.Collections.Generic;
 using System.Linq;

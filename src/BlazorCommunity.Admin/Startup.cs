@@ -1,11 +1,11 @@
 
 using AspectCore.Configuration;
 using AspectCore.Extensions.DependencyInjection;
-using Blazui.Admin.ServerRender;
+using Element.Admin.ServerRender;
 using BlazorCommunity.Admin.Service;
 using BlazorCommunity.AdminDbContext;
 using BlazorCommunity.Model.Models;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -34,9 +34,9 @@ namespace BlazorCommunity.Admin
             services.AddServerSideBlazor();
             services.AddDbContext<BlazorCommunityAdminDbContext>(
                 options => options.UseMySql(Configuration.GetConnectionString("DbConnectionString")));
-            services.AddHttpClient("BlazuiCommunitiyAdmin",
+            services.AddHttpClient("ElementCommunitiyAdmin",
                 client => client.BaseAddress = new Uri(Configuration["ServerUrl"]));
-            services.AddBlazuiServicesAsync().Wait();
+            services.AddElementServices();
 
             services.AddScoped<DbContext, BlazorCommunityAdminDbContext>();
             services.AddAdmin<IdentityUser, AdminUserService, BlazorCommunityAdminDbContext>(null);

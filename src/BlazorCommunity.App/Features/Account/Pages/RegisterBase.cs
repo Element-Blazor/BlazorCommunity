@@ -2,7 +2,7 @@
 using BlazorCommunity.Common;
 using BlazorCommunity.DTO;
 using BlazorCommunity.Model.Models;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;

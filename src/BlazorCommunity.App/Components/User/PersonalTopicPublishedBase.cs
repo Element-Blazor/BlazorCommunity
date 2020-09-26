@@ -1,7 +1,7 @@
 ﻿using BlazorCommunity.App.Model.Condition;
 using BlazorCommunity.DTO;
 using BlazorCommunity.Enums;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using BlazorCommunity.App.Components.User;

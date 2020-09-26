@@ -1,13 +1,13 @@
 ﻿using BlazorCommunity.App.Service;
 using BlazorCommunity.DTO;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BlazorCommunity.App.Components
 {
-    public class ContentBannerBase : BComponentBase
+    public class ContentBannerBase : ElementComponentBase
     {
         internal static List<BzBannerDto> Banners { get; set; } = new List<BzBannerDto>();
 

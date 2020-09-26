@@ -38,7 +38,7 @@ namespace BlazorCommunity.App
                 services.AddCustomAspIdenitty<BZUserModel, BlazorCommunityContext>();
 
             services.AddHttpContextAccessor();
-            services.AddHttpClient("BlazuiCommunitiyApp",
+            services.AddHttpClient("ElementCommunitiyApp",
               client => client.BaseAddress = new Uri(Configuration["ServerUrl"]));
 
           
@@ -48,7 +48,7 @@ namespace BlazorCommunity.App
             services.AddControllers();
             services.AddServerSideBlazor();
 
-            await services.AddBlazui();
+            services.AddElement();
             services.AddCustomService();
 
             //services.Configure<OpenIdConnectOptions>(option => {

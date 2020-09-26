@@ -1,7 +1,7 @@
 ﻿using BlazorCommunity.DTO;
 using BlazorCommunity.WasmApp.Components.Topic;
 using BlazorCommunity.WasmApp.Service;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;

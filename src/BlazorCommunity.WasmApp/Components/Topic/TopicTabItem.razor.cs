@@ -1,6 +1,6 @@
 ﻿using BlazorCommunity.WasmApp.Pages;
 using BlazorCommunity.DTO;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;

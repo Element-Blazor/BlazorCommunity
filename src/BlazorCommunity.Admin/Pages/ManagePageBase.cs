@@ -1,6 +1,6 @@
 ﻿using BlazorCommunity.Admin.QueryCondition;
 using BlazorCommunity.Admin.Service;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.Admin.Pages
 {
-    public abstract class ManagePageBase<T> : BComponentBase
+    public abstract class ManagePageBase<T> : ElementComponentBase
     {
         [Inject]
         public ILogger<ManagePageBase<T>> _logger { get; set; }

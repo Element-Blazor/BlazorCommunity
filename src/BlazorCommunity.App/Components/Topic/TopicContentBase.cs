@@ -1,6 +1,6 @@
 ﻿using BlazorCommunity.DTO;
 using BlazorCommunity.Enums;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.App.Components
 {
-    public class TopicContentBase : BComponentBase
+    public class TopicContentBase : ElementComponentBase
     {
         [Inject]
         private IConfiguration Configuration { get; set; }

@@ -1,6 +1,6 @@
-﻿using Blazui.Admin;
-using Blazui.Admin.Abstract;
-using Blazui.Component;
+﻿using Element.Admin;
+using Element.Admin.Abstract;
+using Element;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;

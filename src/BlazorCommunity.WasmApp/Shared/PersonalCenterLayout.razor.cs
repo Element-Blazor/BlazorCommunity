@@ -1,5 +1,5 @@
 ﻿using BlazorCommunity.WasmApp.Model;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;

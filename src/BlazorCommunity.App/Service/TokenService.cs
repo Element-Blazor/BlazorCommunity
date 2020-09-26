@@ -23,7 +23,7 @@ namespace BlazorCommunity.App.Service
             _memoryCache = memoryCache;
             _AuthenticationStateProvider = authenticationStateProvider;
             _userManager = userManager;
-            this.httpClient = httpClientFactory.CreateClient("BlazuiCommunitiyApp");
+            this.httpClient = httpClientFactory.CreateClient("ElementCommunitiyApp");
         }
 
         /// <summary>

@@ -1,10 +1,10 @@
 ﻿using BlazorCommunity.DTO;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorCommunity.WasmApp.Pages.Mobile
 {
-    public partial class MobileReplyItem : BComponentBase
+    public partial class MobileReplyItem : ElementComponentBase
     {
         [Parameter]
         public BZReplyDto ReplyModel { get; set; }

@@ -1,7 +1,7 @@
 ﻿using System;
 using BlazorCommunity.WasmApp.Service;
 using BlazorCommunity.DTO;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,7 +10,7 @@ using BlazorCommunity.WasmApp.Model.Cache;
 
 namespace BlazorCommunity.WasmApp.Components.Topic
 {
-    public partial class ContentBanner : BComponentBase
+    public partial class ContentBanner : ElementComponentBase
     {
         [Inject]
         ILocalStorageCacheService localStorage { get; set; }

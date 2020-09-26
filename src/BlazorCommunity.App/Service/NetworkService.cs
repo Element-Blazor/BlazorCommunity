@@ -21,7 +21,7 @@ namespace BlazorCommunity.App.Service
 
         public NetworkService(IHttpClientFactory httpClientFactory, TokenService tokenService)
         {
-            this.httpClient = httpClientFactory.CreateClient("BlazuiCommunitiyApp");
+            this.httpClient = httpClientFactory.CreateClient("ElementCommunitiyApp");
             _tokenService = tokenService;
             Unauthorized = new BaseResponse(403, "Unauthorized ，对不起您没有权限进行该操作 ", null);
         }

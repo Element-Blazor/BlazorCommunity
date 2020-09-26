@@ -1,8 +1,8 @@
 ﻿using BlazorCommunity.App.Model;
 using BlazorCommunity.DTO;
 using BlazorCommunity.Enums;
-using Blazui.Component;
-using Blazui.Markdown;
+using Element;
+using Element.Markdown;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Memory;
 using System;
@@ -97,7 +97,7 @@ namespace BlazorCommunity.App.Pages
         protected override async Task InitilizePageDataAsync()
         {
             article = new NewTopicModel() { Title = "", Content = "" };
-            //await LoadProjects(ProjectType.Blazui);
+            //await LoadProjects(ProjectType.Element);
         }
 
         private async Task LoadProjects(ProjectType type)

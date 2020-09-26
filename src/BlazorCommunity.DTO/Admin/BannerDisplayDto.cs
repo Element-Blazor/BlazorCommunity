@@ -60,7 +60,7 @@ namespace BlazorCommunity.DTO.Admin
         public string CreateDateDisplay => CreateDate.ConvertToDateDiffStr();
 
         /// <summary>
-        /// 为了不依赖blazui组件 使用object代替IFileModel
+        /// 为了不依赖Element组件 使用object代替IFileModel
         /// </summary>
         [AutoNotMap]
         [NotMapped]

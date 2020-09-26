@@ -1,6 +1,6 @@
 ﻿using BlazorCommunity.App.Service;
 using BlazorCommunity.DTO;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.App.Components.Topic
 {
-    public class HotUserBase : BComponentBase
+    public class HotUserBase : ElementComponentBase
     {
 
         protected string Title { get; set; }

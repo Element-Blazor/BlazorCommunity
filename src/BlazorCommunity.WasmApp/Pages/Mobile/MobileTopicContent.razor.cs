@@ -1,6 +1,6 @@
 ﻿using BlazorCommunity.DTO;
 using BlazorCommunity.Enums;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Configuration;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.WasmApp.Pages.Mobile
 {
-    public partial class MobileTopicContent : BComponentBase
+    public partial class MobileTopicContent : ElementComponentBase
     {
 
         protected string tagClass = "el-tag--success";

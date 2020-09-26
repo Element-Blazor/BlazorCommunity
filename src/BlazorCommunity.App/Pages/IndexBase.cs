@@ -1,6 +1,6 @@
 ﻿using BlazorCommunity.App.Service;
 using BlazorCommunity.Enums;
-using Blazui.Component;
+using Element;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.App.Pages
 {
-    public class IndexBase : BComponentBase
+    public class IndexBase : ElementComponentBase
     {
         [Inject]
         private BrowerService  browerService{ get; set; }
         protected List<TabItem> Tabs = new List<TabItem>();
         protected BTab btab;
         protected BLayout blayout;
-        protected void ActiveTabChanged(BChangeEventArgs<BTabPanelBase> e)
+        protected void ActiveTabChanged(BChangeEventArgs<BTabPanel> e)
         {
          
             blayout?.Refresh();
