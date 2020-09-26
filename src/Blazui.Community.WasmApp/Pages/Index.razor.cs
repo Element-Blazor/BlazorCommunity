@@ -17,7 +17,7 @@ namespace Blazui.Community.WasmApp.Pages
          BrowerService browerService { get; set; }
 
         
-        protected void ActiveTabChanged(BChangeEventArgs<BTabPanel> e)
+        protected void ActiveTabChanged(BChangeEventArgs<BTabPanelBase> e)
         {
             blayout?.Refresh();
             btab?.Refresh();

@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="2.1.6" />
+    <PackageReference Include="Blazui.Markdown" Version="0.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.2.0-preview3.20168.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0.0-preview.3.20215.14" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="3.1.4" />
@@ -27,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Blazui\src\Markdown\Blazui.Markdown.csproj" />
     <ProjectReference Include="..\Blazui.Community.HttpClientExtensions\Blazui.Community.HttpClientExtensions.csproj" />
     <ProjectReference Include="..\Blazui.Community.Shared\Blazui.Community.Shared.csproj" />
     <ProjectReference Include="..\BlazUICommunity.DTO\Blazui.Community.DTO.csproj" />
