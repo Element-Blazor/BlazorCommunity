@@ -1,4 +1,4 @@
-﻿@inherits AppHeaderBase
+@inherits AppHeaderBase
 <div class="nav">
     <div class="container app-header-dropdown">
         <img src="img/logo.svg" width="146" height="38" />
@@ -28,28 +28,28 @@
         <div style="flex:1;">
             <AuthorizeView>
                 <Authorized>
-                    <BDropDown EnableAlwaysRender="true">
+                    <ElDropdown EnableAlwaysRender="true">
                         <Trigger>
-                            <BButton Style="border:none;background:transparent;padding:0px;">
+                            <ElButton Style="border:none;background:transparent;padding:0px;">
                                 <div style="display:flex;">
                                     <img src="@User?.Avator" class="app-nav-avatar-img" />
                                     <span class="el-dropdown-link" style="margin:auto;color:#fff;">
                                         @User?.NickName  <i class="el-icon-arrow-down el-icon--right" style="color:#fff;"></i>
                                     </span>
                                 </div>
-                            </BButton>
+                            </ElButton>
                         </Trigger>
                         <Items>
-                            <BDropDownItem OnClick="e=>Personal()">个人中心</BDropDownItem>
-                            <BDropDownItem OnClick="e=>LoginOut()">退出登录</BDropDownItem>
+                            <ElDropdownItem OnClick="e=>Personal()">个人中心</ElDropdownItem>
+                            <ElDropdownItem OnClick="e=>LoginOut()">退出登�</ElDropdownItem>
 
                         </Items>
-                    </BDropDown>
+                    </ElDropdown>
                 </Authorized>
                 <NotAuthorized>
                     <div style="display:flex;">
-                        <BButton Type="@ButtonType.Primary" OnClick="e=>Login()" Style="padding:12px 5px;">登录</BButton>
-                        <BButton Type="@ButtonType.Primary" OnClick="e=>Regist()" Style="padding:12px 5px;margin-left:0px !important">注册</BButton>
+                        <ElButton Type="@ButtonType.Primary" OnClick="e=>Login()" Style="padding:12px 5px;">登录</ElButton>
+                        <ElButton Type="@ButtonType.Primary" OnClick="e=>Regist()" Style="padding:12px 5px;margin-left:0px !important">注册</ElButton>
                     </div>
                 </NotAuthorized>
             </AuthorizeView>

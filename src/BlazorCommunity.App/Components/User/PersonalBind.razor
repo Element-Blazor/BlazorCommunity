@@ -1,19 +1,19 @@
-ï»¿@layout PersonalCenterLayout
+@layout PersonalCenterLayout
 @page "/user/bind"
 @inherits PersonalBindBase
-<BTab Type="@TabType.Card" EnableAlwaysRender="true">
-    <BTabPanel Title="@tabTitle" EnableAlwaysRender="true">
-        <BTab>
-            <BTabPanel Title="é‚®ç®±ç»‘å®š">
+<ElTabs Type="@TabType.Card" EnableAlwaysRender="true">
+    <ElTabPane Title="@tabTitle" EnableAlwaysRender="true">
+        <ElTabs>
+            <ElTabPane Title="ÓÊÏä°ó¶¨">
                 <BindEmail></BindEmail>
-            </BTabPanel>
-            <BTabPanel Title="æ‰‹æœºç»‘å®š">
-                åŠªåŠ›å®Œå–„ä¸­
+            </ElTabPane>
+            <ElTabPane Title="ÊÖ»ú°ó¶¨">
+                Å¬Á¦ÍêÉÆÖÐ
                 @*<BindMobile></BindMobile>*@
-            </BTabPanel>
-        </BTab>
-    </BTabPanel>
-</BTab>
+            </ElTabPane>
+        </ElTabs>
+    </ElTabPane>
+</ElTabs>
 
 @code {
 

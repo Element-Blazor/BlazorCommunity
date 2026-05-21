@@ -1,4 +1,4 @@
-﻿using BlazorCommunity.Admin.Service;
+using BlazorCommunity.Admin.Service;
 using BlazorCommunity.DTO.Admin;
 using Element;
 using Microsoft.AspNetCore.Components;
@@ -14,7 +14,7 @@ namespace BlazorCommunity.Admin.Pages.Role
 
         [Parameter]
         public string RoleId { get; set; }
-        protected BForm claimForm;
+        protected ElForm claimForm;
         protected RoleClaimDto model;
 
         [Inject]

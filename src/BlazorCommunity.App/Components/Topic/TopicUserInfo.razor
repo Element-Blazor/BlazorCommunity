@@ -1,15 +1,15 @@
-ï»¿@inherits TopicUserInfoBase
+@inherits TopicUserInfoBase
 <div class="flex-centor">
-    <BCard Style="height:100%;border:none;" Shadow="ShadowShowType.Never" EnableAlwaysRender="true">
-        <Header>ä½œè€…ç®€ä»‹</Header>
+    <ElCard Style="height:100%;border:none;" Shadow="ShadowShowType.Never" EnableAlwaysRender="true">
+        <Header>×÷Õß¼ò½é</Header>
         <Body>
             @if (TopicUser != null&&!string.IsNullOrWhiteSpace(TopicUser.NickName))
             {
-                <p>@($"æ˜µç§°ï¼š{TopicUser.NickName}")</p>
-                <p>@($"ä¸»è´´ï¼š{TopicUser.TopicCount}  å›å¸–ï¼š{TopicUser.ReplyCount}")</p>
-                <p>@($"æœ€åæ´»è·ƒæ—¶é—´ï¼š{TopicUser.LastLoginDate.ToString("yyyy-MM-dd")}")</p>
+                <p>@($"êÇ³Æ£º{TopicUser.NickName}")</p>
+                <p>@($"Ö÷Ìù£º{TopicUser.TopicCount}  »ØÌû£º{TopicUser.ReplyCount}")</p>
+                <p>@($"×îºó»îÔ¾Ê±¼ä£º{TopicUser.LastLoginDate.ToString("yyyy-MM-dd")}")</p>
             }
         </Body>
-    </BCard>
+    </ElCard>
 </div>
 

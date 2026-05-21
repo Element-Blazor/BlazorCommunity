@@ -1,15 +1,15 @@
-ï»¿@inherits PageBase
+@inherits PageBase
 <div class="flex-centor">
-    <BCard Style="height:100%;border:none;" Shadow="ShadowShowType.Never" EnableAlwaysRender="true">
-        <Header>ä½œè€…ç®€ä»‹</Header>
+    <ElCard Style="height:100%;border:none;" Shadow="ShadowShowType.Never" EnableAlwaysRender="true">
+        <Header>×÷Õß¼ò½é</Header>
         <Body>
             @if (User!=null&&!string.IsNullOrWhiteSpace(HotUser.NickName))
             {
-                <p>@($"æ˜µç§°ï¼š{HotUser.NickName}")</p>
-                <p>@($"ä¸»è´´ï¼š{HotUser.TopicCount}  å›å¸–ï¼š{HotUser.ReplyCount}")</p>
-                <p>@($"æœ€åæ´»è·ƒæ—¶é—´ï¼š{HotUser.LastLoginDate.ToString("yyyy-MM-dd")}")</p>
+                <p>@($"êÇ³Æ£º{HotUser.NickName}")</p>
+                <p>@($"Ö÷Ìù£º{HotUser.TopicCount}  »ØÌû£º{HotUser.ReplyCount}")</p>
+                <p>@($"×îºó»îÔ¾Ê±¼ä£º{HotUser.LastLoginDate.ToString("yyyy-MM-dd")}")</p>
             }
         </Body>
-    </BCard>
+    </ElCard>
 </div>
 

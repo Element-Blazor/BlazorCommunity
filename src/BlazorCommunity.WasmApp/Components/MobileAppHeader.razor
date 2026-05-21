@@ -1,13 +1,13 @@
-﻿@inherits PageBase
+@inherits PageBase
 <div class="mobile-header">
     <div class="header-item mobile-logo" @onclick="@(e=>NavigationManager.NavigateTo("/",true))">
         <img src="img/logo.png" style="width:80px;height:64px;margin-top:0px !important;" />
     </div>
     <div class="header-item mobile-search">
-        <BInput Type="InputType.Text" TValue="string" Size="@InputSize.Small" Style="display:inline-block;" EnableAlwaysRender="true" EnableClearButton="true" Placeholder="输入您要搜索的内容" @bind-Value="@SearchText"> </BInput>
-        <BButton Type="@ButtonType.Text" Size="@ButtonSize.Medium" Icon="el-icon-search" OnClick="e=>Search()"
+        <ElInput Type="@InputType.Text" TValue="string" Size="@InputSize.Small" Style="display:inline-block;" EnableAlwaysRender="true" EnableClearButton="true" Placeholder="输入您要搜索的内�? @bind-Value="@SearchText"> </ElInput>
+        <ElButton Type="@ButtonType.Text" Size="@ButtonSize.Medium" Icon="el-icon-search" OnClick="e=>Search()"
                  Style="font-size:16px; color:white;margin:0px 10px 0px 10px !important">
-        </BButton>
+        </ElButton>
     </div>
     <div class="header-item mobile-user">
         <AuthorizeView>
@@ -18,7 +18,7 @@
                 <span @onclick="e=>Login()" style="margin-left:2px;margin-right:2px;min-width:50px;">登录</span>
             </NotAuthorized>
         </AuthorizeView>
-        <BDropDown EnableAlwaysRender="true">
+        <ElDropdown EnableAlwaysRender="true">
             <Trigger>
                 <span class="icon iconfont icon-navicon" style="color:white;margin-right:5px !important;"></span>
             </Trigger>
@@ -26,27 +26,27 @@
                 @foreach (var menu in headerMenus)
                 {
                     var target = @menu.URL == "/" ? "_self" : "_blank";
-                    <BDropDownItem>
+                    <ElDropdownItem>
                         <a href="@menu.URL" target=@target style="display: inline-block;width: 100%;">
                             <i class="@menu.Icon"></i>
                             @menu.Title
                         </a>
-                    </BDropDownItem>
+                    </ElDropdownItem>
 
                 }
                 <AuthorizeView>
                     <Authorized>
-                        <BDropDownItem OnClick="LoginOut">
+                        <ElDropdownItem OnClick="LoginOut">
                             <a>
                                 <i class="icon iconfont icon-tuichu" style="font-size:16px !important"></i>
-                                <span font-size: 16px;color: #000000;text-decoration: none;>退出</span>
+                                <span font-size: 16px;color: #000000;text-decoration: none;>退�?/span>
                             </a>
-                        </BDropDownItem>
+                        </ElDropdownItem>
                     </Authorized>
                 </AuthorizeView>
 
             </Items>
-        </BDropDown>
+        </ElDropdown>
     </div>
 
 </div>

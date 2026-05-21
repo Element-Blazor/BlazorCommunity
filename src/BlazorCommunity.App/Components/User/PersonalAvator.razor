@@ -1,20 +1,20 @@
-Ôªø@layout PersonalCenterLayout
+@layout PersonalCenterLayout
 @page "/user/avator"
 @inherits PersonalAvatorBase
-<BTab Type="@TabType.Card" EnableAlwaysRender="true">
-    <BTabPanel Title="@tabTitle" EnableAlwaysRender="true">
-        <BForm Style="width:400px;" @ref="bForm" Value="value" EnableAlwaysRender="true">
+<ElTabs Type="@TabType.Card" EnableAlwaysRender="true">
+    <ElTabPane Title="@tabTitle" EnableAlwaysRender="true">
+        <ElForm Style="width:400px;" @ref="ElForm" Model="value" EnableAlwaysRender="true">
 
-            <BFormItem TValue="IFileModel[]" Label="" Name="@nameof(UploadActivity.Previews)" EnableAlwaysRender="true">
+            <ElFormItem TValue="IFileModel[]" Label="" Prop="@nameof(UploadActivity.Previews)" EnableAlwaysRender="true">
                 <UploadAvatar Url="@(UploadUrl+ UploadPath.Avator.Description())"
                               UploadType="UploadType.Image"
                               EnablePasteUpload="true" Limit="1" MaxSize="300"
                               AllowExtensions="@(new string[] { " .jpg",".png"})" EnableAlwaysRender="true">
                 </UploadAvatar>
-            </BFormItem>
-            <BFormActionItem>
-                <BButton Type="@ButtonType.Primary" Style="width:178px;" OnClick="e=>Submit()" IsPlain="true">‰øù  Â≠ò</BButton>
-            </BFormActionItem>
-        </BForm>
-    </BTabPanel>
-</BTab>
+            </ElFormItem>
+            <ElFormActionItem>
+                <ElButton Type="@ButtonType.Primary" Style="width:178px;" OnClick="e=>Submit()" Plain="true">‰ø? Â≠</ElButton>
+            </ElFormActionItem>
+        </ElForm>
+    </ElTabPane>
+</ElTabs>

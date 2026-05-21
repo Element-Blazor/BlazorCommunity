@@ -1,39 +1,39 @@
-﻿@inherits BindMobileBase
+@inherits BindMobileBase
 
-<BCard EnableAlwaysRender="true" @ref="bCard">
+<ElCard EnableAlwaysRender="true" @ref="bCard">
     <Body>
         @if (value != null && !string.IsNullOrWhiteSpace(value.Mobile))
         {
-            <BForm @ref="bForm" Value="value" LabelAlign="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
-                <BFormItem TValue="string" Label="" Name="@nameof(PasswordModel.Mobile)" IsRequired="false">
-                    <BButton Type="ButtonType.Info" IsPlain="true" Style="border:none" IsDisabled="true">@($"已绑定：{ value.Mobile}")</BButton>
-                </BFormItem>
-            </BForm>
+            <ElForm @ref="ElForm" Model="value" LabelPosition="right" Inline="true" EnableAlwaysRender="true">
+                <ElFormItem TValue="string" Label="" Prop="@nameof(PasswordModel.Mobile)" Required="false">
+                    <ElButton Type="ButtonType.Info" Plain="true" Style="border:none" Disabled="true">@($"已绑定：{ value.Mobile}")</ElButton>
+                </ElFormItem>
+            </ElForm>
         }
         else
         {
-            <BForm @ref="bForm" Value="value" LabelAlign="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
-                <BFormItem TValue="string" Label="手机：" Name="@nameof(PasswordModel.Mobile)" IsRequired="true">
-                    <BInput TValue="string" Type="InputType.Tel" Placeholder="请输入手机号码"></BInput>
-                </BFormItem>
-                <BFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
+            <ElForm @ref="ElForm" Model="value" LabelPosition="right" Inline="true" EnableAlwaysRender="true">
+                <ElFormItem TValue="string" Label="手机�? Prop="@nameof(PasswordModel.Mobile)" Required="true">
+                    <ElInput TValue="string" Type="@InputType.Tel" Placeholder="请输入手机号�?></ElInput>
+                </ElFormItem>
+                <ElFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
 
-                    <BButton Type="@ButtonType.Default" IsPlain="true" OnClick="e => SendBindMobileMsg()" EnableAlwaysRender="true" IsDisabled="IsDisabled">
-                        @((TimeOut > 0 && TimeOut < CountDownTime) ? $"请等待{TimeOut}s后重试" : "发送验证码")
-                    </BButton>
-                </BFormActionItem>
+                    <ElButton Type="@ButtonType.Default" Plain="true" OnClick="e => SendBindMobileMsg()" EnableAlwaysRender="true" Disabled="IsDisabled">
+                        @((TimeOut > 0 && TimeOut < CountDownTime) ? $"请等待{TimeOut}s后重�? : "发送验证码")
+                    </ElButton>
+                </ElFormActionItem>
                 @if (showInput)
                 {
-                    <BFormItem TValue="string" Label="验证码：" Name="@nameof(PasswordModel.Code)" IsRequired="false">
-                        <BInput TValue="string" Placeholder="请输入验证码"></BInput>
-                    </BFormItem>
-                    <BFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
-                        <BButton Type="@ButtonType.Default" IsPlain="true" OnClick="e => CheckAndBindMobileVerifyCode()" EnableAlwaysRender="true">
+                    <ElFormItem TValue="string" Label="验证码：" Prop="@nameof(PasswordModel.Code)" Required="false">
+                        <ElInput TValue="string" Placeholder="请输入验证码"></ElInput>
+                    </ElFormItem>
+                    <ElFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
+                        <ElButton Type="@ButtonType.Default" Plain="true" OnClick="e => CheckAndBindMobileVerifyCode()" EnableAlwaysRender="true">
                             绑定
-                        </BButton>
-                    </BFormActionItem>
+                        </ElButton>
+                    </ElFormActionItem>
                 }
-            </BForm>
+            </ElForm>
         }
     </Body>
-</BCard>
+</ElCard>

@@ -1,4 +1,4 @@
-ï»¿using BlazorCommunity.WasmApp.Model;
+using BlazorCommunity.WasmApp.Model;
 using BlazorCommunity.WasmApp.Pages;
 using Element;
 using Microsoft.AspNetCore.Components;
@@ -11,7 +11,7 @@ namespace BlazorCommunity.WasmApp.Features.Account.Pages
     public partial class ResetPassword : PageBase
     {
         protected string PreviousRoute = "/account/forget";
-        protected BForm form;
+        protected ElForm form;
 
         [Parameter]
         public string UserId { get; set; }
@@ -30,14 +30,14 @@ namespace BlazorCommunity.WasmApp.Features.Account.Pages
                 var user = await NetService.FindUserByIdAsync(UserId);
                 if (user is null)
                 {
-                    ToastError("ç”¨æˆ·ä¸å­˜åœ¨");
+                    ToastError("ÓÃ»§²»´æÔÚ");
                     return;
                 }
 
                 var resetResult = await NetService.ResetPasswordAsync(new DTO.App.UpdateUserPasswordDto { NewPassword = model.Password, UserId = UserId }) ;
                 if (resetResult.IsSuccess)
                 {
-                    ToastSuccess("å¯†ç é‡ç½®æˆåŠŸï¼Œè¯·ç¨åä½¿ç”¨æ–°å¯†ç ç™»å½•");
+                    ToastSuccess("ÃÜÂëÖØÖÃ³É¹¦£¬ÇëÉÔºóÊ¹ÓÃĞÂÃÜÂëµÇÂ¼");
                     await WithFullScreenLoading(async () => await Task.Delay(1500));
                     NavigationManager.NavigateTo("/account/signin", true);
                 }
@@ -49,7 +49,7 @@ namespace BlazorCommunity.WasmApp.Features.Account.Pages
             }
             else
             {
-                ToastError("ä¸¤æ¬¡è¾“å…¥å¯†ç ä¸ä¸€è‡´");
+                ToastError("Á½´ÎÊäÈëÃÜÂë²»Ò»ÖÂ");
                 return;
             }
         }

@@ -1,4 +1,4 @@
-ï»¿using BlazorCommunity.WasmApp.Pages;
+using BlazorCommunity.WasmApp.Pages;
 using BlazorCommunity.DTO;
 using Element;
 using Microsoft.AspNetCore.Components;
@@ -13,7 +13,7 @@ namespace BlazorCommunity.WasmApp.Features.Account.Pages
         [Inject]
         public IAuthenticationService authenticationService { get; set; }
 
-        protected BForm registerForm;
+        protected ElForm registerForm;
         internal RegisterAccountDto Value = new RegisterAccountDto();
 
         protected InputType passwordType { get; set; } = InputType.Password;
@@ -35,13 +35,13 @@ namespace BlazorCommunity.WasmApp.Features.Account.Pages
                 var registerAccountModel = registerForm.GetValue<RegisterAccountDto>();
                 if (RegexHelper.ContainsChineseCharacters(registerAccountModel.UserAccount))
                 {
-                    ToastError("ä¸æ”¯æŒä¸­æ–‡è´¦å·");
+                    ToastError("²»Ö§³ÖÖĞÎÄÕËºÅ");
                     return;
                 }
 
                 if (!registerAccountModel.Password.Equals(registerAccountModel.ConfirmPassword))
                 {
-                    ToastError("ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸ä¸€è‡´");
+                    ToastError("Á½´ÎÃÜÂëÊäÈë²»Ò»ÖÂ");
                     return;
                 }
                 var RegistResult = await Regist(registerAccountModel);
@@ -76,7 +76,7 @@ namespace BlazorCommunity.WasmApp.Features.Account.Pages
 
         private async Task AutoLogin(RegisterAccountDto registerAccountModel)
         {
-            ToastSuccess("æ³¨å†ŒæˆåŠŸï¼Œå³å°†è‡ªåŠ¨ç™»å½•...");
+            ToastSuccess("×¢²á³É¹¦£¬¼´½«×Ô¶¯µÇÂ¼...");
             var loginModel = new LoginModel
             {
                 Password = registerAccountModel.Password,

@@ -1,6 +1,6 @@
-﻿@inherits PageBase
+@inherits PageBase
 <div class="reply-now">
-    @*<BCard EnableAlwaysRender="true">
+    @*<ElCard EnableAlwaysRender="true">
         <Header>*@
             <div class="content-flex-row custome-button-hover">
                 <div style="margin:25px 0px;font-weight:800;">发表回复</div>
@@ -14,17 +14,17 @@
             </div>
         @*</Header>
         <Body>*@
-            <BForm Inline="false" @ref="form" Value="Model" LabelAlign="@LabelAlign.Left" EnableAlwaysRender="true">
-                <BFormItem TValue="string" IsRequired="false"  Name="@nameof(NewReplyModel.Content)" EnableAlwaysRender="true" @ref="formItem">
-                    <BMarkdownEditor @ref="bMarkdownEditor"  UploadUrl="@(UploadUrl+ UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="300" ImageMaxSize="ConstConfig.MaxUploadFileSize" EnableAlwaysRender="true"></BMarkdownEditor>
+            <ElForm Inline="false" @ref="form" Model="Model" LabelPosition="left" EnableAlwaysRender="true">
+                <ElFormItem TValue="string" Required="false"  Prop="@nameof(NewReplyModel.Content)" EnableAlwaysRender="true" @ref="formItem">
+                    <ElMarkdownEditor @ref="bMarkdownEditor"  UploadUrl="@(UploadUrl+ UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="300" ImageMaxSize="ConstConfig.MaxUploadFileSize" EnableAlwaysRender="true"></ElMarkdownEditor>
                     <div>
                         <span class="el-tag el-tag--warning el-tag--light" style="width:100%">温馨提示：上传图片，单张图片最大只允许@(ConstConfig.MaxUploadFileSize)k</span>
                     </div>
-                </BFormItem>
-                <BFormItem TValue="object" Style="text-align:left">
-                    <BButton Type="@ButtonType.Success" OnClick="e=>SubmitData()" IsPlain="true">立即回复</BButton>
-                </BFormItem>
-            </BForm>
+                </ElFormItem>
+                <ElFormItem TValue="object" Style="text-align:left">
+                    <ElButton Type="@ButtonType.Success" OnClick="e=>SubmitData()" Plain="true">立即回复</ElButton>
+                </ElFormItem>
+            </ElForm>
         @*</Body>
-    </BCard>*@
+    </ElCard>*@
 </div>

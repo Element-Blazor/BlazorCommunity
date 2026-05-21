@@ -1,8 +1,8 @@
-﻿@inherits TopicContentBase
+@inherits TopicContentBase
 @if (!string.IsNullOrWhiteSpace(TopicModel.Id))
 {
     <div class="content-topic-base">
-        <BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
+        <ElCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
             <Header>
                 <div class="content-topic-head">
                     <div class="content-info">
@@ -19,7 +19,7 @@
                             @if (TopicModel.Status == 1)
                             {
                                 <div class="content-tag">
-                                    <span class="el-tag el-tag--info el-tag--small  el-tag--light">已结帖</span>
+                                    <span class="el-tag el-tag--info el-tag--small  el-tag--light">已结�?/span>
                                 </div>
                             }
                             else
@@ -36,7 +36,7 @@
                                     <div>
                                         @if (IsEditing)
                                         {
-                                            <BInput TValue="string" Type="InputType.Text" @bind-Value="TopicModel.Title" Style="width: 500px;" Size="InputSize.Medium"></BInput>
+                                            <ElInput TValue="string" Type="@InputType.Text" @bind-Value="TopicModel.Title" Style="width: 500px;" Size="InputSize.Medium"></ElInput>
                                         }
                                         else
                                         {
@@ -45,12 +45,12 @@
                                     </div>
                                     @if (TopicModel.Good == 1 && !IsEditing)
                                     {
-                                        <sup class="el-badge__content el-badge__content--undefined is-fixed" style=" font-size:12px;">精</sup>
+                                        <sup class="el-badge__content el-badge__content--undefined is-fixed" style=" font-size:12px;">�?/sup>
                                     }
                                 </div>
                             </div>
                         </div>
-                        <div class="content-time">   发布时间：   @TopicModel?.LastModifyDate.ToString("yyyy-MM-dd")</div>
+                        <div class="content-time">   发布时间�?  @TopicModel?.LastModifyDate.ToString("yyyy-MM-dd")</div>
                     </div>
 
                     <div class="content-good">
@@ -74,11 +74,11 @@
                                 @if (TopicModel.Status != 1)
                                 {
 
-                                    <BButton Icon=@(IsEditing?"el-icon-finished":"el-icon-edit") Style=@buttonedit Type="ButtonType.Text" IsPlain="true" Size="ButtonSize.Medium" OnClick="ToggleEditStatus">
-                                    </BButton>
+                                    <ElButton Icon=@(IsEditing?"el-icon-finished":"el-icon-edit") Style=@buttonedit Type="ButtonType.Text" Plain="true" Size="ButtonSize.Medium" OnClick="ToggleEditStatus">
+                                    </ElButton>
                                     <div title="关闭帖子">
-                                        <BButton Icon="el-icon-lock" Style=@buttonedit Type="ButtonType.Text" IsPlain="true" Size="ButtonSize.Medium" OnClick="CloseMyTopic">
-                                        </BButton>
+                                        <ElButton Icon="el-icon-lock" Style=@buttonedit Type="ButtonType.Text" Plain="true" Size="ButtonSize.Medium" OnClick="CloseMyTopic">
+                                        </ElButton>
                                     </div>
                                 }
                             }
@@ -97,15 +97,15 @@
             <Body>
                 @if (IsEditing)
                 {
-                    <BMarkdownEditor @bind-Value="@TopicModel.Content" UploadUrl="@UploadUrl" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="ConstConfig.MaxUploadFileSize" Height="300"></BMarkdownEditor>
+                    <ElMarkdownEditor @bind-Value="@TopicModel.Content" UploadUrl="@UploadUrl" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="ConstConfig.MaxUploadFileSize" Height="300"></ElMarkdownEditor>
                 }
                 else
                 {
-                    <BMarkdown Text="@TopicModel.Content"></BMarkdown>
+                    <ElMarkdown Text="@TopicModel.Content"></ElMarkdown>
                 }
                     <UserSignature Signature="@TopicModel.Signature"/>
             </Body>
-        </BCard>
+        </ElCard>
     </div>
 }
 @code {

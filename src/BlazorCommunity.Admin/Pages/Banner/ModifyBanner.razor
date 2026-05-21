@@ -1,28 +1,28 @@
-﻿@using BlazorCommunity.DTO.Admin
+@using BlazorCommunity.DTO.Admin
 @inherits ModifyBannerBase
 
-<BForm Style="width:100%;" @ref="versionForm" Value="model" LabelAlign="@LabelAlign.Right">
-    <BFormItem TValue="string" Label="描述" Name="@nameof(BannerDisplayDto.Title)" IsRequired="true">
-        <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>
+<ElForm Style="width:100%;" @ref="versionForm" Model="model" LabelPosition="right">
+    <ElFormItem TValue="string" Label="描述" Prop="@nameof(BannerDisplayDto.Title)" Required="true">
+        <ElInput Clearable="true" TValue="string"></ElInput>
+    </ElFormItem>
 
-    <BFormItem TValue="IFileModel[]" Label="Banner图" Name="@nameof(BannerDisplayDto.Previews)">
+    <ElFormItem TValue="IFileModel[]" Label="Banner�? Prop="@nameof(BannerDisplayDto.Previews)">
         <div class="admin-banner-img">
-            <BUpload Url="@ServerUrl" UploadType="UploadType.Image"></BUpload>
+            <ElUpload Url="@ServerUrl" UploadType="UploadType.Image"></ElUpload>
         </div>
-    </BFormItem>
-    <BFormItem TValue="bool" Label="显示到前端" Name="@nameof(BannerDisplayDto.Show)" IsRequired="true">
-        <BSwitch TValue="bool" ActiveValue="true" InactiveValue="false"></BSwitch>
-    </BFormItem>
-    <BFormItem TValue="string" Label="ID" Name="@nameof(BannerDisplayDto.Id)" IsRequired="false" IsHidden="true">
-        <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="DateTime" Label="CreateDate" Name="@nameof(BannerDisplayDto.CreateDate)" IsRequired="false" IsHidden="true">
-        <BDatePicker></BDatePicker>
-    </BFormItem>
+    </ElFormItem>
+    <ElFormItem TValue="bool" Label="显示到前�? Prop="@nameof(BannerDisplayDto.Show)" Required="true">
+        <ElSwitch TValue="bool" ActiveValue="true" InactiveValue="false"></ElSwitch>
+    </ElFormItem>
+    <ElFormItem TValue="string" Label="ID" Prop="@nameof(BannerDisplayDto.Id)" Required="false" IsHidden="true">
+        <ElInput Clearable="true" TValue="string"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="DateTime" Label="CreateDate" Prop="@nameof(BannerDisplayDto.CreateDate)" Required="false" IsHidden="true">
+        <ElDatePicker></ElDatePicker>
+    </ElFormItem>
 
-    <BFormItem TValue="object" Style="text-align:center;margin:0 auto;">
-        <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>Save()" Style="text-align:center;width:100px;">保存</BButton>
-        <BButton Type="@ButtonType.Default" IsPlain="true" OnClick="e=>versionForm.Reset()" Style="text-align:center;width:100px;">重置</BButton>
-    </BFormItem>
-</BForm>
+    <ElFormItem TValue="object" Style="text-align:center;margin:0 auto;">
+        <ElButton Type="@ButtonType.Primary" Plain="true" OnClick="e=>Save()" Style="text-align:center;width:100px;">保存</ElButton>
+        <ElButton Type="@ButtonType.Default" Plain="true" OnClick="e=>versionForm.Reset()" Style="text-align:center;width:100px;">重置</ElButton>
+    </ElFormItem>
+</ElForm>

@@ -1,4 +1,4 @@
-ï»¿using BlazorCommunity.App.Pages;
+using BlazorCommunity.App.Pages;
 using BlazorCommunity.Common;
 using BlazorCommunity.DTO;
 using BlazorCommunity.Model.Models;
@@ -24,7 +24,7 @@ namespace BlazorCommunity.App.Features.Account.Pages
         [Inject]
         private IDataProtectionProvider dataProtectionProvider { get; set; }
 
-        protected BForm registerForm;
+        protected ElForm registerForm;
         internal RegisterAccountDto Value = new RegisterAccountDto();
 
         protected InputType passwordType { get; set; } = InputType.Password;
@@ -46,19 +46,19 @@ namespace BlazorCommunity.App.Features.Account.Pages
                 var registerAccountModel = registerForm.GetValue<RegisterAccountDto>();
                 if (RegexHelper.ContainsChineseCharacters(registerAccountModel.UserAccount))
                 {
-                    ToastError("ä¸æ”¯æŒä¸­æ–‡è´¦å·");
+                    ToastError("²»Ö§³ÖÖĞÎÄÕËºÅ");
                     return;
                 }
 
                 if (!registerAccountModel.Password.Equals(registerAccountModel.ConfirmPassword))
                 {
-                    ToastError("ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸ä¸€è‡´");
+                    ToastError("Á½´ÎÃÜÂëÊäÈë²»Ò»ÖÂ");
                     return;
                 }
                 var user = await userManager.FindByNameAsync(registerAccountModel.UserAccount);
                 if (user != null)
                 {
-                    ToastError("ç”¨æˆ·è´¦å·å·²å­˜åœ¨");
+                    ToastError("ÓÃ»§ÕËºÅÒÑ´æÔÚ");
                     return;
                 }
 
@@ -80,7 +80,7 @@ namespace BlazorCommunity.App.Features.Account.Pages
                 }
                 else
                 {
-                    ToastSuccess("æ³¨å†ŒæˆåŠŸï¼Œå³å°†è‡ªåŠ¨ç™»å½•...");
+                    ToastSuccess("×¢²á³É¹¦£¬¼´½«×Ô¶¯µÇÂ¼...");
                     await Task.Delay(1000);
                     await AutoLogin(registerAccountModel.UserAccount);
                 }

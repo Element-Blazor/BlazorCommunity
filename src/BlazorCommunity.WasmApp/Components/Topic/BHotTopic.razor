@@ -1,5 +1,5 @@
-﻿@inherits ElementComponentBase
-<BCard Style="height:100%;border:none;" Shadow="ShadowShowType.Never" EnableAlwaysRender="true">
+@inherits ElementComponentBase
+<ElCard Style="height:100%;border:none;" Shadow="ShadowShowType.Never" EnableAlwaysRender="true">
     <Header>@Title</Header>
     <Body>
         @foreach (var hot in Datas)
@@ -7,4 +7,4 @@
             <HotItem Hot="@hot"  OnClick="e=>ItemClick(hot.Id)" EnableAlwaysRender="true"></HotItem>
         }
     </Body>
-</BCard>
+</ElCard>

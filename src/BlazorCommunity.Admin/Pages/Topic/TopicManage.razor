@@ -1,51 +1,51 @@
-﻿@page   "/manage/topic"
+@page   "/manage/topic"
 @using BlazorCommunity.Admin.QueryCondition
 @using BlazorCommunity.DTO.Admin;
 @inherits TopicManageBase
 
-<BForm Inline="true" @ref="searchForm">
-    <BFormItem TValue="string" Label="标题" Name="@nameof(QueryTopicCondition.Title)" IsRequired="false">
-        <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="object" Label="作者" Name="@(nameof(QueryTopicCondition.UserName))" IsRequired="false">
-        <BInput TValue="object"></BInput>
-    </BFormItem>
-    <BFormItem TValue="DelStatus?" Label="状态" Name="@nameof(QueryTopicCondition.Status)" IsRequired="false">
-        <div style="width:100px;"><BSelect TValue="DelStatus?" Value="DelStatus.Normal"></BSelect></div>
-    </BFormItem>
-    <BFormItem TValue="TopicCategory?" Label="类型" Name="@nameof(QueryTopicCondition.Category)" IsRequired="false">
-        <div style="width:100px;"><BSelect TValue="TopicCategory?"></BSelect></div>
-    </BFormItem>
-    <BFormItem TValue="DateTime?" Label="发帖时间" IsRequired="false" Name="@nameof(QueryTopicCondition.CreateDateStart)">
-        <BDatePicker IsClearable="true"></BDatePicker>
-    </BFormItem>
-    <BFormItem TValue="DateTime?" Label="至" IsRequired="false" Name="@nameof(QueryTopicCondition.CreateDateEnd)">
-        <BDatePicker IsClearable="true"></BDatePicker>
-    </BFormItem>
-    <BFormActionItem>
-        <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
-    </BFormActionItem>
-</BForm>
+<ElForm Inline="true" @ref="searchForm">
+    <ElFormItem TValue="string" Label="标题" Prop="@nameof(QueryTopicCondition.Title)" Required="false">
+        <ElInput Clearable="true" TValue="string"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="object" Label="作�? Prop="@(nameof(QueryTopicCondition.UserName))" Required="false">
+        <ElInput TValue="object"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="DelStatus?" Label="状�? Prop="@nameof(QueryTopicCondition.Status)" Required="false">
+        <div style="width:100px;"><ElSelect TValue="DelStatus?" Value="DelStatus.Normal"></ElSelect></div>
+    </ElFormItem>
+    <ElFormItem TValue="TopicCategory?" Label="类型" Prop="@nameof(QueryTopicCondition.Category)" Required="false">
+        <div style="width:100px;"><ElSelect TValue="TopicCategory?"></ElSelect></div>
+    </ElFormItem>
+    <ElFormItem TValue="DateTime?" Label="发帖时间" Required="false" Prop="@nameof(QueryTopicCondition.CreateDateStart)">
+        <ElDatePicker Clearable="true"></ElDatePicker>
+    </ElFormItem>
+    <ElFormItem TValue="DateTime?" Label="�? Required="false" Prop="@nameof(QueryTopicCondition.CreateDateEnd)">
+        <ElDatePicker Clearable="true"></ElDatePicker>
+    </ElFormItem>
+    <ElFormActionItem>
+        <ElButton Type="@ButtonType.Primary" Plain="true" OnClick="e=>SearchData()">搜索</ElButton>
+    </ElFormActionItem>
+</ElForm>
 
 <div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
 
-<BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
-    <BTableColumns>
-        <BTableColumn Width="100" Property="@nameof(TopicDisplayDto.UserName)" Text="作者" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(TopicDisplayDto.CategoryDisplay)" Text="类型" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="400" Property="@nameof(TopicDisplayDto.Title)" Text="标题" Style="text-align:left;"></BTableColumn>
-        <BTableColumn Width="400" Property="@nameof(TopicDisplayDto.RoleName)" Text="权限" Style="text-align:left;"></BTableColumn>
-        <BTableColumn Width="50" Property="@nameof(TopicDisplayDto.StatusDisplay)" Text="状态" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="50" Property="@nameof(TopicDisplayDto.ReplyCount)" Text="回复" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="50" Property="@nameof(TopicDisplayDto.GoodDisplay)" Text="精华" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="50" Property="@nameof(TopicDisplayDto.TopDisplay)" Text="置顶" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(TopicDisplayDto.CreateDate)" Format="yyyy-MM-dd" Text="发帖时间" Style="text-align:center;"></BTableColumn>
-        <BTableTemplateColumn Text="操作" Width="150">
-            <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Detail(context))">查看</BButton>
+<ElTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
+    <ElTableColumns>
+        <ElTableColumn Width="100" Property="@nameof(TopicDisplayDto.UserName)" Text="作�? Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="100" Property="@nameof(TopicDisplayDto.CategoryDisplay)" Text="类型" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="400" Property="@nameof(TopicDisplayDto.Title)" Text="标题" Style="text-align:left;"></ElTableColumn>
+        <ElTableColumn Width="400" Property="@nameof(TopicDisplayDto.RoleName)" Text="权限" Style="text-align:left;"></ElTableColumn>
+        <ElTableColumn Width="50" Property="@nameof(TopicDisplayDto.StatusDisplay)" Text="状�? Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="50" Property="@nameof(TopicDisplayDto.ReplyCount)" Text="回复" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="50" Property="@nameof(TopicDisplayDto.GoodDisplay)" Text="精华" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="50" Property="@nameof(TopicDisplayDto.TopDisplay)" Text="置顶" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="100" Property="@nameof(TopicDisplayDto.CreateDate)" Format="yyyy-MM-dd" Text="发帖时间" Style="text-align:center;"></ElTableColumn>
+        <ElTableTemplateColumn Text="操作" Width="150">
+            <ElButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" Plain="true" OnClick="@(e=> Detail(context))">查看</ElButton>
 
-            <BDropDown Style="cursor:pointer;">
+            <ElDropdown Style="cursor:pointer;">
                 <Trigger>
-                    <BButton Type="@ButtonType.Default" Size="@ButtonSize.Small" IsPlain="true">操作</BButton>
+                    <ElButton Type="@ButtonType.Default" Size="@ButtonSize.Small" Plain="true">操作</ElButton>
                 </Trigger>
                 <Items>
                     @{
@@ -55,32 +55,32 @@
 
                             if (topic.Status == -1)
                             {
-                                <BDropDownItem OnClick="@(e=> Resume(context))">
+                                <ElDropdownItem OnClick="@(e=> Resume(context))">
                                     恢复
-                                </BDropDownItem>
+                                </ElDropdownItem>
                             }
                             else
                             {
-                                <BDropDownItem OnClick="@(e=> Top(context))">
+                                <ElDropdownItem OnClick="@(e=> Top(context))">
                                     @(topic.Top == 0 ? "置顶" : "取消置顶")
-                                </BDropDownItem>
-                                <BDropDownItem OnClick="@(e=> Best(context))">
+                                </ElDropdownItem>
+                                <ElDropdownItem OnClick="@(e=> Best(context))">
                                     @( topic.Good == 0 ? "加精" : "取消加精")
-                                </BDropDownItem>
-                                <BDropDownItem OnClick="@(e=> End(context))">
+                                </ElDropdownItem>
+                                <ElDropdownItem OnClick="@(e=> End(context))">
                                     @(topic.Status == 1 ? "取消结贴" : "结贴")
-                                </BDropDownItem>
-                                <BDropDownItem OnClick="@(e=> Delete(context))">
+                                </ElDropdownItem>
+                                <ElDropdownItem OnClick="@(e=> Delete(context))">
                                     删除
-                                </BDropDownItem>
+                                </ElDropdownItem>
                             }
-                            <BDropDownItem OnClick="@(e=> SetAuthorize(context))">
+                            <ElDropdownItem OnClick="@(e=> SetAuthorize(context))">
                                 设置权限
-                            </BDropDownItem>
+                            </ElDropdownItem>
                         }
                     }
                 </Items>
-            </BDropDown>
-        </BTableTemplateColumn>
-    </BTableColumns>
-</BTable>
+            </ElDropdown>
+        </ElTableTemplateColumn>
+    </ElTableColumns>
+</ElTable>

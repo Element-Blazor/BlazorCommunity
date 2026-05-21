@@ -1,16 +1,16 @@
-﻿@using BlazorCommunity.DTO.Admin
+@using BlazorCommunity.DTO.Admin
 @inherits ModifyRoleClaimBase
 
-<BForm Inline="true">
-    <BButton Type="@ButtonType.Success" Icon="el-icon-plus" OnClick="New" IsPlain="true" IsDisabled="false">新增</BButton>
-</BForm>
-<BTable DataSource="Claims" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
-    <BTableColumns>
-        <BTableColumn Property="@nameof(RoleClaimDto.ClaimType)" Text="类型" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Property="@nameof(RoleClaimDto.ClaimValue)" Text="描述" Style="text-align:center;"></BTableColumn>
+<ElForm Inline="true">
+    <ElButton Type="@ButtonType.Success" Icon="el-icon-plus" OnClick="New" Plain="true" Disabled="false">新增</ElButton>
+</ElForm>
+<ElTable DataSource="Claims" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
+    <ElTableColumns>
+        <ElTableColumn Property="@nameof(RoleClaimDto.ClaimType)" Text="类型" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Property="@nameof(RoleClaimDto.ClaimValue)" Text="描述" Style="text-align:center;"></ElTableColumn>
 
-        <BTableTemplateColumn Text="操作" Width="150">
-            <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Delete(context))">删除</BButton>
-        </BTableTemplateColumn>
-    </BTableColumns>
-</BTable>
+        <ElTableTemplateColumn Text="操作" Width="150">
+            <ElButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" Plain="true" OnClick="@(e=> Delete(context))">删除</ElButton>
+        </ElTableTemplateColumn>
+    </ElTableColumns>
+</ElTable>

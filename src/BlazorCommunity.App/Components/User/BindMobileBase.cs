@@ -1,4 +1,4 @@
-ï»¿using BlazorCommunity.App.Model;
+using BlazorCommunity.App.Model;
 using BlazorCommunity.App.Pages;
 using BlazorCommunity.Enums;
 using BlazorCommunity.Model.Models;
@@ -13,7 +13,7 @@ namespace BlazorCommunity.App.Components
     [Authorize]
     public class BindMobileBase : PageBase
     {
-        protected BForm bForm { get; set; }
+        protected ElForm ElForm { get; set; }
         internal PasswordModel value { get; set; }
         protected bool showInput { get; set; } = false;
         protected BCard bCard { get; set; }
@@ -29,7 +29,7 @@ namespace BlazorCommunity.App.Components
 
         private void UpdateUI()
         {
-            bForm?.Refresh();
+            ElForm?.Refresh();
             bCard?.Refresh();
         }
 
@@ -39,13 +39,13 @@ namespace BlazorCommunity.App.Components
 
         protected async Task SendBindMobileMsg()
         {
-            if (!bForm.IsValid())
+            if (!ElForm.IsValid())
                 return;
-            var model = bForm.GetValue<PasswordModel>();
+            var model = ElForm.GetValue<PasswordModel>();
             var mobileValid = Regex.Match(model.Mobile, "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$").Success;
             if (!mobileValid)
             {
-                ToastError("æ‰‹æœºå·ç é”™è¯¯");
+                ToastError("ÊÖ»úºÅÂë´íÎó");
                 return;
             }
             var response = await NetService.SendVerifyCode(User.Id, EmailType.MobileBind, model.Mobile);
@@ -59,7 +59,7 @@ namespace BlazorCommunity.App.Components
                 VerifyCode = response.Data.ToString();
                 IsDisabled = true;
                 showInput = true;
-                ToastSuccess("éªŒè¯ç å‘é€æˆåŠŸï¼Œ2åˆ†é’Ÿå†…æœ‰æ•ˆï¼Œè¯·å‰å¾€é‚®ç®±æŸ¥æ”¶");
+                ToastSuccess("ÑéÖ¤Âë·¢ËÍ³É¹¦£¬2·ÖÖÓÄÚÓĞĞ§£¬ÇëÇ°ÍùÓÊÏä²éÊÕ");
                 while (TimeOut > 0)
                 {
                     if (TimeOut == 1)
@@ -81,17 +81,17 @@ namespace BlazorCommunity.App.Components
         {
             if (string.IsNullOrWhiteSpace(VerifyCode))
             {
-                ToastError("è¯·å…ˆå‘é€éªŒè¯ç åˆ°æ‚¨çš„é‚®ç®±");
+                ToastError("ÇëÏÈ·¢ËÍÑéÖ¤Âëµ½ÄúµÄÓÊÏä");
                 return;
             }
-            if (!bForm.IsValid())
+            if (!ElForm.IsValid())
                 return;
 
-            var model = bForm.GetValue<PasswordModel>();
+            var model = ElForm.GetValue<PasswordModel>();
 
             if (!model.Code.Equals(VerifyCode))
             {
-                ToastError("éªŒè¯ç æ— æ•ˆ");
+                ToastError("ÑéÖ¤ÂëÎŞĞ§");
                 return;
             }
             await SetPhoneNumberAsync(model);
@@ -105,7 +105,7 @@ namespace BlazorCommunity.App.Components
                 var bindMobile = await userManager.SetPhoneNumberAsync(User, model.Mobile);
                 if (bindMobile.Succeeded)
                 {
-                    ToastSuccess("ç»‘å®šæ‰‹æœºæˆåŠŸ");
+                    ToastSuccess("°ó¶¨ÊÖ»ú³É¹¦");
                     await LoadData();
                     UpdateUI();
                 }

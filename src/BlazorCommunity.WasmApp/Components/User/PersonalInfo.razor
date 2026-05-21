@@ -1,96 +1,96 @@
-﻿@layout PersonalCenterLayout
+@layout PersonalCenterLayout
 @page "/user/base"
 @inherits PersonalPageBase
-<BTab Type="@TabType.Card" EnableAlwaysRender="true">
-    <BTabPanel Title="@tabTitle" EnableAlwaysRender="true">
+<ElTabs Type="@TabType.Card" EnableAlwaysRender="true">
+    <ElTabPane Title="@tabTitle" EnableAlwaysRender="true">
         @if (User != null)
         {
             <div class="app-user-info">
-                <BForm LabelAlign="@LabelAlign.Right" @ref="userInfoForm" Value="User" EnableAlwaysRender="true">
+                <ElForm LabelPosition="right" @ref="userInfoForm" Model="User" EnableAlwaysRender="true">
 
                     <div style=" display:flex;">
-                        <BFormItem TValue="string" Label="账号" Name="@nameof(BZUserModel.UserName)">
+                        <ElFormItem TValue="string" Label="账号" Prop="@nameof(BZUserModel.UserName)">
                             @User?.UserName
-                        </BFormItem>
-                        <BFormActionItem Style="text-align:left;margin-left:300px;" EnableAlwaysRender="true">
+                        </ElFormItem>
+                        <ElFormActionItem Style="text-align:left;margin-left:300px;" EnableAlwaysRender="true">
                             @if (Disabled)
                             {
-                                <BButton Type="@ButtonType.Default" OnClick=" EditUser" IsCircle="true" IsPlain="true" Icon="el-icon-edit"></BButton>
+                                <ElButton Type="@ButtonType.Default" OnClick=" EditUser" Circle="true" Plain="true" Icon="el-icon-edit"></ElButton>
                             }
                             else
                             {
-                                <BButton Type="@ButtonType.Default" OnClick="SaveUser" IsCircle="true" IsPlain="true" Icon="el-icon-check"></BButton>
+                                <ElButton Type="@ButtonType.Default" OnClick="SaveUser" Circle="true" Plain="true" Icon="el-icon-check"></ElButton>
                             }
-                        </BFormActionItem>
+                        </ElFormActionItem>
                     </div>
 
-                    <BFormItem TValue="string" Label="昵称" Name="@nameof(BZUserModel.NickName)" Style="max-width:300px;" EnableAlwaysRender="true">
+                    <ElFormItem TValue="string" Label="昵称" Prop="@nameof(BZUserModel.NickName)" Style="max-width:300px;" EnableAlwaysRender="true">
                         @if (Disabled)
                         {
                             @User?.NickName
                         }
                         else
                         {
-                            <BInput TValue="string" Placeholder="输入昵称" EnableAlwaysRender="true"></BInput>
+                            <ElInput TValue="string" Placeholder="输入昵称" EnableAlwaysRender="true"></ElInput>
                         }
-                    </BFormItem>
+                    </ElFormItem>
 
-                    <BFormItem TValue="string" Label="邮箱" Name="@nameof(BZUserModel.Email)">
+                    <ElFormItem TValue="string" Label="邮箱" Prop="@nameof(BZUserModel.Email)">
 
                         @(string.IsNullOrWhiteSpace(User?.Email) ? "暂未绑定邮箱" : User.Email)
-                    </BFormItem>
-                    <BFormItem TValue="string" Label="手机" Name="@nameof(BZUserModel.PhoneNumber)">
+                    </ElFormItem>
+                    <ElFormItem TValue="string" Label="手机" Prop="@nameof(BZUserModel.PhoneNumber)">
                         @(string.IsNullOrWhiteSpace(User?.PhoneNumber) ? "暂未绑定手机" : User.PhoneNumber)
-                    </BFormItem>
-                    <BFormItem TValue="int?" Label="性别" Name="@nameof(BZUserModel.Sex)" EnableAlwaysRender="true">
+                    </ElFormItem>
+                    <ElFormItem TValue="int?" Label="性别" Prop="@nameof(BZUserModel.Sex)" EnableAlwaysRender="true">
 
                         @if (Disabled)
                         {
-                            <BRadio @bind-SelectedValue="User.Sex" Value="0" StatusChanging="@OnStatusChanging">男</BRadio>
-                            <BRadio @bind-SelectedValue="User.Sex" Value="1" StatusChanging="@OnStatusChanging">女</BRadio>
+                            <ElRadio TValue="object" @bind-SelectedValue="User.Sex" Model="0" StatusChanging="@OnStatusChanging">�</ElRadio>
+                            <ElRadio TValue="object" @bind-SelectedValue="User.Sex" Model="1" StatusChanging="@OnStatusChanging">�</ElRadio>
                         }
                         else
                         {
-                            <BRadio @bind-SelectedValue="User.Sex" Value="0">男</BRadio>
-                            <BRadio @bind-SelectedValue="User.Sex" Value="1">女</BRadio>
+                            <ElRadio TValue="object" @bind-SelectedValue="User.Sex" Model="0">�</ElRadio>
+                            <ElRadio TValue="object" @bind-SelectedValue="User.Sex" Model="1">�</ElRadio>
                         }
-                    </BFormItem>
-                    @*<BFormItem TValue="string" Label="地区" Name="@nameof(BZUserModel.LastLoginAddr)" EnableAlwaysRender="true">
+                    </ElFormItem>
+                    @*<ElFormItem TValue="string" Label="地区" Prop="@nameof(BZUserModel.LastLoginAddr)" EnableAlwaysRender="true">
                         @if (Disabled)
                         {
                             @(User?.LastLoginAddr ?? "未知")
                         }
                         else
                         {
-                            <BInput TValue="string" ></BInput>
+                            <ElInput TValue="string" ></ElInput>
                         }
-                    </BFormItem>*@
-                <BFormItem TValue="string" Label="签名" Name="@nameof(BZUserModel.Signature)" Style="max-width:500px;" EnableAlwaysRender="true">
+                    </ElFormItem>*@
+                <ElFormItem TValue="string" Label="签名" Prop="@nameof(BZUserModel.Signature)" Style="max-width:500px;" EnableAlwaysRender="true">
                     @*@if (Disabled)
         {
             @(User?.Signature ?? "您还没有设置一个座右铭")
         }
         else
         {
-            <BInput TValue="string" Type="InputType.Textarea" Placeholder="输入座右铭" EnableAlwaysRender="true"></BInput>
+            <ElInput TValue="string" Type="@InputType.Textarea" Placeholder="输入座右�? EnableAlwaysRender="true"></ElInput>
         }*@
                     <div style="margin-top:6px; width:800px;">
                         @if (Disabled)
                         {
-                            <BMarkdown Text="@(string.IsNullOrWhiteSpace(User.Signature) ? "写点什么呗": User.Signature)"></BMarkdown>
+                            <ElMarkdown Text="@(string.IsNullOrWhiteSpace(User.Signature) ? "写点什么呗": User.Signature)"></ElMarkdown>
                         }
                         else
                         {
-                            <BMarkdownEditor @bind-Value="@User.Signature" UploadUrl="@(UploadUrl+ UploadPath.Avator.Description())" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="ConstConfig.MaxUploadFileSize" Height="300"></BMarkdownEditor>
+                            <ElMarkdownEditor @bind-Value="@User.Signature" UploadUrl="@(UploadUrl+ UploadPath.Avator.Description())" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="ConstConfig.MaxUploadFileSize" Height="300"></ElMarkdownEditor>
                         }
                     </div>
-                    </BFormItem>
+                    </ElFormItem>
 
-            <BFormItem TValue="string" Name="@nameof(BZUserModel.Id)" IsHidden="true">
-                <BInput TValue="string"></BInput>
-            </BFormItem>
-            </BForm>
+            <ElFormItem TValue="string" Prop="@nameof(BZUserModel.Id)" IsHidden="true">
+                <ElInput TValue="string"></ElInput>
+            </ElFormItem>
+            </ElForm>
             </div>
         }
-    </BTabPanel>
-</BTab>
+    </ElTabPane>
+</ElTabs>

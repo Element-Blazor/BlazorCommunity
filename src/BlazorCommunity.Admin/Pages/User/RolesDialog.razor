@@ -1,25 +1,25 @@
-﻿@inherits RolesDialogBase
+@inherits RolesDialogBase
 @using BlazorCommunity.DTO.Admin
 已选中数据：@string.Join(",", SelectedValues.Select(p=>p.Name))
 <br />
 
 
-<BForm Style="width:100%;" @ref="roleForm" Value="rolesDto" LabelAlign="@LabelAlign.Right" EnableAlwaysRender="true">
-    <BFormItem TValue="List<RoleDisplayDto>" Label="角色列表" Name="@nameof(RolesDto.Roles)" EnableAlwaysRender="true">
-        <BCheckBox Value="true" Status="@Status" StatusChanged="status=>SelectAll(status)">全选</BCheckBox>
-        <BCheckBoxGroup TValue="List<RoleDisplayDto>" EnableAlwaysRender="true">
+<ElForm Style="width:100%;" @ref="roleForm" Model="rolesDto" LabelPosition="right" EnableAlwaysRender="true">
+    <ElFormItem TValue="List<RoleDisplayDto>" Label="角色列表" Prop="@nameof(RolesDto.Roles)" EnableAlwaysRender="true">
+        <ElCheckbox TValue="object" Model="true" Status="@Status" StatusChanged="status=>SelectAll(status)">全�</ElCheckbox>
+        <ElCheckboxGroup TValue="List<RoleDisplayDto>" EnableAlwaysRender="true">
             @foreach (var item in Values)
             {
-                <BCheckBox Value="item.Id" EnableAlwaysRender="true" Status="SelectedValues.Contains(item) ? Status.Checked:Status.UnChecked" StatusChanged="status=> ChangeStatus(status,item)">@item.Name</BCheckBox>
+                <ElCheckbox TValue="object" Model="item.Id" EnableAlwaysRender="true" Status="SelectedValues.Contains(item) ? Status.Checked:Status.UnChecked" StatusChanged="status=> ChangeStatus(status,item)">@item.Name</ElCheckbox>
             }
-        </BCheckBoxGroup>
-    </BFormItem>
+        </ElCheckboxGroup>
+    </ElFormItem>
 
-    <BFormItem TValue="object" Style="text-align:center;margin:0 auto;">
-        <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>Save()" Style="text-align:center;width:100px;">保存</BButton>
-        <BButton Type="@ButtonType.Default" IsPlain="true" OnClick="e=>roleForm.Reset()" Style="text-align:center;width:100px;">重置</BButton>
-    </BFormItem>
-</BForm>
+    <ElFormItem TValue="object" Style="text-align:center;margin:0 auto;">
+        <ElButton Type="@ButtonType.Primary" Plain="true" OnClick="e=>Save()" Style="text-align:center;width:100px;">保存</ElButton>
+        <ElButton Type="@ButtonType.Default" Plain="true" OnClick="e=>roleForm.Reset()" Style="text-align:center;width:100px;">重置</ElButton>
+    </ElFormItem>
+</ElForm>
     @code {
 
     }

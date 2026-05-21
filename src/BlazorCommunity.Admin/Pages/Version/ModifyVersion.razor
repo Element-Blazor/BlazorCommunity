@@ -1,37 +1,37 @@
-﻿@using BlazorCommunity.DTO.Admin
+@using BlazorCommunity.DTO.Admin
 @inherits ModifyVersionBase
 
-<BForm Style="width:660px;" @ref="versionForm" Value="model" LabelAlign="@LabelAlign.Right">
-    @*<BFormItem TValue="int" Label="项目" Name="@nameof(VersionDisplayDto.Project)" IsRequired="true">
-        <BSelect TValue="int?" Value="0">
-        </BSelect>
-    </BFormItem>*@
-    @*<BFormItem TValue="string" Label="版本名称" Name="@nameof(VersionDisplayDto.VerName)" IsRequired="true">
-        <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>*@
-    <BFormItem TValue="string" Label="版本名称" Name="@nameof(VersionDisplayDto.VerNo)" IsRequired="true">
-        <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="string" Label="Nuget包" Name="@nameof(VersionDisplayDto.VerNuget)" IsRequired="false">
-        <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="string" Label="文档地址" Name="@nameof(VersionDisplayDto.VerDocUrl)" IsRequired="false">
-        <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="string" Label="版本说明" Name="@nameof(VersionDisplayDto.VerDescription)" IsRequired="false">
-        <BInput Type="InputType.Textarea" TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="string" Label="组件地址" Name="@nameof(VersionDisplayDto.VerDownUrl)" IsRequired="false">
-        <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="string" Label="ID" Name="@nameof(VersionDisplayDto.Id)" IsRequired="false" IsHidden="true">
-        <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="DateTime" Label="DateTime" Name="@nameof(VersionDisplayDto.CreateDate)" IsRequired="false" IsHidden="true">
-        <BInput TValue="DateTime"></BInput>
-    </BFormItem>
-    <BFormItem TValue="object" Style="text-align:center;margin:0 auto;">
-        <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>Save()" Style="text-align:center;width:100px;">保存</BButton>
-        <BButton Type="@ButtonType.Default" IsPlain="true" OnClick="e=>versionForm.Reset()" Style="text-align:center;width:100px;">重置</BButton>
-    </BFormItem>
-</BForm>
+<ElForm Style="width:660px;" @ref="versionForm" Model="model" LabelPosition="right">
+    @*<ElFormItem TValue="int" Label="项目" Prop="@nameof(VersionDisplayDto.Project)" Required="true">
+        <ElSelect TValue="int?" Value="0">
+        </ElSelect>
+    </ElFormItem>*@
+    @*<ElFormItem TValue="string" Label="版本名称" Prop="@nameof(VersionDisplayDto.VerName)" Required="true">
+        <ElInput Clearable="true" TValue="string"></ElInput>
+    </ElFormItem>*@
+    <ElFormItem TValue="string" Label="版本名称" Prop="@nameof(VersionDisplayDto.VerNo)" Required="true">
+        <ElInput Clearable="true" TValue="string"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="string" Label="Nuget包" Prop="@nameof(VersionDisplayDto.VerNuget)" Required="false">
+        <ElInput Clearable="true" TValue="string"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="string" Label="文档地址" Prop="@nameof(VersionDisplayDto.VerDocUrl)" Required="false">
+        <ElInput Clearable="true" TValue="string"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="string" Label="版本说明" Prop="@nameof(VersionDisplayDto.VerDescription)" Required="false">
+        <ElInput Type="@InputType.Textarea" TValue="string"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="string" Label="组件地址" Prop="@nameof(VersionDisplayDto.VerDownUrl)" Required="false">
+        <ElInput Clearable="true" TValue="string"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="string" Label="ID" Prop="@nameof(VersionDisplayDto.Id)" Required="false" IsHidden="true">
+        <ElInput Clearable="true" TValue="string"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="DateTime" Label="DateTime" Prop="@nameof(VersionDisplayDto.CreateDate)" Required="false" IsHidden="true">
+        <ElInput TValue="DateTime"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="object" Style="text-align:center;margin:0 auto;">
+        <ElButton Type="@ButtonType.Primary" Plain="true" OnClick="e=>Save()" Style="text-align:center;width:100px;">保存</ElButton>
+        <ElButton Type="@ButtonType.Default" Plain="true" OnClick="e=>versionForm.Reset()" Style="text-align:center;width:100px;">重置</ElButton>
+    </ElFormItem>
+</ElForm>

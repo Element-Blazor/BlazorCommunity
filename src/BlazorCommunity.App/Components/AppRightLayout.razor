@@ -1,6 +1,6 @@
-﻿
+
 <div class="margin-top-5 content-east" style="@Style">
-    <BLayout NorthHeight="30" EnableAlwaysRender="true">
+    <ElLayout NorthHeight="30" EnableAlwaysRender="true">
         <North>
             <div class="newtopic">
                 <AppTop></AppTop>
@@ -11,51 +11,51 @@
             @if (IsTopicDetailPage)
             {
                 <div class="content-card" style="margin-top:14px;">
-                    <BCard Shadow="@ShadowShowType.Never">
+                    <ElCard Shadow="@ShadowShowType.Never">
                         <Body>
                             <TopicUserInfo></TopicUserInfo>
                         </Body>
-                    </BCard>
+                    </ElCard>
                 </div>
 
                 <div class="content-card" style="margin-top:10px;">
-                    <BCard Shadow="@ShadowShowType.Never">
+                    <ElCard Shadow="@ShadowShowType.Never">
                         <Body>
                             <UserTopics></UserTopics>
                         </Body>
-                    </BCard>
+                    </ElCard>
                 </div>
             }
             @*<div class="content-card" style="margin-top:14px;">
-            <BCard Shadow="@ShadowShowType.Never" Style="height:100px;">
+            <ElCard Shadow="@ShadowShowType.Never" Style="height:100px;">
                 <Body>
                     <AskDaily></AskDaily>
                 </Body>
-            </BCard>
+            </ElCard>
         </div>*@
             <div class="content-card" style="margin-top:14px;">
-                <BCard Shadow="@ShadowShowType.Never">
+                <ElCard Shadow="@ShadowShowType.Never">
                     <Body>
                         <AppRightTop></AppRightTop>
                     </Body>
-                </BCard>
+                </ElCard>
             </div>
             <div class="content-card margin-top-10">
-                <BCard Shadow="@ShadowShowType.Never">
+                <ElCard Shadow="@ShadowShowType.Never">
                     <Body>
                         <AppRightCenter></AppRightCenter>
                     </Body>
-                </BCard>
+                </ElCard>
             </div>
             <div class="content-card margin-top-10">
-                <BCard Shadow="@ShadowShowType.Never">
+                <ElCard Shadow="@ShadowShowType.Never">
                     <Body>
                         <AppRightBottom></AppRightBottom>
                     </Body>
-                </BCard>
+                </ElCard>
             </div>
         </Center>
-    </BLayout>
+    </ElLayout>
 </div>
 
 @code{

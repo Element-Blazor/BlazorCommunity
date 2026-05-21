@@ -1,4 +1,4 @@
-锘縰sing BlazorCommunity.Model.Models;
+using BlazorCommunity.Model.Models;
 using Element;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
@@ -28,16 +28,16 @@ namespace BlazorCommunity.App.Components
             };
         }
 
-        protected BForm bForm;
+        protected ElForm ElForm;
         protected UploadActivity value;
 
         protected async Task Submit()
         {
-            if (!bForm.IsValid())
+            if (!ElForm.IsValid())
             {
                 return;
             }
-            var activity = bForm.GetValue<UploadActivity>();
+            var activity = ElForm.GetValue<UploadActivity>();
             var upload = activity.Previews.FirstOrDefault();
             User.Avator = upload?.Url;
 
@@ -50,7 +50,7 @@ namespace BlazorCommunity.App.Components
 
         protected override void InitTabTitle()
         {
-            tabTitle = "鎴戠殑澶村儚";
+            tabTitle = "我的头像";
         }
     }
 

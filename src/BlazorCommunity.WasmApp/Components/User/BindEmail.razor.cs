@@ -1,4 +1,4 @@
-ï»¿using BlazorCommunity.WasmApp.Model;
+using BlazorCommunity.WasmApp.Model;
 using BlazorCommunity.WasmApp.Pages;
 using BlazorCommunity.Enums;
 using BlazorCommunity.Model.Models;
@@ -15,7 +15,7 @@ namespace BlazorCommunity.WasmApp.Components.User
     public partial class BindEmail : PageBase
 
     {
-        protected BForm bForm { get; set; }
+        protected ElForm ElForm { get; set; }
         internal PasswordModel value { get; set; }
         protected bool showInput { get; set; } = false;
         protected BCard bCard { get; set; }
@@ -29,7 +29,7 @@ namespace BlazorCommunity.WasmApp.Components.User
 
         private void UpdateUI()
         {
-            bForm?.Refresh();
+            ElForm?.Refresh();
             bCard?.Refresh();
         }
 
@@ -49,7 +49,7 @@ namespace BlazorCommunity.WasmApp.Components.User
 
         protected async Task CanCelBindConfirm()
         {
-            var model = bForm.GetValue<PasswordModel>();
+            var model = ElForm.GetValue<PasswordModel>();
 
             var result = await NetService.ValidateVerifyCode(User.Id, EmailType.EmailUnBind, model.Code);
             if (result.IsSuccess)
@@ -57,7 +57,7 @@ namespace BlazorCommunity.WasmApp.Components.User
                 var UplodateResult = await NetService.UpdateEmailAsync(new DTO.App.UpdateUserEmailDto() { UserId=User.Id, Email=""});
                 if (UplodateResult.IsSuccess)
                 {
-                    ToastSuccess("é‚®ç®±å·²è§£ç»‘");
+                    ToastSuccess("ÓÊÏäÒÑ½â°ó");
                     TimeOut = 0;
                     await LoadData();
                     BtnBindEmailDisabled = false;
@@ -68,7 +68,7 @@ namespace BlazorCommunity.WasmApp.Components.User
                     ToastError(UplodateResult.Message);
             }
             else
-                ToastError("éªŒè¯å¤±è´¥");
+                ToastError("ÑéÖ¤Ê§°Ü");
         }
         protected override bool ShouldRender() => true;
 
@@ -76,13 +76,13 @@ namespace BlazorCommunity.WasmApp.Components.User
 
         protected async Task SendEmailMsg()
         {
-            if (!bForm.IsValid())
+            if (!ElForm.IsValid())
                 return;
-            var model = bForm.GetValue<PasswordModel>();
+            var model = ElForm.GetValue<PasswordModel>();
             var mobileValid = RegexHelper.IsEmail(model.Email);
             if (!mobileValid)
             {
-                ToastError("é‚®ç®±å·ç é”™è¯¯");
+                ToastError("ÓÊÏäºÅÂë´íÎó");
                 return;
             }
             await Wating(await NetService.SendVerifyCode(User.Id, EmailType.EmailBind, model.Email));
@@ -92,7 +92,7 @@ namespace BlazorCommunity.WasmApp.Components.User
         {
             if (result.IsSuccess)
             {
-                ToastSuccess("éªŒè¯ç å‘é€æˆåŠŸï¼Œ2åˆ†é’Ÿå†…æœ‰æ•ˆï¼Œè¯·å‰å¾€é‚®ç®±æŸ¥æ”¶");
+                ToastSuccess("ÑéÖ¤Âë·¢ËÍ³É¹¦£¬2·ÖÖÓÄÚÓĞĞ§£¬ÇëÇ°ÍùÓÊÏä²éÊÕ");
                 VerifyCode = result.Data.ToString();
                 BtnBindEmailDisabled = true;
                 showInput = true;
@@ -115,11 +115,11 @@ namespace BlazorCommunity.WasmApp.Components.User
 
         protected async Task CheckVerifyCode()
         {
-            var model = bForm.GetValue<PasswordModel>();
+            var model = ElForm.GetValue<PasswordModel>();
 
             if (VerifyCode != model.Code)
             {
-                ToastError("éªŒè¯ç æ— æ•ˆ");
+                ToastError("ÑéÖ¤ÂëÎŞĞ§");
                 return;
             }
             var result = await NetService.ValidateVerifyCode(User.Id, EmailType.EmailBind, VerifyCode);
@@ -133,7 +133,7 @@ namespace BlazorCommunity.WasmApp.Components.User
                 var bindMobile = await NetService.UpdateEmailAsync(new DTO.App.UpdateUserEmailDto() {   Email=model.Email, UserId=User.Id});
                 if (bindMobile.IsSuccess)
                 {
-                    ToastSuccess("ç»‘å®šé‚®ç®±æˆåŠŸ");
+                    ToastSuccess("°ó¶¨ÓÊÏä³É¹¦");
                     await LoadData();
                     UpdateUI();
                 }

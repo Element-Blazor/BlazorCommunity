@@ -1,4 +1,4 @@
-﻿using BlazorCommunity.Admin.Enum;
+using BlazorCommunity.Admin.Enum;
 using BlazorCommunity.Admin.Service;
 using BlazorCommunity.DTO.Admin;
 using Element;
@@ -12,7 +12,7 @@ namespace BlazorCommunity.Admin.Pages.Role
 {
     public class NewRoleBase : BDialogBase
     {
-        internal BForm roleForm;
+        internal ElForm roleForm;
 
         [Parameter]
         public RoleDisplayDto model { get; set; }

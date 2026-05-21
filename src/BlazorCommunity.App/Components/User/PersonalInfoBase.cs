@@ -1,4 +1,4 @@
-ï»¿using BlazorCommunity.Model.Models;
+using BlazorCommunity.Model.Models;
 using Element;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
@@ -8,7 +8,7 @@ namespace BlazorCommunity.App.Components
     [Authorize]
     public class PersonalInfoBase : PersonalPageBase
     {
-        protected BForm userInfoForm { get; set; }
+        protected ElForm userInfoForm { get; set; }
         protected BZUserModel User { get; set; }
         protected bool Disabled { get; set; } = true;
 
@@ -24,12 +24,12 @@ namespace BlazorCommunity.App.Components
 
         protected override void InitTabTitle()
         {
-            tabTitle = "åŸºæœ¬ä¿¡æ¯";
+            tabTitle = "»ù±¾ĞÅÏ¢";
         }
 
         /*
           * / <summary>
-          * / åˆ‡æ¢è¡¨å•ä¸ºå¯è¾“å…¥çŠ¶æ€
+          * / ÇĞ»»±íµ¥Îª¿ÉÊäÈë×´Ì¬
           * / </summary>
           */
 
@@ -48,7 +48,7 @@ namespace BlazorCommunity.App.Components
 
         /*
 		 * / <summary>
-		 * / æ›´æ–°ç”¨æˆ·
+		 * / ¸üĞÂÓÃ»§
 		 * / </summary>
 		 */
 
@@ -59,7 +59,7 @@ namespace BlazorCommunity.App.Components
             var model = userInfoForm.GetValue<BZUserModel>();
             if ( SubstringCount( model.Signature.ToLower(), "upload/avator/") >1)
             {
-                ToastError("åªèƒ½ä¸Šä¼ ä¸€å¼ å›¾ç‰‡");
+                ToastError("Ö»ÄÜÉÏ´«Ò»ÕÅÍ¼Æ¬");
                 return;
             }
             await UpdateUser(model);
@@ -67,7 +67,7 @@ namespace BlazorCommunity.App.Components
 
         /*
 		 * / <summary>
-		 * / æ›´æ–°ç”¨æˆ·æäº¤DB
+		 * / ¸üĞÂÓÃ»§Ìá½»DB
 		 * / </summary>
 		 * / <returns></returns>
 		 */
@@ -96,18 +96,18 @@ namespace BlazorCommunity.App.Components
             }
             else
             {
-                ToastError("æ›´æ–°å¤±è´¥");
+                ToastError("¸üĞÂÊ§°Ü");
             }
         }
 
         protected override bool ShouldRender() => true;
 
         /// <summary>
-        /// è®¡ç®—å­—ç¬¦ä¸²ä¸­å­ä¸²å‡ºç°çš„æ¬¡æ•°
+        /// ¼ÆËã×Ö·û´®ÖĞ×Ó´®³öÏÖµÄ´ÎÊı
         /// </summary>
-        /// <param name="str">å­—ç¬¦ä¸²</param>
-        /// <param name="substring">å­ä¸²</param>
-        /// <returns>å‡ºç°çš„æ¬¡æ•°</returns>
+        /// <param name="str">×Ö·û´®</param>
+        /// <param name="substring">×Ó´®</param>
+        /// <returns>³öÏÖµÄ´ÎÊı</returns>
         static int SubstringCount(string str, string substring)
         {
             if (str.Contains(substring))

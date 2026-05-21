@@ -1,11 +1,11 @@
-﻿@using System.Text.RegularExpressions
+@using System.Text.RegularExpressions
 @inherits PageBase
 
-<BInput Type="InputType.Text" TValue="string" Size="@InputSize.Small" @bind-Value="@SearchText"
-        Style="width:220px;margin-left: -100px;display:inline-block;" EnableAlwaysRender="true" EnableClearButton="true"></BInput>
-<BButton Type="@ButtonType.Text" Size="@ButtonSize.Medium" Icon="el-icon-search" OnClick="e=>Search()"
-         Style="padding: 0px 0px !important;display: inline-block;color:#67C23A;margin:0px 10px 0px 10px !important"></BButton>
-<BButton Type="@ButtonType.Success" OnClick="e=>NewTopic()" IsPlain="true" Size="@ButtonSize.Small"> 发表新帖 </BButton>
+<ElInput Type="@InputType.Text" TValue="string" Size="@InputSize.Small" @bind-Value="@SearchText"
+        Style="width:220px;margin-left: -100px;display:inline-block;" EnableAlwaysRender="true" EnableClearButton="true"></ElInput>
+<ElButton Type="@ButtonType.Text" Size="@ButtonSize.Medium" Icon="el-icon-search" OnClick="e=>Search()"
+         Style="padding: 0px 0px !important;display: inline-block;color:#67C23A;margin:0px 10px 0px 10px !important"></ElButton>
+<ElButton Type="@ButtonType.Success" OnClick="e=>NewTopic()" Plain="true" Size="@ButtonSize.Small"> 发表新帖 </ElButton>
 
 @code   {
     internal string SearchText { get; set; }

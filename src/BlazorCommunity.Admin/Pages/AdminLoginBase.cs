@@ -1,4 +1,4 @@
-﻿using Element.Admin;
+using Element.Admin;
 using Element;
 using Microsoft.AspNetCore.Components;
 
@@ -6,7 +6,7 @@ namespace BlazorCommunity.Admin.Pages
 {
     public class AdminLoginBase : BAdminPageBase
     {
-        public BForm Form { get; internal set; }
+        public ElForm Form { get; internal set; }
 
         protected override bool ShouldRender() => true;
 

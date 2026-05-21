@@ -1,21 +1,21 @@
-﻿@page "/topic/{TopicId}"
+@page "/topic/{TopicId}"
 @page "/topic/hot/{TopicId}"
 @inherits PageBase
 
 <div class="container">
     @if (!string.IsNullOrWhiteSpace(TopicModel.Content))
     {
-        <BLayout EastWidth="350" EnableAlwaysRender="true">
+        <ElLayout EastWidth="350" EnableAlwaysRender="true">
             <Center>
                 <div style="display:flex;padding-bottom:10px;">
                     <GoHome />
-                    <BButton Type="@ButtonType.Success" OnClick="@(e=>NavigationManager.NavigateTo("/topic/new"))" IsPlain="true" Size="@ButtonSize.Small" Style="margin-right:0px;margin-left:auto;"> 发表新帖 </BButton>
+                    <ElButton Type="@ButtonType.Success" OnClick="@(e=>NavigationManager.NavigateTo("/topic/new"))" Plain="true" Size="@ButtonSize.Small" Style="margin-right:0px;margin-left:auto;"> 发表新帖 </ElButton>
                 </div>
 
                 <TopicContent @ref="mTopicContent" EnableAlwaysRender="true" TopicModel="@TopicModel" IsFollow="@IsFollow" IsMySelf="@IsMySelf" IsEditing="@IsEditing" OnFollowStatusChanging="@ToggleFollow" OnEditStatusChanging="ToggleEditing" CloseTopic="EndTopic">
                 </TopicContent>
                 <div class="margin-top-5"></div>
-                <BCard EnableAlwaysRender="true" Shadow="ShadowShowType.Never">
+                <ElCard EnableAlwaysRender="true" Shadow="ShadowShowType.Never">
                     <Header>
                         <div class="el-divider el-divider--horizontal">
                             <div class="el-divider__text is-center">
@@ -26,16 +26,16 @@
                     <Body>
                         <ReplyList EnableAlwaysRender="true" TopicModel="@TopicModel" OnItemDeleted="OnReplyDelete" OnNewReply="OnReplySuccess"></ReplyList> @*  OnNewReply="OnReplySuccess"*@
                     </Body>
-                </BCard>
-                @*<BTab TabPosition="@TabPosition.Top" EnableAlwaysRender="true" Style="margin-top:-4px;">
-            <BTabPanel Title="" Style="margin-top:-5px;">
+                </ElCard>
+                @*<ElTabs TabPosition="@TabPosition.Top" EnableAlwaysRender="true" Style="margin-top:-4px;">
+            <ElTabPane Title="" Style="margin-top:-5px;">
 
-            </BTabPanel>
-        </BTab>*@
+            </ElTabPane>
+        </ElTabs>*@
             </Center>
             @*<East>
                     <AppRightLayout Style="margin-top:9px !important;"></AppRightLayout>
                 </East>*@
-        </BLayout>
+        </ElLayout>
     }
 </div>

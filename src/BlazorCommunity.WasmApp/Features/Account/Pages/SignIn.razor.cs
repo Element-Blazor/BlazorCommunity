@@ -1,4 +1,4 @@
-Ôªøusing BlazorCommunity.Shared;
+using BlazorCommunity.Shared;
 using BlazorCommunity.WasmApp.Pages;
 using BlazorCommunity.WasmApp.Service;
 using Element;
@@ -20,7 +20,7 @@ namespace BlazorCommunity.WasmApp.Features.Account.Pages
         [Parameter]
         public SignInModel signInModel { get; set; }
 
-        public BForm signInForm;
+        public ElForm signInForm;
 
         protected async Task Login()
         {
@@ -35,7 +35,7 @@ namespace BlazorCommunity.WasmApp.Features.Account.Pages
                     var loginResult = await authenticationService.Login(loginModel);
                     if (loginResult.Successful)
                     {
-                        ToastSuccess("ÁôªÂΩïÊàêÂäü");
+                        ToastSuccess("µ«¬º≥…π¶");
                         await  NavigateToReturnUrl();
                     }
                     else
@@ -49,7 +49,7 @@ namespace BlazorCommunity.WasmApp.Features.Account.Pages
                 }
                 catch (Exception ex)
                 {
-                    ToastError("ÁôªÂΩïÂ§±Ë¥•" + ex.StackTrace);
+                    ToastError("µ«¬º ß∞‹" + ex.StackTrace);
                 }
             });
         }

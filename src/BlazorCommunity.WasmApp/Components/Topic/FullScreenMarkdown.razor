@@ -1,14 +1,14 @@
-﻿@inherits BDialogBase
+@inherits BDialogBase
 
 <div class="markdown-fullscreen">
-    <BForm Style="height:100%;margin:0px;padding:0px;" @ref="form" Value="model" LabelAlign="@LabelAlign.Right">
-        <BFormItem TValue="string" Name="@nameof(NewReplyModel.Content)" IsRequired="false" EnableAlwaysRender="true">
-            <BMarkdownEditor DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="ConstConfig.MaxUploadFileSize" EnableAlwaysRender="true" UploadUrl="@UploadApiUrl"></BMarkdownEditor>
-        </BFormItem>
-        <BFormItem TValue="object" Style="text-align:right;position:absolute;top:5px;right:50px;float:right;width:100%;text-align:right;">
+    <ElForm Style="height:100%;margin:0px;padding:0px;" @ref="form" Model="model" LabelPosition="right">
+        <ElFormItem TValue="string" Prop="@nameof(NewReplyModel.Content)" Required="false" EnableAlwaysRender="true">
+            <ElMarkdownEditor DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="ConstConfig.MaxUploadFileSize" EnableAlwaysRender="true" UploadUrl="@UploadApiUrl"></ElMarkdownEditor>
+        </ElFormItem>
+        <ElFormItem TValue="object" Style="text-align:right;position:absolute;top:5px;right:50px;float:right;width:100%;text-align:right;">
             <div class="custome-button-hover">
-                <BButton Type="@ButtonType.Text" IsPlain="true" OnClick="e => ReplyNow()" Icon="el-icon-check" Style="font-size:20px;color:#606266"></BButton>
+                <ElButton Type="@ButtonType.Text" Plain="true" OnClick="e => ReplyNow()" Icon="el-icon-check" Style="font-size:20px;color:#606266"></ElButton>
             </div>
-        </BFormItem>
-    </BForm>
+        </ElFormItem>
+    </ElForm>
 </div>

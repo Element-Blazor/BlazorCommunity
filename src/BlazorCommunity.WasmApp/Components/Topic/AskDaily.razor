@@ -1,8 +1,8 @@
-ï»¿@if (Ask != null && !string.IsNullOrWhiteSpace(Ask.Title))
+@if (Ask != null && !string.IsNullOrWhiteSpace(Ask.Title))
 {
     <div class="flex-centor">
-        <BCard>
-            <Header><span style="color:#409EFF">æ¯æ—¥ä¸€é—®</span></Header>
+        <ElCard>
+            <Header><span style="color:#409EFF">Ã¿ÈÕÒ»ÎÊ</span></Header>
             <Body>
                 <div class="hot-item" style="margin:10px auto" @onclick="OnClick" title="@Ask.Title">
                     <a class="el-link el-link--default ">
@@ -11,7 +11,7 @@
                 </div>
 
             </Body>
-        </BCard>
+        </ElCard>
     </div>
 }
 @code {
@@ -23,6 +23,6 @@
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-        Ask = new HotTopicDto() { Title = "ä¸ºä»€ä¹ˆæˆ‘çš„Blazorç»„ä»¶ä¸åˆ·æ–°ï¼Ÿ" };
+        Ask = new HotTopicDto() { Title = "ÎªÊ²Ã´ÎÒµÄBlazor×é¼ş²»Ë¢ĞÂ£¿" };
     }
 }

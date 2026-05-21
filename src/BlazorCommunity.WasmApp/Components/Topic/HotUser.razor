@@ -1,5 +1,5 @@
-锘緻inherits PageBase
-<BCard Style="height:100%;border:none;" Shadow="ShadowShowType.Never" EnableAlwaysRender="true">
+@inherits PageBase
+<ElCard Style="height:100%;border:none;" Shadow="ShadowShowType.Never" EnableAlwaysRender="true">
     <Header>@Title</Header>
     <Body>
         
@@ -13,8 +13,8 @@
             
                 <div role="tooltip" id="@user.UserName"  class="el-popover el-popper el-popover--plain" tabindex="0" style="width: 200px; transform-origin: center bottom;z-index: 2035;left: @(left+"px"); display:@(user.Show?"block":"none")" aria-hidden="@user.Show">
                     <p>@($"{user.NickName}")</p>
-                    <p>@($"  涓昏创锛歿user.TopicCount}  鍥炲笘锛歿user.ReplyCount}")</p>
-                    <p>@($"鏈�鍚庢椿璺冩椂闂达細{user.LastLoginDate.ToString("yyyy-MM-dd")}")</p>
+                    <p>@($"  主贴：{user.TopicCount}  回帖：{user.ReplyCount}")</p>
+                    <p>@($"最后活跃时间：{user.LastLoginDate.ToString("yyyy-MM-dd")}")</p>
                     
                 </div>
 
@@ -22,5 +22,5 @@
 
        
     </Body>
-</BCard>
+</ElCard>
 

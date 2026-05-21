@@ -1,19 +1,19 @@
-锘緻layout PersonalCenterLayout
+@layout PersonalCenterLayout
 @page "/user/topic"
 @inherits PersonalPageBase
 
-<BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
+<ElCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
     <Body>
-        <BTab EnableAlwaysRender="true" Type="TabType.Card">
-            <BTabPanel Title="鎴戝彂甯冪殑" EnableAlwaysRender="true">
+        <ElTabs EnableAlwaysRender="true" Type="TabType.Card">
+            <ElTabPane Title="我发布的" EnableAlwaysRender="true">
                 <PersonalTopicPublished></PersonalTopicPublished>
-            </BTabPanel>
-            <BTabPanel Title="鎴戝洖澶嶇殑" EnableAlwaysRender="true">
+            </ElTabPane>
+            <ElTabPane Title="我回复的" EnableAlwaysRender="true">
                 <PersonalTopicReplied></PersonalTopicReplied>
-            </BTabPanel>
-            <BTabPanel Title="鎴戞敹钘忕殑" EnableAlwaysRender="true">
+            </ElTabPane>
+            <ElTabPane Title="我收藏的" EnableAlwaysRender="true">
                 <PersonalTopicFollowed></PersonalTopicFollowed>
-            </BTabPanel>
-        </BTab>
+            </ElTabPane>
+        </ElTabs>
     </Body>
-</BCard>
+</ElCard>

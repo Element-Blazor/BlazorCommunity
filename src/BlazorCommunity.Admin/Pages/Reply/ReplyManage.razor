@@ -1,54 +1,54 @@
-﻿@page "/manage/reply"
+@page "/manage/reply"
 @using BlazorCommunity.Admin.QueryCondition
 @using BlazorCommunity.DTO.Admin;
 @inherits ReplyManageBase
 
-<BForm Inline="true" @ref="searchForm">
-    <BFormItem TValue="string" Label="主贴标题" Name="@nameof(QueryReplyCondition.Title)" IsRequired="false">
-        <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="string" Label="回帖用户" Name="@nameof(QueryReplyCondition.UserName)" IsRequired="false">
-        <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="DelStatus?" Label="状态" Name="@nameof(QueryReplyCondition.Status)" IsRequired="false">
-        <div style="width:100px;"><BSelect TValue="DelStatus?" Value="DelStatus.Normal"></BSelect></div>
-    </BFormItem>
-    <BFormItem TValue="DateTime?" Label="回复时间" IsRequired="false" Name="@nameof(QueryReplyCondition.CreateDateStart)">
-        <BDatePicker IsClearable="true"></BDatePicker>
-    </BFormItem>
-    <BFormItem TValue="DateTime?" Label="至" IsRequired="false" Name="@nameof(QueryReplyCondition.CreateDateEnd)">
-        <BDatePicker IsClearable="true"></BDatePicker>
-    </BFormItem>
-    <BFormActionItem>
-        <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
-    </BFormActionItem>
-</BForm>
+<ElForm Inline="true" @ref="searchForm">
+    <ElFormItem TValue="string" Label="主贴标题" Prop="@nameof(QueryReplyCondition.Title)" Required="false">
+        <ElInput Clearable="true" TValue="string"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="string" Label="回帖用户" Prop="@nameof(QueryReplyCondition.UserName)" Required="false">
+        <ElInput Clearable="true" TValue="string"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="DelStatus?" Label="状�? Prop="@nameof(QueryReplyCondition.Status)" Required="false">
+        <div style="width:100px;"><ElSelect TValue="DelStatus?" Value="DelStatus.Normal"></ElSelect></div>
+    </ElFormItem>
+    <ElFormItem TValue="DateTime?" Label="回复时间" Required="false" Prop="@nameof(QueryReplyCondition.CreateDateStart)">
+        <ElDatePicker Clearable="true"></ElDatePicker>
+    </ElFormItem>
+    <ElFormItem TValue="DateTime?" Label="�? Required="false" Prop="@nameof(QueryReplyCondition.CreateDateEnd)">
+        <ElDatePicker Clearable="true"></ElDatePicker>
+    </ElFormItem>
+    <ElFormActionItem>
+        <ElButton Type="@ButtonType.Primary" Plain="true" OnClick="e=>SearchData()">搜索</ElButton>
+    </ElFormActionItem>
+</ElForm>
 
 <div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
 
-<BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
-    <BTableColumns>
-        <BTableColumn Width="300" Property="@nameof(ReplyDisplayDto.Title)" Text="主贴标题" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(ReplyDisplayDto.Author)" Text="发帖人" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(ReplyDisplayDto.NickName)" Text="回帖人" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(ReplyDisplayDto.Content)" Text="回复内容">
-            <BButton Type="@ButtonType.Text" OnClick="e=>Detail(context)">查看详情</BButton>
-        </BTableColumn>
-        <BTableColumn Width="50" Property="@nameof(ReplyDisplayDto.StatusDisplay)" Text="状态" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(ReplyDisplayDto.CreateDate)" Format="yyyy-MM-dd" Text="发表时间" Style="text-align:center;"></BTableColumn>
-        <BTableTemplateColumn Text="操作" Width="150">
+<ElTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
+    <ElTableColumns>
+        <ElTableColumn Width="300" Property="@nameof(ReplyDisplayDto.Title)" Text="主贴标题" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="100" Property="@nameof(ReplyDisplayDto.Author)" Text="发帖�? Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="100" Property="@nameof(ReplyDisplayDto.NickName)" Text="回帖�? Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="100" Property="@nameof(ReplyDisplayDto.Content)" Text="回复内容">
+            <ElButton Type="@ButtonType.Text" OnClick="e=>Detail(context)">查看详情</ElButton>
+        </ElTableColumn>
+        <ElTableColumn Width="50" Property="@nameof(ReplyDisplayDto.StatusDisplay)" Text="状�? Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="100" Property="@nameof(ReplyDisplayDto.CreateDate)" Format="yyyy-MM-dd" Text="发表时间" Style="text-align:center;"></ElTableColumn>
+        <ElTableTemplateColumn Text="操作" Width="150">
             @{
 
                 var reply = (ReplyDisplayDto)context;
                 if (reply.Status == 0)
                 {
-                    <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Delete(context))">删除</BButton>
+                    <ElButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" Plain="true" OnClick="@(e=> Delete(context))">删除</ElButton>
                 }
                 else
                 {
-                    <BButton Type="@ButtonType.Success" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Resume(context))">恢复</BButton>
+                    <ElButton Type="@ButtonType.Success" Size="@ButtonSize.Small" Plain="true" OnClick="@(e=> Resume(context))">恢复</ElButton>
                 }
             }
-        </BTableTemplateColumn>
-    </BTableColumns>
-</BTable>
+        </ElTableTemplateColumn>
+    </ElTableColumns>
+</ElTable>

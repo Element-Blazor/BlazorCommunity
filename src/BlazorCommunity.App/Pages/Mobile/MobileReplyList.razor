@@ -1,4 +1,4 @@
-﻿@inherits MobileReplyListBase
+@inherits MobileReplyListBase
 
 <div class="reply-list">
     @if (Replys.Count > 0)
@@ -11,7 +11,7 @@
         @if (Math.Ceiling((float)Total / PageSize) > 1 || !NoPaginationOnSinglePage)
         {
             <div class="topic-pagination">
-                <BPagination Total="Total" ShowPageCount="ShowPageCount" PageSize="PageSize" CurrentPageChanged="CurrentPageChangedAsync"></BPagination>
+                <ElPagination Total="Total" ShowPageCount="ShowPageCount" PageSize="PageSize" CurrentPageChanged="CurrentPageChangedAsync"></ElPagination>
             </div>
         }
     }
@@ -21,7 +21,7 @@
         {
             <div class="el-table__empty-block" style="height:50px;">
                 <span class="el-table__empty-text">
-                    消灭零回复
+                    消灭零回�?
                 </span>
             </div>
         }
@@ -33,9 +33,9 @@
             <div style="height:100px; display:flex;margin-top:10px; justify-items:center;justify-content:center;" role="alert" class="el-alert el-alert--warning is-center is-light">
                 <i class="el-alert__icon el-icon-warning"></i>
                 <div class="el-alert__content">
-                    <span class="el-alert__title" style="font-size:15px;margin-right:10px;">请登录后再开始你的表演</span>
+                    <span class="el-alert__title" style="font-size:15px;margin-right:10px;">请登录后再开始你的表�?/span>
                 </div>
-                <BButton OnClick="NavigateToLoginPage" Type="ButtonType.Text">登录/注册</BButton>
+                <ElButton OnClick="NavigateToLoginPage" Type="ButtonType.Text">登录/注册</ElButton>
             </div>
         }
         else

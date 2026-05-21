@@ -1,4 +1,4 @@
-ï»¿@inherits PageBase
+@inherits PageBase
 @if (Topics.Any())
 {
     @foreach (var topic in Topics)
@@ -10,7 +10,7 @@
     @if (Math.Ceiling((float)Total / PageSize) > 1 || !NoPaginationOnSinglePage)
     {
         <div class="topic-pagination">
-            <BPagination Total="Total" ShowPageCount="ShowPageCount" PageSize="PageSize" CurrentPageChanged="CurrentPageChangedAsync"></BPagination>
+            <ElPagination Total="Total" ShowPageCount="ShowPageCount" PageSize="PageSize" CurrentPageChanged="CurrentPageChangedAsync"></ElPagination>
         </div>
     }
 }
@@ -18,7 +18,7 @@ else
 {
     <div class="el-table__empty-block" style="height:60px;">
         <span class="el-table__empty-text">
-            @(string.IsNullOrWhiteSpace(EmptyMessage) ? "æš‚æ— æ•°æ®" : EmptyMessage)
+            @(string.IsNullOrWhiteSpace(EmptyMessage) ? "ÔİÎŞÊı¾İ" : EmptyMessage)
         </span>
     </div>
 }

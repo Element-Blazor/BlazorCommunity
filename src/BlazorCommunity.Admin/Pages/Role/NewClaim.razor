@@ -1,19 +1,19 @@
-﻿@using BlazorCommunity.DTO.Admin
+@using BlazorCommunity.DTO.Admin
 @inherits NewClaimBase
 
-    <BForm Style="width:100%;" @ref="claimForm" Value="model" LabelAlign="@LabelAlign.Right" EnableAlwaysRender="true">
-        <BFormItem TValue="string" Label="RoleId" Name="@nameof(RoleClaimDto.RoleId)" EnableAlwaysRender="true">
-            <BInput TValue="string"  EnableAlwaysRender="true" IsDisabled="true"></BInput>
-        </BFormItem>
+    <ElForm Style="width:100%;" @ref="claimForm" Model="model" LabelPosition="right" EnableAlwaysRender="true">
+        <ElFormItem TValue="string" Label="RoleId" Prop="@nameof(RoleClaimDto.RoleId)" EnableAlwaysRender="true">
+            <ElInput TValue="string"  EnableAlwaysRender="true" Disabled="true"></ElInput>
+        </ElFormItem>
 
-        <BFormItem TValue="string" Label="ClaimType" Name="@nameof(RoleClaimDto.ClaimType)" IsRequired="true" EnableAlwaysRender="true">
-            <BInput IsClearable="true" TValue="string" EnableAlwaysRender="true"></BInput>
-        </BFormItem>
-        <BFormItem TValue="string" Label="ClaimValue" Name="@nameof(RoleClaimDto.ClaimValue)" IsRequired="true" EnableAlwaysRender="true">
-            <BInput IsClearable="true" TValue="string" EnableAlwaysRender="true"></BInput>
-        </BFormItem>
-        <BFormItem TValue="object" Style="text-align:center;margin:0 auto;">
-            <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>Save()" Style="text-align:center;width:100px;">保存</BButton>
-            <BButton Type="@ButtonType.Default" IsPlain="true" OnClick="e=>claimForm.Reset()" Style="text-align:center;width:100px;">重置</BButton>
-        </BFormItem>
-    </BForm>
+        <ElFormItem TValue="string" Label="ClaimType" Prop="@nameof(RoleClaimDto.ClaimType)" Required="true" EnableAlwaysRender="true">
+            <ElInput Clearable="true" TValue="string" EnableAlwaysRender="true"></ElInput>
+        </ElFormItem>
+        <ElFormItem TValue="string" Label="ClaimValue" Prop="@nameof(RoleClaimDto.ClaimValue)" Required="true" EnableAlwaysRender="true">
+            <ElInput Clearable="true" TValue="string" EnableAlwaysRender="true"></ElInput>
+        </ElFormItem>
+        <ElFormItem TValue="object" Style="text-align:center;margin:0 auto;">
+            <ElButton Type="@ButtonType.Primary" Plain="true" OnClick="e=>Save()" Style="text-align:center;width:100px;">保存</ElButton>
+            <ElButton Type="@ButtonType.Default" Plain="true" OnClick="e=>claimForm.Reset()" Style="text-align:center;width:100px;">重置</ElButton>
+        </ElFormItem>
+    </ElForm>

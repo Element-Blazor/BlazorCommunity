@@ -1,9 +1,9 @@
-﻿@inherits ElementComponentBase
+@inherits ElementComponentBase
 @if (Topic != null)
 {
-    <BLayout WestWidth="90" Height="78" EnableAlwaysRender="true">
+    <ElLayout WestWidth="90" Height="78" EnableAlwaysRender="true">
         <West>
-            <BCard Shadow="@ShadowShowType.Always" Style="text-align: center;" EnableAlwaysRender="true">
+            <ElCard Shadow="@ShadowShowType.Always" Style="text-align: center;" EnableAlwaysRender="true">
                 <Body>
                     @if (string.IsNullOrWhiteSpace(Topic.Avator))
                     {
@@ -14,17 +14,17 @@
                         <img class="app-topic-img" src="@Topic.Avator" />
                     }
                 </Body>
-            </BCard>
+            </ElCard>
         </West>
         <Center>
-            <BCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true">
+            <ElCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true">
                 <Body>
                     <div class="topic-wrap">
                         <div class="topic-item">
                             <div class="topic-type">
                                 @if (Topic.Status == 1)
                                 {
-                                    <span class="el-tag el-tag--info el-tag--mini el-tag--light">已结帖</span>
+                                    <span class="el-tag el-tag--info el-tag--mini el-tag--light">已结�?/span>
                                 }
                                 else
                                 {
@@ -34,7 +34,7 @@
                                     }
                                 }
                             </div>
-                            <div class="topic-title"><BButton Type="ButtonType.Text" Style="color:#000033" OnClick="e=>NavigationToReply(Topic?.Id)">@Topic?.Title</BButton></div>
+                            <div class="topic-title"><ElButton Type="ButtonType.Text" Style="color:#000033" OnClick="e=>NavigationToReply(Topic?.Id)">@Topic?.Title</ElButton></div>
                             <div class="topic-tag">
                                 @if (Topic.Good == 1)
                                 {
@@ -43,11 +43,11 @@
                             </div>
                         </div>
                         <div class="topic-item">
-                            <div class="topic-author" title="作者">@Topic?.NickName</div>
-                            <div class="topic-time" title="最后修改时间">@Topic?.LastModifyDateDisplay</div>
+                            <div class="topic-author" title="作�?>@Topic?.NickName</div>
+                            <div class="topic-time" title="最后修改时�?>@Topic?.LastModifyDateDisplay</div>
                             @if (Topic.ReplyCount > 0)
                             {
-                                <div class="topic-reply" title="回复量">
+                                <div class="topic-reply" title="回复�?>
                                     <div>
                                         <i class="el-icon-chat-dot-square" style="color:#909399;font-size:16px;"></i>
                                         <span style="margin-left:0px;color: #909399;">@Topic?.ReplyCount</span>
@@ -56,7 +56,7 @@
                             }
                             @if (Topic.Hot > 0)
                             {
-                                <div class="topic-hot" title="浏览量">
+                                <div class="topic-hot" title="浏览�?>
                                     <i class="el-icon-view" style="color: #909399;font-size:16px;"></i>
                                     <span style="margin-left:0px;color: #909399;">@Topic.Hot</span>
                                 </div>
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                 </Body>
-            </BCard>
+            </ElCard>
         </Center>
-    </BLayout>
+    </ElLayout>
 }

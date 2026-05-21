@@ -1,4 +1,4 @@
-﻿using BlazorCommunity.Admin.QueryCondition;
+using BlazorCommunity.Admin.QueryCondition;
 using BlazorCommunity.Admin.Service;
 using Element;
 using Microsoft.AspNetCore.Components;
@@ -34,8 +34,8 @@ namespace BlazorCommunity.Admin.Pages
         protected int pageSize = 10;
         protected int DataCount = 0;
         protected IList<T> Datas = new List<T>();
-        protected BTable table;
-        protected BForm searchForm;
+        protected ElTable table;
+        protected ElForm searchForm;
 
         internal int CurrentPage
         {

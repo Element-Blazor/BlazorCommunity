@@ -1,30 +1,30 @@
-﻿@page "/account/register"
+@page "/account/register"
 @inherits PageBase
 <div class="login-container">
-    <BForm @ref="registerForm" Value="Value" EnableAlwaysRender="true">
+    <ElForm @ref="registerForm" Model="Value" EnableAlwaysRender="true">
         <div class="title-container" style="text-align:center;">
             <h3 class="title">
                 Blazor社区注册
             </h3>
         </div>
-        <BFormItem TValue="string" Label="用户账号" Name="@nameof(RegisterAccountDto.UserAccount)" IsRequired="true">
-            <BInput TValue="string" Placeholder="请输入账号或者邮箱"></BInput>
-        </BFormItem>
-        @*<BFormItem TValue="string" Label="手机号码" Name="@nameof(RegisterAccountModel.Mobile)" IsRequired="true">
-                <BInput TValue="string"></BInput>
-                <BButton Style="float:right;margin-top:10px;" Type="@ButtonType.Info" IsPlain="true" Icon="el-icon-message"> 发送验证码</BButton>
-            </BFormItem>
-            <BFormItem TValue="string" Label="验证码" Name="@nameof(RegisterAccountModel.VerifyCode)" IsRequired="true">
-                <BInput TValue="string"></BInput>
-            </BFormItem>*@
-        <BFormItem TValue="string" Label="密码" Name="@nameof(RegisterAccountDto.Password)" IsRequired="true" EnableAlwaysRender="true">
-            <BInput PrefixIcon="el-icon-lock" SuffixIcon="el-icon-view" Type="@passwordType" TValue="string" Placeholder="请输入密码" OnSuffixIconClick="e=>TogglePassword()"></BInput>
-        </BFormItem>
-        <BFormItem TValue="string" Label="确认密码" Name="@nameof(RegisterAccountDto.ConfirmPassword)" IsRequired="true" EnableAlwaysRender="true">
-            <BInput PrefixIcon="el-icon-lock" SuffixIcon="el-icon-view" Type="@ConfirmPasswordType" TValue="string" Placeholder="请输入确认密码" OnSuffixIconClick="e=>ToggleConfirmPassword()"></BInput>
-        </BFormItem>
-        <BFormActionItem>
-            <BButton Type="@ButtonType.Default" OnClick="e=>RegisterUser()" IsPlain="true" Style="width:100%">立即注册</BButton>
-        </BFormActionItem>
-    </BForm>
+        <ElFormItem TValue="string" Label="用户账号" Prop="@nameof(RegisterAccountDto.UserAccount)" Required="true">
+            <ElInput TValue="string" Placeholder="请输入账号或者邮箱"></ElInput>
+        </ElFormItem>
+        @*<ElFormItem TValue="string" Label="手机号码" Prop="@nameof(RegisterAccountModel.Mobile)" Required="true">
+                <ElInput TValue="string"></ElInput>
+                <ElButton Style="float:right;margin-top:10px;" Type="@ButtonType.Info" Plain="true" Icon="el-icon-message"> 发送验证码</ElButton>
+            </ElFormItem>
+            <ElFormItem TValue="string" Label="验证码" Prop="@nameof(RegisterAccountModel.VerifyCode)" Required="true">
+                <ElInput TValue="string"></ElInput>
+            </ElFormItem>*@
+        <ElFormItem TValue="string" Label="密码" Prop="@nameof(RegisterAccountDto.Password)" Required="true" EnableAlwaysRender="true">
+            <ElInput PrefixIcon="el-icon-lock" SuffixIcon="el-icon-view" Type="@passwordType" TValue="string" Placeholder="请输入密码" OnSuffixIconClick="e=>TogglePassword()"></ElInput>
+        </ElFormItem>
+        <ElFormItem TValue="string" Label="确认密码" Prop="@nameof(RegisterAccountDto.ConfirmPassword)" Required="true" EnableAlwaysRender="true">
+            <ElInput PrefixIcon="el-icon-lock" SuffixIcon="el-icon-view" Type="@ConfirmPasswordType" TValue="string" Placeholder="请输入确认密码" OnSuffixIconClick="e=>ToggleConfirmPassword()"></ElInput>
+        </ElFormItem>
+        <ElFormActionItem>
+            <ElButton Type="@ButtonType.Default" OnClick="e=>RegisterUser()" Plain="true" Style="width:100%">立即注册</ElButton>
+        </ElFormActionItem>
+    </ElForm>
 </div>

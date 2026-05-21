@@ -1,4 +1,4 @@
-ï»¿using BlazorCommunity.WasmApp.Model;
+using BlazorCommunity.WasmApp.Model;
 using BlazorCommunity.Enums;
 using Element;
 using Microsoft.AspNetCore.Components;
@@ -24,7 +24,7 @@ namespace BlazorCommunity.WasmApp.Components.Topic
         [Parameter]
         public NewReplyModel model { get; set; }
 
-        internal BForm form;
+        internal ElForm form;
 
         [CascadingParameter]
         private Task<AuthenticationState> authenticationStateTask { get; set; }
@@ -42,16 +42,16 @@ namespace BlazorCommunity.WasmApp.Components.Topic
                 await CloseAsync(new NewReplyModel());
             else
             {
-                MessageBoxResult Confirm = await MessageBox.ConfirmAsync("æ˜¯å¦è¦æäº¤å›å¤");
+                MessageBoxResult Confirm = await MessageBox.ConfirmAsync("ÊÇ·ñÒªÌá½»»Ø¸´");
                 if (Confirm == MessageBoxResult.Ok)
                 {
                     if ((await authenticationStateTask).User.Identity.IsAuthenticated)
                         await CloseAsync(model);
                     else
-                        MessageService.Show("è¯·ç™»å½•åå†å›å¤å¸–å­", MessageType.Warning);
+                        MessageService.Show("ÇëµÇÂ¼ºóÔÙ»Ø¸´Ìû×Ó", MessageType.Warning);
                 }
                 else
-                    MessageService.Show("æ‚¨é€‰æ‹©äº†å–æ¶ˆ", MessageType.Info);
+                    MessageService.Show("ÄúÑ¡ÔñÁËÈ¡Ïû", MessageType.Info);
             }
         }
     }

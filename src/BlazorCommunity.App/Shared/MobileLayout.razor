@@ -1,6 +1,6 @@
-﻿@inherits LayoutComponentBase
-<BPopup></BPopup>
-<BLayout EnableAlwaysRender="true" NorthHeight="80">
+@inherits LayoutComponentBase
+<ElPopup></ElPopup>
+<ElLayout EnableAlwaysRender="true" NorthHeight="80">
     <North>
         <MobileAppHeader></MobileAppHeader>
     </North>
@@ -9,8 +9,8 @@
             @Body
         </div>
     </Center>
-</BLayout>
-<CascadingValue Value="@this">
+</ElLayout>
+<CascadingValue Model="@this">
     @ChildContent
 </CascadingValue>
 @code

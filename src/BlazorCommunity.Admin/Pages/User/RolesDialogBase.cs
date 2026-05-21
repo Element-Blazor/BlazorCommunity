@@ -1,4 +1,4 @@
-﻿using BlazorCommunity.Admin.Service;
+using BlazorCommunity.Admin.Service;
 using BlazorCommunity.DTO.Admin;
 using Element;
 using Microsoft.AspNetCore.Components;
@@ -13,7 +13,7 @@ namespace BlazorCommunity.Admin.Pages.User
     public class RolesDialogBase:BDialogBase
     {
 
-        internal BForm roleForm;
+        internal ElForm roleForm;
 
         [Parameter]
         public UserDisplayDto model { get; set; }

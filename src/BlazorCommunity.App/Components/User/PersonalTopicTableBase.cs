@@ -1,4 +1,4 @@
-﻿using BlazorCommunity.DTO;
+using BlazorCommunity.DTO;
 using BlazorCommunity.App.Model.Condition;
 using BlazorCommunity.App.Pages;
 using Element;
@@ -15,8 +15,8 @@ namespace BlazorCommunity.App.Components.User
         protected int pageSize = 7;
         protected int DataCount = 0;
         protected IList<T> Datas = new List<T>();
-        protected BTable table;
-        protected BForm searchForm;
+        protected ElTable table;
+        protected ElForm searchForm;
 
         internal int CurrentPage
         {

@@ -1,48 +1,48 @@
-﻿@page "/manage/ver"
+@page "/manage/ver"
 @using BlazorCommunity.DTO.Admin
 @using BlazorCommunity.Admin.QueryCondition
 @inherits VersionManageBase
 
-<BForm Inline="true" @ref="searchForm">
-    @*<BFormItem TValue="ProjectType?" Label="项目" Name="@nameof(QueryVersionCondition.ProjectId)" IsRequired="false">
-        <BSelect TValue="ProjectType?">
-        </BSelect>
-    </BFormItem>*@
-    <BFormActionItem>
-        <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
-    </BFormActionItem>
-    <BButton Type="@ButtonType.Success" Icon="el-icon-plus" IsPlain="true" OnClick="New" Style="float:right;margin-right:100px;">新增</BButton>
-</BForm>
+<ElForm Inline="true" @ref="searchForm">
+    @*<ElFormItem TValue="ProjectType?" Label="项目" Prop="@nameof(QueryVersionCondition.ProjectId)" Required="false">
+        <ElSelect TValue="ProjectType?">
+        </ElSelect>
+    </ElFormItem>*@
+    <ElFormActionItem>
+        <ElButton Type="@ButtonType.Primary" Plain="true" OnClick="e=>SearchData()">搜索</ElButton>
+    </ElFormActionItem>
+    <ElButton Type="@ButtonType.Success" Icon="el-icon-plus" Plain="true" OnClick="New" Style="float:right;margin-right:100px;">新增</ElButton>
+</ElForm>
 
 <div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
 
-<BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
-    <BTableColumns>
-        @*<BTableColumn Width="100" Property="@nameof(VersionDisplayDto.ProjectDisplay)" Text="所属项目" Style="text-align:center;"></BTableColumn>*@
-        <BTableColumn Width="100" Property="@nameof(VersionDisplayDto.VerNo)" Text="版本编号" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(VersionDisplayDto.VerName)" Text="版本名称" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="300" Property="@nameof(VersionDisplayDto.VerDescription)" Text="说明" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(VersionDisplayDto.VerDocUrl)" Text="文档地址" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="200" Property="@nameof(VersionDisplayDto.VerNuget)" Text="Nuget地址" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="50" Property="@nameof(VersionDisplayDto.StatusDisplay)" Text="状态" Style="text-align:center;color:red;"></BTableColumn>
-        <BTableColumn Width="200" Property="@nameof(VersionDisplayDto.VerDownUrl)" Text="下载地址" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(VersionDisplayDto.CreateDate)" Format="yyyy-MM-dd" Text="创建时间" Style="text-align:center;"></BTableColumn>
-        <BTableTemplateColumn Text="操作" Width="150">
-            <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Modify(context))">
+<ElTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
+    <ElTableColumns>
+        @*<ElTableColumn Width="100" Property="@nameof(VersionDisplayDto.ProjectDisplay)" Text="所属项目" Style="text-align:center;"></ElTableColumn>*@
+        <ElTableColumn Width="100" Property="@nameof(VersionDisplayDto.VerNo)" Text="版本编号" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="100" Property="@nameof(VersionDisplayDto.VerName)" Text="版本名称" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="300" Property="@nameof(VersionDisplayDto.VerDescription)" Text="说明" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="100" Property="@nameof(VersionDisplayDto.VerDocUrl)" Text="文档地址" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="200" Property="@nameof(VersionDisplayDto.VerNuget)" Text="Nuget地址" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="50" Property="@nameof(VersionDisplayDto.StatusDisplay)" Text="状态" Style="text-align:center;color:red;"></ElTableColumn>
+        <ElTableColumn Width="200" Property="@nameof(VersionDisplayDto.VerDownUrl)" Text="下载地址" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="100" Property="@nameof(VersionDisplayDto.CreateDate)" Format="yyyy-MM-dd" Text="创建时间" Style="text-align:center;"></ElTableColumn>
+        <ElTableTemplateColumn Text="操作" Width="150">
+            <ElButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" Plain="true" OnClick="@(e=> Modify(context))">
                 编辑
-            </BButton>
+            </ElButton>
             @{
                 var version = (VersionDisplayDto)context;
                 if (version.Status == 0)
                 {
-                    <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Delete(context))">删除</BButton>
+                    <ElButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" Plain="true" OnClick="@(e=> Delete(context))">删除</ElButton>
                 }
                 else
                 {
-                    <BButton Type="@ButtonType.Success" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Resume(context))">删除</BButton>
+                    <ElButton Type="@ButtonType.Success" Size="@ButtonSize.Small" Plain="true" OnClick="@(e=> Resume(context))">删除</ElButton>
                 }
 
             }
-        </BTableTemplateColumn>
-    </BTableColumns>
-</BTable>
+        </ElTableTemplateColumn>
+    </ElTableColumns>
+</ElTable>

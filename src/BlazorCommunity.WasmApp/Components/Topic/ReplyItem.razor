@@ -1,8 +1,8 @@
-﻿@inherits ElementComponentBase
+@inherits ElementComponentBase
 @if (ReplyModel != null)
 {
     <div class="content-reply-base custome-button-hover">
-        @*<BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
+        @*<ElCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
         <Header>*@
         <div class="content-topic-head">
             <div class="content-info">
@@ -22,7 +22,7 @@
             <div class="content-flex-col">
                 <div class="reply-user-name">@ReplyModel.NickName</div>
                 <div class="content-time">
-                    发布时间： @ReplyModel?.LastModifyDate.ToString("yyyy-MM-dd")
+                    发布时间�?@ReplyModel?.LastModifyDate.ToString("yyyy-MM-dd")
                 </div>
             </div>
             @if (ReplyModel.IsMySelf && !IsTopicEnd)
@@ -30,10 +30,10 @@
                 var buttonedit = "color:#909399;font-size:20px;";
                 var buttonsave = "color:#909399;font-size:20px;";
                 <div style="position: absolute; right: 17px;">
-                    <BButtonGroup>
-                        <BButton Type="ButtonType.Text" Style=@(ReplyModel.ShoudEdit?buttonedit:buttonsave) IsPlain="true" Size="ButtonSize.Default" Icon=@(ReplyModel.ShoudEdit?"el-icon-finished":"el-icon-edit") OnClick="OnEdit"> </BButton>
-                        <BButton Type="ButtonType.Text" Style="color:#909399;font-size:20px; margin-left: 10px;" IsPlain="true" Size="ButtonSize.Default" Icon="el-icon-circle-close" OnClick="OnDeleted"></BButton>
-                    </BButtonGroup>
+                    <ElButtonGroup>
+                        <ElButton Type="ButtonType.Text" Style=@(ReplyModel.ShoudEdit?buttonedit:buttonsave) Plain="true" Size="ButtonSize.Default" Icon=@(ReplyModel.ShoudEdit?"el-icon-finished":"el-icon-edit") OnClick="OnEdit"> </ElButton>
+                        <ElButton Type="ButtonType.Text" Style="color:#909399;font-size:20px; margin-left: 10px;" Plain="true" Size="ButtonSize.Default" Icon="el-icon-circle-close" OnClick="OnDeleted"></ElButton>
+                    </ElButtonGroup>
                 </div>
             }
 
@@ -42,21 +42,21 @@
         <Body>*@
         @if (ReplyModel.ShoudEdit)
         {
-            <BMarkdownEditor @bind-Value="@ReplyModel.Content" EnableAlwaysRender="true" UploadUrl="@UploadUrl" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="ConstConfig.MaxUploadFileSize" Height="300"></BMarkdownEditor>
+            <ElMarkdownEditor @bind-Value="@ReplyModel.Content" EnableAlwaysRender="true" UploadUrl="@UploadUrl" DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="ConstConfig.MaxUploadFileSize" Height="300"></ElMarkdownEditor>
         }
         else
         {
-            <BMarkdown Text="@ReplyModel.Content"></BMarkdown>
+            <ElMarkdown Text="@ReplyModel.Content"></ElMarkdown>
         }
         @*@if (!IsTopicEnd)
         {
             <div style="text-align:right;">
-                <BButton Type="ButtonType.Text" Style="color:#909399;font-size:20px; margin-left: 10px;" IsPlain="true" Size="ButtonSize.Default" Icon="el-icon-chat-line-round" OnClick="ReferenceReply"></BButton>
+                <ElButton Type="ButtonType.Text" Style="color:#909399;font-size:20px; margin-left: 10px;" Plain="true" Size="ButtonSize.Default" Icon="el-icon-chat-line-round" OnClick="ReferenceReply"></ElButton>
             </div>
         }*@
         <UserSignature Signature="@ReplyModel.Signature" />
         <div class="el-divider el-divider--horizontal" style="margin:10px 0"></div>
         @*</Body>
-        </BCard>*@
+        </ElCard>*@
     </div>
 }

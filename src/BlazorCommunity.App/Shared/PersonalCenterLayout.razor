@@ -1,29 +1,29 @@
-﻿@layout MainLayout
+@layout MainLayout
 @page "/user"
 @inherits PersonalCenterLayoutBase
 <div class="container">
-    <BLayout @ref="bLayout" EnableAlwaysRender="true">
+    <ElLayout @ref="bLayout" EnableAlwaysRender="true">
         <West>
             <div style="height:600px;">
-                <BCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true" @ref="bCard">
+                <ElCard Shadow="@ShadowShowType.Never" EnableAlwaysRender="true" @ref="bCard">
                     <Body>
                         <div class="app-user-menu">
-                            <BMenu Mode="@MenuMode.Vertical" DefaultActive="0" @ref="bmenu" EnableAlwaysRender="true" ActiveTextColor="" HoverColor="">
+                            <ElMenu Mode="@MenuMode.Vertical" DefaultActive="0" @ref="bmenu" EnableAlwaysRender="true" ActiveTextColor="" HoverColor="">
                                 @if (personalCenterMenuModels != null)
                                     @foreach (var menu in personalCenterMenuModels)
                                     {
-                                        <BMenuItem Icon="@menu.Icon" Index="@menu.Index.ToString()" Route="@menu.Route" EnableAlwaysRender="true">
+                                        <ElMenuItem Icon="@menu.Icon" Index="@menu.Index.ToString()" Route="@menu.Route" EnableAlwaysRender="true">
                                             @menu.Title
-                                        </BMenuItem>
+                                        </ElMenuItem>
                                     }
-                            </BMenu>
+                            </ElMenu>
                         </div>
                     </Body>
-                </BCard>
+                </ElCard>
             </div>
         </West>
         <Center>
             @Body
         </Center>
-    </BLayout>
+    </ElLayout>
 </div>

@@ -1,4 +1,4 @@
-ï»¿using BlazorCommunity.App.Model;
+using BlazorCommunity.App.Model;
 using BlazorCommunity.App.Pages;
 using BlazorCommunity.Model.Models;
 using Element;
@@ -9,7 +9,7 @@ namespace BlazorCommunity.App.Components.User
 {
     public class ChangePasswordByOldPasswordBase : PageBase
     {
-        protected BForm bformOldpwd;
+        protected ElForm bformOldpwd;
         protected BZUserModel User;
         protected string VerifyCode = "";
 
@@ -31,7 +31,7 @@ namespace BlazorCommunity.App.Components.User
             var checkOld = await userManager.CheckPasswordAsync(User, model.OldPassword);
             if (!checkOld)
             {
-                ToastError("å½“å‰å¯†ç é”™è¯¯");
+                ToastError("µ±Ç°ÃÜÂë´íÎó");
                 return false;
             }
             return true;
@@ -42,21 +42,21 @@ namespace BlazorCommunity.App.Components.User
             var PasswordModel = bformOldpwd.GetValue<PasswordModel>();
             if (PasswordModel.Password != PasswordModel.ConfirmPassword)
             {
-                ToastError("æ–°å¯†ç ä¸ç¡®è®¤å¯†ç ä¸ä¸€è‡´");
+                ToastError("ĞÂÃÜÂëÓëÈ·ÈÏÃÜÂë²»Ò»ÖÂ");
                 return false;
             }
             return true;
         }
 
-        private async Task ResetPassword(BForm bForm)
+        private async Task ResetPassword(ElForm ElForm)
         {
-            var PasswordModel = bForm.GetValue<PasswordModel>();
+            var PasswordModel = ElForm.GetValue<PasswordModel>();
             var token = await userManager.GeneratePasswordResetTokenAsync(User);
             var result = await userManager.ResetPasswordAsync(User, token, PasswordModel.Password);
             if (result.Succeeded)
             {
-                ToastSuccess("å¯†ç é‡ç½®æˆåŠŸ,ä¸‹æ¬¡ç™»å½•è¯·ä½¿ç”¨æ–°å¯†ç ");
-                bForm.Reset();
+                ToastSuccess("ÃÜÂëÖØÖÃ³É¹¦,ÏÂ´ÎµÇÂ¼ÇëÊ¹ÓÃĞÂÃÜÂë");
+                ElForm.Reset();
                 return;
             }
             else

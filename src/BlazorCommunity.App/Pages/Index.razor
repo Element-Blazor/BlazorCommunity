@@ -1,17 +1,17 @@
-﻿@page "/"
+@page "/"
 @inherits IndexBase
 <div class="container">
-    <BLayout EnableAlwaysRender="true" @ref="blayout">
+    <ElLayout EnableAlwaysRender="true" @ref="blayout">
         <Center>
-            <BTab TabPosition="@TabPosition.Top" OnActiveTabChanged="ActiveTabChanged" EnableAlwaysRender="true" @ref="btab">
+            <ElTabs TabPosition="@TabPosition.Top" OnActiveTabChanged="ActiveTabChanged" EnableAlwaysRender="true" @ref="btab">
                 @foreach (var item in Tabs)
                 {
                     <MainContent Title="@item.Title" TopicType="@item.Category" EnableAlwaysRender="true"></MainContent>
                 }
-            </BTab>
+            </ElTabs>
         </Center>
         <East>
             <AppRightLayout></AppRightLayout>
         </East>
-    </BLayout>
+    </ElLayout>
 </div>

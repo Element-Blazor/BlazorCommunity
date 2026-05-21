@@ -1,57 +1,57 @@
-﻿@inherits BindEmailBase
-<BCard EnableAlwaysRender="true" @ref="bCard">
+@inherits BindEmailBase
+<ElCard EnableAlwaysRender="true" @ref="bCard">
     <Body>
         @if (value != null && !string.IsNullOrWhiteSpace(value.Email))
         {
-        <BForm @ref="bForm" Value="value" LabelAlign="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
-            <BFormItem TValue="string" Label="" Name="@nameof(PasswordModel.Email)" IsRequired="false">
-                <BButton Type="ButtonType.Info" IsPlain="true" Style="border:none" IsDisabled="true">@($"已绑定：{ value.Email}")</BButton>
-            </BFormItem>
+        <ElForm @ref="ElForm" Model="value" LabelPosition="right" Inline="true" EnableAlwaysRender="true">
+            <ElFormItem TValue="string" Label="" Prop="@nameof(PasswordModel.Email)" Required="false">
+                <ElButton Type="ButtonType.Info" Plain="true" Style="border:none" Disabled="true">@($"已绑定：{ value.Email}")</ElButton>
+            </ElFormItem>
             @if (SendCanCelEmailBindCodeSuccess)
             {
-                <BFormItem TValue="string" Label="验证码：" Name="@nameof(PasswordModel.Code)" IsRequired="false">
-                    <BInput TValue="string" Placeholder="请输入验证码"></BInput>
-                </BFormItem>
-                <BFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
-                    <BButton Type="@ButtonType.Default" IsDisabled="BtnConfirmDisabled" IsPlain="true" OnClick="e => CanCelBindConfirm()" EnableAlwaysRender="true">
+                <ElFormItem TValue="string" Label="验证码：" Prop="@nameof(PasswordModel.Code)" Required="false">
+                    <ElInput TValue="string" Placeholder="请输入验证码"></ElInput>
+                </ElFormItem>
+                <ElFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
+                    <ElButton Type="@ButtonType.Default" Disabled="BtnConfirmDisabled" Plain="true" OnClick="e => CanCelBindConfirm()" EnableAlwaysRender="true">
                         确定
-                    </BButton>
-                </BFormActionItem>
+                    </ElButton>
+                </ElFormActionItem>
             }
             else
             {
-                <BFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
-                    <BButton Type="@ButtonType.Info" IsDisabled="BtnCancelDisabled" IsPlain="true" OnClick="e => CanCelBind()" EnableAlwaysRender="true">
+                <ElFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
+                    <ElButton Type="@ButtonType.Info" Disabled="BtnCancelDisabled" Plain="true" OnClick="e => CanCelBind()" EnableAlwaysRender="true">
                         取消绑定
-                    </BButton>
-                </BFormActionItem>
+                    </ElButton>
+                </ElFormActionItem>
             }
 
-        </BForm>
+        </ElForm>
         }
         else
         {
-            <BForm @ref="bForm" Value="value" LabelAlign="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
-                <BFormItem TValue="string" Label="邮箱：" Name="@nameof(PasswordModel.Email)" IsRequired="true">
-                    <BInput TValue="string" Type="InputType.Tel" Placeholder="请输入邮箱地址"></BInput>
-                </BFormItem>
-                <BFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
-                    <BButton Type="@ButtonType.Default" IsPlain="true" OnClick="e => SendEmailMsg()" EnableAlwaysRender="true" IsDisabled="BtnBindEmailDisabled">
-                        @((TimeOut > 0 && TimeOut < CountDownTime)?$"请等待{TimeOut}s后重试":"绑定邮箱")
-                    </BButton>
-                </BFormActionItem>
+            <ElForm @ref="ElForm" Model="value" LabelPosition="right" Inline="true" EnableAlwaysRender="true">
+                <ElFormItem TValue="string" Label="邮箱�? Prop="@nameof(PasswordModel.Email)" Required="true">
+                    <ElInput TValue="string" Type="@InputType.Tel" Placeholder="请输入邮箱地址"></ElInput>
+                </ElFormItem>
+                <ElFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
+                    <ElButton Type="@ButtonType.Default" Plain="true" OnClick="e => SendEmailMsg()" EnableAlwaysRender="true" Disabled="BtnBindEmailDisabled">
+                        @((TimeOut > 0 && TimeOut < CountDownTime)?$"请等待{TimeOut}s后重�?:"绑定邮箱")
+                    </ElButton>
+                </ElFormActionItem>
                 @if (showInput)
                 {
-                    <BFormItem TValue="string" Label="验证码：" Name="@nameof(PasswordModel.Code)" IsRequired="false">
-                        <BInput TValue="string" Placeholder="请输入验证码"></BInput>
-                    </BFormItem>
-                    <BFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
-                        <BButton Type="@ButtonType.Default" IsPlain="true" OnClick="e => CheckVerifyCode()" EnableAlwaysRender="true">
+                    <ElFormItem TValue="string" Label="验证码：" Prop="@nameof(PasswordModel.Code)" Required="false">
+                        <ElInput TValue="string" Placeholder="请输入验证码"></ElInput>
+                    </ElFormItem>
+                    <ElFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
+                        <ElButton Type="@ButtonType.Default" Plain="true" OnClick="e => CheckVerifyCode()" EnableAlwaysRender="true">
                             确定
-                        </BButton>
-                    </BFormActionItem>
+                        </ElButton>
+                    </ElFormActionItem>
                 }
-            </BForm>
+            </ElForm>
         }
     </Body>
-</BCard>
+</ElCard>

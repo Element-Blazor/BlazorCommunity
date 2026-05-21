@@ -1,7 +1,7 @@
-Ôªø@inherits ElementComponentBase
+@inherits ElementComponentBase
 @if (!string.IsNullOrWhiteSpace(TopicModel.Id))
 {
-    <BCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
+    <ElCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
         <Header>
             <div class="mobile-topic-content-info">
                 <div class="mobile-topic-content-data">
@@ -18,7 +18,7 @@
                                 @{
                                     if (TopicModel.Status == 1)
                                     {
-                                        <span class="el-tag el-tag--info el-tag--mini">Â∑≤ÁªìÂ∏ñ</span>
+                                        <span class="el-tag el-tag--info el-tag--mini">“—Ω·Ã˚</span>
                                     }
                                     else
                                     {
@@ -58,9 +58,9 @@
             </div>
         </Header>
         <Body>
-            <div class="el-divider el-divider--horizontal" style="margin:10px 0px 15px 0px;"> <div class="el-divider__text is-center">Â∏ñÂ≠êÂÜÖÂÆπ</div></div>
-            <BMarkdown Text="@TopicModel.Content"></BMarkdown>
+            <div class="el-divider el-divider--horizontal" style="margin:10px 0px 15px 0px;"> <div class="el-divider__text is-center">Ã˚◊”ƒ⁄»›</div></div>
+            <ElMarkdown Text="@TopicModel.Content"></ElMarkdown>
             <UserSignature Signature="@TopicModel.Signature" />
         </Body>
-    </BCard>
+    </ElCard>
 }

@@ -1,4 +1,4 @@
-锘縰sing BlazorCommunity.DTO;
+using BlazorCommunity.DTO;
 using BlazorCommunity.DTO.App;
 using BlazorCommunity.Model.Models;
 using Element;
@@ -29,16 +29,16 @@ namespace BlazorCommunity.WasmApp.Components.User
             };
         }
 
-        protected BForm bForm;
+        protected ElForm ElForm;
         protected UploadActivity value;
 
         protected async Task Submit()
         {
-            if (!bForm.IsValid())
+            if (!ElForm.IsValid())
             {
                 return;
             }
-            var activity = bForm.GetValue<UploadActivity>();
+            var activity = ElForm.GetValue<UploadActivity>();
             var upload = activity.Previews.FirstOrDefault();
             User.Avator = upload?.Url;
 
@@ -49,13 +49,13 @@ namespace BlazorCommunity.WasmApp.Components.User
             }
             else
             {
-                ToastError("鏇存柊澶辫触");
+                ToastError("更新失败");
             }
         }
 
         protected override void InitTabTitle()
         {
-            tabTitle = "鎴戠殑澶村儚";
+            tabTitle = "我的头像";
         }
     }
 

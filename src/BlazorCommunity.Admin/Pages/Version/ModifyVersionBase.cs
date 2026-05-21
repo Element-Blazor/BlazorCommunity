@@ -1,4 +1,4 @@
-﻿using BlazorCommunity.Admin.Enum;
+using BlazorCommunity.Admin.Enum;
 using BlazorCommunity.Admin.Service;
 using BlazorCommunity.DTO.Admin;
 using Element;
@@ -10,7 +10,7 @@ namespace BlazorCommunity.Admin.Pages.Version
 {
     public class ModifyVersionBase : BDialogBase
     {
-        internal BForm versionForm;
+        internal ElForm versionForm;
 
         [Parameter]
         public VersionDisplayDto model { get; set; }

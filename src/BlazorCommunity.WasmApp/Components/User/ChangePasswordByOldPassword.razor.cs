@@ -1,4 +1,4 @@
-ï»¿using BlazorCommunity.WasmApp.Model;
+using BlazorCommunity.WasmApp.Model;
 using BlazorCommunity.WasmApp.Pages;
 using BlazorCommunity.Model.Models;
 using Element;
@@ -10,7 +10,7 @@ namespace BlazorCommunity.WasmApp.Components.User
 {
     public partial class ChangePasswordByOldPassword : PageBase
     {
-        protected BForm bformOldpwd;
+        protected ElForm bformOldpwd;
         protected string VerifyCode = "";
 
         protected async Task ChangePwdByOld()
@@ -30,20 +30,20 @@ namespace BlazorCommunity.WasmApp.Components.User
             var PasswordModel = bformOldpwd.GetValue<PasswordModel>();
             if (PasswordModel.Password != PasswordModel.ConfirmPassword)
             {
-                ToastError("æ–°å¯†ç ä¸ç¡®è®¤å¯†ç ä¸ä¸€è‡´");
+                ToastError("ĞÂÃÜÂëÓëÈ·ÈÏÃÜÂë²»Ò»ÖÂ");
                 return false;
             }
             return true;
         }
 
-        private async Task ResetPassword(BForm bForm)
+        private async Task ResetPassword(ElForm ElForm)
         {
-            var PasswordModel = bForm.GetValue<PasswordModel>();
+            var PasswordModel = ElForm.GetValue<PasswordModel>();
             var ResetPasswordResult = await NetService.ResetPasswordAsync(new UpdateUserPasswordDto { NewPassword = PasswordModel.Password, UserId = User.Id });
             if (ResetPasswordResult.IsSuccess)
             {
-                ToastSuccess("å¯†ç é‡ç½®æˆåŠŸ,ä¸‹æ¬¡ç™»å½•è¯·ä½¿ç”¨æ–°å¯†ç ");
-                bForm.Reset();
+                ToastSuccess("ÃÜÂëÖØÖÃ³É¹¦,ÏÂ´ÎµÇÂ¼ÇëÊ¹ÓÃĞÂÃÜÂë");
+                ElForm.Reset();
                 return;
             }
             else

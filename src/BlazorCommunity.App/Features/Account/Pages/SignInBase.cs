@@ -1,4 +1,4 @@
-ï»¿using BlazorCommunity.App.Pages;
+using BlazorCommunity.App.Pages;
 using Element;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.DataProtection;
@@ -24,7 +24,7 @@ namespace BlazorCommunity.App.Features.Account.Pages
         [Parameter]
         public SignInModel signInModel { get; set; }
 
-        public BForm signInForm;
+        public ElForm signInForm;
 
         protected async Task Login()
         {
@@ -39,18 +39,18 @@ namespace BlazorCommunity.App.Features.Account.Pages
                     user = await userManager.FindByEmailAsync(signInModel.UserAccount);
                     if(user==null)
                     {
-                        ToastError("è´¦å·ä¸å­˜åœ¨ï¼Œè¯·å…ˆæ³¨å†Œ");
+                        ToastError("ÕËºÅ²»´æÔÚ£¬ÇëÏÈ×¢²á");
                         return;
                     }
                 }
                 if (user.Status != 0)
                 {
-                    ToastError("è´¦å·å·²è¢«å°ï¼Œè¯·è”ç³»ç®¡ç†å‘˜");
+                    ToastError("ÕËºÅÒÑ±»·â£¬ÇëÁªÏµ¹ÜÀíÔ±");
                     return;
                 }
                 if (user != null && await userManager.CheckPasswordAsync(user, signInModel.Password))
                 {
-                    memoryCache.Remove(user.UserName);    //æ¸…é™¤token
+                    memoryCache.Remove(user.UserName);    //Çå³ıtoken
 
                     var token = await userManager.GenerateUserTokenAsync(user, TokenOptions.DefaultProvider, "SignIn");
 
@@ -74,7 +74,7 @@ namespace BlazorCommunity.App.Features.Account.Pages
                 }
                 else
                 {
-                    ToastError("ç™»å½•å¤±è´¥ï¼Œç”¨æˆ·åæˆ–å¯†ç é”™è¯¯");
+                    ToastError("µÇÂ¼Ê§°Ü£¬ÓÃ»§Ãû»òÃÜÂë´íÎó");
                     return;
                 }
             });

@@ -1,4 +1,4 @@
-ï»¿using BlazorCommunity.App.Model;
+using BlazorCommunity.App.Model;
 using BlazorCommunity.App.Pages;
 using Element;
 using Microsoft.AspNetCore.Components;
@@ -11,7 +11,7 @@ namespace BlazorCommunity.App.Features.Account.Pages
     public class ResetPasswordBase : PageBase
     {
         protected string PreviousRoute = "/account/forget";
-        protected BForm form;
+        protected ElForm form;
 
         [Parameter]
         public string UserId { get; set; }
@@ -30,19 +30,19 @@ namespace BlazorCommunity.App.Features.Account.Pages
                 var user = await userManager.FindByIdAsync(UserId);
                 if (user is null)
                 {
-                    ToastError("è¯¥é‚®ç®±æœªç»‘å®šç”¨æˆ·");
+                    ToastError("¸ÃÓÊÏäÎ´°ó¶¨ÓÃ»§");
                     return;
                 }
                 var token = await userManager.GeneratePasswordResetTokenAsync(user);
                 if (token is null)
                 {
-                    ToastError("è·å–tokenå¤±è´¥");
+                    ToastError("»ñÈ¡tokenÊ§°Ü");
                     return;
                 }
                 var resetResult = await userManager.ResetPasswordAsync(user, token, model.Password);
                 if (resetResult.Succeeded)
                 {
-                    ToastSuccess("å¯†ç é‡ç½®æˆåŠŸï¼Œè¯·ç¨åä½¿ç”¨æ–°å¯†ç ç™»å½•");
+                    ToastSuccess("ÃÜÂëÖØÖÃ³É¹¦£¬ÇëÉÔºóÊ¹ÓÃĞÂÃÜÂëµÇÂ¼");
                     await WithFullScreenLoading(async () => await Task.Delay(1500));
                     NavigationManager.NavigateTo("/account/signin", true);
                 }
@@ -54,7 +54,7 @@ namespace BlazorCommunity.App.Features.Account.Pages
             }
             else
             {
-                ToastError("ä¸¤æ¬¡è¾“å…¥å¯†ç ä¸ä¸€è‡´");
+                ToastError("Á½´ÎÊäÈëÃÜÂë²»Ò»ÖÂ");
                 return;
             }
         }

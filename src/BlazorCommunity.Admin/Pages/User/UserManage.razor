@@ -1,62 +1,62 @@
-﻿@page "/manage/user"
+@page "/manage/user"
 @using BlazorCommunity.Admin.QueryCondition
 @using BlazorCommunity.DTO.Admin;
 @inherits UserManageBase
 
-<BForm Inline="true" @ref="searchForm">
-    <BFormItem TValue="string" Label="用户名" Name="@nameof(QueryUserCondition.UserName)" IsRequired="false">
-        <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="string" Label="手机" Name="@nameof(QueryUserCondition.PhoneNumber)" IsRequired="false">
-        <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="string" Label="邮箱" Name="@nameof(QueryUserCondition.Email)" IsRequired="false">
-        <BInput IsClearable="true" TValue="string"></BInput>
-    </BFormItem>
-    <BFormItem TValue="DateTime?" Label="注册时间" IsRequired="false" Name="@nameof(QueryUserCondition.CreateDateStart)">
-        <BDatePicker IsClearable="true"></BDatePicker>
-    </BFormItem>
-    <BFormItem TValue="DateTime?" Label="至" IsRequired="false" Name="@nameof(QueryUserCondition.CreateDateEnd)">
-        <BDatePicker IsClearable="true"></BDatePicker>
-    </BFormItem>
-    <BFormActionItem>
-        <BButton Type="@ButtonType.Primary" IsPlain="true" OnClick="e=>SearchData()">搜索</BButton>
-    </BFormActionItem>
-</BForm>
+<ElForm Inline="true" @ref="searchForm">
+    <ElFormItem TValue="string" Label="用户�? Prop="@nameof(QueryUserCondition.UserName)" Required="false">
+        <ElInput Clearable="true" TValue="string"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="string" Label="手机" Prop="@nameof(QueryUserCondition.PhoneNumber)" Required="false">
+        <ElInput Clearable="true" TValue="string"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="string" Label="邮箱" Prop="@nameof(QueryUserCondition.Email)" Required="false">
+        <ElInput Clearable="true" TValue="string"></ElInput>
+    </ElFormItem>
+    <ElFormItem TValue="DateTime?" Label="注册时间" Required="false" Prop="@nameof(QueryUserCondition.CreateDateStart)">
+        <ElDatePicker Clearable="true"></ElDatePicker>
+    </ElFormItem>
+    <ElFormItem TValue="DateTime?" Label="�? Required="false" Prop="@nameof(QueryUserCondition.CreateDateEnd)">
+        <ElDatePicker Clearable="true"></ElDatePicker>
+    </ElFormItem>
+    <ElFormActionItem>
+        <ElButton Type="@ButtonType.Primary" Plain="true" OnClick="e=>SearchData()">搜索</ElButton>
+    </ElFormActionItem>
+</ElForm>
 
 <div class="el-divider el-divider--horizontal" style="margin: 5px 0;"><!----></div>
 
-<BTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
-    <BTableColumns>
-        <BTableColumn Width="100" Property="@nameof(UserDisplayDto.UserName)" Text="账号" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(UserDisplayDto.Email)" Text="邮箱" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(UserDisplayDto.PhoneNumber)" Text="手机" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(UserDisplayDto.NickName)" Text="昵称" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="50" Property="@nameof(UserDisplayDto.SexDisplay)" Text="性别" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="50" Property="@nameof(UserDisplayDto.StatusDisplay)" Text="状态" Style="text-align:center;color:red;"></BTableColumn>
-        <BTableColumn Width="200" Property="@nameof(UserDisplayDto.RoleName)" Text="角色" Style="text-align:center;"></BTableColumn>
-        <BTableColumn Width="100" Property="@nameof(UserDisplayDto.CreateDate)" Format="yyyy-MM-dd" Text="注册日期" Style="text-align:center;"></BTableColumn>
-        <BTableTemplateColumn Text="操作" Width="150">
-            <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> Detail(context))">查看</BButton>
-            <BButton Type="@ButtonType.Success" Size="@ButtonSize.Small" IsPlain="true" OnClick="@(e=> SetRole(context))">角色</BButton>
-            <BDropDown Style="cursor:pointer;">
+<ElTable DataSource="Datas" Total="DataCount" @bind-CurrentPage="CurrentPage" PageSize="pageSize" @ref="table" HasSelectionColumn="false" IsStripe="true" AutoGenerateColumns="false">
+    <ElTableColumns>
+        <ElTableColumn Width="100" Property="@nameof(UserDisplayDto.UserName)" Text="账号" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="100" Property="@nameof(UserDisplayDto.Email)" Text="邮箱" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="100" Property="@nameof(UserDisplayDto.PhoneNumber)" Text="手机" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="100" Property="@nameof(UserDisplayDto.NickName)" Text="昵称" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="50" Property="@nameof(UserDisplayDto.SexDisplay)" Text="性别" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="50" Property="@nameof(UserDisplayDto.StatusDisplay)" Text="状�? Style="text-align:center;color:red;"></ElTableColumn>
+        <ElTableColumn Width="200" Property="@nameof(UserDisplayDto.RoleName)" Text="角色" Style="text-align:center;"></ElTableColumn>
+        <ElTableColumn Width="100" Property="@nameof(UserDisplayDto.CreateDate)" Format="yyyy-MM-dd" Text="注册日期" Style="text-align:center;"></ElTableColumn>
+        <ElTableTemplateColumn Text="操作" Width="150">
+            <ElButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" Plain="true" OnClick="@(e=> Detail(context))">查看</ElButton>
+            <ElButton Type="@ButtonType.Success" Size="@ButtonSize.Small" Plain="true" OnClick="@(e=> SetRole(context))">角色</ElButton>
+            <ElDropdown Style="cursor:pointer;">
                 <Trigger>
-                    <BButton Type="@ButtonType.Default" Size="@ButtonSize.Small" IsPlain="true">操作</BButton>
+                    <ElButton Type="@ButtonType.Default" Size="@ButtonSize.Small" Plain="true">操作</ElButton>
                 </Trigger>
                 <Items>
                     @if (context is UserDisplayDto dto)
                         if (dto.Status == 0)
                         {
-                            <BDropDownItem OnClick="@(e => Delete(context))">删除</BDropDownItem>
+                            <ElDropdownItem OnClick="@(e => Delete(context))">删除</ElDropdownItem>
                         }
                         else
                         {
-                            <BDropDownItem OnClick="@(e => Resume(context))">恢复</BDropDownItem>
+                            <ElDropdownItem OnClick="@(e => Resume(context))">恢复</ElDropdownItem>
                         }
-                    <BDropDownItem OnClick="@(e=> ResetPassword(context))">重置密码</BDropDownItem>
+                    <ElDropdownItem OnClick="@(e=> ResetPassword(context))">重置密码</ElDropdownItem>
 
                 </Items>
-            </BDropDown>
-        </BTableTemplateColumn>
-    </BTableColumns>
-</BTable>
+            </ElDropdown>
+        </ElTableTemplateColumn>
+    </ElTableColumns>
+</ElTable>
