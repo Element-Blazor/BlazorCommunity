@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.Admin.Pages.Topic
 {
-    public class ChooseRolesDialogBase:BDialogBase
+    public class ChooseRolesDialogBase:ElementDialogBase
     {
 
         [Parameter]
@@ -47,3 +47,4 @@ namespace BlazorCommunity.Admin.Pages.Topic
         }
     }
 }
+

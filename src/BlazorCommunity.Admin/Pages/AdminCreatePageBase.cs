@@ -1,4 +1,4 @@
-using Element.Admin;
+Ôªøusing Element.Admin;
 using BlazorCommunity.Admin.ViewModel;
 using Element;
 using Microsoft.AspNetCore.Components;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.Admin.Pages
 {
-    public class AdminCreatePageBase : BAdminPageBase
+    public class AdminCreatePageBase : ElAdminPageBase
     {
         internal ElForm form;
 
@@ -30,7 +30,7 @@ namespace BlazorCommunity.Admin.Pages
             await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
             {
-                //IsAdminDisable = await RoleManager.RoleExistsAsync("π‹¿Ì‘±");
+                //IsAdminDisable = await RoleManager.RoleExistsAsync("ÁÆ°ÁêÜÂëò");
                 form.MarkAsRequireRender();
                 MarkAsRequireRender();
                 StateHasChanged();

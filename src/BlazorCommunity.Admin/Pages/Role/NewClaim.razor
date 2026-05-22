@@ -1,7 +1,7 @@
 @using BlazorCommunity.DTO.Admin
 @inherits NewClaimBase
 
-    <ElForm Style="width:100%;" @ref="claimForm" Model="model" LabelPosition="right" EnableAlwaysRender="true">
+    <ElForm Style="width:100%;" @ref="claimForm" Model="model" LabelPosition="@LabelAlign.Right" EnableAlwaysRender="true">
         <ElFormItem TValue="string" Label="RoleId" Prop="@nameof(RoleClaimDto.RoleId)" EnableAlwaysRender="true">
             <ElInput TValue="string"  EnableAlwaysRender="true" Disabled="true"></ElInput>
         </ElFormItem>

@@ -1,4 +1,4 @@
-using BlazorCommunity.Admin.Service;
+﻿using BlazorCommunity.Admin.Service;
 using BlazorCommunity.DTO.Admin;
 using Element;
 using Microsoft.AspNetCore.Components;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.Admin.Pages.Role
 {
-    public class NewClaimBase:BDialogBase
+    public class NewClaimBase:ElementDialogBase
     {
 
         [Parameter]
@@ -42,3 +42,4 @@ namespace BlazorCommunity.Admin.Pages.Role
         }
     }
 }
+

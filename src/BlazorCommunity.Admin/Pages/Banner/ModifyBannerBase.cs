@@ -1,4 +1,4 @@
-using BlazorCommunity.Admin.Enum;
+ï»¿using BlazorCommunity.Admin.Enum;
 using BlazorCommunity.Admin.Service;
 using BlazorCommunity.DTO.Admin;
 using BlazorCommunity.Enums;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.Admin.Pages.Banner
 {
-    public class ModifyBannerBase : BDialogBase
+    public class ModifyBannerBase : ElementDialogBase
     {
         internal ElForm versionForm;
 
@@ -53,12 +53,12 @@ namespace BlazorCommunity.Admin.Pages.Banner
             var banner = versionForm.GetValue<BannerDisplayDto>();
             if (banner.Previews == null || banner.Previews.Length == 0)
             {
-                MessageService.Show("ÇëÉÏ´«Í¼Æ¬ºóÔÙÌá½»", MessageType.Error);
+                MessageService.Show("è¯·ä¸Šä¼ å›¾ç‰‡åå†æäº¤", MessageType.Error);
                 return;
             }
             if (banner.Previews.Length > 1)
             {
-                MessageService.Show("Ò»´ÎÖ»ÄÜÉÏ´«Ò»ÕÅÍ¼Æ¬", MessageType.Error);
+                MessageService.Show("ä¸€æ¬¡åªèƒ½ä¸Šä¼ ä¸€å¼ å›¾ç‰‡", MessageType.Error);
                 return;
             }
 

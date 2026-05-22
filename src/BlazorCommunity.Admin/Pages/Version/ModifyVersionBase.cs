@@ -1,4 +1,4 @@
-using BlazorCommunity.Admin.Enum;
+﻿using BlazorCommunity.Admin.Enum;
 using BlazorCommunity.Admin.Service;
 using BlazorCommunity.DTO.Admin;
 using Element;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.Admin.Pages.Version
 {
-    public class ModifyVersionBase : BDialogBase
+    public class ModifyVersionBase : ElementDialogBase
     {
         internal ElForm versionForm;
 

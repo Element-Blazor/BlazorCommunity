@@ -1,11 +1,11 @@
-﻿using Element.Admin;
+using Element.Admin;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazorCommunity.AdminDbContext
 {
-    public class BlazorCommunityAdminDbContext : IdentityDbContext
+    public class BlazorCommunityAdminDbContext : IdentityDbContext<IdentityUser>
     {
         public BlazorCommunityAdminDbContext()
         {

@@ -1,7 +1,7 @@
 @using BlazorCommunity.DTO.Admin
 @inherits ModifyVersionBase
 
-<ElForm Style="width:660px;" @ref="versionForm" Model="model" LabelPosition="right">
+<ElForm Style="width:660px;" @ref="versionForm" Model="model" LabelPosition="@LabelAlign.Right">
     @*<ElFormItem TValue="int" Label="项目" Prop="@nameof(VersionDisplayDto.Project)" Required="true">
         <ElSelect TValue="int?" Value="0">
         </ElSelect>

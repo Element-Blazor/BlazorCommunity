@@ -1,4 +1,4 @@
-using BlazorCommunity.Admin.Service;
+ï»¿using BlazorCommunity.Admin.Service;
 using BlazorCommunity.DTO.Admin;
 using Element;
 using Microsoft.AspNetCore.Components;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.Admin.Pages.Role
 {
-    public class ModifyRoleClaimBase : BDialogBase
+    public class ModifyRoleClaimBase : ElementDialogBase
     {
 
         internal ElForm roleForm;
@@ -44,7 +44,7 @@ namespace BlazorCommunity.Admin.Pages.Role
             {
                 { "RoleId", RoleId }
             };
-            DialogResult result = await DialogService.ShowDialogAsync<NewClaim>("Ìí¼ÓClaim", 500, model);
+            DialogResult result = await DialogService.ShowDialogAsync<NewClaim>("æ·»åŠ Claim", 500, model);
             if (Convert.ToBoolean(result.Result))
             {
                 await LoadDatas();
@@ -67,7 +67,7 @@ namespace BlazorCommunity.Admin.Pages.Role
         {
             var claim = ((RoleClaimDto)context);
           
-            MessageBoxResult Confirm = await MessageBox.ConfirmAsync("È·¶¨ÒªÉ¾³ı¸Ã¼ÇÂ¼Âğ£¿");
+            MessageBoxResult Confirm = await MessageBox.ConfirmAsync("ç¡®å®šè¦åˆ é™¤è¯¥è®°å½•å—ï¼Ÿ");
             if (Confirm == MessageBoxResult.Ok)
             {
                 var DeleteResult = await NetService.DeleteRoleClaim(claim);
@@ -78,7 +78,8 @@ namespace BlazorCommunity.Admin.Pages.Role
                 MessageService.Show(DeleteResult.Message, DeleteResult.IsSuccess ? MessageType.Success : MessageType.Error);
             }
             else
-                MessageService.Show("ÄúÑ¡ÔñÁËÈ¡Ïû", MessageType.Info);
+                MessageService.Show("æ‚¨é€‰æ‹©äº†å–æ¶ˆ", MessageType.Info);
         }
     }
 }
+

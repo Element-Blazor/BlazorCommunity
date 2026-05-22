@@ -4,9 +4,9 @@
 <br />
 
 
-<ElForm Style="width:100%;" @ref="roleForm" Model="rolesDto" LabelPosition="right" EnableAlwaysRender="true">
+<ElForm Style="width:100%;" @ref="roleForm" Model="rolesDto" LabelPosition="@LabelAlign.Right" EnableAlwaysRender="true">
     <ElFormItem TValue="List<RoleDisplayDto>" Label="角色列表" Prop="@nameof(RolesDto.Roles)" EnableAlwaysRender="true">
-        <ElCheckbox TValue="object" Model="true" Status="@Status" StatusChanged="status=>SelectAll(status)">全�</ElCheckbox>
+        <ElCheckbox TValue="object" Model="true" Status="@Status" StatusChanged="status=>SelectAll(status)">全�</ElCheckbox>
         <ElCheckboxGroup TValue="List<RoleDisplayDto>" EnableAlwaysRender="true">
             @foreach (var item in Values)
             {

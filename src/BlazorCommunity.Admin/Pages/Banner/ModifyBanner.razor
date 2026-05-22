@@ -1,17 +1,17 @@
 @using BlazorCommunity.DTO.Admin
 @inherits ModifyBannerBase
 
-<ElForm Style="width:100%;" @ref="versionForm" Model="model" LabelPosition="right">
+<ElForm Style="width:100%;" @ref="versionForm" Model="model" LabelPosition="@LabelAlign.Right">
     <ElFormItem TValue="string" Label="描述" Prop="@nameof(BannerDisplayDto.Title)" Required="true">
         <ElInput Clearable="true" TValue="string"></ElInput>
     </ElFormItem>
 
-    <ElFormItem TValue="IFileModel[]" Label="Banner�? Prop="@nameof(BannerDisplayDto.Previews)">
+    <ElFormItem TValue="IFileModel[]" Label="Banner�? Prop="@nameof(BannerDisplayDto.Previews)">
         <div class="admin-banner-img">
             <ElUpload Url="@ServerUrl" UploadType="UploadType.Image"></ElUpload>
         </div>
     </ElFormItem>
-    <ElFormItem TValue="bool" Label="显示到前�? Prop="@nameof(BannerDisplayDto.Show)" Required="true">
+    <ElFormItem TValue="bool" Label="显示到前�? Prop="@nameof(BannerDisplayDto.Show)" Required="true">
         <ElSwitch TValue="bool" ActiveValue="true" InactiveValue="false"></ElSwitch>
     </ElFormItem>
     <ElFormItem TValue="string" Label="ID" Prop="@nameof(BannerDisplayDto.Id)" Required="false" IsHidden="true">

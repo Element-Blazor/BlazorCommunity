@@ -1,4 +1,4 @@
-using BlazorCommunity.Admin.Enum;
+﻿using BlazorCommunity.Admin.Enum;
 using BlazorCommunity.Admin.Service;
 using BlazorCommunity.DTO.Admin;
 using Element;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.Admin.Pages.Role
 {
-    public class NewRoleBase : BDialogBase
+    public class NewRoleBase : ElementDialogBase
     {
         internal ElForm roleForm;
 
@@ -47,3 +47,4 @@ namespace BlazorCommunity.Admin.Pages.Role
         }
     }
 }
+

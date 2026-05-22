@@ -1,7 +1,7 @@
 @using BlazorCommunity.DTO.Admin
 @inherits NewRoleBase
 
-    <ElForm Style="width:100%;" @ref="roleForm" Model="model" LabelPosition="right">
+    <ElForm Style="width:100%;" @ref="roleForm" Model="model" LabelPosition="@LabelAlign.Right">
         <ElFormItem TValue="string" Label="Id" Prop="@nameof(RoleDisplayDto.Id)" IsHidden="@(EntryOperation==BlazorCommunity.Admin.Enum. EntryOperation.Add)">
             <ElInput TValue="string" Disabled="true"></ElInput>
         </ElFormItem>

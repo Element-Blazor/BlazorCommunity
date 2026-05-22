@@ -1,10 +1,10 @@
-using Element.Admin;
+﻿using Element.Admin;
 using Element;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorCommunity.Admin.Pages
 {
-    public class AdminLoginBase : BAdminPageBase
+    public class AdminLoginBase : ElAdminPageBase
     {
         public ElForm Form { get; internal set; }
 
