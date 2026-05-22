@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace BlazUICommunity.IRepository
+namespace BlazorCommunity.IRepository
 {
     public class Class1
     {

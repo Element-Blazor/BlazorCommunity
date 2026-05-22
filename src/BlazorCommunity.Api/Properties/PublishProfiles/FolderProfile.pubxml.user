@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
-此文件由 Web 项目的发布/打包过程使用。可以通过编辑此 MSBuild 文件
-自定义此过程的行为。为了解与此相关的更多内容，请访问 https://go.microsoft.com/fwlink/?LinkID=208121。 
+姝ゆ枃浠剁敱 Web 椤圭洰鐨勫彂甯?鎵撳寘杩囩▼浣跨敤銆傚彲浠ラ€氳繃缂栬緫姝?MSBuild 鏂囦欢
+鑷畾涔夋杩囩▼鐨勮涓恒€備负浜嗚В涓庢鐩稿叧鐨勬洿澶氬唴瀹癸紝璇疯闂?https://go.microsoft.com/fwlink/?LinkID=208121銆?
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>E:\dev\blazor\BlazUICommunity\BlazUICommunity\BlazUICommunity.Api\bin\Release\netcoreapp3.1\publish\</_PublishTargetUrl>
+    <_PublishTargetUrl>E:\dev\blazor\BlazorCommunity\BlazorCommunity.Api\bin\Release\net10.0\publish\</_PublishTargetUrl>
   </PropertyGroup>
 </Project>

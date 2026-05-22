@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace BlazUICommunity.Service
+namespace BlazorCommunity.Service
 {
     public class Class1
     {

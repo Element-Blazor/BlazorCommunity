@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Blazui.Community.StreamExtensions
+namespace BlazorCommunity.StreamExtensions
 {
     public class Class1
     {

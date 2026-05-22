@@ -9,7 +9,7 @@
     <WebStackScaffolding_IsReferencingScriptLibrariesSelected>True</WebStackScaffolding_IsReferencingScriptLibrariesSelected>
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
-    <ActiveDebugProfile>Blazui.Community.Api</ActiveDebugProfile>
+    <ActiveDebugProfile>BlazorCommunity.Api</ActiveDebugProfile>
     <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
     <ShowAllFiles>false</ShowAllFiles>
     <RazorPage_SelectedScaffolderID>RazorPageScaffolder</RazorPage_SelectedScaffolderID>

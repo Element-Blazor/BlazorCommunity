@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace BlazUICommunity.Interface
+namespace BlazorCommunity.Interface
 {
     public class Class1
     {

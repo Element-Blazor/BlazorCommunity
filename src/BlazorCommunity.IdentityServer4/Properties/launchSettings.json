@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "BlazUICommunity.IdentityServer4": {
+    "BlazorCommunity.IdentityServer4": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",

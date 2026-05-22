@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Blazui.Community.MSTest
+namespace BlazorCommunity.MSTest
 {
     [TestClass]
     public class UnitTest1

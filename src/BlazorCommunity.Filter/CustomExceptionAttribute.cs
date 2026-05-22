@@ -1,9 +1,9 @@
-﻿using Blazui.Community.Utility.Response;
+using BlazorCommunity.Utility.Response;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using System.Net;
 
-namespace Blazui.Community.Filter
+namespace BlazorCommunity.Filter
 {
     public class CustomExceptionAttribute : IExceptionFilter
     {

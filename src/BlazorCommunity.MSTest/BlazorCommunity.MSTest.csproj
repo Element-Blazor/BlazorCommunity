@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BlazUICommunity.App\Blazui.Community.App.csproj" />
+    <ProjectReference Include="..\BlazorCommunity.App\BlazorCommunity.App.csproj" />
   </ItemGroup>
 
 </Project>

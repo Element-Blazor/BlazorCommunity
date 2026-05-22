@@ -1,7 +1,7 @@
-﻿using Blazui.Community.Utility.Response;
+using BlazorCommunity.Utility.Response;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Blazui.Community.Filter
+namespace BlazorCommunity.Filter
 {
     public class CustomValidateModelAttribute : ActionFilterAttribute
     {

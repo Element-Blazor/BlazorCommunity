@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace BlazUICommunity.IdentityServer4
+namespace BlazorCommunity.IdentityServer4
 {
     public class Program
     {

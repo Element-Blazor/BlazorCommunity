@@ -1,9 +1,9 @@
-﻿using Blazui.Community.Utility.Response;
+using BlazorCommunity.Utility.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 
-namespace Blazui.Community.Filter
+namespace BlazorCommunity.Filter
 {
     public class CustomApiResultAttribute : ActionFilterAttribute
     {
@@ -22,7 +22,7 @@ namespace Blazui.Community.Filter
             }
             else
             {
-                if (!context.Controller.GetType().IsDefined(typeof(BlazuiUploadApiResultAttribute), true))
+                if (!context.Controller.GetType().IsDefined(typeof(CommunityUploadApiResultAttribute), true))
                 {
                     if (context.Result is NoContentResponse || context.Result is NoContentResult)
                     {

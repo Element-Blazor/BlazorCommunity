@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Blazui.Community.Filter
+namespace BlazorCommunity.Filter
 {
-    public class BlazuiUploadApiResultAttribute : ActionFilterAttribute
+    public class CommunityUploadApiResultAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
