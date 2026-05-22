@@ -1,0 +1,28 @@
+<ElCard Shadow="@ShadowShowType.Never" BodyCls="topic-list-card__body">
+    <Header>
+        <div class="section-heading section-heading--inline">
+            <div>
+                <p class="section-heading__eyebrow">Overview</p>
+                <h2>组件总览</h2>
+            </div>
+            <div class="section-heading__actions">
+                <ElButton Size="@ButtonSize.Small" Type="@ButtonType.Primary" Plain="true">最新</ElButton>
+                <ElButton Size="@ButtonSize.Small" Plain="true">精华</ElButton>
+                <ElButton Size="@ButtonSize.Small" Plain="true">待回答</ElButton>
+            </div>
+        </div>
+    </Header>
+    <Body>
+        <div class="topic-list">
+            @foreach (var topic in Topics)
+            {
+                <TopicCard Topic="topic" />
+            }
+        </div>
+    </Body>
+</ElCard>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<Topic> Topics { get; set; } = Array.Empty<Topic>();
+}

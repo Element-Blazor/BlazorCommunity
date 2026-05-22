@@ -1,0 +1,32 @@
+@inject NavigationManager Navigation
+
+<article class="topic-card">
+    <div class="topic-card__status">
+        <ElTag Type="@Topic.Kind.ToTagType()" Theme="@TagTheme.Light" Size="@TagSize.Small">@Topic.Kind.ToLabel()</ElTag>
+        @if (Topic.Status != TopicStatus.Normal)
+        {
+            <ElTag Type="@Topic.Status.ToTagType()" Theme="@TagTheme.Plain" Size="@TagSize.Small">@Topic.Status.ToLabel()</ElTag>
+        }
+    </div>
+
+    <div class="topic-card__main">
+        <button class="topic-card__title" @onclick="@(() => Navigation.NavigateTo($"/topic/{Topic.Id}"))">@Topic.Title</button>
+        <p>@Topic.Excerpt</p>
+        <div class="topic-card__tags">
+            @foreach (var tag in Topic.Tags)
+            {
+                <ElTag Type="@TagType.Info" Theme="@TagTheme.Plain" Size="@TagSize.Mini">@tag</ElTag>
+            }
+        </div>
+    </div>
+
+    <div class="topic-card__stats">
+        <span><strong>@Topic.ReplyCount</strong> 回复</span>
+        <span><strong>@Topic.ViewCount</strong> 浏览</span>
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired]
+    public Topic Topic { get; set; } = default!;
+}

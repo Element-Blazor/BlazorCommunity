@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="ElementCommunity.App/ElementCommunity.App.csproj" />
+  <Project Path="ElementCommunity.Components/ElementCommunity.Components.csproj" />
+  <Project Path="ElementCommunity.Domain/ElementCommunity.Domain.csproj" />
+  <Project Path="ElementCommunity.Infrastructure/ElementCommunity.Infrastructure.csproj" />
+</Solution>

@@ -1,0 +1,23 @@
+<ElCard Shadow="@ShadowShowType.Never" BodyCls="user-card__body">
+    <Body>
+        <div class="user-card">
+            <div class="avatar">@User.AvatarText</div>
+            <div>
+                <h3>@User.DisplayName</h3>
+                <p>@User.Role</p>
+            </div>
+        </div>
+        <p class="user-card__bio">@User.Bio</p>
+        <div class="user-card__stats">
+            <span><strong>@User.Reputation</strong> 声望</span>
+            <span><strong>@User.TopicCount</strong> 主题</span>
+            <span><strong>@User.ReplyCount</strong> 回复</span>
+        </div>
+        <ElButton Type="@ButtonType.Primary" Plain="true" Size="@ButtonSize.Small" Style="width:100%;">查看主页</ElButton>
+    </Body>
+</ElCard>
+
+@code {
+    [Parameter, EditorRequired]
+    public UserProfile User { get; set; } = default!;
+}

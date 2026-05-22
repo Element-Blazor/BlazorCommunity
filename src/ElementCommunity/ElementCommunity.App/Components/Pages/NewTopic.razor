@@ -1,0 +1,101 @@
+@page "/topic/new"
+@inject ICommunityReadModel ReadModel
+
+<PageTitle>发布主题 - ElementCommunity</PageTitle>
+
+<section class="community-page">
+    <div class="compose-grid">
+        <section class="compose-grid__main">
+            <ElCard Shadow="@ShadowShowType.Never" BodyCls="compose-card__body">
+                <Header>
+                    <div class="section-heading section-heading--inline">
+                        <div>
+                            <p class="section-heading__eyebrow">New Topic</p>
+                            <h1>发布主题</h1>
+                        </div>
+                        <ElTag Type="@TagType.Success" Theme="@TagTheme.Plain" Size="@TagSize.Small">静态骨架</ElTag>
+                    </div>
+                </Header>
+                <Body>
+                    <div class="compose-form">
+                        <label>
+                            <span>标题</span>
+                            <ElInput TValue="string" Placeholder="请输入主题标题" Clearable="true" />
+                        </label>
+
+                        <div class="compose-form__row">
+                            <label>
+                                <span>版块</span>
+                                <ElSelect TValue="string" Placeholder="选择发布版块">
+                                    @foreach (var forum in Snapshot.Forums)
+                                    {
+                                        <ElOption TValue="string" Value="@forum.Slug" Text="@forum.Name" />
+                                    }
+                                </ElSelect>
+                            </label>
+                            <label>
+                                <span>类型</span>
+                                <ElSelect TValue="TopicKind" Placeholder="选择主题类型" />
+                            </label>
+                        </div>
+
+                        <label>
+                            <span>标签</span>
+                            <ElInput TValue="string" Placeholder="例如：ElButton, Element Plus, Blazor Web App" Clearable="true" />
+                        </label>
+
+                        <label>
+                            <span>Markdown 内容</span>
+                            <ElInput TValue="string" Type="@InputType.Textarea" Placeholder="写下问题背景、复现步骤或方案说明" Autosize="true" InputStyle="min-height: 260px;" />
+                        </label>
+
+                        <div class="compose-form__actions">
+                            <ElButton Plain="true">保存草稿</ElButton>
+                            <ElButton Type="@ButtonType.Primary">发布主题</ElButton>
+                        </div>
+                    </div>
+                </Body>
+            </ElCard>
+        </section>
+
+        <aside class="compose-grid__side">
+            <ElCard Shadow="@ShadowShowType.Never" BodyCls="side-card__body">
+                <Header>
+                    <div class="side-card__header">
+                        <span>发帖检查</span>
+                        <ElTag Type="@TagType.Info" Theme="@TagTheme.Plain" Size="@TagSize.Mini">ElForm</ElTag>
+                    </div>
+                </Header>
+                <Body>
+                    <ul class="check-list">
+                        <li>控件示例统一写作 ElButton、ElInput、ElSelect。</li>
+                        <li>问题帖包含版本、复现步骤和期望行为。</li>
+                        <li>案例帖补充截图、路由和组件组合方式。</li>
+                    </ul>
+                </Body>
+            </ElCard>
+
+            <ElCard Shadow="@ShadowShowType.Never" BodyCls="side-card__body">
+                <Header>
+                    <div class="side-card__header">
+                        <span>代码区</span>
+                        <ElTag Type="@TagType.Success" Theme="@TagTheme.Plain" Size="@TagSize.Mini">Demo</ElTag>
+                    </div>
+                </Header>
+                <Body>
+                    <pre class="code-panel"><code>&lt;ElButton Type="@@ButtonType.Primary"&gt;发布&lt;/ElButton&gt;
+&lt;ElInput TValue="string" Clearable="true" /&gt;</code></pre>
+                </Body>
+            </ElCard>
+        </aside>
+    </div>
+</section>
+
+@code {
+    private CommunitySnapshot Snapshot { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        Snapshot = ReadModel.GetSnapshot();
+    }
+}

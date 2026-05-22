@@ -1,0 +1,28 @@
+<section class="forum-nav" aria-label="组件分类">
+    <div class="section-heading">
+        <div>
+            <p class="section-heading__eyebrow">Components</p>
+            <h2>组件分类</h2>
+        </div>
+        <ElButton Size="@ButtonSize.Small" Plain="true">全部版块</ElButton>
+    </div>
+
+    <div class="forum-nav__list">
+        @foreach (var forum in Forums)
+        {
+            <a class="forum-nav__item" href="@($"/forum/{forum.Slug}")">
+                <span class="forum-nav__accent" style="@($"background:{forum.Accent}")"></span>
+                <span class="forum-nav__content">
+                    <strong>@forum.Name</strong>
+                    <small>@forum.Summary</small>
+                </span>
+                <span class="forum-nav__meta">@forum.TopicCount</span>
+            </a>
+        }
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<Forum> Forums { get; set; } = Array.Empty<Forum>();
+}

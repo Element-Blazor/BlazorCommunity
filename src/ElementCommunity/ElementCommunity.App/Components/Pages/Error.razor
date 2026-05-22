@@ -1,0 +1,43 @@
+@page "/Error"
+@using System.Diagnostics
+
+<PageTitle>错误 - ElementCommunity</PageTitle>
+
+<section class="community-page community-page--narrow">
+    <ElCard Shadow="@ShadowShowType.Never">
+        <Header>
+            <div class="section-heading">
+                <div>
+                    <p class="section-heading__eyebrow">Error</p>
+                    <h1>请求处理失败</h1>
+                </div>
+            </div>
+        </Header>
+        <Body>
+            <p class="muted-text">页面处理过程中发生错误，请稍后再试。</p>
+
+            @if (ShowRequestId)
+            {
+                <p class="muted-text">
+                    Request ID: <code>@RequestId</code>
+                </p>
+            }
+
+            <ElButton Type="@ButtonType.Primary" Plain="true" OnClick="@(() => Navigation.NavigateTo("/"))">返回首页</ElButton>
+        </Body>
+    </ElCard>
+</section>
+
+@code {
+    [Inject]
+    private NavigationManager Navigation { get; set; } = default!;
+
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    private string? RequestId { get; set; }
+    private bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+
+    protected override void OnInitialized() =>
+        RequestId = Activity.Current?.Id ?? HttpContext?.TraceIdentifier;
+}

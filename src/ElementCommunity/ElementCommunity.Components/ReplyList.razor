@@ -1,0 +1,41 @@
+<section class="reply-list">
+    <div class="section-heading section-heading--inline">
+        <div>
+            <p class="section-heading__eyebrow">Replies</p>
+            <h2>全部回复</h2>
+        </div>
+        <ElButton Size="@ButtonSize.Small" Plain="true">只看楼主</ElButton>
+    </div>
+
+    @foreach (var reply in Replies)
+    {
+        var author = Users.FirstOrDefault(user => user.Id == reply.AuthorId);
+        <ElCard Shadow="@ShadowShowType.Never" BodyCls="reply-card__body">
+            <Body>
+                <article class="reply-card">
+                    <div class="avatar avatar--small">@author?.AvatarText</div>
+                    <div class="reply-card__content">
+                        <div class="reply-card__meta">
+                            <strong>@author?.DisplayName</strong>
+                            <span>#@reply.Floor</span>
+                            <span>@reply.PublishedAt.ToString("MM-dd HH:mm")</span>
+                        </div>
+                        <p>@reply.Content</p>
+                        <div class="reply-card__actions">
+                            <ElButton Text="true" Size="@ButtonSize.Small">引用</ElButton>
+                            <ElButton Text="true" Size="@ButtonSize.Small">回复</ElButton>
+                        </div>
+                    </div>
+                </article>
+            </Body>
+        </ElCard>
+    }
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<Reply> Replies { get; set; } = Array.Empty<Reply>();
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<UserProfile> Users { get; set; } = Array.Empty<UserProfile>();
+}

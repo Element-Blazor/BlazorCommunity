@@ -1,0 +1,109 @@
+@page "/topic/{Id:int}"
+@inject ICommunityReadModel ReadModel
+@inject NavigationManager Navigation
+
+<PageTitle>@(Topic?.Title ?? "帖子详情") - ElementCommunity</PageTitle>
+
+@if (Topic is null)
+{
+    <section class="community-page community-page--narrow">
+        <ElCard Shadow="@ShadowShowType.Never">
+            <Header>
+                <div class="section-heading">
+                    <div>
+                        <p class="section-heading__eyebrow">Topic</p>
+                        <h1>帖子不存在</h1>
+                    </div>
+                </div>
+            </Header>
+            <Body>
+                <p class="muted-text">没有找到编号为 @Id 的主题。</p>
+                <ElButton Type="@ButtonType.Primary" Plain="true" OnClick="@(() => Navigation.NavigateTo("/"))">返回首页</ElButton>
+            </Body>
+        </ElCard>
+    </section>
+}
+else
+{
+    <section class="community-page">
+        <div class="detail-grid">
+            <article class="detail-grid__main">
+                <ElCard Shadow="@ShadowShowType.Never" BodyCls="topic-detail__body">
+                    <Header>
+                        <div class="topic-detail__header">
+                            <div class="topic-detail__tags">
+                                <ElTag Type="@Topic.Kind.ToTagType()" Theme="@TagTheme.Light" Size="@TagSize.Small">@Topic.Kind.ToLabel()</ElTag>
+                                @if (Topic.Status != TopicStatus.Normal)
+                                {
+                                    <ElTag Type="@Topic.Status.ToTagType()" Theme="@TagTheme.Plain" Size="@TagSize.Small">@Topic.Status.ToLabel()</ElTag>
+                                }
+                            </div>
+                            <h1>@Topic.Title</h1>
+                            <div class="topic-detail__meta">
+                                <span>@Author?.DisplayName</span>
+                                <span>@Topic.PublishedAt.ToString("yyyy-MM-dd HH:mm")</span>
+                                <span>@Topic.ViewCount 次浏览</span>
+                            </div>
+                        </div>
+                    </Header>
+                    <Body>
+                        <p class="topic-detail__lead">@Topic.Excerpt</p>
+                        <div class="topic-detail__content">
+                            <p>这是 ElementCommunity 新主线的静态帖子详情骨架。页面只接入 Element-Blazor 的 El* 控件，旧项目的 UI、包名和启动方式不会进入这里。</p>
+                            <p>后续 C2 阶段会把当前内存读模型替换为 EF Core、Identity 与真实发帖/回帖闭环。</p>
+                        </div>
+                        <div class="topic-detail__actions">
+                            <ElButton Type="@ButtonType.Primary" Plain="true">收藏</ElButton>
+                            <ElButton Plain="true">分享</ElButton>
+                            <ElButton Plain="true">关注作者</ElButton>
+                        </div>
+                    </Body>
+                </ElCard>
+
+                <ReplyList Replies="Replies" Users="Snapshot.Users" />
+            </article>
+
+            <aside class="detail-grid__side">
+                @if (Author is not null)
+                {
+                    <UserCard User="Author" />
+                }
+
+                <ElCard Shadow="@ShadowShowType.Never" BodyCls="side-card__body">
+                    <Header>
+                        <div class="side-card__header">
+                            <span>关联标签</span>
+                            <ElButton Text="true" Size="@ButtonSize.Small">订阅</ElButton>
+                        </div>
+                    </Header>
+                    <Body>
+                        <div class="tag-cloud">
+                            @foreach (var tag in Topic.Tags)
+                            {
+                                <ElTag Type="@TagType.Info" Theme="@TagTheme.Plain" Size="@TagSize.Small">@tag</ElTag>
+                            }
+                        </div>
+                    </Body>
+                </ElCard>
+            </aside>
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private CommunitySnapshot Snapshot { get; set; } = default!;
+    private Topic? Topic { get; set; }
+    private UserProfile? Author { get; set; }
+    private IReadOnlyList<Reply> Replies { get; set; } = Array.Empty<Reply>();
+
+    protected override void OnParametersSet()
+    {
+        Snapshot = ReadModel.GetSnapshot();
+        Topic = ReadModel.GetTopic(Id);
+        Author = Topic is null ? null : ReadModel.GetUser(Topic.AuthorId);
+        Replies = Topic is null ? Array.Empty<Reply>() : ReadModel.GetReplies(Topic.Id);
+    }
+}

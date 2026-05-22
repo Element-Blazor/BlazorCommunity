@@ -1,0 +1,76 @@
+@page "/"
+@inject ICommunityReadModel ReadModel
+@inject NavigationManager Navigation
+
+<PageTitle>ElementCommunity</PageTitle>
+
+<section class="community-page">
+    <div class="overview-toolbar">
+        <div>
+            <p class="section-heading__eyebrow">Element Plus Style</p>
+            <h1>组件总览</h1>
+        </div>
+        <div class="overview-toolbar__search">
+            <ElInput TValue="string" Placeholder="搜索 ElButton / ElInput / 主题变量" Clearable="true" PrefixIcon="el-icon-search" />
+            <ElButton Type="@ButtonType.Primary" OnClick="@(() => Navigation.NavigateTo("/topic/new"))">发帖</ElButton>
+        </div>
+    </div>
+
+    <div class="community-grid">
+        <aside class="community-grid__left">
+            <ForumNav Forums="Snapshot.Forums" />
+        </aside>
+
+        <section class="community-grid__main">
+            <TopicList Topics="Snapshot.Topics" />
+        </section>
+
+        <aside class="community-grid__right">
+            <StatPanel Snapshot="Snapshot" />
+
+            <ElCard Shadow="@ShadowShowType.Never" BodyCls="side-card__body">
+                <Header>
+                    <div class="side-card__header">
+                        <span>热门标签</span>
+                        <ElButton Text="true" Size="@ButtonSize.Small">管理</ElButton>
+                    </div>
+                </Header>
+                <Body>
+                    <div class="tag-cloud">
+                        @foreach (var tag in Snapshot.SuggestedTags)
+                        {
+                            <ElTag Type="@TagType.Info" Theme="@TagTheme.Plain" Size="@TagSize.Small">@tag</ElTag>
+                        }
+                    </div>
+                </Body>
+            </ElCard>
+
+            <ElCard Shadow="@ShadowShowType.Never" BodyCls="side-card__body">
+                <Header>
+                    <div class="side-card__header">
+                        <span>示例卡片</span>
+                        <ElTag Type="@TagType.Success" Theme="@TagTheme.Plain" Size="@TagSize.Mini">El*</ElTag>
+                    </div>
+                </Header>
+                <Body>
+                    <div class="example-card">
+                        <ElInput TValue="string" Placeholder="ElInput 搜索主题" Clearable="true" />
+                        <div class="example-card__buttons">
+                            <ElButton Type="@ButtonType.Primary" Size="@ButtonSize.Small">ElButton</ElButton>
+                            <ElButton Type="@ButtonType.Success" Size="@ButtonSize.Small" Plain="true">ElTag</ElButton>
+                        </div>
+                    </div>
+                </Body>
+            </ElCard>
+        </aside>
+    </div>
+</section>
+
+@code {
+    private CommunitySnapshot Snapshot { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        Snapshot = ReadModel.GetSnapshot();
+    }
+}

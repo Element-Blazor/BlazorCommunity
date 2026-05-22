@@ -1,0 +1,23 @@
+<ElCard Shadow="@ShadowShowType.Never" BodyCls="stat-panel__body">
+    <Body>
+        <div class="stat-panel">
+            <div>
+                <strong>@Snapshot.Forums.Count</strong>
+                <span>版块</span>
+            </div>
+            <div>
+                <strong>@Snapshot.Topics.Count</strong>
+                <span>主题</span>
+            </div>
+            <div>
+                <strong>@Snapshot.Replies.Count</strong>
+                <span>回复</span>
+            </div>
+        </div>
+    </Body>
+</ElCard>
+
+@code {
+    [Parameter, EditorRequired]
+    public CommunitySnapshot Snapshot { get; set; } = default!;
+}

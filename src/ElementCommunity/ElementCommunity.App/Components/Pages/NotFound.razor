@@ -1,0 +1,26 @@
+@page "/not-found"
+@layout MainLayout
+
+<PageTitle>未找到 - ElementCommunity</PageTitle>
+
+<section class="community-page community-page--narrow">
+    <ElCard Shadow="@ShadowShowType.Never">
+        <Header>
+            <div class="section-heading">
+                <div>
+                    <p class="section-heading__eyebrow">404</p>
+                    <h1>内容不存在</h1>
+                </div>
+            </div>
+        </Header>
+        <Body>
+            <p class="muted-text">这个社区页面还没有建立，先回到首页继续浏览主题流。</p>
+            <ElButton Type="@ButtonType.Primary" Plain="true" OnClick="@(() => Navigation.NavigateTo("/"))">返回首页</ElButton>
+        </Body>
+    </ElCard>
+</section>
+
+@code {
+    [Inject]
+    private NavigationManager Navigation { get; set; } = default!;
+}

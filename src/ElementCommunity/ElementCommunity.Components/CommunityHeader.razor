@@ -1,0 +1,22 @@
+@inject NavigationManager Navigation
+
+<header class="community-header">
+    <div class="community-header__inner">
+        <a class="community-brand" href="/">
+            <span class="community-brand__mark">E</span>
+            <span class="community-brand__text">ElementCommunity</span>
+        </a>
+
+        <nav class="community-header__nav" aria-label="主导航">
+            <ElButton Text="true" Type="@ButtonType.Primary" OnClick="@(() => Navigation.NavigateTo("/"))">首页</ElButton>
+            <ElButton Text="true" OnClick="@(() => Navigation.NavigateTo("/topic/1001"))">帖子详情</ElButton>
+            <ElButton Text="true" OnClick="@(() => Navigation.NavigateTo("/topic/new"))">发帖</ElButton>
+        </nav>
+
+        <div class="community-header__actions">
+            <span class="community-version">Element-Blazor 2.14</span>
+            <ElButton Size="@ButtonSize.Small" Plain="true">登录</ElButton>
+            <ElButton Type="@ButtonType.Primary" Size="@ButtonSize.Small" OnClick="@(() => Navigation.NavigateTo("/topic/new"))">发布主题</ElButton>
+        </div>
+    </div>
+</header>

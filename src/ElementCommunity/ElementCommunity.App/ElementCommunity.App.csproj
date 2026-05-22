@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\ElementCommunity.Components\ElementCommunity.Components.csproj" />
+    <ProjectReference Include="..\ElementCommunity.Domain\ElementCommunity.Domain.csproj" />
+    <ProjectReference Include="..\ElementCommunity.Infrastructure\ElementCommunity.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Components\Element.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+  </PropertyGroup>
+
+</Project>
