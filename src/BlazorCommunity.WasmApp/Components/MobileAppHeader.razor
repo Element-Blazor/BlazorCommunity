@@ -1,12 +1,12 @@
 @inherits PageBase
 <div class="mobile-header">
-    <div class="header-item mobile-logo" @onclick="@(e=>NavigationManager.NavigateTo("/",true))">
+    <div class="header-item mobile-logo" @onclick="@(e => NavigationManager.NavigateTo("/", true))">
         <img src="img/logo.png" style="width:80px;height:64px;margin-top:0px !important;" />
     </div>
     <div class="header-item mobile-search">
-        <ElInput Type="@InputType.Text" TValue="string" Size="@InputSize.Small" Style="display:inline-block;" EnableAlwaysRender="true" EnableClearButton="true" Placeholder="输入您要搜索的内�? @bind-Value="@SearchText"> </ElInput>
-        <ElButton Type="@ButtonType.Text" Size="@ButtonSize.Large" Icon="el-icon-search" OnClick="e=>Search()"
-                 Style="font-size:16px; color:white;margin:0px 10px 0px 10px !important">
+        <ElInput Type="@InputType.Text" TValue="string" Size="@InputSize.Small" Style="display:inline-block;" EnableAlwaysRender="true" EnableClearButton="true" Placeholder="Search" @bind-Value="SearchText"></ElInput>
+        <ElButton Type="@ButtonType.Text" Size="@ButtonSize.Large" Icon="el-icon-search" OnClick="e => Search()"
+                  Style="font-size:16px; color:white;margin:0px 10px 0px 10px !important">
         </ElButton>
     </div>
     <div class="header-item mobile-user">
@@ -15,7 +15,7 @@
                 <span style="min-width:50px;">@User?.NickName</span>
             </Authorized>
             <NotAuthorized>
-                <span @onclick="e=>Login()" style="margin-left:2px;margin-right:2px;min-width:50px;">登录</span>
+                <span @onclick="e => Login()" style="margin-left:2px;margin-right:2px;min-width:50px;">Login</span>
             </NotAuthorized>
         </AuthorizeView>
         <ElDropdown EnableAlwaysRender="true">
@@ -25,28 +25,25 @@
             <Items>
                 @foreach (var menu in headerMenus)
                 {
-                    var target = @menu.URL == "/" ? "_self" : "_blank";
+                    var target = menu.URL == "/" ? "_self" : "_blank";
                     <ElDropdownItem>
-                        <a href="@menu.URL" target=@target style="display: inline-block;width: 100%;">
+                        <a href="@menu.URL" target="@target" style="display: inline-block;width: 100%;">
                             <i class="@menu.Icon"></i>
                             @menu.Title
                         </a>
                     </ElDropdownItem>
-
                 }
                 <AuthorizeView>
                     <Authorized>
                         <ElDropdownItem OnClick="LoginOut">
                             <a>
                                 <i class="icon iconfont icon-tuichu" style="font-size:16px !important"></i>
-                                <span font-size: 16px;color: #000000;text-decoration: none;>退�?/span>
+                                <span style="font-size:16px;color:#000000;text-decoration:none;">Logout</span>
                             </a>
                         </ElDropdownItem>
                     </Authorized>
                 </AuthorizeView>
-
             </Items>
         </ElDropdown>
     </div>
-
 </div>

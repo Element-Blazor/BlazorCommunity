@@ -11,13 +11,13 @@ namespace BlazorCommunity.WasmApp.Pages
     public partial class Index : ElementComponentBase
     {
         protected List<TabItem> Tabs = new List<TabItem>();
-        protected BTab btab;
-        protected BLayout blayout;
+        protected ElTabs btab;
+        protected ElLayout blayout;
         [Inject]
          BrowerService browerService { get; set; }
 
         
-        protected void ActiveTabChanged(BChangeEventArgs<BTabPanel> e)
+        protected void ActiveTabChanged(ElementChangeEventArgs<ElTabPane> e)
         {
             blayout?.Refresh();
             btab?.Refresh();

@@ -1,4 +1,4 @@
-using BlazorCommunity.Model.Models;
+ï»¿using BlazorCommunity.Model.Models;
 using Element;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
@@ -12,7 +12,7 @@ namespace BlazorCommunity.App.Components
         protected BZUserModel User { get; set; }
         protected bool Disabled { get; set; } = true;
 
-        protected void OnStatusChanging(BChangeEventArgs<RadioStatus> e)
+        protected void OnStatusChanging(ElementChangeEventArgs<RadioStatus> e)
         {
             e.DisallowChange = Disabled;
         }
@@ -24,12 +24,12 @@ namespace BlazorCommunity.App.Components
 
         protected override void InitTabTitle()
         {
-            tabTitle = "»ù±¾ĞÅÏ¢";
+            tabTitle = "åŸºæœ¬ä¿¡æ¯";
         }
 
         /*
           * / <summary>
-          * / ÇĞ»»±íµ¥Îª¿ÉÊäÈë×´Ì¬
+          * / åˆ‡æ¢è¡¨å•ä¸ºå¯è¾“å…¥çŠ¶æ€
           * / </summary>
           */
 
@@ -48,7 +48,7 @@ namespace BlazorCommunity.App.Components
 
         /*
 		 * / <summary>
-		 * / ¸üĞÂÓÃ»§
+		 * / æ›´æ–°ç”¨æˆ·
 		 * / </summary>
 		 */
 
@@ -59,7 +59,7 @@ namespace BlazorCommunity.App.Components
             var model = userInfoForm.GetValue<BZUserModel>();
             if ( SubstringCount( model.Signature.ToLower(), "upload/avator/") >1)
             {
-                ToastError("Ö»ÄÜÉÏ´«Ò»ÕÅÍ¼Æ¬");
+                ToastError("åªèƒ½ä¸Šä¼ ä¸€å¼ å›¾ç‰‡");
                 return;
             }
             await UpdateUser(model);
@@ -67,7 +67,7 @@ namespace BlazorCommunity.App.Components
 
         /*
 		 * / <summary>
-		 * / ¸üĞÂÓÃ»§Ìá½»DB
+		 * / æ›´æ–°ç”¨æˆ·æäº¤DB
 		 * / </summary>
 		 * / <returns></returns>
 		 */
@@ -96,18 +96,18 @@ namespace BlazorCommunity.App.Components
             }
             else
             {
-                ToastError("¸üĞÂÊ§°Ü");
+                ToastError("æ›´æ–°å¤±è´¥");
             }
         }
 
         protected override bool ShouldRender() => true;
 
         /// <summary>
-        /// ¼ÆËã×Ö·û´®ÖĞ×Ó´®³öÏÖµÄ´ÎÊı
+        /// è®¡ç®—å­—ç¬¦ä¸²ä¸­å­ä¸²å‡ºç°çš„æ¬¡æ•°
         /// </summary>
-        /// <param name="str">×Ö·û´®</param>
-        /// <param name="substring">×Ó´®</param>
-        /// <returns>³öÏÖµÄ´ÎÊı</returns>
+        /// <param name="str">å­—ç¬¦ä¸²</param>
+        /// <param name="substring">å­ä¸²</param>
+        /// <returns>å‡ºç°çš„æ¬¡æ•°</returns>
         static int SubstringCount(string str, string substring)
         {
             if (str.Contains(substring))

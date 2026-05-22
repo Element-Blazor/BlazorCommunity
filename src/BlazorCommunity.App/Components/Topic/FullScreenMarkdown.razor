@@ -1,7 +1,7 @@
-@inherits FullScreenMarkdownBase
+﻿@inherits FullScreenMarkdownBase
 
 <div class="markdown-fullscreen">
-    <ElForm Style="height:100%;margin:0px;padding:0px;" @ref="form" Model="model" LabelPosition="right">
+    <ElForm Style="height:100%;margin:0px;padding:0px;" @ref="form" Model="model" LabelPosition="@LabelAlign.Right">
         <ElFormItem TValue="string" Prop="@nameof(NewReplyModel.Content)" Required="false" EnableAlwaysRender="true">
             <ElMarkdownEditor DisableFileUpload="true" DisableImageUpload="false" ImageMaxSize="ConstConfig.MaxUploadFileSize" EnableAlwaysRender="true" UploadUrl="@UploadApiUrl"></ElMarkdownEditor>
         </ElFormItem>

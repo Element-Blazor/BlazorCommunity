@@ -7,10 +7,10 @@ namespace BlazorCommunity.Enums
         [Description("Element")]
         Element,
 
-        [Description("BAdmin")]
-        BAdmin,
+        [Description("Element.Admin")]
+        ElementAdmin,
 
-        [Description("BMarkdown")]
-        BMarkdown
+        [Description("Element.Markdown")]
+        ElementMarkdown
     }
 }

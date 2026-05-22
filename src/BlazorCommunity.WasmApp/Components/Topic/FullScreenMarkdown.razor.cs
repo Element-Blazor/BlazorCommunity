@@ -1,4 +1,4 @@
-using BlazorCommunity.WasmApp.Model;
+ï»¿using BlazorCommunity.WasmApp.Model;
 using BlazorCommunity.Enums;
 using Element;
 using Microsoft.AspNetCore.Components;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.WasmApp.Components.Topic
 {
-    public partial class FullScreenMarkdown : BDialogBase
+    public partial class FullScreenMarkdown : ElementDialogBase
     {
         [Inject]
         private MessageBox MessageBox { get; set; }
@@ -42,16 +42,16 @@ namespace BlazorCommunity.WasmApp.Components.Topic
                 await CloseAsync(new NewReplyModel());
             else
             {
-                MessageBoxResult Confirm = await MessageBox.ConfirmAsync("ÊÇ·ñÒªÌá½»»Ø¸´");
+                MessageBoxResult Confirm = await MessageBox.ConfirmAsync("æ˜¯å¦è¦æäº¤å›å¤");
                 if (Confirm == MessageBoxResult.Ok)
                 {
                     if ((await authenticationStateTask).User.Identity.IsAuthenticated)
                         await CloseAsync(model);
                     else
-                        MessageService.Show("ÇëµÇÂ¼ºóÔÙ»Ø¸´Ìû×Ó", MessageType.Warning);
+                        MessageService.Show("è¯·ç™»å½•åå†å›å¤å¸–å­", MessageType.Warning);
                 }
                 else
-                    MessageService.Show("ÄúÑ¡ÔñÁËÈ¡Ïû", MessageType.Info);
+                    MessageService.Show("æ‚¨é€‰æ‹©äº†å–æ¶ˆ", MessageType.Info);
             }
         }
     }

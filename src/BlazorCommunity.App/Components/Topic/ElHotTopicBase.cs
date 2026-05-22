@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlazorCommunity.App.Components.Topic
 {
-    public class BHotTopicBase:ElementComponentBase
+    public class ElHotTopicBase:ElementComponentBase
     {
         [Parameter]
         public string Title { get; set; }
@@ -28,3 +28,4 @@ namespace BlazorCommunity.App.Components.Topic
 
     }
 }
+

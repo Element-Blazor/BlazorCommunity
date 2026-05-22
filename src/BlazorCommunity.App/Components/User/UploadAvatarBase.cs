@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace BlazorCommunity.App.Components
 {
     [Authorize]
-    public class UploadAvatarBase : BUpload
+    public class UploadAvatarBase : ElUpload
     {
         internal ElementReference hdnField;
 
@@ -28,7 +28,7 @@ namespace BlazorCommunity.App.Components
             SetFieldValue(Files.ToArray(), true);
         }
 
-        private async Task UploadFilesAsync(ElementJS input)
+        private async Task UploadFilesAsync(ElementHelper input)
         {
             foreach (var item in Files)
             {

@@ -1,4 +1,4 @@
-using BlazorCommunity.App.Model;
+锘縰sing BlazorCommunity.App.Model;
 using BlazorCommunity.DTO;
 using BlazorCommunity.Enums;
 using Element;
@@ -17,7 +17,7 @@ namespace BlazorCommunity.App.Pages
     {
         internal ElForm form;
         internal NewTopicModel article;
-        protected BMarkdownEditor bMarkdownEditor;
+        protected ElMarkdownEditor markdownEditor;
         protected TopicCategory _TopicType;
         protected List<BZVersionDto> bZVersions;
         internal ElSelect<string> bverNoSelect;
@@ -36,12 +36,12 @@ namespace BlazorCommunity.App.Pages
             var article = form.GetValue<NewTopicModel>();
             if (article is null)
             {
-                form.Toast("验证不通过");
+                form.Toast("楠岃瘉涓嶉�氳繃");
                 return;
             }
             if (article.Title.Length > 100)
             {
-                form.Toast("标题不能超过100");
+                form.Toast("鏍囬涓嶈兘瓒呰繃100");
                 return;
             }
             await AddTopic(article);
@@ -73,13 +73,13 @@ namespace BlazorCommunity.App.Pages
 
                 if (result.IsSuccess)
                 {
-                    ToastSuccess("发布成功");
+                    ToastSuccess("鍙戝竷鎴愬姛");
                     await Task.Delay(100);
                     NavigationManager.NavigateTo($"/topic/{result.Data}");
                 }
                 else
                 {
-                    ToastError($"发布失败{result.Message}");
+                    ToastError($"鍙戝竷澶辫触{result.Message}");
                 }
             });
         }

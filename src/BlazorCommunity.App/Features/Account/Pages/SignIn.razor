@@ -1,22 +1,22 @@
-@page "/account/signin"
+﻿@page "/account/signin"
 @inherits SignInBase
 
 <div class="login-container">
 
-    <ElForm Model="signInModel" @ref="signInForm" EnableAlwaysRender="true" LabelPosition="left">
+    <ElForm Model="signInModel" @ref="signInForm" EnableAlwaysRender="true" LabelPosition="@LabelAlign.Left">
         <div class="title-container">
             <h3 class="title">
-                Element-Blazor社区登录
+                Element-Blazor绀惧尯鐧诲綍
             </h3>
         </div>
-        <ElFormItem Required="true" TValue="string" Error="请输入账号或邮箱" Prop="@nameof(SignInModel.UserAccount)">
-            <ElInput PrefixIcon="el-icon-user-solid" TValue="string" Placeholder="请输入账号或邮箱"></ElInput>
+        <ElFormItem Required="true" TValue="string" Error="璇疯緭鍏ヨ处鍙锋垨閭" Prop="@nameof(SignInModel.UserAccount)">
+            <ElInput PrefixIcon="el-icon-user-solid" TValue="string" Placeholder="璇疯緭鍏ヨ处鍙锋垨閭"></ElInput>
         </ElFormItem>
-        <ElFormItem Required="true" TValue="string" Error="请输入密�? Prop="@nameof(SignInModel.Password)" EnableAlwaysRender="true">
-            <ElInput PrefixIcon="el-icon-lock" SuffixIcon="el-icon-view" Type="@passwordType" TValue="string" Placeholder="请输入密�? OnSuffixIconClick="e=>TogglePassword()"></ElInput>
+        <ElFormItem Required="true" TValue="string" Error="璇疯緭鍏ュ瘑鐮? Prop="@nameof(SignInModel.Password)" EnableAlwaysRender="true">
+            <ElInput PrefixIcon="el-icon-lock" SuffixIcon="el-icon-view" Type="@passwordType" TValue="string" Placeholder="璇疯緭鍏ュ瘑鐮? OnSuffixIconClick="e=>TogglePassword()"></ElInput>
         </ElFormItem>
         <ElFormActionItem>
-            <ElButton Type="@ButtonType.Default" Plain="true" Style="width:100%;" OnClick="Login">登录</ElButton>
+            <ElButton Type="@ButtonType.Default" Plain="true" Style="width:100%;" OnClick="Login">鐧诲綍</ElButton>
         </ElFormActionItem>
         <ElFormActionItem Style="background-color:#fff;">
             @*<ElButtonGroup>
@@ -24,8 +24,8 @@
                     <ElButton Type="@ButtonType.Default" Style="border:none;" Cls="icon iconfont icon-QQ" Plain="true" OnClick="SSOQQ"></ElButton>
                     <ElButton Type="@ButtonType.Default" Style="border:none;" Cls="icon iconfont icon-github" Plain="true" OnClick="SSOGithub"></ElButton>
                 </ElButtonGroup>*@
-            <ElButton Type="@ButtonType.Text" Style="float:right;margin-left:15px; " OnClick="ForgetPwd">忘记密码�</ElButton>
-            <ElButton Type="@ButtonType.Text" Style="float:right; " OnClick="Regist">立即注册</ElButton>
+            <ElButton Type="@ButtonType.Text" Style="float:right;margin-left:15px; " OnClick="ForgetPwd">蹇樿瀵嗙爜锛</ElButton>
+            <ElButton Type="@ButtonType.Text" Style="float:right; " OnClick="Regist">绔嬪嵆娉ㄥ唽</ElButton>
         </ElFormActionItem>
     </ElForm>
 </div>

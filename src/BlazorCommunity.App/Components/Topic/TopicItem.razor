@@ -1,4 +1,4 @@
-@inherits TopicItemBase
+﻿@inherits TopicItemBase
 @if (Topic != null)
 {
     <ElLayout WestWidth="90" Height="78" EnableAlwaysRender="true">
@@ -24,7 +24,7 @@
                             <div class="topic-type">
                                 @if (Topic.Status == 1)
                                 {
-                                    <span class="el-tag el-tag--info el-tag--mini">已结�?/span>
+                                    <span class="el-tag el-tag--info el-tag--mini">closed</span>
                                 }
                                 else
                                 {
@@ -38,16 +38,16 @@
                             <div class="topic-tag">
                                 @if (Topic.Good == 1)
                                 {
-                                    <span class="el-tag el-tag--danger el-tag--mini el-tag--dark">精华</span>
+                                    <span class="el-tag el-tag--danger el-tag--mini el-tag--dark">绮惧崕</span>
                                 }
                             </div>
                         </div>
                         <div class="topic-item">
-                            <div class="topic-author" title="作�?>@Topic?.NickName</div>
-                            <div class="topic-time" title="最后修改时�?>@Topic?.LastModifyDateDisplay</div>
+                            <div class="topic-author" title="author">@Topic?.NickName</div>
+                            <div class="topic-time" title="last modified">@Topic?.LastModifyDateDisplay</div>
                             @if (Topic.ReplyCount > 0)
                             {
-                                <div class="topic-reply" title="回复�?>
+                                <div class="topic-reply" title="reply count">
                                     <div>
                                         <i class="el-icon-chat-dot-square" style="color:#909399;font-size:16px;"></i>
                                         <span style="margin-left:0px;color: #909399;">@Topic?.ReplyCount</span>
@@ -56,7 +56,7 @@
                             }
                             @if (Topic.Hot > 0)
                             {
-                                <div class="topic-hot" title="浏览�?>
+                                <div class="topic-hot" title="view count">
                                     <i class="el-icon-view" style="color: #909399;font-size:16px;"></i>
                                     <span style="margin-left:0px;color: #909399;">@Topic.Hot</span>
                                 </div>

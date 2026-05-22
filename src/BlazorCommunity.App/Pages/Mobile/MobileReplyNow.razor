@@ -1,17 +1,17 @@
-@inherits ReplyNowBase
+﻿@inherits ReplyNowBase
     <div class="reply-now">
         <div class="el-divider el-divider--horizontal">
-            <div class="el-divider__text is-center">发表回复</div>
+            <div class="el-divider__text is-center">鍙戣〃鍥炲</div>
         </div>
-        <ElForm Inline="false" @ref="form" Model="Model" LabelPosition="left" EnableAlwaysRender="true">
+        <ElForm Inline="false" @ref="form" Model="Model" LabelPosition="@LabelAlign.Left" EnableAlwaysRender="true">
             <ElFormItem TValue="string" Required="false" Prop="@nameof(NewReplyModel.Content)" EnableAlwaysRender="true" @ref="formItem">
                 <div class="reply-now-textarea">
-                    <ElInput Type="@InputType.Textarea" TValue="string" Placeholder="期待你的精彩回复" ></ElInput>
+                    <ElInput Type="@InputType.Textarea" TValue="string" Placeholder="鏈熷緟浣犵殑绮惧僵鍥炲" ></ElInput>
                 </div>
             </ElFormItem>
             <ElFormItem TValue="object" >
                 <div class="mobile-replynow-button">
-                    <ElButton Type="@ButtonType.Success" OnClick="e=>ReplyNow()" Plain="true">提交回复</ElButton>
+                    <ElButton Type="@ButtonType.Success" OnClick="e=>ReplyNow()" Plain="true">鎻愪氦鍥炲</ElButton>
                 </div>
                
             </ElFormItem>

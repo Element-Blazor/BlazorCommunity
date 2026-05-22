@@ -1,4 +1,4 @@
-@inherits TopicContentBase
+﻿@inherits TopicContentBase
 @if (!string.IsNullOrWhiteSpace(TopicModel.Id))
 {
     <div class="content-topic-base">
@@ -19,7 +19,7 @@
                             @if (TopicModel.Status == 1)
                             {
                                 <div class="content-tag">
-                                    <span class="el-tag el-tag--info el-tag--small  el-tag--light">已结�?/span>
+                                    <span class="el-tag el-tag--info el-tag--small  el-tag--light">closed</span>
                                 </div>
                             }
                             else
@@ -45,12 +45,12 @@
                                     </div>
                                     @if (TopicModel.Good == 1 && !IsEditing)
                                     {
-                                        <sup class="el-badge__content el-badge__content--undefined is-fixed" style=" font-size:12px;">�?/sup>
+                                        <sup class="el-badge__content el-badge__content--undefined is-fixed" style=" font-size:12px;">good</sup>
                                     }
                                 </div>
                             </div>
                         </div>
-                        <div class="content-time">   发布时间�?  @TopicModel?.LastModifyDate.ToString("yyyy-MM-dd")</div>
+                        <div class="content-time">   鍙戝竷鏃堕棿锛?  @TopicModel?.LastModifyDate.ToString("yyyy-MM-dd")</div>
                     </div>
 
                     <div class="content-good">
@@ -76,7 +76,7 @@
 
                                     <ElButton Icon=@(IsEditing?"el-icon-finished":"el-icon-edit") Style=@buttonedit Type="ButtonType.Text" Plain="true" Size="ButtonSize.Large" OnClick="ToggleEditStatus">
                                     </ElButton>
-                                    <div title="关闭帖子">
+                                    <div title="鍏抽棴甯栧瓙">
                                         <ElButton Icon="el-icon-lock" Style=@buttonedit Type="ButtonType.Text" Plain="true" Size="ButtonSize.Large" OnClick="CloseMyTopic">
                                         </ElButton>
                                     </div>

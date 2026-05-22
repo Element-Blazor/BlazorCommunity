@@ -1,5 +1,5 @@
 @inherits ElementComponentBase
-@if (!string.IsNullOrWhiteSpace(TopicModel.Id))
+@if (!string.IsNullOrWhiteSpace(TopicModel?.Id))
 {
     <div class="content-topic-base">
         <ElCard Shadow="@ShadowShowType.Always" EnableAlwaysRender="true">
@@ -15,79 +15,68 @@
                     </div>
                     <div class="content-flex-col">
                         <div class="content-info-title">
-
                             @if (TopicModel.Status == 1)
                             {
                                 <div class="content-tag">
-                                    <span class="el-tag el-tag--info el-tag--small  el-tag--light">已结�?/span>
+                                    <span class="el-tag el-tag--info el-tag--small el-tag--light">closed</span>
                                 </div>
                             }
-                            else
+                            else if (!string.IsNullOrWhiteSpace(TopicModel.CategoryDisplay))
                             {
-                                @if (!string.IsNullOrWhiteSpace(TopicModel.CategoryDisplay))
-                                {
-                                    <div class="content-tag">
-                                        <span class="el-tag el-tag--success el-tag--small  el-tag--light">@TopicModel.CategoryDisplay</span>
-                                    </div>
-                                }
+                                <div class="content-tag">
+                                    <span class="el-tag el-tag--success el-tag--small el-tag--light">@TopicModel.CategoryDisplay</span>
+                                </div>
                             }
                             <div class="content-title">
                                 <div class="el-badge item" style="margin-top: -5px;">
                                     <div>
                                         @if (IsEditing)
                                         {
-                                            <ElInput TValue="string" Type="@InputType.Text" @bind-Value="TopicModel.Title" Style="width: 500px;" Size="InputSize.Large"></ElInput>
+                                            <ElInput TValue="string" Type="@InputType.Text" @bind-Value="TopicModel.Title" Style="width:500px;" Size="@InputSize.Large"></ElInput>
                                         }
                                         else
                                         {
-                                            <span> @TopicModel.Title</span>
+                                            <span>@TopicModel.Title</span>
                                         }
                                     </div>
                                     @if (TopicModel.Good == 1 && !IsEditing)
                                     {
-                                        <sup class="el-badge__content el-badge__content--undefined is-fixed" style=" font-size:12px;">�?/sup>
+                                        <sup class="el-badge__content el-badge__content--undefined is-fixed" style="font-size:12px;">good</sup>
                                     }
                                 </div>
                             </div>
                         </div>
-                        <div class="content-time">   发布时间�?  @TopicModel?.LastModifyDate.ToString("yyyy-MM-dd")</div>
+                        <div class="content-time">Published: @TopicModel.LastModifyDate.ToString("yyyy-MM-dd")</div>
                     </div>
-
                     <div class="content-good">
                         <div style="padding-bottom:10px;">
                             @if (!string.IsNullOrEmpty(TopicModel.VerName))
                             {
-                                <span class="el-tag el-tag--success el-tag--light el-tag--mini ">
-                                    @TopicModel.VerName
-                                </span>
+                                <span class="el-tag el-tag--success el-tag--light el-tag--mini">@TopicModel.VerName</span>
                             }
                         </div>
-
                         <div class="content-reply custome-button-hover">
                             <div class="content-star" @onclick="ToggleStarStatus">
-                                <i class="@(IsFollow?"el-icon-star-on":"el-icon-star-off")"></i>
+                                <i class="@(IsFollow ? "el-icon-star-on" : "el-icon-star-off")"></i>
                             </div>
                             @if (IsMySelf)
                             {
                                 var buttonedit = "color:#909399;margin-left: 12px;font-size: 20px; margin-top: 4px;";
-
                                 @if (TopicModel.Status != 1)
                                 {
-
-                                    <ElButton Icon=@(IsEditing?"el-icon-finished":"el-icon-edit") Style=@buttonedit Type="ButtonType.Text" Plain="true" Size="ButtonSize.Large" OnClick="ToggleEditStatus">
+                                    <ElButton Icon="@(IsEditing ? "el-icon-finished" : "el-icon-edit")" Style="@buttonedit" Type="@ButtonType.Text" Plain="true" Size="@ButtonSize.Large" OnClick="ToggleEditStatus">
                                     </ElButton>
-                                    <div title="关闭帖子">
-                                        <ElButton Icon="el-icon-lock" Style=@buttonedit Type="ButtonType.Text" Plain="true" Size="ButtonSize.Large" OnClick="CloseMyTopic">
+                                    <div title="close topic">
+                                        <ElButton Icon="el-icon-lock" Style="@buttonedit" Type="@ButtonType.Text" Plain="true" Size="@ButtonSize.Large" OnClick="CloseMyTopic">
                                         </ElButton>
                                     </div>
                                 }
                             }
                             @if (TopicModel.ReplyCount > 0)
                             {
-
-                                <div class="el-badge item" style="margin-top: 15px;margin-left: 10px">
-                                    <i class="el-icon-chat-dot-round" style="color: #909399;font-size: 20px;"></i>
-                                    <sup class="el-badge__content el-badge__content--undefined is-fixed">@TopicModel?.ReplyCount</sup>
+                                <div class="el-badge item" style="margin-top:15px;margin-left:10px">
+                                    <i class="el-icon-chat-dot-round" style="color:#909399;font-size:20px;"></i>
+                                    <sup class="el-badge__content el-badge__content--undefined is-fixed">@TopicModel.ReplyCount</sup>
                                 </div>
                             }
                         </div>
@@ -103,10 +92,8 @@
                 {
                     <ElMarkdown Text="@TopicModel.Content"></ElMarkdown>
                 }
-                    <UserSignature Signature="@TopicModel.Signature"/>
+                <UserSignature Signature="@TopicModel.Signature" />
             </Body>
         </ElCard>
     </div>
-}
-@code {
 }

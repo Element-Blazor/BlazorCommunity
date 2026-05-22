@@ -12,23 +12,23 @@ namespace BlazorCommunity.App.Pages
     {
         protected List<PersonalCenterMenuModel> personalCenterMenuModels;
 
-        protected BLayout bLayout
+        protected ElLayout bLayout
         {
             get; set;
         }
 
-        protected BTab bTab
+        protected ElTabs bTab
         {
             get; set;
         }
 
-        protected BMenu bmenu
+        protected ElMenu bmenu
         {
             get; set;
         }
 
-        protected BTabPanel bTabPanel { get; set; }
-        protected BCard bCard { get; set; }
+        protected ElTabPane bTabPanel { get; set; }
+        protected ElCard bCard { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

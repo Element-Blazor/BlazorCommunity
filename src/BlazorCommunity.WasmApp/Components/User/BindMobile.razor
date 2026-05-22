@@ -4,32 +4,31 @@
     <Body>
         @if (value != null && !string.IsNullOrWhiteSpace(value.Mobile))
         {
-            <ElForm @ref="ElForm" Model="value" LabelPosition="right" Inline="true" EnableAlwaysRender="true">
+            <ElForm @ref="ElForm" Model="value" LabelPosition="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
                 <ElFormItem TValue="string" Label="" Prop="@nameof(PasswordModel.Mobile)" Required="false">
-                    <ElButton Type="ButtonType.Info" Plain="true" Style="border:none" Disabled="true">@($"已绑定：{ value.Mobile}")</ElButton>
+                    <ElButton Type="@ButtonType.Info" Plain="true" Style="border:none" Disabled="true">@($"Bound: {value.Mobile}")</ElButton>
                 </ElFormItem>
             </ElForm>
         }
         else
         {
-            <ElForm @ref="ElForm" Model="value" LabelPosition="right" Inline="true" EnableAlwaysRender="true">
-                <ElFormItem TValue="string" Label="手机�? Prop="@nameof(PasswordModel.Mobile)" Required="true">
-                    <ElInput TValue="string" Type="@InputType.Tel" Placeholder="请输入手机号�?></ElInput>
+            <ElForm @ref="ElForm" Model="value" LabelPosition="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
+                <ElFormItem TValue="string" Label="Mobile" Prop="@nameof(PasswordModel.Mobile)" Required="true">
+                    <ElInput TValue="string" Type="@InputType.Tel" Placeholder="Mobile number"></ElInput>
                 </ElFormItem>
                 <ElFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
-
                     <ElButton Type="@ButtonType.Default" Plain="true" OnClick="e => SendBindMobileMsg()" EnableAlwaysRender="true" Disabled="IsDisabled">
-                        @((TimeOut > 0 && TimeOut < CountDownTime) ? $"请等待{TimeOut}s后重�? : "发送验证码")
+                        @((TimeOut > 0 && TimeOut < CountDownTime) ? $"Wait {TimeOut}s" : "Send code")
                     </ElButton>
                 </ElFormActionItem>
                 @if (showInput)
                 {
-                    <ElFormItem TValue="string" Label="验证码：" Prop="@nameof(PasswordModel.Code)" Required="false">
-                        <ElInput TValue="string" Placeholder="请输入验证码"></ElInput>
+                    <ElFormItem TValue="string" Label="Code" Prop="@nameof(PasswordModel.Code)" Required="false">
+                        <ElInput TValue="string" Placeholder="Verification code"></ElInput>
                     </ElFormItem>
                     <ElFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
                         <ElButton Type="@ButtonType.Default" Plain="true" OnClick="e => CheckAndBindMobileVerifyCode()" EnableAlwaysRender="true">
-                            绑定
+                            Bind
                         </ElButton>
                     </ElFormActionItem>
                 }

@@ -9,7 +9,7 @@ namespace BlazorCommunity.DTO.Admin
         public string Id { get; set; }
 
         /// <summary>
-        /// 0：Element，1：bAdmin，2：BMarkdown
+        /// 0：Element，1：Element.Admin，2：Element.Markdown
         /// </summary>
         public int Project { get; set; }
 

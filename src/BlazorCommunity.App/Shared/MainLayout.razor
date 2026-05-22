@@ -1,4 +1,4 @@
-@inherits MainLayoutBase
+﻿@inherits MainLayoutBase
 <ElPopup></ElPopup>
 <ElLayout EnableAlwaysRender="true" NorthHeight="80">
     <North>
@@ -18,7 +18,7 @@
         <AppFooter></AppFooter>
     </South>
 </ElLayout>
-<CascadingValue Model="@this">
+<CascadingValue TValue="MainLayoutBase" Value="@this">
     @ChildContent
 </CascadingValue>
 

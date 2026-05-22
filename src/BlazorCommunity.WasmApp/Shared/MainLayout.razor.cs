@@ -8,9 +8,9 @@ namespace BlazorCommunity.WasmApp.Shared
 {
     public partial class MainLayout : LayoutComponentBase
     {
-        protected BLayout Blayout { get; set; }
+        protected ElLayout Blayout { get; set; }
         protected AppHeader Appheader { get; set; }
-        protected BCard Bcard { get; set; }
+        protected ElCard Bcard { get; set; }
 
         [Parameter]
         public RenderFragment ChildContent { get; set; }

@@ -16,9 +16,9 @@ namespace BlazorCommunity.App.Pages
         [Inject]
         private BrowerService  browerService{ get; set; }
         protected List<TabItem> Tabs = new List<TabItem>();
-        protected BTab btab;
-        protected BLayout blayout;
-        protected void ActiveTabChanged(BChangeEventArgs<BTabPanel> e)
+        protected ElTabs btab;
+        protected ElLayout blayout;
+        protected void ActiveTabChanged(ElementChangeEventArgs<ElTabPane> e)
         {
          
             blayout?.Refresh();

@@ -1,4 +1,4 @@
-@layout PersonalCenterLayout
+﻿@layout PersonalCenterLayout
 @page "/user/base"
 @inherits PersonalInfoBase
 <ElTabs Type="@TabType.Card" EnableAlwaysRender="true">
@@ -6,10 +6,10 @@
         @if (User != null)
         {
             <div class="app-user-info">
-                <ElForm LabelPosition="right" @ref="userInfoForm" Model="User" EnableAlwaysRender="true">
+                <ElForm LabelPosition="@LabelAlign.Right" @ref="userInfoForm" Model="User" EnableAlwaysRender="true">
 
                     <div style=" display:flex;">
-                        <ElFormItem TValue="string" Label="账号" Prop="@nameof(BZUserModel.UserName)">
+                        <ElFormItem TValue="string" Label="璐﹀彿" Prop="@nameof(BZUserModel.UserName)">
                             @User?.UserName
                         </ElFormItem>
                         <ElFormActionItem Style="text-align:left;margin-left:300px;" EnableAlwaysRender="true">
@@ -24,70 +24,70 @@
                         </ElFormActionItem>
                     </div>
 
-                    <ElFormItem TValue="string" Label="昵称" Prop="@nameof(BZUserModel.NickName)" Style="max-width:300px;" EnableAlwaysRender="true">
+                    <ElFormItem TValue="string" Label="鏄电О" Prop="@nameof(BZUserModel.NickName)" Style="max-width:300px;" EnableAlwaysRender="true">
                         @if (Disabled)
                         {
                             @User?.NickName
                         }
                         else
                         {
-                            <ElInput TValue="string" Placeholder="输入昵称" EnableAlwaysRender="true"></ElInput>
+                            <ElInput TValue="string" Placeholder="杈撳叆鏄电О" EnableAlwaysRender="true"></ElInput>
                         }
                     </ElFormItem>
 
-                    <ElFormItem TValue="string" Label="邮箱" Prop="@nameof(BZUserModel.Email)">
-                        @(string.IsNullOrWhiteSpace(User?.Email) ? "未绑�? : User.Email)
+                    <ElFormItem TValue="string" Label="閭" Prop="@nameof(BZUserModel.Email)">
+                        @(string.IsNullOrWhiteSpace(User?.Email) ? string.Empty : User.Email)
                     </ElFormItem>
                     <ElFormItem TValue="string" Label="Q Q" Prop="@nameof(BZUserModel.QQ)" EnableAlwaysRender="true" Style="max-width:300px;" >
                         @if (Disabled)
                         {
-                            @(string.IsNullOrWhiteSpace(User?.QQ) ? "未绑�? : User.QQ)
+                            @(string.IsNullOrWhiteSpace(User?.QQ) ? string.Empty : User.QQ)
                         }
                         else
                         {
-                            <ElInput TValue="string" Placeholder="输入有效的QQ" EnableAlwaysRender="true"></ElInput>
+                            <ElInput TValue="string" Placeholder="杈撳叆鏈夋晥鐨凲Q" EnableAlwaysRender="true"></ElInput>
                         }
 
                     </ElFormItem>
-                    <ElFormItem TValue="string" Label="手机" Prop="@nameof(BZUserModel.PhoneNumber)">
-                        @(string.IsNullOrWhiteSpace(User?.PhoneNumber) ? "未绑�? : User.PhoneNumber)
+                    <ElFormItem TValue="string" Label="鎵嬫満" Prop="@nameof(BZUserModel.PhoneNumber)">
+                        @(string.IsNullOrWhiteSpace(User?.PhoneNumber) ? string.Empty : User.PhoneNumber)
                     </ElFormItem>
-                    <ElFormItem TValue="int?" Label="性别" Prop="@nameof(BZUserModel.Sex)" EnableAlwaysRender="true">
+                    <ElFormItem TValue="int" Label="鎬у埆" Prop="@nameof(BZUserModel.Sex)" EnableAlwaysRender="true">
 
                         @if (Disabled)
                         {
-                            <ElRadio TValue="object" @bind-SelectedValue="User.Sex" Model="0" StatusChanging="@OnStatusChanging">�</ElRadio>
-                            <ElRadio TValue="object" @bind-SelectedValue="User.Sex" Model="1" StatusChanging="@OnStatusChanging">�</ElRadio>
+                            <ElRadio TValue="int" @bind-SelectedValue="User.Sex" Model="0" StatusChanging="@OnStatusChanging">鐢</ElRadio>
+                            <ElRadio TValue="int" @bind-SelectedValue="User.Sex" Model="1" StatusChanging="@OnStatusChanging">濂</ElRadio>
                         }
                         else
                         {
-                            <ElRadio TValue="object" @bind-SelectedValue="User.Sex" Model="0">�</ElRadio>
-                            <ElRadio TValue="object" @bind-SelectedValue="User.Sex" Model="1">�</ElRadio>
+                            <ElRadio TValue="int" @bind-SelectedValue="User.Sex" Model="0">鐢</ElRadio>
+                            <ElRadio TValue="int" @bind-SelectedValue="User.Sex" Model="1">濂</ElRadio>
                         }
                     </ElFormItem>
-                    @*<ElFormItem TValue="string" Label="地区" Prop="@nameof(BZUserModel.LastLoginAddr)" EnableAlwaysRender="true">
+                    @*<ElFormItem TValue="string" Label="鍦板尯" Prop="@nameof(BZUserModel.LastLoginAddr)" EnableAlwaysRender="true">
             @if (Disabled)
             {
-                @(User?.LastLoginAddr ?? "未知")
+                @(User?.LastLoginAddr ?? "鏈煡")
             }
             else
             {
                 <ElInput TValue="string" ></ElInput>
             }
         </ElFormItem>*@
-                    <ElFormItem TValue="string" Label="签名" Prop="@nameof(BZUserModel.Signature)" Style="max-width:500px;" EnableAlwaysRender="true">
+                    <ElFormItem TValue="string" Label="绛惧悕" Prop="@nameof(BZUserModel.Signature)" Style="max-width:500px;" EnableAlwaysRender="true">
                         @*@if (Disabled)
             {
-                @(User?.Signature ?? "您还没有设置一个座右铭")
+                @(User?.Signature ?? "鎮ㄨ繕娌℃湁璁剧疆涓€涓骇鍙抽摥")
             }
             else
             {
-                <ElInput TValue="string" Type="@InputType.Textarea" Placeholder="输入座右�? EnableAlwaysRender="true"></ElInput>
+                <ElInput TValue="string" Type="@InputType.Textarea" Placeholder="杈撳叆搴у彸閾? EnableAlwaysRender="true"></ElInput>
             }*@
                         <div style="margin-top:6px; width:800px;">
                             @if (Disabled)
                             {
-                                <ElMarkdown Text="@(string.IsNullOrWhiteSpace(User.Signature) ? "写点什么呗": User.Signature)"></ElMarkdown>
+                                <ElMarkdown Text="@(string.IsNullOrWhiteSpace(User.Signature) ? string.Empty : User.Signature)"></ElMarkdown>
                             }
                             else
                             {

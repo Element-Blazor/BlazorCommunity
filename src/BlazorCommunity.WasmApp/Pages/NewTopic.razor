@@ -1,63 +1,52 @@
-@page   "/topic/new"
+@page "/topic/new"
 @inherits PageBase
 
 <div class="content-newtopic">
     <ElTabs EnableAlwaysRender="true">
-        <ElTabPane Title="发表新帖">
-
-            <ElForm Inline="false" @ref="form" Model="article" LabelPosition="left">
-
+        <ElTabPane Title="New topic">
+            <ElForm Inline="false" @ref="form" Model="article" LabelPosition="@LabelAlign.Left">
                 <div class="form-inline">
-                    <ElFormItem TValue="string" Style="width:500px;" Error="请填写标�? Label="标题" Prop="@nameof(NewTopicModel.Title)" Required="true">
-                        <ElInput Style="margin-left:-40px !important;" TValue="string" Placeholder="标题，如果是提问，请描述清楚问题的主�?></ElInput>
+                    <ElFormItem TValue="string" Style="width:500px;" Error="Please enter a title" Label="Title" Prop="@nameof(NewTopicModel.Title)" Required="true">
+                        <ElInput Style="margin-left:-40px !important;" TValue="string" Placeholder="Title"></ElInput>
                     </ElFormItem>
-                    <ElFormItem TValue="TopicCategory" Style="margin-left:-20px;"  Label="类型" Required="true" Prop="@nameof(NewTopicModel.Category)">
-                        <div class="el-form-item-custom" >
-                            <ElSelect Value="TopicCategory.Ask" >
+                    <ElFormItem TValue="TopicCategory" Style="margin-left:-20px;" Label="Type" Required="true" Prop="@nameof(NewTopicModel.Category)">
+                        <div class="el-form-item-custom">
+                            <ElSelect Value="TopicCategory.Ask">
                             </ElSelect>
                         </div>
                     </ElFormItem>
-                    @*<ElFormItem TValue="ProjectType" Label="项目" Error="请选择项目" Required="false" Prop="@nameof(NewTopicModel.projectType)">
-                            <div class="el-form-item-custom">
-                                <ElSelect TValue="ProjectType" ValueChanged="e=>OnChange(e)">
-                                </ElSelect>
-                            </div>
-                        </ElFormItem>*@
-                        <ElFormItem TValue="string" Label="项目" Required="true" Style="margin-left:20px;" Error="选择项目" Prop="@nameof(NewTopicModel.VerNo)" >
-                            <div class="el-form-item-custom">
-                                <ElSelect TValue="string" @ref="bverNoSelect" @bind-Value="SelectValue">
-                                    @if (bZVersions != null && bZVersions.Any())
+                    <ElFormItem TValue="string" Label="Project" Required="true" Style="margin-left:20px;" Error="Select project" Prop="@nameof(NewTopicModel.VerNo)">
+                        <div class="el-form-item-custom">
+                            <ElSelect TValue="string" @ref="bverNoSelect" @bind-Value="SelectValue">
+                                @if (bZVersions != null && bZVersions.Any())
+                                {
+                                    foreach (var ver in bZVersions)
                                     {
-                                        foreach (var ver in bZVersions)
-                                        {
-                                            <ElOption Value="@ver.Id" Text="@ver.VerNo"></ElOption>
-                                        }
+                                        <ElOption Value="@ver.Id" Text="@ver.VerNo"></ElOption>
                                     }
-                                </ElSelect>
-                            </div>
-                        </ElFormItem>
-                    <ElFormItem TValue="bool" Label="通知管理�? Required="false" Style="margin-left:20px;"
-                               Prop="@nameof(NewTopicModel.Notice)">
+                                }
+                            </ElSelect>
+                        </div>
+                    </ElFormItem>
+                    <ElFormItem TValue="bool" Label="Notice" Required="false" Style="margin-left:20px;" Prop="@nameof(NewTopicModel.Notice)">
                         <ElSwitch TValue="bool" ActiveValue="true" InactiveValue="false"></ElSwitch>
                     </ElFormItem>
                 </div>
-
                 <ElFormItem TValue="string" Required="true" Prop="@nameof(NewTopicModel.Content)" Error="">
                     <div style="width:99%;">
-                        <ElMarkdownEditor @ref="bMarkdownEditor" UploadUrl="@(UploadUrl+ UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="480" FileMaxSize="300" ImageMaxSize="ConstConfig.MaxUploadFileSize"></ElMarkdownEditor>
+                        <ElMarkdownEditor @ref="markdownEditor" UploadUrl="@(UploadUrl + UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="480" FileMaxSize="300" ImageMaxSize="ConstConfig.MaxUploadFileSize"></ElMarkdownEditor>
                         <div>
-                            <span class="el-tag el-tag--success el-tag--light" style="width:100%">温馨提示：上传图片，单张图片最大只允许@(ConstConfig.MaxUploadFileSize)k，绑定QQ后可以及时收到回复通知</span>
+                            <span class="el-tag el-tag--success el-tag--light" style="width:100%">Image max size: @(ConstConfig.MaxUploadFileSize)k</span>
                         </div>
                     </div>
                 </ElFormItem>
                 <ElFormItem TValue="object">
-                    <div style="margin-right: 20px;text-align: right;">
-                        <ElButton Type="@ButtonType.Success" OnClick="e=>Submit()" Plain="true" Style="float: left; ">立即发布</ElButton>
+                    <div style="margin-right:20px;text-align:right;">
+                        <ElButton Type="@ButtonType.Success" OnClick="e => Submit()" Plain="true" Style="float:left;">Publish</ElButton>
                         <GoHome Float="@("right")"></GoHome>
                     </div>
                 </ElFormItem>
             </ElForm>
         </ElTabPane>
     </ElTabs>
-
 </div>

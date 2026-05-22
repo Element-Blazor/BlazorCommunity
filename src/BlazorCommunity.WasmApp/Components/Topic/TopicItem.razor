@@ -3,16 +3,9 @@
 {
     <ElLayout WestWidth="90" Height="78" EnableAlwaysRender="true">
         <West>
-            <ElCard Shadow="@ShadowShowType.Always" Style="text-align: center;" EnableAlwaysRender="true">
+            <ElCard Shadow="@ShadowShowType.Always" Style="text-align:center;" EnableAlwaysRender="true">
                 <Body>
-                    @if (string.IsNullOrWhiteSpace(Topic.Avator))
-                    {
-                        <img class="app-topic-img" src="/img/defaultAct.png" />
-                    }
-                    else
-                    {
-                        <img class="app-topic-img" src="@Topic.Avator" />
-                    }
+                    <img class="app-topic-img" src="@(string.IsNullOrWhiteSpace(Topic.Avator) ? "/img/defaultAct.png" : Topic.Avator)" />
                 </Body>
             </ElCard>
         </West>
@@ -24,41 +17,40 @@
                             <div class="topic-type">
                                 @if (Topic.Status == 1)
                                 {
-                                    <span class="el-tag el-tag--info el-tag--mini el-tag--light">已结�?/span>
+                                    <span class="el-tag el-tag--info el-tag--mini el-tag--light">closed</span>
                                 }
-                                else
+                                else if (!string.IsNullOrWhiteSpace(Topic.CategoryDisplay))
                                 {
-                                    @if (!string.IsNullOrWhiteSpace(Topic.CategoryDisplay))
-                                    {
-                                        <span class="el-tag el-tag--success el-tag--mini el-tag--light">@Topic.CategoryDisplay</span>
-                                    }
+                                    <span class="el-tag el-tag--success el-tag--mini el-tag--light">@Topic.CategoryDisplay</span>
                                 }
                             </div>
-                            <div class="topic-title"><ElButton Type="ButtonType.Text" Style="color:#000033" OnClick="e=>NavigationToReply(Topic?.Id)">@Topic?.Title</ElButton></div>
+                            <div class="topic-title">
+                                <ElButton Type="@ButtonType.Text" Style="color:#000033" OnClick="e => NavigationToReply(Topic?.Id)">@Topic?.Title</ElButton>
+                            </div>
                             <div class="topic-tag">
                                 @if (Topic.Good == 1)
                                 {
-                                    <span class="el-tag el-tag--danger el-tag--mini el-tag--dark">精华</span>
+                                    <span class="el-tag el-tag--danger el-tag--mini el-tag--dark">good</span>
                                 }
                             </div>
                         </div>
                         <div class="topic-item">
-                            <div class="topic-author" title="作�?>@Topic?.NickName</div>
-                            <div class="topic-time" title="最后修改时�?>@Topic?.LastModifyDateDisplay</div>
+                            <div class="topic-author" title="author">@Topic?.NickName</div>
+                            <div class="topic-time" title="last modified">@Topic?.LastModifyDateDisplay</div>
                             @if (Topic.ReplyCount > 0)
                             {
-                                <div class="topic-reply" title="回复�?>
+                                <div class="topic-reply" title="reply count">
                                     <div>
                                         <i class="el-icon-chat-dot-square" style="color:#909399;font-size:16px;"></i>
-                                        <span style="margin-left:0px;color: #909399;">@Topic?.ReplyCount</span>
+                                        <span style="margin-left:0px;color:#909399;">@Topic?.ReplyCount</span>
                                     </div>
                                 </div>
                             }
                             @if (Topic.Hot > 0)
                             {
-                                <div class="topic-hot" title="浏览�?>
-                                    <i class="el-icon-view" style="color: #909399;font-size:16px;"></i>
-                                    <span style="margin-left:0px;color: #909399;">@Topic.Hot</span>
+                                <div class="topic-hot" title="view count">
+                                    <i class="el-icon-view" style="color:#909399;font-size:16px;"></i>
+                                    <span style="margin-left:0px;color:#909399;">@Topic.Hot</span>
                                 </div>
                             }
                         </div>

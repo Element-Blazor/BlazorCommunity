@@ -1,4 +1,4 @@
-using BlazorCommunity.WasmApp.Components.Topic;
+ï»¿using BlazorCommunity.WasmApp.Components.Topic;
 using BlazorCommunity.WasmApp.Model;
 using BlazorCommunity.WasmApp.Pages;
 using BlazorCommunity.DTO;
@@ -19,7 +19,7 @@ namespace BlazorCommunity.WasmApp.Components.Topic
 
         internal ElForm form;
         internal ElFormItem<string> formItem;
-        protected BMarkdownEditor bMarkdownEditor;
+        protected ElMarkdownEditor markdownEditor;
 
         private NewReplyModel _model;
         [Parameter]
@@ -31,7 +31,7 @@ namespace BlazorCommunity.WasmApp.Components.Topic
         //        _model = value;
         //        form?.MarkAsRequireRender();
         //        formItem?.MarkAsRequireRender();
-        //        bMarkdownEditor?.MarkAsRequireRender();
+        //        markdownEditor?.MarkAsRequireRender();
         //        this.MarkAsRequireRender();
         //        StateHasChanged();
         //    }
@@ -42,7 +42,7 @@ namespace BlazorCommunity.WasmApp.Components.Topic
         [Parameter] public EventCallback OnReplySuccess { get; set; }
 
         /// <summary>
-        /// ÒÅÁôÎÊÌâ »Ø¸´³É¹¦ºó form.resetÃ»ÓĞÇå¿ÕmarkdownµÄÊı¾İ
+        /// é—ç•™é—®é¢˜ å›å¤æˆåŠŸå form.resetæ²¡æœ‰æ¸…ç©ºmarkdownçš„æ•°æ®
         /// </summary>
         /// <returns></returns>
         protected async Task SubmitData()
@@ -51,7 +51,7 @@ namespace BlazorCommunity.WasmApp.Components.Topic
 
             if (string.IsNullOrWhiteSpace(user?.Id))
             {
-                ToastWarning("ÇëµÇÂ¼");
+                ToastWarning("è¯·ç™»å½•");
                 return;
             }
 
@@ -68,13 +68,13 @@ namespace BlazorCommunity.WasmApp.Components.Topic
         {
             if (string.IsNullOrWhiteSpace(model.Content))
             {
-                form.Toast("»¹ÊÇĞ´µãÊ²Ã´°É");
+                form.Toast("è¿˜æ˜¯å†™ç‚¹ä»€ä¹ˆå§");
                 return;
             }
 
             if (Topic is null)
             {
-                ToastError($"Ö÷Ìù²»´æÔÚ»òÒÑ±»É¾³ı");
+                ToastError($"ä¸»è´´ä¸å­˜åœ¨æˆ–å·²è¢«åˆ é™¤");
                 NavigationManager.NavigateTo("/");
                 return;
             }
@@ -96,11 +96,11 @@ namespace BlazorCommunity.WasmApp.Components.Topic
                 var addResult = await NetService.AddReply(bZReplyDto);
                 if (addResult.IsSuccess)
                 {
-                    NavigationManager.NavigateTo(NavigationManager.Uri, true);//Ìø×ªµ½+"&golast=1"
+                    NavigationManager.NavigateTo(NavigationManager.Uri, true);//è·³è½¬åˆ°+"&golast=1"
                 }
                 else
                 {
-                    ToastError("»Ø¸´Ê§°Ü");
+                    ToastError("å›å¤å¤±è´¥");
                     return;
                 }
             });
@@ -111,7 +111,7 @@ namespace BlazorCommunity.WasmApp.Components.Topic
 
         internal async Task FullScreen()
         {
-            //ToastWarning("È«ÆÁmarkdon±à¼­Æ÷£¬ÉĞÎ´ÊµÏÖ");
+            //ToastWarning("å…¨å±markdonç¼–è¾‘å™¨ï¼Œå°šæœªå®ç°");
             var replyModel = form.GetValue<NewReplyModel>();
             Dictionary<string, object> values = new Dictionary<string, object>
             {
@@ -123,7 +123,7 @@ namespace BlazorCommunity.WasmApp.Components.Topic
                 Model = model;
                 var user = await GetUser();
                 if (string.IsNullOrWhiteSpace(user?.Id))
-                    ToastWarning("ÇëµÇÂ¼");
+                    ToastWarning("è¯·ç™»å½•");
                 else
                     await NewReply(model, user.Id);
             }

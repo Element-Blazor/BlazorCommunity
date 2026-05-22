@@ -5,16 +5,16 @@ namespace BlazorCommunity.WasmApp.Components.Topic
 {
     public partial class ContentCenter : ElementComponentBase
     {
-        protected BTab tab;
-        protected BTabPanel tabPanel_Comprehensive;
-        protected BTabPanel tabPanel_Hot;
-        protected BTabPanel tabPanel_Best;
-        protected BTabPanel tabPanel_End;
+        protected ElTabs tab;
+        protected ElTabPane tabPanel_Comprehensive;
+        protected ElTabPane tabPanel_Hot;
+        protected ElTabPane tabPanel_Best;
+        protected ElTabPane tabPanel_End;
 
         [Parameter]
         public int TopicType { get; set; }
 
-        protected void ActiveTabChanged(BChangeEventArgs<BTabPanel> e)
+        protected void ActiveTabChanged(ElementChangeEventArgs<ElTabPane> e)
         {
             var title = e.NewValue.Title;
             switch (title)

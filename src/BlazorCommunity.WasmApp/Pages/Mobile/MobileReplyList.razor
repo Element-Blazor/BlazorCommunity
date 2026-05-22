@@ -5,9 +5,9 @@
     {
         foreach (var reply in Replys)
         {
-            <MobileReplyItem  ReplyModel="reply" EnableAlwaysRender="true"> </MobileReplyItem>
+            <MobileReplyItem ReplyModel="reply" EnableAlwaysRender="true"> </MobileReplyItem>
         }
-        <div class="el-table__column-resize-proxy" style="display: none;"></div>
+        <div class="el-table__column-resize-proxy" style="display:none;"></div>
         @if (Math.Ceiling((float)Total / PageSize) > 1 || !NoPaginationOnSinglePage)
         {
             <div class="topic-pagination">
@@ -15,16 +15,11 @@
             </div>
         }
     }
-    else
+    else if (!IsEnd)
     {
-        @if (!IsEnd)
-        {
-            <div class="el-table__empty-block" style="height:50px;">
-                <span class="el-table__empty-text">
-                    消灭零回�?
-                </span>
-            </div>
-        }
+        <div class="el-table__empty-block" style="height:50px;">
+            <span class="el-table__empty-text">No replies</span>
+        </div>
     }
     @if (!IsEnd)
     {
@@ -33,9 +28,9 @@
             <div style="height:100px; display:flex;margin-top:10px; justify-items:center;justify-content:center;" role="alert" class="el-alert el-alert--warning is-center is-light">
                 <i class="el-alert__icon el-icon-warning"></i>
                 <div class="el-alert__content">
-                    <span class="el-alert__title" style="font-size:15px;margin-right:10px;">请登录后再开始你的表�?/span>
+                    <span class="el-alert__title" style="font-size:15px;margin-right:10px;">Please sign in before replying</span>
                 </div>
-                <ElButton OnClick="NavigateToLoginPage" Type="ButtonType.Text">登录/注册</ElButton>
+                <ElButton OnClick="NavigateToLoginPage" Type="@ButtonType.Text">Login</ElButton>
             </div>
         }
         else
@@ -44,4 +39,3 @@
         }
     }
 </div>
-

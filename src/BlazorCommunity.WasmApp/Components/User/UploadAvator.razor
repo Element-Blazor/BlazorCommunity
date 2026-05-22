@@ -1,4 +1,4 @@
-@inherits BUpload
+﻿@inherits ElUpload
 @{
     var listType = "text";
     if (UploadType == UploadType.Image)
@@ -23,7 +23,7 @@
 </div>
 <div class="el-upload el-upload--text" onclick="window.upload(this)">
     <ElButton Size="@ButtonSize.Small" Plain="true" Icon="el-icon-upload" Style="width:178px;" Type="ButtonType.Default">
-        选择文件
+        閫夋嫨鏂囦欢
     </ElButton>
     <input type="file" name="file" @ref="Input" @onchange="ScanFileAsync" class="el-upload__input" />
 </div>

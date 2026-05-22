@@ -1,20 +1,20 @@
-@inherits BindEmailBase
+﻿@inherits BindEmailBase
 <ElCard EnableAlwaysRender="true" @ref="bCard">
     <Body>
         @if (value != null && !string.IsNullOrWhiteSpace(value.Email))
         {
-        <ElForm @ref="ElForm" Model="value" LabelPosition="right" Inline="true" EnableAlwaysRender="true">
+        <ElForm @ref="ElForm" Model="value" LabelPosition="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
             <ElFormItem TValue="string" Label="" Prop="@nameof(PasswordModel.Email)" Required="false">
-                <ElButton Type="ButtonType.Info" Plain="true" Style="border:none" Disabled="true">@($"已绑定：{ value.Email}")</ElButton>
+                <ElButton Type="ButtonType.Info" Plain="true" Style="border:none" Disabled="true">@($"宸茬粦瀹氾細{ value.Email}")</ElButton>
             </ElFormItem>
             @if (SendCanCelEmailBindCodeSuccess)
             {
-                <ElFormItem TValue="string" Label="验证码：" Prop="@nameof(PasswordModel.Code)" Required="false">
-                    <ElInput TValue="string" Placeholder="请输入验证码"></ElInput>
+                <ElFormItem TValue="string" Label="楠岃瘉鐮侊細" Prop="@nameof(PasswordModel.Code)" Required="false">
+                    <ElInput TValue="string" Placeholder="璇疯緭鍏ラ獙璇佺爜"></ElInput>
                 </ElFormItem>
                 <ElFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
                     <ElButton Type="@ButtonType.Default" Disabled="BtnConfirmDisabled" Plain="true" OnClick="e => CanCelBindConfirm()" EnableAlwaysRender="true">
-                        确定
+                        纭畾
                     </ElButton>
                 </ElFormActionItem>
             }
@@ -22,7 +22,7 @@
             {
                 <ElFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
                     <ElButton Type="@ButtonType.Info" Disabled="BtnCancelDisabled" Plain="true" OnClick="e => CanCelBind()" EnableAlwaysRender="true">
-                        取消绑定
+                        鍙栨秷缁戝畾
                     </ElButton>
                 </ElFormActionItem>
             }
@@ -31,23 +31,23 @@
         }
         else
         {
-            <ElForm @ref="ElForm" Model="value" LabelPosition="right" Inline="true" EnableAlwaysRender="true">
-                <ElFormItem TValue="string" Label="邮箱�? Prop="@nameof(PasswordModel.Email)" Required="true">
-                    <ElInput TValue="string" Type="@InputType.Tel" Placeholder="请输入邮箱地址"></ElInput>
+            <ElForm @ref="ElForm" Model="value" LabelPosition="@LabelAlign.Right" Inline="true" EnableAlwaysRender="true">
+                <ElFormItem TValue="string" Label="Email" Prop="@nameof(PasswordModel.Email)" Required="true">
+                    <ElInput TValue="string" Type="@InputType.Tel" Placeholder="璇疯緭鍏ラ偖绠卞湴鍧€"></ElInput>
                 </ElFormItem>
                 <ElFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
                     <ElButton Type="@ButtonType.Default" Plain="true" OnClick="e => SendEmailMsg()" EnableAlwaysRender="true" Disabled="BtnBindEmailDisabled">
-                        @((TimeOut > 0 && TimeOut < CountDownTime)?$"请等待{TimeOut}s后重�?:"绑定邮箱")
+                        @((TimeOut > 0 && TimeOut < CountDownTime) ? $"Wait {TimeOut}s" : "Bind email")
                     </ElButton>
                 </ElFormActionItem>
                 @if (showInput)
                 {
-                    <ElFormItem TValue="string" Label="验证码：" Prop="@nameof(PasswordModel.Code)" Required="false">
-                        <ElInput TValue="string" Placeholder="请输入验证码"></ElInput>
+                    <ElFormItem TValue="string" Label="楠岃瘉鐮侊細" Prop="@nameof(PasswordModel.Code)" Required="false">
+                        <ElInput TValue="string" Placeholder="璇疯緭鍏ラ獙璇佺爜"></ElInput>
                     </ElFormItem>
                     <ElFormActionItem EnableAlwaysRender="true" Style="text-align-last:right;">
                         <ElButton Type="@ButtonType.Default" Plain="true" OnClick="e => CheckVerifyCode()" EnableAlwaysRender="true">
-                            确定
+                            纭畾
                         </ElButton>
                     </ElFormActionItem>
                 }

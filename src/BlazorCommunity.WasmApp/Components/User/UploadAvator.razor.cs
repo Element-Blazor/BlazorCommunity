@@ -1,4 +1,4 @@
-﻿using Element;
+using Element;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -28,7 +28,7 @@ namespace BlazorCommunity.WasmApp.Components.User
             SetFieldValue(Files.ToArray(), true);
         }
 
-        private async Task UploadFilesAsync(ElementJS input)
+        private async Task UploadFilesAsync(ElementHelper input)
         {
             foreach (var item in Files)
             {

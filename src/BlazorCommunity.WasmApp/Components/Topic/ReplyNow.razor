@@ -14,9 +14,9 @@
             </div>
         @*</Header>
         <Body>*@
-            <ElForm Inline="false" @ref="form" Model="Model" LabelPosition="left" EnableAlwaysRender="true">
+            <ElForm Inline="false" @ref="form" Model="Model" LabelPosition="@LabelAlign.Left" EnableAlwaysRender="true">
                 <ElFormItem TValue="string" Required="false"  Prop="@nameof(NewReplyModel.Content)" EnableAlwaysRender="true" @ref="formItem">
-                    <ElMarkdownEditor @ref="bMarkdownEditor"  UploadUrl="@(UploadUrl+ UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="300" ImageMaxSize="ConstConfig.MaxUploadFileSize" EnableAlwaysRender="true"></ElMarkdownEditor>
+                    <ElMarkdownEditor @ref="markdownEditor"  UploadUrl="@(UploadUrl+ UploadPath.Topic.Description())" DisableFileUpload="true" DisableImageUpload="false" Height="300" ImageMaxSize="ConstConfig.MaxUploadFileSize" EnableAlwaysRender="true"></ElMarkdownEditor>
                     <div>
                         <span class="el-tag el-tag--warning el-tag--light" style="width:100%">温馨提示：上传图片，单张图片最大只允许@(ConstConfig.MaxUploadFileSize)k</span>
                     </div>
