@@ -1,7 +1,7 @@
-using Blazui.Community.AppDbContext;
-using Blazui.Community.Model.Models;
-using Blazui.Community.WebassemblyApp.Server.Data;
-using Blazui.Community.WebassemblyApp.Server.Models;
+using BlazorCommunity.AppDbContext;
+using BlazorCommunity.Model.Models;
+using BlazorCommunity.WebassemblyApp.Server.Data;
+using BlazorCommunity.WebassemblyApp.Server.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,7 +15,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blazui.Community.WebassemblyApp.Server
+namespace BlazorCommunity.WebassemblyApp.Server
 {
     public class Startup
     {
@@ -23,7 +23,7 @@ namespace Blazui.Community.WebassemblyApp.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BlazUICommunityContext>(options =>
+            services.AddDbContext<BlazorCommunityContext>(options =>
               options.UseSqlite("Filename=data.db"));
            
 
@@ -31,7 +31,7 @@ namespace Blazui.Community.WebassemblyApp.Server
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddIdentity<BZUserModel, IdentityRole<string>>()
-                .AddEntityFrameworkStores<BlazUICommunityContext>()
+                .AddEntityFrameworkStores<BlazorCommunityContext>()
                 .AddDefaultTokenProviders();
             services.AddRazorPages();
             services.Configure<IdentityOptions>(options =>

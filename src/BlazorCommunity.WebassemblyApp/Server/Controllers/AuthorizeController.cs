@@ -1,5 +1,5 @@
-﻿using Blazui.Community.WebassemblyApp.Server.Models;
-using Blazui.Community.WebassemblyApp.Shared;
+using BlazorCommunity.WebassemblyApp.Server.Models;
+using BlazorCommunity.WebassemblyApp.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blazui.Community.WebassemblyApp.Server.Controllers
+namespace BlazorCommunity.WebassemblyApp.Server.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

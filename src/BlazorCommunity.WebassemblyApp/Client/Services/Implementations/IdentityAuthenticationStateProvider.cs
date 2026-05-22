@@ -1,5 +1,5 @@
-﻿using Blazui.Community.WebassemblyApp.Client.Services.Contracts;
-using Blazui.Community.WebassemblyApp.Shared;
+using BlazorCommunity.WebassemblyApp.Client.Services.Contracts;
+using BlazorCommunity.WebassemblyApp.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
 using System;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Blazui.Community.WebassemblyApp.Client.States
+namespace BlazorCommunity.WebassemblyApp.Client.States
 {
     public class IdentityAuthenticationStateProvider : AuthenticationStateProvider
     {

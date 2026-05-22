@@ -1,10 +1,10 @@
-﻿using Blazui.Community.WebassemblyApp.Shared;
+using BlazorCommunity.WebassemblyApp.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blazui.Community.WebassemblyApp.Client.Services.Contracts
+namespace BlazorCommunity.WebassemblyApp.Client.Services.Contracts
 {
     public interface IAuthorizeApi
     {

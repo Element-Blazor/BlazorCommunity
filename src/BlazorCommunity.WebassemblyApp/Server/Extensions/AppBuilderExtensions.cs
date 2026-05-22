@@ -1,26 +1,26 @@
-﻿//using Arch.EntityFrameworkCore.UnitOfWork;
-//using Blazui.Community.Api.Jwt;
-//using Blazui.Community.Api.Options;
-//using Blazui.Community.Api.Service;
-//using Blazui.Community.IdentityExtensions;
-//using Blazui.Community.JWTServiceCollectionExtensions;
-//using Blazui.Community.Model.Models;
-//using Blazui.Community.MvcCore;
+//using Arch.EntityFrameworkCore.UnitOfWork;
+//using BlazorCommunity.Api.Jwt;
+//using BlazorCommunity.Api.Options;
+//using BlazorCommunity.Api.Service;
+//using BlazorCommunity.IdentityExtensions;
+//using BlazorCommunity.JWTServiceCollectionExtensions;
+//using BlazorCommunity.Model.Models;
+//using BlazorCommunity.MvcCore;
 //using Microsoft.EntityFrameworkCore;
 //using Microsoft.Extensions.Configuration;
 //using Microsoft.Extensions.DependencyInjection;
 //using System;
-//using Blazui.Community.SwaggerExtensions;
+//using BlazorCommunity.SwaggerExtensions;
 //using AutoMapper;
-//using static Blazui.Community.Api.Configuration.ConstantConfiguration;
+//using static BlazorCommunity.Api.Configuration.ConstantConfiguration;
 //using Microsoft.AspNetCore.Hosting;
-//using Blazui.Community.Enums;
+//using BlazorCommunity.Enums;
 //using System.IO;
 //using Microsoft.Extensions.Hosting;
 //using Autofac;
-//using Blazui.Community.AppDbContext;
+//using BlazorCommunity.AppDbContext;
 
-//namespace Blazui.Community.WebassemblyApp.Server.Extensions
+//namespace BlazorCommunity.WebassemblyApp.Server.Extensions
 //{
 //    public static class AppBuilderExtensions
 //    {
@@ -58,10 +58,10 @@
 
 //        public static IServiceCollection AddCustomDbService(this IServiceCollection services, IConfiguration Configuration)
 //        {
-//            services.AddDbContext<BlazUICommunityContext>(opt =>
+//            services.AddDbContext<BlazorCommunityContext>(opt =>
 //                 opt.UseMySql(Configuration.GetConnectionString("DbConnectionString")))
-//                    .AddUnitOfWork<BlazUICommunityContext>()
-//                    .AddCustomAspIdenitty<BZUserModel, BlazUICommunityContext>();
+//                    .AddUnitOfWork<BlazorCommunityContext>()
+//                    .AddCustomAspIdenitty<BZUserModel, BlazorCommunityContext>();
 //            return services;
 //        }
 //        public static void CreateUplodFolder(this IWebHostEnvironment webHostEnvironment)

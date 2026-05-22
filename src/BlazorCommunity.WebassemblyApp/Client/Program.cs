@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Blazui.Community.WebassemblyApp.Client.States;
+using BlazorCommunity.WebassemblyApp.Client.States;
 using Microsoft.AspNetCore.Components.Authorization;
-using Blazui.Community.WebassemblyApp.Client.Services.Contracts;
-using Blazui.Community.WebassemblyApp.Client.Services.Implementations;
+using BlazorCommunity.WebassemblyApp.Client.Services.Contracts;
+using BlazorCommunity.WebassemblyApp.Client.Services.Implementations;
 
-namespace Blazui.Community.WebassemblyApp.Client
+namespace BlazorCommunity.WebassemblyApp.Client
 {
     public class Program
     {

@@ -1,24 +1,13 @@
-﻿using Blazui.Community.WebassemblyApp.Server.Models;
-using IdentityServer4.EntityFramework.Options;
-using Microsoft.AspNetCore.Identity;
+using BlazorCommunity.WebassemblyApp.Server.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Blazui.Community.WebassemblyApp.Server.Data
+namespace BlazorCommunity.WebassemblyApp.Server.Data
 {
-    
-    public class ApplicationDbContext : Microsoft.AspNetCore.ApiAuthorization.IdentityServer.ApiAuthorizationDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(
-            DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
     }
-
 }

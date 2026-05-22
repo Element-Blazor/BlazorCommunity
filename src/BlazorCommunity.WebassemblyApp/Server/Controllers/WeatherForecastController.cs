@@ -1,4 +1,4 @@
-﻿using Blazui.Community.WebassemblyApp.Shared;
+using BlazorCommunity.WebassemblyApp.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Blazui.Community.WebassemblyApp.Server.Controllers
+namespace BlazorCommunity.WebassemblyApp.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]

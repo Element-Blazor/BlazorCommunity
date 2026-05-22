@@ -1,17 +1,18 @@
-﻿using Blazui.Community.WebassemblyApp.Client.Services.Contracts;
-using Blazui.Community.WebassemblyApp.Shared;
+using BlazorCommunity.WebassemblyApp.Client.Services.Contracts;
+using BlazorCommunity.WebassemblyApp.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Blazui.Community.WebassemblyApp.Client.Services.Implementations
+namespace BlazorCommunity.WebassemblyApp.Client.Services.Implementations
 {
     public class AuthorizeApi : IAuthorizeApi
     {
@@ -46,7 +47,7 @@ namespace Blazui.Community.WebassemblyApp.Client.Services.Implementations
 
         public async Task<UserInfo> GetUserInfo()
         {
-            var result = await _httpClient.GetJsonAsync<UserInfo>("api/Authorize/UserInfo");
+            var result = await _httpClient.GetFromJsonAsync<UserInfo>("api/Authorize/UserInfo");
             return result;
         }
     }

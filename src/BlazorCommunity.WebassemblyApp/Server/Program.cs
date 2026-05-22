@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
-namespace Blazui.Community.WebassemblyApp.Server
+namespace BlazorCommunity.WebassemblyApp.Server
 {
     public class Program
     {

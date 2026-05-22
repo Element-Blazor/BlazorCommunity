@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BlazorCommunity.Model\BlazorCommunity.Model.csproj" />
+    <ProjectReference Include="..\Client\BlazorCommunity.WebassemblyApp.Client.csproj" />
+    <ProjectReference Include="..\..\BlazorCommunity.AutofacModules\BlazorCommunity.AutofacModules.csproj" />
+    <ProjectReference Include="..\..\BlazorCommunity.Common\BlazorCommunity.Common.csproj" />
+    <ProjectReference Include="..\..\BlazorCommunity.FileExtensions\BlazorCommunity.FileExtensions.csproj" />
+    <ProjectReference Include="..\..\BlazorCommunity.IdentityExtensions\BlazorCommunity.IdentityExtensions.csproj" />
+    <ProjectReference Include="..\..\BlazorCommunity.JWTServiceCollectionExtensions\BlazorCommunity.JWTServiceCollectionExtensions.csproj" />
+    <ProjectReference Include="..\..\BlazorCommunity.LinqExtensions\BlazorCommunity.LinqExtensions.csproj" />
+    <ProjectReference Include="..\..\BlazorCommunity.MvcCore\BlazorCommunity.MvcCore.csproj" />
+    <ProjectReference Include="..\..\BlazorCommunity.Response\BlazorCommunity.Response.csproj" />
+    <ProjectReference Include="..\..\BlazorCommunity.Shared\BlazorCommunity.Shared.csproj" />
+    <ProjectReference Include="..\..\BlazorCommunity.StringExtensions\BlazorCommunity.StringExtensions.csproj" />
+    <ProjectReference Include="..\..\BlazorCommunity.SwaggerExtensions\BlazorCommunity.SwaggerExtensions.csproj" />
+    <ProjectReference Include="..\..\BlazorCommunity.Repository\BlazorCommunity.Repository.csproj" />
+    <ProjectReference Include="..\..\BlazorCommunity.Request\BlazorCommunity.Request.csproj" />
+  </ItemGroup>
+
+
+</Project>
