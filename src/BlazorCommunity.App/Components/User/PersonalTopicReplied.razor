@@ -19,9 +19,9 @@
             <ElButton Type="@ButtonType.Text" OnClick="e=>ShowContent(context)">查看</ElButton>
         </ElTableColumn>
         <ElTableTemplateColumn Text="操作" Width="100">
-            <ElButton Type="@ButtonType.Danger" Size="@ButtonSize.Mini" Style="border-color:transparent !important" Plain="true" Circle="true" Icon="el-icon-remove-outline" OnClick="@(e=> Del(context))">
+            <ElButton Type="@ButtonType.Danger" Size="@ButtonSize.Small" Style="border-color:transparent !important" Plain="true" Circle="true" Icon="el-icon-remove-outline" OnClick="@(e=> Del(context))">
             </ElButton>
-            <ElButton Type="@ButtonType.Success" Size="@ButtonSize.Mini" Style="border-color:transparent !important" Plain="true" Circle="true" Icon="el-icon-link" OnClick="@(e=> LinktoTopic(context))">
+            <ElButton Type="@ButtonType.Success" Size="@ButtonSize.Small" Style="border-color:transparent !important" Plain="true" Circle="true" Icon="el-icon-link" OnClick="@(e=> LinktoTopic(context))">
             </ElButton>
         </ElTableTemplateColumn>
     </ElTableColumns>

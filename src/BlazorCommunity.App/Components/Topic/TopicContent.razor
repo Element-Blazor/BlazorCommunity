@@ -36,7 +36,7 @@
                                     <div>
                                         @if (IsEditing)
                                         {
-                                            <ElInput TValue="string" Type="@InputType.Text" @bind-Value="TopicModel.Title" Style="width: 500px;" Size="InputSize.Medium"></ElInput>
+                                            <ElInput TValue="string" Type="@InputType.Text" @bind-Value="TopicModel.Title" Style="width: 500px;" Size="InputSize.Large"></ElInput>
                                         }
                                         else
                                         {
@@ -74,10 +74,10 @@
                                 @if (TopicModel.Status != 1)
                                 {
 
-                                    <ElButton Icon=@(IsEditing?"el-icon-finished":"el-icon-edit") Style=@buttonedit Type="ButtonType.Text" Plain="true" Size="ButtonSize.Medium" OnClick="ToggleEditStatus">
+                                    <ElButton Icon=@(IsEditing?"el-icon-finished":"el-icon-edit") Style=@buttonedit Type="ButtonType.Text" Plain="true" Size="ButtonSize.Large" OnClick="ToggleEditStatus">
                                     </ElButton>
                                     <div title="关闭帖子">
-                                        <ElButton Icon="el-icon-lock" Style=@buttonedit Type="ButtonType.Text" Plain="true" Size="ButtonSize.Medium" OnClick="CloseMyTopic">
+                                        <ElButton Icon="el-icon-lock" Style=@buttonedit Type="ButtonType.Text" Plain="true" Size="ButtonSize.Large" OnClick="CloseMyTopic">
                                         </ElButton>
                                     </div>
                                 }
