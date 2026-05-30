@@ -69,14 +69,9 @@ p {
 }
 
 .community-brand__mark {
-    align-items: center;
-    background: #409eff;
     border-radius: 8px;
-    color: #ffffff;
-    display: inline-flex;
-    font-weight: 700;
+    display: block;
     height: 34px;
-    justify-content: center;
     width: 34px;
 }
 

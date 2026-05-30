@@ -1,7 +1,7 @@
 @inherits PageBase
 <div class="mobile-header">
     <div class="header-item mobile-logo" @onclick="@(e => NavigationManager.NavigateTo("/", true))">
-        <img src="img/logo.png" style="width:80px;height:64px;margin-top:0px !important;" />
+        <img src="img/logo.svg" />
     </div>
     <div class="header-item mobile-search">
         <ElInput Type="@InputType.Text" TValue="string" Size="@InputSize.Small" Style="display:inline-block;" EnableAlwaysRender="true" EnableClearButton="true" Placeholder="Search" @bind-Value="SearchText"></ElInput>

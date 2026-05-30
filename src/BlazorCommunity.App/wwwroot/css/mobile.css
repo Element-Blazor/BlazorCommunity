@@ -96,9 +96,10 @@ body {
 }
 
 .mobile-logo img {
-    width: 60px;
-    height: 70px;
-    margin-left: -10px;
+    width: 132px;
+    height: 34px;
+    margin-left: 6px;
+    margin-top: 8px;
 }
 
 .blaz-layout-north.blaz-layout-card {

@@ -7,6 +7,7 @@
     <meta name=”Description” Content=”blazor,netcore,dotnet,webassembly”>
     <title>Blazor Developer Community</title>
     <base href="/" />
+    <link rel="icon" href="favicon.ico" />
     <link href="/css/site.css" rel="stylesheet" />
     <link href="/_content/Element.Markdown/css/editormd.min.css" rel="stylesheet" />
     <!--对 editormd 的默认样式进行更改的文件 -->
@@ -32,94 +33,39 @@
 <body>
 
     <app>
-            <style>
-                    .loader {
-                        position: relative;
-                        width: 2.5em;
-                        height: 2.5em;
-                        transform: rotate(165deg);
-                    }
+        <style>
+            html,
+            body {
+                height: 100%;
+            }
 
-                        .loader:before, .loader:after {
-                            content: '';
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            display: block;
-                            width: 0.5em;
-                            height: 0.5em;
-                            border-radius: 0.25em;
-                            transform: translate(-50%, -50%);
-                        }
+            body > app {
+                align-items: center;
+                display: flex;
+                justify-content: center;
+                min-height: 100%;
+            }
 
-                        .loader:before {
-                            animation: before 2s infinite;
-                        }
+            .boot-loading {
+                display: grid;
+                gap: 14px;
+                justify-items: center;
+                color: #1f2d3d;
+                font-family: Inter, "Segoe UI", Arial, sans-serif;
+                font-size: 16px;
+                font-weight: 700;
+            }
 
-                        .loader:after {
-                            animation: after 2s infinite;
-                        }
-
-                    @keyframes before {
-                        0% {
-                            width: 0.5em;
-                            box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
-                        }
-
-                        35% {
-                            width: 2.5em;
-                            box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75), 0 0.5em rgba(111, 202, 220, 0.75);
-                        }
-
-                        70% {
-                            width: 0.5em;
-                            box-shadow: -1em -0.5em rgba(225, 20, 98, 0.75), 1em 0.5em rgba(111, 202, 220, 0.75);
-                        }
-
-                        100% {
-                            box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
-                        }
-                    }
-
-                    @keyframes after {
-                        0% {
-                            height: 0.5em;
-                            box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
-                        }
-
-                        35% {
-                            height: 2.5em;
-                            box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75), -0.5em 0 rgba(233, 169, 32, 0.75);
-                        }
-
-                        70% {
-                            height: 0.5em;
-                            box-shadow: 0.5em -1em rgba(61, 184, 143, 0.75), -0.5em 1em rgba(233, 169, 32, 0.75);
-                        }
-
-                        100% {
-                            box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
-                        }
-                    }
-                    /**
-                * Attempt to center the whole thing!
-                */
-                    html,
-                    body {
-                        height: 100%;
-                    }
-
-                    .loader {
-                        position: absolute;
-                        top: calc(50% - 1.25em);
-                        left: calc(50% - 1.25em);
-                    }
-            </style>
-            <div class='loader'>
-
-            </div>
-
-        </App>
+            .boot-loading img {
+                width: 96px;
+                height: 96px;
+            }
+        </style>
+        <div class="boot-loading" role="status" aria-live="polite">
+            <img src="logo-loading.svg" alt="" />
+            <span>Element-Blazor</span>
+        </div>
+    </app>
 
         <script src="/_content/Element/js/dom.js"></script>
         <script src="/_content/Element.Markdown/js/dom.js"></script>

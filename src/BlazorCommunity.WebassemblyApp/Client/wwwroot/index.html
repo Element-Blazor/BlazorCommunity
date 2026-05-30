@@ -6,12 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>BlazorCommunity.WebassemblyApp</title>
     <base href="/" />
+    <link rel="icon" href="favicon.ico" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
+    <style>
+        body > app {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .boot-loading {
+            display: grid;
+            gap: 14px;
+            justify-items: center;
+            color: #1f2d3d;
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .boot-loading img {
+            width: 96px;
+            height: 96px;
+        }
+    </style>
 </head>
 
 <body>
-    <app>Loading...</app>
+    <app>
+        <div class="boot-loading" role="status" aria-live="polite">
+            <img src="logo-loading.svg" alt="" />
+            <span>Element-Blazor</span>
+        </div>
+    </app>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
